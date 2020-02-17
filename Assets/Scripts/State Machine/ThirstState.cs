@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using Ecosystem.Attributes;
 
 namespace Ecosystem.StateMachines {
     public class ThirstState : IState {
 
-        Unit owner;
+        IAnimal owner;
 
-        public ThirstState(Unit owner) { this.owner = owner; }
+        public ThirstState(IAnimal owner) { this.owner = owner; }
 
         public void Enter() {
 

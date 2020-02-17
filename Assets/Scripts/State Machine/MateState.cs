@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using Ecosystem.Attributes;
 
 namespace Ecosystem.StateMachines {
     public class MateState : IState {
 
-        Unit owner;
+        IAnimal owner;
 
-        public MateState(Unit owner) { this.owner = owner; }
+        public MateState(IAnimal owner) { this.owner = owner; }
 
         public void Enter() {
 
