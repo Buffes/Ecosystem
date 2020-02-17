@@ -3,8 +3,8 @@ using Ecosystem.StateMachines;
 
 namespace Ecosystem.Attributes {
     public interface IAnimal {
-        public float Hunger { get; set; }
-        public float Thirst { get; set; }
-        public float Mating { get; set; }
+        float Hunger { get; set; }
+        float Thirst { get; set; }
+        float Mating { get; set; }
     }
 }
