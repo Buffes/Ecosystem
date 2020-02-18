@@ -16,7 +16,7 @@ namespace Ecosystem.Attributes {
 
         // Start is called before the first frame update
         void Start() {
-            stateMachine.ChangeState(new ThirstState(this));
+            stateMachine.ChangeState(new CasualState(this));
         }
 
         // Update is called once per frame
