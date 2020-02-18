@@ -2,7 +2,7 @@
 using Ecosystem.StateMachines;
 
 namespace Ecosystem.Attributes {
-    public class Rabbit : MonoBehaviour, IAnimal {
+    public class BigFish : MonoBehaviour, IAnimal {
 
         public float Hunger { get; set; }
         public float Thirst { get; set; }
@@ -10,7 +10,7 @@ namespace Ecosystem.Attributes {
 
         StateMachine stateMachine;
 
-        public Rabbit() {
+        public BigFish() {
             stateMachine = new StateMachine();
         }
 
