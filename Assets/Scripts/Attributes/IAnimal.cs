@@ -6,5 +6,6 @@ namespace Ecosystem.Attributes {
         float Hunger { get; set; }
         float Thirst { get; set; }
         float Mating { get; set; }
+        string FoodSource { get; }
     }
 }
