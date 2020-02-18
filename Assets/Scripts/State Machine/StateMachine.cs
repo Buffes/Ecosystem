@@ -2,12 +2,16 @@
 
 namespace Ecosystem.StateMachines {
     public class StateMachine {
-        IState currentState;
+
+        private IState currentState;
+        private IState previousState;
 
         public void ChangeState(IState newState) {
             if (currentState != null) {
                 currentState.Exit();
             }
+            previousState = currentState;
+
             currentState = newState;
             currentState.Enter();
         }
@@ -16,6 +20,13 @@ namespace Ecosystem.StateMachines {
             if (currentState != null) {
                 currentState.Execute();
             }
+        }
+
+        public void SwitchToPreviousState()
+        {
+            currentState.Exit();
+            currentState = previousState;
+            currentState.Enter();
         }
     }
 }
