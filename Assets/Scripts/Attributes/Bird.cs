@@ -15,7 +15,7 @@ namespace Ecosystem.Attributes {
         StateMachine stateMachine;
 
         public Bird() {
-            stateMachine = new StateMachine();
+            this.stateMachine = new StateMachine();
         }
 
         // Start is called before the first frame update

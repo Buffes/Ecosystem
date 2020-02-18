@@ -15,7 +15,7 @@ namespace Ecosystem.Attributes {
         StateMachine stateMachine;
 
         public Rabbit() {
-            stateMachine = new StateMachine();
+            this.stateMachine = new StateMachine();
         }
 
         // Start is called before the first frame update
