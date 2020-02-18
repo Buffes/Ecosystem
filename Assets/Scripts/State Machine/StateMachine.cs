@@ -25,7 +25,9 @@ namespace Ecosystem.StateMachines {
         public void SwitchToPreviousState()
         {
             currentState.Exit();
+            IState tmpState = currentState;
             currentState = previousState;
+            previousState = tmpState;
             currentState.Enter();
         }
     }
