@@ -12,12 +12,12 @@ namespace Ecosystem.ECS.Targeting
         protected override void OnUpdate()
         {
             
-            Entities.WithNone<HasTarget>().WithAll<Unit>().ForEach((Entity entity, ref Translation unitTranslation) =>
+            Entities.WithAll<Unit>().ForEach((Entity entity, ref Translation unitTranslation) =>
             {
                 float3 unitPosition = unitTranslation.Value;
                 Entity closestTargetEntity = Entity.Null;
                 float3 closestTargetPosition = float3.zero;
-                Debug.Log(entity);
+                Debug.Log("Who is looking:" + entity);
 
                 Entities.WithAll<Unit>().ForEach((Entity targetEntity, ref Translation targetTranslation) =>
                 {
@@ -30,7 +30,7 @@ namespace Ecosystem.ECS.Targeting
                         {
                             closestTargetEntity = targetEntity;
                             closestTargetPosition = targetTranslation.Value;
-                            Debug.Log(targetEntity);
+                            Debug.Log("first seen:" + targetEntity);
                         }
                         else
                         {
@@ -38,6 +38,8 @@ namespace Ecosystem.ECS.Targeting
                             {
                                 closestTargetEntity = entity;
                                 closestTargetPosition = targetTranslation.Value;
+
+                                Debug.Log("Nearer than before:" + closestTargetEntity);
                             }
                         }
                     }
