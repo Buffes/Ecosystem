@@ -9,13 +9,11 @@ namespace Ecosystem.ECS.Physics
     /// Stops everything from falling through the ground.
     /// </summary>
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class GroundCollisionSystem : JobComponentSystem
+    public class GroundCollisionSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
-            return Entities.ForEach((
-                ref Translation translation,
-                ref Velocity velocity) =>
+            Entities.ForEach((ref Translation translation, ref Velocity velocity) =>
             {
 
                 float groundLevel = GetGroundLevel(translation.Value);
@@ -26,7 +24,7 @@ namespace Ecosystem.ECS.Physics
                     velocity.Value.y = 0;
                 }
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
         }
 
         private static float GetGroundLevel(float3 position)

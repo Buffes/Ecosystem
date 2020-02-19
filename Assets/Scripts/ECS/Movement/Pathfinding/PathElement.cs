@@ -9,6 +9,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// </summary>
     [Serializable]
     [InternalBufferCapacity(20)]
+    [GenerateAuthoringComponent]
     public struct PathElement : IBufferElementData
     {
         public float3 Checkpoint;

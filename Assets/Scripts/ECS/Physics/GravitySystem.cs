@@ -9,20 +9,20 @@ namespace Ecosystem.ECS.Physics
     /// </summary>
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
     [UpdateBefore(typeof(GroundCollisionSystem))]
-    public class GravitySystem : JobComponentSystem
+    public class GravitySystem : SystemBase
     {
         private static readonly float3 GRAVITY = new float3(0, -9.8f, 0);
 
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
             float deltaTime = Time.DeltaTime;
 
-            return Entities.ForEach((ref Velocity velocity) =>
+            Entities.ForEach((ref Velocity velocity) =>
             {
 
                 velocity.Value += math.up() * GRAVITY * deltaTime;
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
         }
     }
 }
