@@ -10,11 +10,11 @@ namespace Ecosystem.ECS.Movement
     /// <summary>
     /// Sets velocity and rotation based on movement input data.
     /// </summary>
-    public class GroundMovementSystem : JobComponentSystem
+    public class GroundMovementSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
-            return Entities.ForEach((
+            Entities.ForEach((
                 ref Rotation rotation,
                 ref Velocity velocity,
                 in MovementInput movementInput,
@@ -32,7 +32,7 @@ namespace Ecosystem.ECS.Movement
                     rotation.Value = quaternion.LookRotation(direction, math.up());
                 }
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
         }
     }
 }

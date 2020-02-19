@@ -8,11 +8,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// <summary>
     /// Moves entities along their current path.
     /// </summary>
-    public class PathFollowingSystem : JobComponentSystem
+    public class PathFollowingSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
-            return Entities.ForEach((Entity entity, int entityInQueryIndex,
+            Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref MovementInput movementInput,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in Translation translation) =>
@@ -35,7 +35,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 movementInput.Direction = float3.zero;
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
         }
     }
 }

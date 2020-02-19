@@ -9,20 +9,18 @@ namespace Ecosystem.ECS.Physics
     /// </summary>
     [UpdateInGroup(typeof(PhysicsSystemGroup))]
     [UpdateBefore(typeof(GravitySystem))]
-    public class VelocitySystem : JobComponentSystem
+    public class VelocitySystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
             float deltaTime = Time.DeltaTime;
 
-            return Entities.ForEach((
-                ref Translation translation,
-                in Velocity velocity) =>
+            Entities.ForEach((ref Translation translation, in Velocity velocity) =>
             {
 
                 translation.Value += velocity.Value * deltaTime;
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
         }
     }
 }
