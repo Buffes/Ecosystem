@@ -34,7 +34,7 @@ namespace Ecosystem.ECS.Targeting
                         }
                         else
                         {
-                            if (math.distance(unitPosition, targetTranslation.Value) > math.distance(unitPosition, closestTargetPosition))
+                            if (math.distance(unitPosition, targetTranslation.Value) < math.distance(unitPosition, closestTargetPosition))
                             {
                                 closestTargetEntity = entity;
                                 closestTargetPosition = targetTranslation.Value;
@@ -49,7 +49,7 @@ namespace Ecosystem.ECS.Targeting
                 //Draw line between unit and closest target
                 if(closestTargetEntity != Entity.Null)
                 {
-                    Debug.DrawLine(unitPosition, closestTargetPosition);
+                    Debug.DrawLine(unitPosition, closestTargetPosition, Color.green);
                     PostUpdateCommands.AddComponent(entity, new HasTarget { targetEntity = closestTargetEntity });
                 }
             });
