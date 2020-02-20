@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace Ecosystem.ECS.Targeting
 {
-    public struct HasTarget : IComponentData
+    public struct ClosestTarget : IComponentData
     {
         public Entity targetEntity;
     }
