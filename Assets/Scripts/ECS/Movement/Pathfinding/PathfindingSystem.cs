@@ -164,7 +164,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 Debug.Log("Didn't find a path!");
             } else {
                 // Found a path
-                NativeList<int2> path = CalculatePath(pathNodes, targetNode);
+                NativeList<int2> path = ConstructPath(pathNodes, targetNode);
                 
                 foreach (int2 pathPosition in path) {
                     Debug.Log(pathPosition);
@@ -214,13 +214,37 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         private int GetLowestFCostNodeIndex(NativeList<int> openList, NativeList<PathNode> pathNodes) 
         {
             PathNode lowestCostPathNode = pathNodes[openList[0]];
-            for (int i = 1; i < openList.Length; i++) {
+            for (int i = 1; i < openList.Length; i++) 
+            {
                 PathNode testPathNode = pathNodes[openList[i]];
-                if (testPathNode.fCost < lowestCostPathNode.fCost) {
+                if (testPathNode.fCost < lowestCostPathNode.fCost) 
+                {
                     lowestCostPathNode = testPathNode;
                 }
             }
             return lowestCostPathNode.index;
+        }
+
+        private NativeList<int2> ConstructPath(NativeList<PathNode> pathNodes, PathNode targetNode)
+        {
+            if (targetNode.cameFromNodeIndex == -1) 
+            {
+                // Couldn't find a path.
+                return new NativeList<int2>(Allocator.Temp);
+            } else 
+            {
+                NativeList<int2> path = new NativeList<int2>(Allocator.Temp);
+                path.Add(new int2(targetNode.x, targetNode.y));
+
+                PathNode currentNode = targetNode;
+                while (currentNode.cameFromNodeIndex != -1) {
+                    PathNode cameFromNode = pathNodes[currentNode.cameFromNodeIndex];
+                    path.Add(new int2(cameFromNode.x, cameFromNode.y));
+                    currentNode = cameFromNode;
+                }
+
+                return path;
+            }
         }
 
         private bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {
