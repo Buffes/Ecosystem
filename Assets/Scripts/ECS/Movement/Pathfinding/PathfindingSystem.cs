@@ -11,7 +11,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// Finds a path to the target position from a move command. Currently just sets the path straight
     /// toward the target. Needs a reference to the grid world to actually pathfind.
     /// </summary>
-    public class PathfindingSystem : JobComponentSystem
+    public class PathfindingSystem : SystemBase
     {
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
@@ -25,11 +25,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            var jobHandle = Entities.ForEach((Entity entity, int entityInQueryIndex,
+            Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
@@ -49,10 +49,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Add path checkpoint
                 pathBuffer.Add(new PathElement { Checkpoint = target });
 
-            }).Schedule(inputDependencies);
+            }).ScheduleParallel();
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(jobHandle);
-            return jobHandle;
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
 
         ///<summary>
