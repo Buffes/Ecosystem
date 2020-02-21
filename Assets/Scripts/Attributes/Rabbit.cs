@@ -7,10 +7,12 @@ namespace Ecosystem.Attributes {
         public float Hunger { get; set; }
         public float Thirst { get; set; }
         public float Mating { get; set; }
-        private float hungerLimit = Random.Range((float)0.3,(float)0.8);
-        private float thirstLimit = Random.Range((float)0.3,(float)0.8);
-        private float matingLimit = Random.Range((float)0.3,(float)0.8);
+        private float HungerLimit = Random.Range((float)0.3,(float)0.8);
+        private float ThirstLimit = Random.Range((float)0.3,(float)0.8);
+        private float MatingLimit = Random.Range((float)0.3,(float)0.8);
         public string FoodSource { get; } = "GRASS,BERRIES";
+        public Transform Trans { get; set; }
+
 
         StateMachine stateMachine;
 
@@ -28,11 +30,11 @@ namespace Ecosystem.Attributes {
             // TODO: Check for enemies, change state to flee
 
             // Check for stateChange
-            if (Thirst <= thirstLimit) {
+            if (Thirst <= ThirstLimit) {
                 stateMachine.ChangeState(new ThirstState(this));
-            } else if (Hunger <= hungerLimit) {
+            } else if (Hunger <= HungerLimit) {
                 stateMachine.ChangeState(new HungerState(this));
-            } else if (Mating <= matingLimit) {
+            } else if (Mating <= MatingLimit) {
                 stateMachine.ChangeState(new MateState(this));
             }
             stateMachine.Update();
