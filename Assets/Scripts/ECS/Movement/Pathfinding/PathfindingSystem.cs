@@ -37,7 +37,10 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
+                float3 position = translation.Value;    
 
+                
+                FindPath(new int2(0,0), new int2(6,7));
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
                 // Clear any existing path
@@ -57,7 +60,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private void FindPath(int2 startPosition, int2 targetPosition)
+        private static void FindPath(int2 startPosition, int2 targetPosition)
         {
             // Temporary representation of the grid, mapping coordinates to a boolean for walkability. 
             // false = not walkable, true = walkable. We assume equal weights for all positions in the grid for now.
@@ -65,6 +68,14 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             int2 gridSize = new int2(100, 100);
             NativeHashMap<int2, bool> pathFindingMap = new NativeHashMap<int2, bool>(gridSize.x * gridSize.y, Allocator.Temp);
             
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                for (int x = 0; x < gridSize.x; x++)
+                {
+                    pathFindingMap.TryAdd(new int2(x, y), true);
+                }
+            }
+
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
             neighbourOffsetArray[0] = new int2(-1, 0); // Left
@@ -87,7 +98,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             NativeList<int> closedList = new NativeList<int>(Allocator.Temp);
 
             pathNodes.Add(MakePathNode(startPosition, ref index, ref indexOfPathNode, Heuristic(startPosition, targetPosition), 0));
-            pathNodes.Add(MakePathNode(targetPosition, ref index, ref indexOfPathNode, Heuristic(targetPosition, targetPosition), 0));
+            pathNodes.Add(MakePathNode(targetPosition, ref index, ref indexOfPathNode, Heuristic(targetPosition, targetPosition), int.MaxValue));
             openList.Add(pathNodes[0].index);
             int targetNodeIndex = -1;
             indexOfPathNode.TryGetValue(new int2(targetPosition.x, targetPosition.y), out targetNodeIndex);
@@ -123,8 +134,20 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         // Neighbour not a valid position
                         continue;
                     }
+                    
+                    int neighbourNodeIndex = -1;
+                    if (!indexOfPathNode.TryGetValue(neighbourPosition, out neighbourNodeIndex))
+                    {
+                        // Need to create the PathNode
+                        pathNodes.Add(MakePathNode(
+                                    neighbourPosition, 
+                                    ref index, 
+                                    ref indexOfPathNode, 
+                                    Heuristic(neighbourPosition, targetPosition), 
+                                    int.MaxValue));
+                        neighbourNodeIndex = indexOfPathNode[neighbourPosition];
+                    }
 
-                    int neighbourNodeIndex = indexOfPathNode[new int2(neighbourPosition.x, neighbourPosition.y)];
                     PathNode neighbourNode = pathNodes[neighbourNodeIndex];
                     if (closedList.Contains(neighbourNodeIndex)) 
                     {
@@ -132,7 +155,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         continue;
                     }
 
-                    if (!pathFindingMap[new int2(neighbourPosition.x, neighbourPosition.y)])
+                    if (!pathFindingMap[neighbourPosition])
                     {
                         // Not walkable
                         continue;
@@ -165,8 +188,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Found a path
                 NativeList<int2> path = ConstructPath(pathNodes, targetNode);
                 
-                foreach (int2 pathPosition in path) {
-                    Debug.Log(pathPosition);
+                for (int i = 0; i < path.Length; i++)
+                {
+                    Debug.Log(path[i]);   
                 }
                 
                 path.Dispose(); // temporary
@@ -182,7 +206,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             pathFindingMap.Dispose(); // Dispose the temporary map
         }
 
-        private int Heuristic(int2 a, int2 b) {
+        private static int Heuristic(int2 a, int2 b) {
             int dx = math.abs(a.x - b.x);
             int dy = math.abs(a.y - b.y);
             
@@ -191,7 +215,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 ;
         }
 
-        private PathNode MakePathNode(int2 position, ref int index, ref NativeHashMap<int2, int> indexOfPathNode, int hCost, int gCost)
+        private static PathNode MakePathNode(int2 position, ref int index, ref NativeHashMap<int2, int> indexOfPathNode, int hCost, int gCost)
         {
             PathNode node = new PathNode();
             node.x = position.x;
@@ -210,7 +234,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         /// <summary>
         /// Returns the index of the PathNode with the lowest F value. Would be unnecessary if a NativePriorityQueue existed.
         /// </summary>
-        private int GetLowestFCostNodeIndex(NativeList<int> openList, NativeList<PathNode> pathNodes) 
+        private static int GetLowestFCostNodeIndex(NativeList<int> openList, NativeList<PathNode> pathNodes) 
         {
             PathNode lowestCostPathNode = pathNodes[openList[0]];
             for (int i = 1; i < openList.Length; i++) 
@@ -224,7 +248,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             return lowestCostPathNode.index;
         }
 
-        private NativeList<int2> ConstructPath(NativeList<PathNode> pathNodes, PathNode targetNode)
+        private static NativeList<int2> ConstructPath(NativeList<PathNode> pathNodes, PathNode targetNode)
         {
             if (targetNode.cameFromNodeIndex == -1) 
             {
@@ -246,7 +270,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             }
         }
 
-        private bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {
+        private static bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {
             return
                 gridPosition.x >= 0 && 
                 gridPosition.y >= 0 &&
