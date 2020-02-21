@@ -35,8 +35,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 in Translation translation) =>
             {
 
-                float3 target = moveCommand.Target;
-                float reach = moveCommand.Reach;
+                float3 target = moveCommand.target;
+                float reach = moveCommand.reach;
 
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
