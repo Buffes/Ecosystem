@@ -16,6 +16,14 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         // Start is called before the first frame update
         void Start()
         {
+            for (int i = 0; i < 1000; i++)
+            {
+                CreateEntity();
+            }
+        }
+
+        void CreateEntity()
+        {
             EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             Entity entity = entityManager.CreateEntity(
                 typeof(MoveCommand),
