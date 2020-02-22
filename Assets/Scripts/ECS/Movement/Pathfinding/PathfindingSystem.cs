@@ -45,10 +45,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 
                 // Clear any existing path
                 pathBuffer.Clear();
-
                 // Offset the target by the reach
                 target = target - reach * math.normalize(target - translation.Value);
-
                 NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target));
                 // Add path checkpoints
 
@@ -58,8 +56,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
                 }
                 path.Dispose();
-                
-
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
