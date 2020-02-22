@@ -8,8 +8,8 @@ using Unity.Transforms;
 namespace Ecosystem.ECS.Movement.Pathfinding
 {
     /// <summary>
-    /// Finds a path to the target position from a move command. Currently just sets the path straight
-    /// toward the target. Needs a reference to the grid world to actually pathfind.
+    /// Finds a path to the target position from a move command. Currently runs on a generated grid.
+    /// Needs a reference to the grid world.
     /// </summary>
     public class PathfindingSystem : SystemBase
     {
@@ -38,19 +38,27 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
                 float3 position = translation.Value;    
-
-                
-                FindPath(new int2(0,0), new int2(6,7));
+     
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
+
+                
                 // Clear any existing path
                 pathBuffer.Clear();
 
                 // Offset the target by the reach
                 target = target - reach * math.normalize(target - translation.Value);
 
-                // Add path checkpoint
-                pathBuffer.Add(new PathElement { Checkpoint = target });
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target));
+                // Add path checkpoints
+
+                for (int i = 0; i < path.Length; i++)
+                {
+                    // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
+                    pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
+                }
+                path.Dispose();
+                
 
             }).ScheduleParallel();
 
@@ -60,11 +68,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private static void FindPath(int2 startPosition, int2 targetPosition)
+        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition)
         {
             // Temporary representation of the grid, mapping coordinates to a boolean for walkability. 
             // false = not walkable, true = walkable. We assume equal weights for all positions in the grid for now.
             // TODO: Change this into reading from the grid when that is implemented. 
+            //============================================================
             int2 gridSize = new int2(100, 100);
             NativeHashMap<int2, bool> pathFindingMap = new NativeHashMap<int2, bool>(gridSize.x * gridSize.y, Allocator.Temp);
             
@@ -75,6 +84,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     pathFindingMap.TryAdd(new int2(x, y), true);
                 }
             }
+            //============================================================
 
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
@@ -87,13 +97,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             neighbourOffsetArray[6] = new int2(+1, -1); // Right Down
             neighbourOffsetArray[7] = new int2(+1, +1); // Right Up
 
-
-
             NativeList<PathNode> pathNodes = new NativeList<PathNode>(Allocator.Temp); // Add pathNodes to this lazily as needed
             int index = 0;
             NativeHashMap<int2, int> indexOfPathNode = new NativeHashMap<int2, int>(gridSize.x * gridSize.y, Allocator.Temp);
             
-            // Could be optimized by implementing a NativePriorityQueue and using that instead.
+            // openList Could be optimized by implementing a NativePriorityQueue and using that instead.
             NativeList<int> openList = new NativeList<int>(Allocator.Temp);
             NativeList<int> closedList = new NativeList<int>(Allocator.Temp);
 
@@ -181,31 +189,30 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
             PathNode targetNode = pathNodes[targetNodeIndex];
 
-            if (targetNode.cameFromNodeIndex == -1) {
-                // Didn't find a path!
-                Debug.Log("Didn't find a path!");
-            } else {
-                // Found a path
-                NativeList<int2> path = ConstructPath(pathNodes, targetNode);
-                
-                for (int i = 0; i < path.Length; i++)
-                {
-                    Debug.Log(path[i]);   
-                }
-                
-                path.Dispose(); // temporary
-            }
-
-
-
             openList.Dispose();
             closedList.Dispose();
             indexOfPathNode.Dispose();
-            pathNodes.Dispose();
             neighbourOffsetArray.Dispose();
             pathFindingMap.Dispose(); // Dispose the temporary map
+
+            if (targetNode.cameFromNodeIndex == -1) {
+                // Didn't find a path!
+                pathNodes.Dispose();
+                return new NativeList<int2>(Allocator.Temp);
+            } else {
+                // Found a path
+                NativeList<int2> path = ConstructPath(pathNodes, targetNode);
+                pathNodes.Dispose();
+                return path;
+            }
         }
 
+        /// <summary>
+        /// Provides the octile heuristic cost from a to b, disregarding non-walkable positions.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>the heuristic cost.</returns>
         private static int Heuristic(int2 a, int2 b) {
             int dx = math.abs(a.x - b.x);
             int dy = math.abs(a.y - b.y);
