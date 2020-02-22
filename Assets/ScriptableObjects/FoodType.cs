@@ -6,6 +6,6 @@ namespace Ecosystem
     public class FoodType : ScriptableObject
     {
         [Range(1, 10)]
-        public int FoodPoints;
+        public int FoodPoints = 1;
     }
 }
