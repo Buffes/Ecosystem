@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
+  m_Name: Fox
+  m_EditorClassIdentifier: 
+  Meat: {fileID: 11400000, guid: b14a02feda3ba0e4285bc37185ffb967, type: 2}
+  prey:
+  - {fileID: 11400000, guid: bdd7a7559f0396f4f86fb7ae5a3d8b3d, type: 2}
+  food:
+  - {fileID: 11400000, guid: 93ff989ed0e9a8f4781ef01559050103, type: 2}
+  - {fileID: 11400000, guid: 43943814e1f448743bee4a526ed51e1e, type: 2}
