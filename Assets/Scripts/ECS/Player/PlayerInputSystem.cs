@@ -8,7 +8,7 @@ namespace Ecosystem.ECS.Player
     /// <summary>
     /// Movement input controls for entities with a PlayerTag component.
     /// </summary>
-    public class PlayerInputSystem : ComponentSystem
+    public class PlayerInputSystem : SystemBase
     {
         protected override void OnUpdate()
         {
@@ -16,20 +16,19 @@ namespace Ecosystem.ECS.Player
             float z = Input.GetAxisRaw("Vertical");
             bool sprint = Input.GetKey(KeyCode.LeftShift);
             float3 direction = new float3(x, 0f, z);
+
             if (math.length(direction) != 0)
             {
                 direction = math.normalize(direction);
             }
 
-            Entities.ForEach((
-                ref MovementInput movementInput,
-                ref PlayerTag playerTag) =>
+            Entities.ForEach((ref MovementInput movementInput, ref PlayerTag playerTag) =>
             {
 
                 movementInput.Direction = direction;
                 movementInput.Sprint = sprint;
 
-            });
+            }).ScheduleParallel();
         }
     }
 }
