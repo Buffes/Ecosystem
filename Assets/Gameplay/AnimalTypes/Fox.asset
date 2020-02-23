@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fox
   m_EditorClassIdentifier: 
   Meat: {fileID: 11400000, guid: b14a02feda3ba0e4285bc37185ffb967, type: 2}
-  Prey:
+  prey:
   - {fileID: 11400000, guid: bdd7a7559f0396f4f86fb7ae5a3d8b3d, type: 2}
-  Food:
-  - {fileID: 11400000, guid: c156f86a8f816ce4abd6e5ab3a27bc93, type: 2}
+  food:
+  - {fileID: 11400000, guid: 93ff989ed0e9a8f4781ef01559050103, type: 2}
   - {fileID: 11400000, guid: 43943814e1f448743bee4a526ed51e1e, type: 2}
