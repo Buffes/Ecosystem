@@ -6,9 +6,17 @@ using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting
 {
+    /// <summary>
+    /// The id of a sensed entity
+    /// </summary>
+    
+    [Serializable]
+    [InternalBufferCapacity(20)]
+    [GenerateAuthoringComponent]
     public struct Target : IBufferElementData
     {
-        public Entity e;
+        //public Entity e; 
+        public int targetID;
     }
 }
 
