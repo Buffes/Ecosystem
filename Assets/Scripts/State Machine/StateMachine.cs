@@ -30,5 +30,9 @@ namespace Ecosystem.StateMachines {
             previousState = tmpState;
             currentState.Enter();
         }
+
+        public IState getCurrentState() {
+            return currentState;
+        }
     }
 }

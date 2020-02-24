@@ -14,6 +14,7 @@ namespace Ecosystem.Attributes {
         public Transform Trans { get; set; }
 
         StateMachine stateMachine;
+        IState casual;
 
         public SmallFish() {
             this.stateMachine = new StateMachine();
@@ -21,7 +22,8 @@ namespace Ecosystem.Attributes {
 
         // Start is called before the first frame update
         void Start() {
-            stateMachine.ChangeState(new CasualState(this));
+            this.casual = new CasualState(this);
+            this.stateMachine.ChangeState(this.casual);
         }
 
         // Update is called once per frame
@@ -35,7 +37,10 @@ namespace Ecosystem.Attributes {
                 stateMachine.ChangeState(new HungerState(this));
             } else if (Mating <= MatingLimit) {
                 stateMachine.ChangeState(new MateState(this));
+            } else if (this.stateMachine.getCurrentState() != this.casual) {
+                stateMachine.ChangeState(this.casual);
             }
+
             stateMachine.Update();
         }
     }
