@@ -12,6 +12,8 @@ namespace Ecosystem.Attributes {
         private float MatingLimit = Random.Range((float)0.3,(float)0.8);
         public string FoodSource { get; } = "GRASS,BERRIES";
         public Transform Trans { get; set; }
+        public float Speed { get; set; }
+        public float SprintSpeed { get; set; }
 
 
         StateMachine stateMachine;

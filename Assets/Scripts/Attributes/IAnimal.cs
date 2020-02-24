@@ -8,5 +8,7 @@ namespace Ecosystem.Attributes {
         float Mating { get; set; }
         string FoodSource { get; }
         Transform Trans { get; set; }
+        float Speed { get; set; }
+        float SprintSpeed { get; set; }
     }
 }
