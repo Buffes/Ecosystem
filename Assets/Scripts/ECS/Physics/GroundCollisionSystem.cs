@@ -1,37 +1,39 @@
 ﻿using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Physics
+/// <summary>
+/// Stops everything from falling through the ground.
+/// 
+/// This system can use a height map to represent the ground level in the world or just use a
+/// flat number for a flat world. Even a flat world could, for example, want to support lower
+/// ground levels in water to allow fish to swim underneath the surface.
+/// 
+/// The system could also be replaced by adding a regular ground plane
+/// in the editor.
+/// </summary>
+[UpdateInGroup(typeof(PhysicsSystemGroup))]
+public class GroundCollisionSystem : SystemBase
 {
-    /// <summary>
-    /// Stops everything from falling through the ground.
-    /// </summary>
-    [UpdateInGroup(typeof(PhysicsSystemGroup))]
-    public class GroundCollisionSystem : JobComponentSystem
+    protected override void OnUpdate()
     {
-        protected override JobHandle OnUpdate(JobHandle inputDependencies)
+        Entities.ForEach((ref Translation translation, ref PhysicsVelocity velocity, ref PhysicsMass mass) =>
         {
-            return Entities.ForEach((
-                ref Translation translation,
-                ref Velocity velocity) =>
+            float groundLevel = GetGroundLevel(translation.Value);
+
+            if (translation.Value.y < groundLevel)
             {
+                translation.Value.y = groundLevel;
+                velocity.Linear.y = 0;
+            }
 
-                float groundLevel = GetGroundLevel(translation.Value);
+        }).ScheduleParallel();
+    }
 
-                if (translation.Value.y < groundLevel)
-                {
-                    translation.Value.y = groundLevel;
-                    velocity.Value.y = 0;
-                }
-
-            }).Schedule(inputDependencies);
-        }
-
-        private static float GetGroundLevel(float3 position)
-        {
-            return 0; // This can be replaced by a height map
-        }
+    private static float GetGroundLevel(float3 position)
+    {
+        return 0; // This can be replaced by a height map
     }
 }
