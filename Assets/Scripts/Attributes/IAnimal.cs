@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Ecosystem.ECS.Hybrid.Movement;
+using Ecosystem.ECS.Hybrid;
 
 
 namespace Ecosystem.Attributes {
@@ -12,6 +12,6 @@ namespace Ecosystem.Attributes {
         float Speed { get; set; }
         float SprintSpeed { get; set; }
         void Move(Vector3 target);
-        
+        Sensors Sensors { get; }
     }
 }

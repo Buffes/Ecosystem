@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Ecosystem.StateMachines;
-using Ecosystem.ECS.Hybrid.Movement;
+using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
     public class SmallFish : MonoBehaviour, IAnimal {
@@ -16,6 +16,7 @@ namespace Ecosystem.Attributes {
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
         public Movement movement;
+        public Sensors Sensors { get; }
 
         StateMachine stateMachine;
         IState casual;

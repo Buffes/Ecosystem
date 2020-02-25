@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Ecosystem.StateMachines;
-using Ecosystem.ECS.Hybrid.Movement;
-using Ecosystem.ECS.Hybrid.Sensors;
+using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
     public class Rabbit : MonoBehaviour, IAnimal {
@@ -17,7 +16,7 @@ namespace Ecosystem.Attributes {
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
         public Movement movement;
-        public Sensors sensor;
+        public Sensors Sensors { get; }
 
 
         StateMachine stateMachine;
@@ -39,9 +38,14 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            // TODO: Check for enemies, change state to flee
+            sensors.LookForPredator(true);
+            if (sensors.FoundPredator()) {
+                stateMachine.ChangeState(new FleeState(this));
+            } else {
+                sensors.LookForPredator(false);
+            }
 
-            // Check for stateChange
+            // Check for other stateChanges
             if (Thirst <= ThirstLimit) {
                 stateMachine.ChangeState(new ThirstState(this));
             } else if (Hunger <= HungerLimit) {
