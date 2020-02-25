@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: beach
+  m_Name: beach_shallow_straight_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 1bbefc88f30d5a1429d52d4dc9f2b8ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12ab0333295992e418666329929a77a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

@@ -25,13 +25,13 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow)) {
             Vector3 position = this.transform.position;
-            position.y += 0.01f;
+            position.z += 0.01f;
             this.transform.position = position;
         } 
 
         if (Input.GetKey(KeyCode.DownArrow)) {
             Vector3 position = this.transform.position;
-            position.y -= 0.01f;
+            position.z -= 0.01f;
             this.transform.position = position;
         } 
     }

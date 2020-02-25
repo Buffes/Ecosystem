@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -199,7 +199,7 @@ SpriteRenderer:
   m_Size: {x: 0.671875, y: 1.09375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &938198310
@@ -645,28 +645,28 @@ Tilemap:
     m_Data:
       e00: NaN
       e01: 0
-      e02: 0
-      e03: NaN
+      e02: 1.04e-43
+      e03: 0
       e10: NaN
       e11: 0
-      e12: 0
-      e13: NaN
-      e20: 0
+      e12: NaN
+      e13: 0
+      e20: 1.04e-43
       e21: 0
       e22: 0
-      e23: 0
-      e30: 0
-      e31: 0
+      e23: 1.5857148e+29
+      e30: 2.75e-43
+      e31: NaN
       e32: 0
-      e33: 0
+      e33: 7.15e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 11.756989, g: 11.756989, b: 11.756989, a: 11.756989}
+    m_Data: {r: -4.7495728, g: -4.7495728, b: -4.7495728, a: -4.7495728}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -5, y: -5, z: 0}
-  m_Size: {x: 20, y: 20, z: 1}
+  m_Origin: {x: -9, y: -5, z: 0}
+  m_Size: {x: 24, y: 20, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -696,7 +696,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1412048254}
   - component: {fileID: 1412048253}
-  - component: {fileID: 1412048252}
   m_Layer: 0
   m_Name: GameZone
   m_TagString: Untagged
@@ -704,18 +703,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1412048252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412048251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe9a36407919034b886129c97d221af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1412048253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,11 +712,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412048251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e9ff8fe25c70334587b5af31f422486, type: 3}
+  m_Script: {fileID: 11500000, guid: bdc8923cb5cade64cb4073cd79a5a11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 1
-  TileSize: 0
+  TileSize: 1
   StartPoint: {x: 0, y: 0}
 --- !u!4 &1412048254
 Transform:
