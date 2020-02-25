@@ -16,7 +16,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         // Start is called before the first frame update
         void Start()
         {
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 CreateEntity();
             }
@@ -32,7 +32,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
             entityManager.SetComponentData(entity, 
                 new MoveCommand { 
-                    target = new float3(10, 0, 10),
+                    target = new float3(50, 0, 50),
                     reach = 0,
                     pathfind = true,
                     range = int.MaxValue

@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Object oriented implementation of A* pathfinding on a grid. Used for performance comparison with the ECS version used in the simulation.
+/// </summary>
 public class OOPathfinding
 {
     private const int MOVE_STRAIGHT_COST = 10;
