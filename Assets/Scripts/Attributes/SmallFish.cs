@@ -29,6 +29,7 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.casual = new CasualState(this);
             this.stateMachine.ChangeState(this.casual);
+            Sensors.LookForPredator(true);
         }
         public void Move(Vector3 target) {
             movement.Move(target);
@@ -37,7 +38,9 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            // TODO: Check for enemies, change state to flee
+            if (Sensors.FoundPredator()) {
+                stateMachine.ChangeState(new FleeState(this));
+            }
 
             // Check for stateChange
             if (Thirst <= ThirstLimit) {

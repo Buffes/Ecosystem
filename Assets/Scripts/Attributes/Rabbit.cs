@@ -30,6 +30,7 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.casual = new CasualState(this);
             this.stateMachine.ChangeState(casual);
+            Sensors.LookForPredator(true);
         }
 
         public void Move(Vector3 target) {
@@ -38,15 +39,11 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            Sensors.LookForPredator(true);
             if (Sensors.FoundPredator()) {
                 stateMachine.ChangeState(new FleeState(this));
-            } else {
-                Sensors.LookForPredator(false);
             }
-
             // Check for other stateChanges
-            if (Thirst <= ThirstLimit) {
+            else if (Thirst <= ThirstLimit) {
                 stateMachine.ChangeState(new ThirstState(this));
             } else if (Hunger <= HungerLimit) {
                 stateMachine.ChangeState(new HungerState(this));
