@@ -38,11 +38,11 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            sensors.LookForPredator(true);
-            if (sensors.FoundPredator()) {
+            Sensors.LookForPredator(true);
+            if (Sensors.FoundPredator()) {
                 stateMachine.ChangeState(new FleeState(this));
             } else {
-                sensors.LookForPredator(false);
+                Sensors.LookForPredator(false);
             }
 
             // Check for other stateChanges
