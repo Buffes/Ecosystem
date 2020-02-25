@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using Ecosystem.StateMachines;
+using Ecosystem.ECS.Hybrid.Movement;
+
 
 namespace Ecosystem.Attributes {
     public interface IAnimal {
@@ -10,5 +11,7 @@ namespace Ecosystem.Attributes {
         Transform Trans { get; set; }
         float Speed { get; set; }
         float SprintSpeed { get; set; }
+        void Move(Vector3 target);
+        
     }
 }

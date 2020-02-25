@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Ecosystem.Attributes;
-using Ecosystem.ECS.Movement;
 
 namespace Ecosystem.StateMachines {
     public class CasualState : IState {
@@ -14,18 +13,23 @@ namespace Ecosystem.StateMachines {
         }
 
         public void Execute() {
-            // Move randomly
-            Unity.Mathematics.float3 direction;
-            direction.x = Random.Range(0f,1f);
-            direction.y = Random.Range(0f,1f);
-            direction.z = Random.Range(0f,1f);
-            MovementInput movementInput;
-            movementInput.Sprint = false;
-            movementInput.Direction = direction;
-            MovementStats movementStats;
-            movementStats.Speed = owner.Speed;
-            movementStats.SprintSpeed = owner.SprintSpeed;
-            // TODO: move owner
+            // Random Target
+            Vector3 currentPos = owner.Trans.position;
+            Vector3 target = currentPos;
+            int tile = new System.Random().Next(8);
+            switch (tile) {
+                case 0: target.x = currentPos.x - 1; target.z = currentPos.z - 1; break;
+                case 1: target.z = currentPos.z - 1; break;
+                case 2: target.x = currentPos.x + 1; target.z = currentPos.z - 1; break;
+                case 3: target.x = currentPos.x - 1; break;
+                case 4: target.x = currentPos.x + 1; break;
+                case 5: target.x = currentPos.x - 1; target.z = currentPos.z + 1; break;
+                case 6: target.z = currentPos.z + 1; break;
+                case 7: target.x = currentPos.x + 1; target.z = currentPos.z + 1; break;
+                default: break;
+            }
+            // Move owner
+            owner.Move(target);
         }
 
         public void Exit() {

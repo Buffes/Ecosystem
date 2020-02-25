@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Ecosystem.StateMachines;
+using Ecosystem.ECS.Hybrid.Movement;
+using Ecosystem.ECS.Hybrid.Sensors;
 
 namespace Ecosystem.Attributes {
     public class Rabbit : MonoBehaviour, IAnimal {
@@ -14,6 +16,8 @@ namespace Ecosystem.Attributes {
         public Transform Trans { get; set; }
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
+        public Movement movement;
+        public Sensors sensor;
 
 
         StateMachine stateMachine;
@@ -27,6 +31,10 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.casual = new CasualState(this);
             this.stateMachine.ChangeState(casual);
+        }
+
+        public void Move(Vector3 target) {
+            movement.Move(target);
         }
 
         // Update is called once per frame

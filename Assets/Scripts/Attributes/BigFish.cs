@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Ecosystem.StateMachines;
+using Ecosystem.ECS.Hybrid.Movement;
 
 namespace Ecosystem.Attributes {
     public class BigFish : MonoBehaviour, IAnimal {
@@ -12,6 +13,9 @@ namespace Ecosystem.Attributes {
         private float MatingLimit = Random.Range((float)0.3,(float)0.8);
         public string FoodSource { get; } = "SMALLFISH";
         public Transform Trans { get; set; }
+        public float Speed { get; set; }
+        public float SprintSpeed { get; set; }
+        public Movement movement;
 
         StateMachine stateMachine;
         IState casual;
@@ -24,6 +28,10 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.casual = new CasualState(this);
             this.stateMachine.ChangeState(this.casual);
+        }
+
+        public void Move(Vector3 target) {
+            movement.Move(target);
         }
 
         // Update is called once per frame
