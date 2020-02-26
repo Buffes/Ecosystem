@@ -19,7 +19,8 @@ namespace Ecosystem.StateMachines {
             if (owner.Sensors.FoundWater()) {
                 target = owner.Sensors.GetWaterLocation();
                 if (target == currentPos) { // change to "in range"
-                    // drink water
+                    owner.Thirst = 1f;
+                    // TODO: drink water
                 }
             } else {
                 target = currentPos;

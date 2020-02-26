@@ -20,7 +20,8 @@ namespace Ecosystem.StateMachines {
             if (owner.Sensors.FoundFood()) {
                 target = owner.Sensors.GetFoodLocation();
                 if (target == currentPos) { // change to "in range"
-                    // eat food
+                    owner.Hunger = 1f;
+                    // TODO: eat food
                 }
             } else {
                 target = currentPos;
