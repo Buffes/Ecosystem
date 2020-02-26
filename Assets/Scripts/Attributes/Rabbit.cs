@@ -34,8 +34,8 @@ namespace Ecosystem.Attributes {
             Sensors.LookForPredator(true);
         }
 
-        public void Move(Vector3 target) {
-            movement.Move(target);
+        public void Move(Vector3 target,float reach,float range) {
+            movement.Move(target,reach,range);
         }
 
         // Update is called once per frame

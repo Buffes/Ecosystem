@@ -29,7 +29,7 @@ namespace Ecosystem.StateMachines {
                 default: break;
             }
             // Move owner
-            owner.Move(target);
+            owner.Move(target,0f,2f);
         }
 
         public void Exit() {

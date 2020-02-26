@@ -18,9 +18,10 @@ namespace Ecosystem.StateMachines {
 
             if (owner.Sensors.FoundWater()) {
                 target = owner.Sensors.GetWaterLocation();
-                if (target == currentPos) { // change to "in range"
+                Vector3 diff = target - currentPos;
+                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+                if (diffLength <= 2f) {
                     owner.Thirst = 1f;
-                    // TODO: drink water
                 }
             } else {
                 target = currentPos;
@@ -39,7 +40,7 @@ namespace Ecosystem.StateMachines {
             }
 
             // Move owner
-            owner.Move(target);
+            owner.Move(target,1f,100f);
         }
 
         public void Exit() {

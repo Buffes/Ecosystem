@@ -19,9 +19,11 @@ namespace Ecosystem.StateMachines {
 
             if (owner.Sensors.FoundFood()) {
                 target = owner.Sensors.GetFoodLocation();
-                if (target == currentPos) { // change to "in range"
+                Vector3 diff = target - currentPos;
+                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+                if (diffLength <= 2f) {
                     owner.Hunger = 1f;
-                    // TODO: eat food
+                    // TODO: destroy food
                 }
             } else {
                 target = currentPos;
@@ -42,7 +44,7 @@ namespace Ecosystem.StateMachines {
             
 
             // Move owner
-            owner.Move(target);
+            owner.Move(target,1f,100f);
 
 
             // Below is the first draft. I don't think we need it, but I did not dare remove it :)

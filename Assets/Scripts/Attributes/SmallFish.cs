@@ -32,8 +32,8 @@ namespace Ecosystem.Attributes {
             this.stateMachine.ChangeState(this.casual);
             Sensors.LookForPredator(true);
         }
-        public void Move(Vector3 target) {
-            movement.Move(target);
+        public void Move(Vector3 target,float reach,float range) {
+            movement.Move(target,reach,range);
         }
 
 

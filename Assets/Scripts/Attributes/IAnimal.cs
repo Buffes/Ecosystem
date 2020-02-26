@@ -11,7 +11,7 @@ namespace Ecosystem.Attributes {
         Transform Trans { get; set; }
         float Speed { get; set; }
         float SprintSpeed { get; set; }
-        void Move(Vector3 target);
+        void Move(Vector3 target,float reach,float range);
         Sensors Sensors { get; }
     }
 }

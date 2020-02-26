@@ -18,7 +18,7 @@ namespace Ecosystem.StateMachines {
             Vector3 diff = currentPos - predatorPos;
             Vector3 target = currentPos + diff;
 
-            owner.Move(target);
+            owner.Move(target,0f,100f);
         }
 
         public void Exit() {
