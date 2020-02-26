@@ -38,6 +38,10 @@ namespace Ecosystem.Attributes {
             movement.Move(target,reach,range);
         }
 
+        public void GetEatenOrDie() {
+            Destroy(this);
+        }
+
         // Update is called once per frame
         void Update() {
             this.Thirst -= 0.00001f;
