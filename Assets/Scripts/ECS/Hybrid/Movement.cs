@@ -1,5 +1,6 @@
 ﻿using Ecosystem.ECS.Movement.Pathfinding;
 using Unity.Entities;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace Ecosystem.ECS.Hybrid
@@ -32,6 +33,16 @@ namespace Ecosystem.ECS.Hybrid
                 pathfind = true,
                 range = range
             });
+        }
+
+        public Vector3 GetPosition()
+        {
+            return entityManager.GetComponentData<Translation>(entity).Value;
+        }
+
+        public Quaternion GetRotation()
+        {
+            return entityManager.GetComponentData<Rotation>(entity).Value;
         }
     }
 }

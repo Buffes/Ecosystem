@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323721158131829859}
   - component: {fileID: 744675890564847367}
-  - component: {fileID: 2823049416550767545}
+  - component: {fileID: 550889955043201840}
   - component: {fileID: 2823049416550767544}
   - component: {fileID: 5168984738706632044}
   - component: {fileID: 4390213413405574708}
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 0
---- !u!114 &2823049416550767545
+--- !u!114 &550889955043201840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,10 +61,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2823049416550767551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab8b2db129143e418a99c1c96f2b21c, type: 3}
+  m_Script: {fileID: 11500000, guid: ba6c8ccefe007e54e87c518a1855a3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform: {fileID: 4571552670960423277}
 --- !u!114 &2823049416550767544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4571552670960423277}
+  - component: {fileID: 564988194653765124}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -353,3 +353,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &564988194653765124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4571552670960423276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb142c22429a82e45a49a6ceeb7794f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 550889955043201840}
