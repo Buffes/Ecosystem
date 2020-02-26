@@ -37,8 +37,6 @@ namespace Ecosystem.StateMachines {
                 }
             }
 
-
-
             // Move owner
             owner.Move(target);
         }

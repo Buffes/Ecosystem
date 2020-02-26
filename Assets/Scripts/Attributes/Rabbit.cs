@@ -5,9 +5,9 @@ using Ecosystem.ECS.Hybrid;
 namespace Ecosystem.Attributes {
     public class Rabbit : MonoBehaviour, IAnimal {
 
-        public float Hunger { get; set; }
-        public float Thirst { get; set; }
-        public float Mating { get; set; }
+        private float Hunger { get; set; }
+        private float Thirst { get; set; }
+        private float Mating { get; set; }
         private float HungerLimit = Random.Range((float)0.3,(float)0.8);
         private float ThirstLimit = Random.Range((float)0.3,(float)0.8);
         private float MatingLimit = Random.Range((float)0.3,(float)0.8);
