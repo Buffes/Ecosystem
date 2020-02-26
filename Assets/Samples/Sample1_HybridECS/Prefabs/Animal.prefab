@@ -129,7 +129,7 @@ MonoBehaviour:
   sensors: {fileID: 5070148453820763527}
   reach: 1
   range: 100
-  pathfindInterval: 1
+  pathfindInterval: 2
 --- !u!114 &6483375770176162762
 MonoBehaviour:
   m_ObjectHideFlags: 0
