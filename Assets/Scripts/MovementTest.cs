@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class MovementTest : MonoBehaviour
 {
     private Vector2 movementInput;
     private Vector3 direction;
