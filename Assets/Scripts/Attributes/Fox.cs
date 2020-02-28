@@ -57,6 +57,10 @@ namespace Ecosystem.Attributes {
             }
 
             stateMachine.Update();
+
+            if (this.Hunger <= 0f || this.Thirst <= 0) {
+                Die();
+            }
         }
     }
 }
