@@ -36,7 +36,7 @@ namespace Ecosystem.Attributes {
             movement.Move(target,reach,range);
         }
 
-        public void GetEatenOrDie() {
+        public void Die() {
             Destroy(this);
         }
 

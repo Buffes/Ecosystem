@@ -35,6 +35,9 @@ namespace Ecosystem.Attributes {
             movement.Move(target,reach,range);
         }
 
+        public void Die() {
+            Destroy(this);
+        }
 
         // Update is called once per frame
         void Update() {
