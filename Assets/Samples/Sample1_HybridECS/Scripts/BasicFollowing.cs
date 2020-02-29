@@ -38,8 +38,8 @@ namespace Ecosystem.Samples
 
             if (foundFood && foundPrey)
             {
-                Vector3 foodLocation = sensors.GetFoodLocation();
-                Vector3 preyLocation = sensors.GetPreyLocation();
+                Vector3 foodLocation = sensors.GetFoundFoodInfo().Position;
+                Vector3 preyLocation = sensors.GetFoundPreyInfo().Position;
 
                 closestTarget = (Vector3.Distance(transform.position, foodLocation)
                     < Vector3.Distance(transform.position, preyLocation))
@@ -48,11 +48,11 @@ namespace Ecosystem.Samples
             }
             else if (foundFood)
             {
-                closestTarget = sensors.GetFoodLocation();
+                closestTarget = sensors.GetFoundFoodInfo().Position;
             }
             else if (foundPrey)
             {
-                closestTarget = sensors.GetPreyLocation();
+                closestTarget = sensors.GetFoundPreyInfo().Position;
             }
 
             if (foundFood || foundPrey)
