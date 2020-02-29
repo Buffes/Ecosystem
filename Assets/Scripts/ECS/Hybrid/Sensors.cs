@@ -23,9 +23,9 @@ namespace Ecosystem.ECS.Hybrid
         /// <summary>
         /// Start/stop actively looking for water.
         /// </summary>
-        public void LookForWater(bool enabled) => entityManager.AddComponentData(entity, new LookingForWater());
-        public void LookForFood(bool enabled) => entityManager.AddComponentData(entity, new LookingForFood());
-        public void LookForPrey(bool enabled) => entityManager.AddComponentData(entity, new LookingForPrey());
+        public void LookForWater(bool enabled) => AddRemoveComponentData(enabled, new LookingForWater());
+        public void LookForFood(bool enabled) => AddRemoveComponentData(enabled, new LookingForFood());
+        public void LookForPrey(bool enabled) => AddRemoveComponentData(enabled, new LookingForPrey());
         public void LookForPredator(bool enabled) => AddRemoveComponentData(enabled, new LookingForPredator());
 
 
