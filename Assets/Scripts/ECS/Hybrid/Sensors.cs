@@ -2,6 +2,7 @@
 using UnityEngine;
 using Ecosystem.ECS.Targeting.Targets;
 using Ecosystem.ECS.Targeting.Results;
+using System;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -72,24 +73,53 @@ namespace Ecosystem.ECS.Hybrid
         /// Returns the location where water has been found.
         /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
         /// </summary>
+        [Obsolete("Use GetFoundWaterInfo().Position instead")]
         public Vector3 GetWaterLocation()
         {
             return entityManager.GetComponentData<FoundWater>(entity).Position;
         }
 
+        [Obsolete("Use GetFoundFoodInfo().Position instead")]
         public Vector3 GetFoodLocation()
         {
             return entityManager.GetComponentData<FoundFood>(entity).Position;
         }
 
+        [Obsolete("Use GetFoundPreyInfo().Position instead")]
         public Vector3 GetPreyLocation()
         {
             return entityManager.GetComponentData<FoundPrey>(entity).Position;
         }
 
+        [Obsolete("Use GetFoundPredatorInfo().Position instead")]
         public Vector3 GetPredatorLocation()
         {
             return entityManager.GetComponentData<FoundPredator>(entity).Position;
+        }
+
+
+        /// <summary>
+        /// Returns info about the water that has been found.
+        /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
+        /// </summary>
+        public FoundWater GetFoundWaterInfo()
+        {
+            return entityManager.GetComponentData<FoundWater>(entity);
+        }
+
+        public FoundFood GetFoundFoodInfo()
+        {
+            return entityManager.GetComponentData<FoundFood>(entity);
+        }
+
+        public FoundPrey GetFoundPreyInfo()
+        {
+            return entityManager.GetComponentData<FoundPrey>(entity);
+        }
+
+        public FoundPredator GetFoundPredatorInfo()
+        {
+            return entityManager.GetComponentData<FoundPredator>(entity);
         }
 
 
