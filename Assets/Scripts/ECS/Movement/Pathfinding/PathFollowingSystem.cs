@@ -25,10 +25,16 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     float3 checkpoint = pathBuffer[i].Checkpoint;
                     float3 difference = checkpoint - translation.Value;
                     difference.y = 0;
-                    if (math.length(difference) > 0.1)
+                    if (math.length(difference) > 0.1f)
                     {
-                        movementInput.Direction = math.normalize(difference);
-                        return;
+                        float3 oldDir = movementInput.Direction;
+                        float3 newDir = math.normalize(difference);
+
+                        if (math.length(newDir + oldDir) > 0.1f)
+                        {
+                            movementInput.Direction = newDir;
+                            return;
+                        }
                     }
                     pathBuffer.RemoveAt(i);
                 }

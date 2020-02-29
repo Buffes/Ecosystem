@@ -1,29 +1,45 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
+using UnityEngine;
+using Ecosystem.ECS.Targeting.Targets;
+using Ecosystem.ECS.Targeting.Results;
 
 namespace Ecosystem.ECS.Hybrid
 {
     /// <summary>
     /// Functionality for awareness of surroundings (e.g., vision and hearing).
     /// </summary>
-    public class Sensors : MonoBehaviour
+    public class Sensors : MonoBehaviour, IConvertGameObjectToEntity
     {
+        private Entity entity;
+        private EntityManager entityManager;
+
+        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        {
+            this.entity = entity;
+            entityManager = dstManager;
+        }
+
         /// <summary>
         /// Start/stop actively looking for water.
         /// </summary>
         public void LookForWater(bool enabled)
         {
+            entityManager.AddComponentData(entity, new LookingForWater());
         }
 
         public void LookForFood(bool enabled)
         {
+            entityManager.AddComponentData(entity, new LookingForFood());
         }
 
         public void LookForPrey(bool enabled)
         {
+            entityManager.AddComponentData(entity, new LookingForPrey());
         }
 
         public void LookForPredator(bool enabled)
         {
+            AddRemoveComponentData(enabled, new LookingForPredator());
         }
 
 
@@ -33,22 +49,22 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         public bool FoundWater()
         {
-            return true;
+            return entityManager.HasComponent<FoundWater>(entity);
         }
 
         public bool FoundFood()
         {
-            return true;
+            return entityManager.HasComponent<FoundFood>(entity);
         }
 
         public bool FoundPrey()
         {
-            return true;
+            return entityManager.HasComponent<FoundPrey>(entity);
         }
 
         public bool FoundPredator()
         {
-            return true;
+            return entityManager.HasComponent<FoundPredator>(entity);
         }
 
 
@@ -58,22 +74,35 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         public Vector3 GetWaterLocation()
         {
-            return new Vector3();
+            return entityManager.GetComponentData<FoundWater>(entity).Position;
         }
 
         public Vector3 GetFoodLocation()
         {
-            return new Vector3();
+            return entityManager.GetComponentData<FoundFood>(entity).Position;
         }
 
         public Vector3 GetPreyLocation()
         {
-            return new Vector3();
+            return entityManager.GetComponentData<FoundPrey>(entity).Position;
         }
 
         public Vector3 GetPredatorLocation()
         {
-            return new Vector3();
+            return entityManager.GetComponentData<FoundPredator>(entity).Position;
+        }
+
+
+        private void AddRemoveComponentData<T>(bool add, T component) where T : struct, IComponentData
+        {
+            if (add)
+            {
+                entityManager.AddComponentData(entity, component);
+            }
+            else
+            {
+                entityManager.RemoveComponent<T>(entity);
+            }
         }
     }
 }
