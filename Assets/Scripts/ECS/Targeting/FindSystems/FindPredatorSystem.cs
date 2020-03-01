@@ -71,6 +71,7 @@ namespace Ecosystem.ECS.Targeting
                 {
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new FoundPredator
                     {
+                        Entity = entities[closestPredatorIndex],
                         Position = positions[closestPredatorIndex].Value
                     });
                 }

@@ -11,7 +11,11 @@ namespace Ecosystem.ECS.Animal
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            dstManager.AddComponentData(entity, new FoodTypeData { FoodTypeId = foodType.GetInstanceID() });
+            dstManager.AddComponentData(entity, new FoodTypeData
+            {
+                FoodTypeId = foodType.GetInstanceID(),
+                FoodPoints = foodType.FoodPoints
+            });
         }
     }
 }

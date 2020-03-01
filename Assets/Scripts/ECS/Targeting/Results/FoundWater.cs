@@ -7,6 +7,7 @@ namespace Ecosystem.ECS.Targeting.Results
     [Serializable]
     public struct FoundWater : IComponentData
     {
+        public Entity Entity;
         public float3 Position;
     }
 }

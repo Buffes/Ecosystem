@@ -70,6 +70,7 @@ namespace Ecosystem.ECS.Targeting
                 {
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new FoundFood
                     {
+                        Entity = entities[closestFoodIndex],
                         Position = positions[closestFoodIndex].Value
                     });
                 }
