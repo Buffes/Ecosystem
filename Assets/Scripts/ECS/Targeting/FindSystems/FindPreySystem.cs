@@ -1,5 +1,4 @@
 ﻿using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Results;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
@@ -37,11 +36,11 @@ namespace Ecosystem.ECS.Targeting
             var animalTypes = query.ToComponentDataArray<AnimalTypeData>(Allocator.TempJob);
 
             Entities
-                .WithAll<LookingForPrey>()
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(animalTypes)
                 .ForEach((Entity entity, int entityInQueryIndex,
+                ref LookingForPrey lookingForPrey,
                 in Translation position,
                 in Hearing hearing,
                 in DynamicBuffer<PreyTypesElement> preyTypeBuffer) =>
@@ -68,15 +67,13 @@ namespace Ecosystem.ECS.Targeting
                 // Set result
                 if (closestPreyIndex != -1)
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new FoundPrey
-                    {
-                        Entity = entities[closestPreyIndex],
-                        Position = positions[closestPreyIndex].Value
-                    });
+                    lookingForPrey.HasFound = true;
+                    lookingForPrey.Entity = entities[closestPreyIndex];
+                    lookingForPrey.Position = positions[closestPreyIndex].Value;
                 }
                 else
                 {
-                    commandBuffer.RemoveComponent<FoundPrey>(entityInQueryIndex, entity);
+                    lookingForPrey.HasFound = false;
                 }
 
             }).ScheduleParallel();
