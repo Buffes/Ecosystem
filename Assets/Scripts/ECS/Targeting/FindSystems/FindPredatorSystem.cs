@@ -13,6 +13,7 @@ namespace Ecosystem.ECS.Targeting
     /// <summary>
     /// Looks for nearby predators and stores info about the closest predator that was found.
     /// </summary>
+    [DisableAutoCreation]
     public class FindPredatorSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;

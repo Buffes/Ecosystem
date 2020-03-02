@@ -11,6 +11,8 @@ namespace Ecosystem.Samples
         [SerializeField]
         private GameObject foxPrefab = default;
         [SerializeField]
+        private GameObject OOPRabbitPrefab = default;
+        [SerializeField]
         [Range(1, 1000)]
         private int spawnAmount = 1;
 
@@ -33,6 +35,11 @@ namespace Ecosystem.Samples
         public void SpawnFoxes()
         {
             SpawnPrefabs(foxPrefab, spawnAmount);
+        }
+
+        public void SpawnOOPRabbits()
+        {
+            SpawnPrefabs(OOPRabbitPrefab, spawnAmount);
         }
 
         private void SpawnPrefabs(GameObject prefab, int amound)

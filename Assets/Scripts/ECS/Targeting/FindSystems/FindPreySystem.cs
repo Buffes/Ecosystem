@@ -12,6 +12,7 @@ namespace Ecosystem.ECS.Targeting
     /// <summary>
     /// Looks for nearby prey and stores info about the closest prey that was found.
     /// </summary>
+    [DisableAutoCreation]
     public class FindPreySystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;

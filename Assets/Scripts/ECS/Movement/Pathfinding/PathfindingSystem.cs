@@ -40,7 +40,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 position = translation.Value;    
      
                 // Consume the command
-                //commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
+                commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
 
                 
                 // Clear any existing path
@@ -94,26 +94,26 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             neighbourOffsetArray[6] = new int2(+1, -1); // Right Down
             neighbourOffsetArray[7] = new int2(+1, +1); // Right Up
 
-            //NativeList<PathNode> pathNodes = new NativeList<PathNode>(Allocator.Temp); // Add pathNodes to this lazily as needed
+            NativeList<PathNode> pathNodes = new NativeList<PathNode>(Allocator.Temp); // Add pathNodes to this lazily as needed
             int index = 0;
-            NativeHashMap<int2, PathNode> pathNodes = new NativeHashMap<int2, PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
+            NativeHashMap<int2, int> indexOfPathNode = new NativeHashMap<int2, int>(gridSize.x * gridSize.y, Allocator.Temp);
             
             // openList Could be optimized by implementing a NativePriorityQueue and using that instead.
-            NativeList<int2> openList = new NativeList<int2>(Allocator.Temp);
-            NativeList<int2> closedList = new NativeList<int2>(Allocator.Temp);
+            NativeList<int> openList = new NativeList<int>(Allocator.Temp);
+            NativeList<int> closedList = new NativeList<int>(Allocator.Temp);
 
-            pathNodes.Add(startPosition, MakePathNode(startPosition, ref index, Heuristic(startPosition, targetPosition), 0));
-            pathNodes.Add(targetPosition, MakePathNode(targetPosition, ref index, Heuristic(targetPosition, targetPosition), int.MaxValue));
+            pathNodes.Add(MakePathNode(startPosition, ref index, ref indexOfPathNode, Heuristic(startPosition, targetPosition), 0));
+            pathNodes.Add(MakePathNode(targetPosition, ref index, ref indexOfPathNode, Heuristic(targetPosition, targetPosition), int.MaxValue));
             openList.Add(pathNodes[0].index);
-            // int targetNodeIndex = -1;
-            // indexOfPathNode.TryGetValue(new int2(targetPosition.x, targetPosition.y), out targetNodeIndex);
+            int targetNodeIndex = -1;
+            indexOfPathNode.TryGetValue(new int2(targetPosition.x, targetPosition.y), out targetNodeIndex);
 
             while (openList.Length > 0)
             {
-                int2 currentPosition = GetLowestFCostNodeIndex(openList, pathNodes);
-                PathNode currentNode = pathNodes[currentPosition];
+                int currentNodeIndex = GetLowestFCostNodeIndex(openList, pathNodes);
+                PathNode currentNode = pathNodes[currentNodeIndex];
 
-                if (currentPosition.Equals(targetPosition))
+                if (currentNodeIndex == targetNodeIndex)
                 {
                     // Finished.
                     break;
@@ -121,19 +121,18 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 // Remove current node from Open List
                 for (int i = 0; i < openList.Length; i++) {
-                    if (openList[i].Equals(currentPosition)) {
+                    if (openList[i] == currentNodeIndex) {
                         openList.RemoveAtSwapBack(i);
                         break;
                     }
                 }
 
-                closedList.Add(currentPosition);
+                closedList.Add(currentNodeIndex);
 
                 for (int i = 0; i < neighbourOffsetArray.Length; i++) 
                 {
                     int2 neighbourOffset = neighbourOffsetArray[i];
-                    int2 neighbourPosition = currentPosition + neighbourOffset;
-                    //int2 neighbourPosition = new int2(currentNode.x + neighbourOffset.x, currentNode.y + neighbourOffset.y);
+                    int2 neighbourPosition = new int2(currentNode.x + neighbourOffset.x, currentNode.y + neighbourOffset.y);
                     
                     if (!IsPositionInsideGrid(neighbourPosition, gridSize))
                     {
@@ -141,19 +140,21 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         continue;
                     }
                     
-                    if (!pathNodes.ContainsKey(neighbourPosition))
+                    int neighbourNodeIndex = -1;
+                    if (!indexOfPathNode.TryGetValue(neighbourPosition, out neighbourNodeIndex))
                     {
                         // Need to create the PathNode
-                        pathNodes.Add(neighbourPosition, MakePathNode(
+                        pathNodes.Add(MakePathNode(
                                     neighbourPosition, 
                                     ref index, 
+                                    ref indexOfPathNode, 
                                     Heuristic(neighbourPosition, targetPosition), 
                                     int.MaxValue));
-                        //neighbourNodeIndex = indexOfPathNode[neighbourPosition];
+                        neighbourNodeIndex = indexOfPathNode[neighbourPosition];
                     }
 
-                    PathNode neighbourNode = pathNodes[neighbourPosition];
-                    if (closedList.Contains(neighbourPosition)) 
+                    PathNode neighbourNode = pathNodes[neighbourNodeIndex];
+                    if (closedList.Contains(neighbourNodeIndex)) 
                     {
                         // Already searched this node
                         continue;
@@ -171,27 +172,27 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     if (tentativeGCost < neighbourNode.gCost)
                     {
                         // This path to neighbor is better than any previous one.
-                        neighbourNode.cameFromPosition = currentPosition;
+                        neighbourNode.cameFromNodeIndex = currentNodeIndex;
                         neighbourNode.gCost = tentativeGCost;
 		                neighbourNode.CalculateFCost();
-                        pathNodes[neighbourPosition] = neighbourNode;
+                        pathNodes[neighbourNodeIndex] = neighbourNode;
 
-                        if (!openList.Contains(neighbourPosition)) {
-			                openList.Add(neighbourPosition);
+                        if (!openList.Contains(neighbourNode.index)) {
+			                openList.Add(neighbourNode.index);
 		                }
                     }
                 }
             }
 
-            PathNode targetNode = pathNodes[targetPosition];
+            PathNode targetNode = pathNodes[targetNodeIndex];
 
             openList.Dispose();
             closedList.Dispose();
-            //indexOfPathNode.Dispose();
+            indexOfPathNode.Dispose();
             neighbourOffsetArray.Dispose();
             pathFindingMap.Dispose(); // Dispose the temporary map
 
-            if (targetNode.cameFromPosition.Equals(new int2(-1,-1))) {
+            if (targetNode.cameFromNodeIndex == -1) {
                 // Didn't find a path!
                 pathNodes.Dispose();
                 return new NativeList<int2>(Allocator.Temp);
@@ -218,18 +219,18 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 ;
         }
 
-        private static PathNode MakePathNode(int2 position, ref int index, int hCost, int gCost)
+        private static PathNode MakePathNode(int2 position, ref int index, ref NativeHashMap<int2, int> indexOfPathNode, int hCost, int gCost)
         {
             PathNode node = new PathNode();
             node.x = position.x;
             node.y = position.y;
             node.index = index;
-            //indexOfPathNode.TryAdd(new int2(node.x, node.y), index);
+            indexOfPathNode.TryAdd(new int2(node.x, node.y), index);
             index++;
             node.gCost = gCost;
             node.hCost = hCost;
             node.CalculateFCost();
-            node.cameFromPosition = new int2(-1, -1);
+            node.cameFromNodeIndex = -1;
 
             return node;
         }
@@ -237,7 +238,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         /// <summary>
         /// Returns the index of the PathNode with the lowest F value. Would be unnecessary if a NativePriorityQueue existed.
         /// </summary>
-        private static int2 GetLowestFCostNodeIndex(NativeList<int2> openList, NativeHashMap<int2, PathNode> pathNodes) 
+        private static int GetLowestFCostNodeIndex(NativeList<int> openList, NativeList<PathNode> pathNodes) 
         {
             PathNode lowestCostPathNode = pathNodes[openList[0]];
             for (int i = 1; i < openList.Length; i++) 
@@ -248,12 +249,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     lowestCostPathNode = testPathNode;
                 }
             }
-            return new int2(lowestCostPathNode.x, lowestCostPathNode.y);
+            return lowestCostPathNode.index;
         }
 
-        private static NativeList<int2> ConstructPath(NativeHashMap<int2, PathNode> pathNodes, PathNode targetNode)
+        private static NativeList<int2> ConstructPath(NativeList<PathNode> pathNodes, PathNode targetNode)
         {
-            if (targetNode.cameFromPosition.Equals(new int2(-1,-1))) 
+            if (targetNode.cameFromNodeIndex == -1) 
             {
                 // Couldn't find a path.
                 return new NativeList<int2>(Allocator.Temp);
@@ -263,8 +264,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 path.Add(new int2(targetNode.x, targetNode.y));
 
                 PathNode currentNode = targetNode;
-                while (!currentNode.cameFromPosition.Equals(new int2(-1,-1))) {
-                    PathNode cameFromNode = pathNodes[currentNode.cameFromPosition];
+                while (currentNode.cameFromNodeIndex != -1) {
+                    PathNode cameFromNode = pathNodes[currentNode.cameFromNodeIndex];
                     path.Add(new int2(cameFromNode.x, cameFromNode.y));
                     currentNode = cameFromNode;
                 }
@@ -304,7 +305,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             public int gCost;
             public int hCost;
             public int fCost;
-            public int2 cameFromPosition;
+            public int cameFromNodeIndex;
 
             public void CalculateFCost() {
                 fCost = gCost + hCost;

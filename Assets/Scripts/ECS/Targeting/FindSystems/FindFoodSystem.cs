@@ -12,6 +12,8 @@ namespace Ecosystem.ECS.Targeting
     /// <summary>
     /// Looks for nearby food and stores info about the closest food that was found.
     /// </summary>
+    
+    [DisableAutoCreation]
     public class FindFoodSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;

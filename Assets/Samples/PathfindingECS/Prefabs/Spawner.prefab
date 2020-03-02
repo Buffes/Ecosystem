@@ -48,7 +48,9 @@ MonoBehaviour:
     type: 3}
   foxPrefab: {fileID: 3693017469720498761, guid: 842e63f850dba454f9b7322c87f0292d,
     type: 3}
-  spawnAmount: 100
+  OOPRabbitPrefab: {fileID: 5944290087314583153, guid: 36a7fb6a7492653a999b711defa18be0,
+    type: 3}
+  spawnAmount: 1
   startX: 0
   endX: 100
   startZ: 0
