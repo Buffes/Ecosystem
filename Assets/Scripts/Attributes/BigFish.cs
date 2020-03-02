@@ -5,8 +5,8 @@ using Ecosystem.ECS.Hybrid;
 namespace Ecosystem.Attributes {
     public class BigFish : MonoBehaviour, IAnimal {
 
-        public float Hunger { get; set; }
-        public float Thirst { get; set; }
+        private float Hunger;
+        private float Thirst;
         //public float Mating { get; set; }
         private float HungerLimit = Random.Range(0.3f,0.8f);
         private float ThirstLimit = Random.Range(0.3f,0.8f);
@@ -28,6 +28,8 @@ namespace Ecosystem.Attributes {
 
         // Start is called before the first frame update
         void Start() {
+            this.Hunger = 1f;
+            this.Thirst = 1f;
             this.casual = new CasualState(this);
             this.stateMachine.ChangeState(this.casual);
         }
@@ -61,6 +63,22 @@ namespace Ecosystem.Attributes {
             if (this.Hunger <= 0f || this.Thirst <= 0) {
                 Die();
             }
+        }
+
+        public float GetHunger() {
+            return this.Hunger;
+        }
+
+        public void SetHunger(float newHunger) {
+            this.Hunger = newHunger;
+        }
+
+        public float GetThirst() {
+            return this.Thirst;
+        }
+
+        public void SetThirst(float newThirst) {
+            this.Thirst = newThirst;
         }
     }
 }

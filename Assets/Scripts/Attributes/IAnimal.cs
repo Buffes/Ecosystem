@@ -4,8 +4,8 @@ using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
     public interface IAnimal {
-        float Hunger { get; set; }
-        float Thirst { get; set; }
+        //float Hunger { get; set; }
+        //float Thirst { get; set; }
         //float Mating { get; set; }
         string FoodSource { get; }
         Transform Trans { get; set; }
@@ -14,5 +14,9 @@ namespace Ecosystem.Attributes {
         void Move(Vector3 target,float reach,float range);
         Sensors Sensors { get; }
         void Die();
+        float GetHunger();
+        void SetHunger(float newHunger);
+        float GetThirst();
+        void SetThirst(float newThirst);
     }
 }

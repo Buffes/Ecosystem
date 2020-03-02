@@ -17,11 +17,11 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.Trans.position;
 
             if (owner.Sensors.FoundWater()) {
-                target = owner.Sensors.GetWaterLocation();
+                target = owner.Sensors.GetFoundWaterInfo().Position;
                 Vector3 diff = target - currentPos;
                 float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
                 if (diffLength <= 2f) {
-                    owner.Thirst = 1f;
+                    owner.SetThirst(1f);
                 }
             } else {
                 target = currentPos;

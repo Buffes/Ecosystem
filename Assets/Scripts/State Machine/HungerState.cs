@@ -18,11 +18,11 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.Trans.position;
 
             if (owner.Sensors.FoundFood()) {
-                target = owner.Sensors.GetFoodLocation();
+                target = owner.Sensors.GetFoundFoodInfo().Position;
                 Vector3 diff = target - currentPos;
                 float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
                 if (diffLength <= 2f) {
-                    owner.Hunger = 1f;
+                    owner.SetHunger(1f);
                     // TODO: destroy food
                 }
             } else {
