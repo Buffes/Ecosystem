@@ -2,6 +2,7 @@
 using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Pool;
 using Unity.Entities;
+using Ecosystem.ECS.Events;
 using UnityEngine;
 
 namespace Ecosystem.ECS.Hybrid
@@ -23,8 +24,10 @@ namespace Ecosystem.ECS.Hybrid
         public void Kill(Entity animal, GameObject prefab)
         {
             prefab.SetActive(false);
-            entityManager.DestroyEntity(animal);
-            entityManager.CreateEntity(); // The animal drops food upon death
+
+            entityManager.AddComponent<DeathCommand>(animal);
+
+            entityManager.CreateEntity(/*Food*/); // The animal drops food upon death
             // TODO: Death event for the animal
         }
 
@@ -36,7 +39,7 @@ namespace Ecosystem.ECS.Hybrid
         public int Eat(Entity food, GameObject prefab)
         {
             prefab.SetActive(false);
-            entityManager.DestroyEntity(food);
+            entityManager.AddComponent<DeathCommand>(food);
             // TODO: Death event for the food
 
             return entityManager.GetComponentData<FoodTypeData>(food).FoodPoints;

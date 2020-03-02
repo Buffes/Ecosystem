@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Collections;
 
-namespace Assets.Scripts.ECS.Events
+namespace Ecosystem.ECS.Events
 {
     /// <summary>
     /// Kills desired entities
@@ -15,6 +15,7 @@ namespace Assets.Scripts.ECS.Events
     public class DeathEventSystem : SystemBase
     {
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        private EntityManager entityManager;
 
         protected override void OnCreate()
         {
@@ -26,12 +27,11 @@ namespace Assets.Scripts.ECS.Events
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex, 
-                in DeathCommand death) =>
+            Entities.WithAll<DeathCommand>().ForEach((Entity entity, int entityInQueryIndex,
+                in DeathCommand deathCommand) =>
             {
                 commandBuffer.RemoveComponent<DeathCommand>(entityInQueryIndex, entity);
-
-
+                commandBuffer.DestroyEntity(entityInQueryIndex, entity);
             }).ScheduleParallel();
         }
     }

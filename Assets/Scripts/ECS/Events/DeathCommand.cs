@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Entities;
 
-namespace Assets.Scripts.ECS.Events
+namespace Ecosystem.ECS.Events
 {
     /// <summary>
     /// Commands the entity to die
