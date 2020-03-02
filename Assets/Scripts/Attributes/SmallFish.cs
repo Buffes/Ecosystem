@@ -37,6 +37,8 @@ namespace Ecosystem.Attributes {
             this.HungerLimit = Random.Range(0.3f,0.8f);
             this.ThirstLimit = Random.Range(0.3f,0.8f);
             this.casualState = new CasualState(this);
+            this.fleeState = new FleeState(this);
+            this.hungerState = new HungerState(this);
             this.stateMachine.ChangeState(this.casualState);
             this.predatorLength = 5f;
             this.changePerFrame = 0.00001f;
