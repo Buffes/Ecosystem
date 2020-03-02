@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ecosystem.Samples
 {
@@ -15,6 +16,11 @@ namespace Ecosystem.Samples
         [SerializeField]
         [Range(1, 1000)]
         private int spawnAmount = 1;
+
+        [SerializeField]
+        private Text rabbitCounter;
+
+        private int rabbitCount;
 
         [Header("Random Spawn Area")]
 
@@ -52,6 +58,10 @@ namespace Ecosystem.Samples
                     new Quaternion(),
                     parent);
             }
+
+            rabbitCount += spawnAmount;
+
+            rabbitCounter.text = "Rabbits: " + rabbitCount;
         }
     }
 }

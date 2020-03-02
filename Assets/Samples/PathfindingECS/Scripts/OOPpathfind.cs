@@ -30,20 +30,21 @@ public class OOPpathfind : MonoBehaviour
             RandomizeNewTarget();
         }
 
+        Vector3 movementDirection = Vector3.Normalize(currentNode - transform.position);
 
         if (Vector3.Distance(transform.position, currentNode) < 0.1)
         {
-            currentNode = GetWorldPosition(new int2(path[currentIndex].x, path[currentIndex].y));
             currentIndex++;
+            currentNode = GetWorldPosition(new int2(path[currentIndex].x, path[currentIndex].y));
         }
 
-        // Move
-        Vector3 movementDirection = Vector3.Normalize(currentNode - transform.position);
-        transform.Translate(movementDirection * 6f * Time.deltaTime);
         if (movementDirection != Vector3.zero)
         {
-            transform.rotation = quaternion.LookRotation(movementDirection, math.up());
+            Quaternion rotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = rotation;
         }
+        // Move
+        transform.position += transform.forward * 6f * Time.deltaTime;
     }
 
     private void RandomizeNewTarget()
