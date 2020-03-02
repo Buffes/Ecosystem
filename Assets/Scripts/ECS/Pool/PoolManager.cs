@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Ecosystem.ECS.Pool
 {
+    /// <summary>
+    /// For grouping together and reusing gameObjects in pools.
+    /// </summary>
     public class PoolManager : MonoBehaviour
     {
 
-        public List<Pool> pools;
         public Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
-        public GameObject objectToPool;
-        public int amountToPool;
 
         static PoolManager _instance;
 
@@ -26,14 +26,12 @@ namespace Ecosystem.ECS.Pool
             }
         }
 
-        [System.Serializable]
-        public class Pool
-        {
-            public int tag;
-            public GameObject prefab;
-            public int size;
-        }
 
+        /// <summary>
+        /// Creates a pool with objects of wanted type
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <param name="poolSize"></param>
         public void CreatePool(GameObject prefab, int poolSize)
         {
             int poolKey = prefab.GetInstanceID();
@@ -50,6 +48,12 @@ namespace Ecosystem.ECS.Pool
             }
         }
 
+        /// <summary>
+        /// If there is a pool of objects whose type match prefab, then reuse that GameObject and give it a new position and rotation. 
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
         public void ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation)
         {
             int poolKey = prefab.GetInstanceID();
