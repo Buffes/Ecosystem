@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &403517434268612593
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523527969179376392, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_Name
+      value: FoxMeat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523527969179376399, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: foodType
+      value: 
+      objectReference: {fileID: 11400000, guid: b14a02feda3ba0e4285bc37185ffb967,
+        type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
