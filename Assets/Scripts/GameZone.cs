@@ -93,13 +93,13 @@ public class GameZone : MonoBehaviour
 
     private void CheckEdges()
     {
-        CheckUpperEdges();
+        //CheckUpperEdges();
         CheckLowerEdges();
         CheckRightEdges();
-        CheckLeftEdges();
+        //CheckLeftEdges();
     }
 
-    private void CheckLeftEdges()
+    private void CheckUpperEdges()
     {
         for(int i = 2; i < tiles.GetLength(1)-2; i += 2)
         {
@@ -122,7 +122,7 @@ public class GameZone : MonoBehaviour
         }
     }
 
-    private void CheckRightEdges()
+    private void CheckLowerEdges()
     {
         for(int i = 2; i < tiles.GetLength(1)-2; i += 2)
         {
@@ -144,7 +144,7 @@ public class GameZone : MonoBehaviour
         }
     }
 
-    private void CheckUpperEdges()
+    private void CheckRightEdges()
     {
         for(int i = 2; i < tiles.GetLength(0)-2; i += 2)
         {
@@ -166,7 +166,7 @@ public class GameZone : MonoBehaviour
         }
     }
 
-    private void CheckLowerEdges()
+    private void CheckLeftEdges()
     {
         for(int i = 2; i < tiles.GetLength(0)-2; i += 2)
         {
