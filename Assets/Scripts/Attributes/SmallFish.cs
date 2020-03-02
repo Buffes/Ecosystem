@@ -8,19 +8,23 @@ namespace Ecosystem.Attributes {
         private float Hunger;
         private float Thirst;
         //public float Mating { get; set; }
-        private float HungerLimit = Random.Range(0.3f,0.8f);
-        private float ThirstLimit = Random.Range(0.3f,0.8f);
+        private float HungerLimit;
+        private float ThirstLimit;
         //private float MatingLimit = Random.Range(0.3f,0.8f);
 
         public string FoodSource { get; } = "SEAGRASS";
-        public Transform Trans { get; set; }
+        //public Transform Trans { get; set; }
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
         public Movement movement;
         public Sensors Sensors;
+        private float predatorLength;
+        private float changePerFrame;
 
         StateMachine stateMachine;
-        IState casual;
+        IState casualState;
+        IState fleeState;
+        IState hungerState;
 
         public SmallFish() {
             this.stateMachine = new StateMachine();
@@ -30,8 +34,12 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.Hunger = 1f;
             this.Thirst = 1f;
-            this.casual = new CasualState(this);
-            this.stateMachine.ChangeState(this.casual);
+            this.HungerLimit = Random.Range(0.3f,0.8f);
+            this.ThirstLimit = Random.Range(0.3f,0.8f);
+            this.casualState = new CasualState(this);
+            this.stateMachine.ChangeState(this.casualState);
+            this.predatorLength = 5f;
+            this.changePerFrame = 0.00001f;
             Sensors.LookForPredator(true);
         }
         public void Move(Vector3 target,float reach,float range) {
@@ -45,29 +53,42 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            this.Thirst -= 0.00001f;
-            this.Hunger -= 0.00001f;
+            this.Hunger -= this.changePerFrame;
+            bool predatorInRange = PredatorInRange();
 
-            if (Sensors.FoundPredator()) {
-                stateMachine.ChangeState(new FleeState(this));
-            }
-
-            // Check for stateChange
-            if (Thirst <= ThirstLimit) {
-                stateMachine.ChangeState(new ThirstState(this));
+            if (predatorInRange) {
+                if (stateMachine.getCurrentState() != this.fleeState) {
+                    Debug.Log("SmallFish flee");
+                    stateMachine.ChangeState(this.fleeState);
+                }
             } else if (Hunger <= HungerLimit) {
-                stateMachine.ChangeState(new HungerState(this));
-            //} else if (Mating <= MatingLimit) {
-                //stateMachine.ChangeState(new MateState(this));
-            } else if (this.stateMachine.getCurrentState() != this.casual) {
-                stateMachine.ChangeState(this.casual);
+                if (stateMachine.getCurrentState() != this.hungerState) {
+                    Debug.Log("SmallFish hunt");
+                    stateMachine.ChangeState(this.hungerState);
+                }
+            } else if (stateMachine.getCurrentState() != this.casualState) {
+                Debug.Log("SmallFish casual");
+                stateMachine.ChangeState(this.casualState);
             }
 
             stateMachine.Update();
 
-            if (this.Hunger <= 0f || this.Thirst <= 0) {
-                Die();
+            //if (this.Hunger <= 0f || this.Thirst <= 0) {
+            //    Die();
+            //}
+        }
+
+        private bool PredatorInRange() {
+            bool ans = false;
+            if (Sensors.FoundPredator()) {
+                Vector3 predatorPos = Sensors.GetFoundPredatorInfo().Position;
+                Vector3 diff = predatorPos - transform.position;
+                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+                if (diffLength < this.predatorLength) {
+                    ans = true;
+                }
             }
+            return ans;
         }
 
         public float GetHunger() {
@@ -88,6 +109,10 @@ namespace Ecosystem.Attributes {
 
         public Sensors GetSensors() {
             return this.Sensors;
+        }
+
+        public Transform GetTransform() {
+            return transform;
         }
     }
 }

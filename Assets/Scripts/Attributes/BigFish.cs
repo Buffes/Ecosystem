@@ -8,19 +8,21 @@ namespace Ecosystem.Attributes {
         private float Hunger;
         private float Thirst;
         //public float Mating { get; set; }
-        private float HungerLimit = Random.Range(0.3f,0.8f);
-        private float ThirstLimit = Random.Range(0.3f,0.8f);
+        private float HungerLimit;
+        private float ThirstLimit;
         //private float MatingLimit = Random.Range(0.3f,0.8f);
 
         public string FoodSource { get; } = "SMALLFISH";
-        public Transform Trans { get; set; }
+        //public Transform Trans { get; set; }
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
         public Movement movement;
         public Sensors Sensors;
+        private float changePerFrame;
 
         StateMachine stateMachine;
-        IState casual;
+        IState casualState;
+        IState hungerState;
 
         public BigFish() {
             this.stateMachine = new StateMachine();
@@ -30,8 +32,12 @@ namespace Ecosystem.Attributes {
         void Start() {
             this.Hunger = 1f;
             this.Thirst = 1f;
-            this.casual = new CasualState(this);
-            this.stateMachine.ChangeState(this.casual);
+            this.HungerLimit = Random.Range(0.3f,0.8f);
+            this.ThirstLimit = Random.Range(0.3f,0.8f);
+            this.casualState = new CasualState(this);
+            this.hungerState = new HungerState(this);
+            this.changePerFrame = 0.00001f;
+            this.stateMachine.ChangeState(this.casualState);
         }
 
         public void Move(Vector3 target,float reach,float range) {
@@ -44,25 +50,23 @@ namespace Ecosystem.Attributes {
 
         // Update is called once per frame
         void Update() {
-            this.Thirst -= 0.00001f;
-            this.Hunger -= 0.00001f;
+            this.Hunger -= this.changePerFrame;
 
-            // Check for stateChange
-            if (Thirst <= ThirstLimit) {
-                stateMachine.ChangeState(new ThirstState(this));
-            } else if (Hunger <= HungerLimit) {
-                stateMachine.ChangeState(new HungerState(this));
-            //} else if (Mating <= MatingLimit) {
-                //stateMachine.ChangeState(new MateState(this));
-            } else if (stateMachine.getCurrentState() != casual) {
-                stateMachine.ChangeState(this.casual);
+            if (Hunger <= HungerLimit) {
+                if (stateMachine.getCurrentState() != this.hungerState) {
+                    stateMachine.ChangeState(this.hungerState);
+                    Debug.Log("BigFish hunt");
+                }
+            } else if (stateMachine.getCurrentState() != this.casualState) {
+                stateMachine.ChangeState(this.casualState);
+                Debug.Log("BigFish casual");
             }
 
             stateMachine.Update();
 
-            if (this.Hunger <= 0f || this.Thirst <= 0) {
-                Die();
-            }
+            //if (this.Hunger <= 0f || this.Thirst <= 0) {
+            //    Die();
+            //}
         }
 
         public float GetHunger() {
@@ -83,6 +87,10 @@ namespace Ecosystem.Attributes {
 
         public Sensors GetSensors() {
             return this.Sensors;
+        }
+
+        public Transform GetTransform() {
+            return transform;
         }
     }
 }
