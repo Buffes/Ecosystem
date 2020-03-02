@@ -12,7 +12,7 @@ namespace Ecosystem.Attributes {
         float Speed { get; set; }
         float SprintSpeed { get; set; }
         void Move(Vector3 target,float reach,float range);
-        Sensors Sensors { get; }
+        Sensors GetSensors();
         void Die();
         float GetHunger();
         void SetHunger(float newHunger);

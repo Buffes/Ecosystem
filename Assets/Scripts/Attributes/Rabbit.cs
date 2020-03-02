@@ -17,8 +17,7 @@ namespace Ecosystem.Attributes {
         public float Speed { get; set; }
         public float SprintSpeed { get; set; }
         public Movement movement;
-        public Sensors Sensors { get; }
-
+        public Sensors Sensors;
 
         StateMachine stateMachine;
         IState casual;
@@ -83,6 +82,10 @@ namespace Ecosystem.Attributes {
 
         public void SetThirst(float newThirst) {
             this.Thirst = newThirst;
+        }
+
+        public Sensors GetSensors() {
+            return this.Sensors;
         }
     }
 }

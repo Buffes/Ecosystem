@@ -9,15 +9,15 @@ namespace Ecosystem.StateMachines {
         public ThirstState(IAnimal owner) { this.owner = owner; }
 
         public void Enter() {
-            owner.Sensors.LookForWater(true);
+            owner.GetSensors().LookForWater(true);
         }
 
         public void Execute() {
             Vector3 target;
             Vector3 currentPos = owner.Trans.position;
 
-            if (owner.Sensors.FoundWater()) {
-                target = owner.Sensors.GetFoundWaterInfo().Position;
+            if (owner.GetSensors().FoundWater()) {
+                target = owner.GetSensors().GetFoundWaterInfo().Position;
                 Vector3 diff = target - currentPos;
                 float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
                 if (diffLength <= 2f) {

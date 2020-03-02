@@ -13,7 +13,7 @@ namespace Ecosystem.StateMachines {
         }
 
         public void Execute() {
-            Vector3 predatorPos = owner.Sensors.GetFoundPredatorInfo().Position;
+            Vector3 predatorPos = owner.GetSensors().GetFoundPredatorInfo().Position;
             Vector3 currentPos = owner.Trans.position;
             Vector3 diff = currentPos - predatorPos;
             Vector3 target = currentPos + diff;
