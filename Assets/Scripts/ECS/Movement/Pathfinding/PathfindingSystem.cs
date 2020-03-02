@@ -55,6 +55,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
                 }
+                pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
                 path.Dispose();
             }).ScheduleParallel();
 

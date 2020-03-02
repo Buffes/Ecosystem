@@ -7,5 +7,6 @@ namespace Ecosystem.ECS.Animal
     public struct FoodTypeData : IComponentData
     {
         public int FoodTypeId;
+        public int FoodPoints;
     }
 }
