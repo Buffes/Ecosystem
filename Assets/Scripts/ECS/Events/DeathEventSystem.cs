@@ -27,11 +27,15 @@ namespace Ecosystem.ECS.Events
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.WithAll<DeathCommand>().ForEach((Entity entity, int entityInQueryIndex,
-                in DeathCommand deathCommand) =>
+            Entities.WithAll<DeathCommand>().ForEach((Entity entity /*,int entityInQueryIndex,*/ ) =>
             {
-                commandBuffer.RemoveComponent<DeathCommand>(entityInQueryIndex, entity);
-                commandBuffer.DestroyEntity(entityInQueryIndex, entity);
+                entityManager.RemoveComponent<DeathCommand>(entity);
+                entityManager.DestroyEntity(entity);
+
+                //CommandBuffer or EntityManager??????
+
+                /*commandBuffer.RemoveComponent<DeathCommand>(entityInQueryIndex, entity);
+                commandBuffer.DestroyEntity(entityInQueryIndex, entity);*/
             }).ScheduleParallel();
         }
     }

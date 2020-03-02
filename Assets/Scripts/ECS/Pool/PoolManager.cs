@@ -30,8 +30,8 @@ namespace Ecosystem.ECS.Pool
         /// <summary>
         /// Creates a pool with objects of wanted type
         /// </summary>
-        /// <param name="prefab"></param>
-        /// <param name="poolSize"></param>
+        /// <param name="prefab">Type of objects contained in pool</param>
+        /// <param name="poolSize">Size of new pool</param>
         public void CreatePool(GameObject prefab, int poolSize)
         {
             int poolKey = prefab.GetInstanceID();
@@ -51,9 +51,9 @@ namespace Ecosystem.ECS.Pool
         /// <summary>
         /// If there is a pool of objects whose type match prefab, then reuse that GameObject and give it a new position and rotation. 
         /// </summary>
-        /// <param name="prefab"></param>
-        /// <param name="position"></param>
-        /// <param name="rotation"></param>
+        /// <param name="prefab">Type of object to reuse</param>
+        /// <param name="position">Position of new object</param>
+        /// <param name="rotation">Rotation of new object</param>
         public void ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation)
         {
             int poolKey = prefab.GetInstanceID();
