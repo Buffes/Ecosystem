@@ -36,7 +36,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            var grid = grid;
+            var grid = this.grid;
             Entities
                 .WithReadOnly(grid)
                 .WithReadOnly(gridSize)
