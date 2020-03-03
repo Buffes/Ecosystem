@@ -10,8 +10,8 @@ namespace Ecosystem.ECS.Events
     /// <summary>
     /// Marks the entity to command other entities to die
     /// </summary>
-    public struct DeathCommand : IComponentData
+    public struct DeathEvent : IComponentData
     {
-        public Entity target;
+        public Entity Target;
     }
 }

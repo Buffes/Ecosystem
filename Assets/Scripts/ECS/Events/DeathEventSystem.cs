@@ -1,27 +1,28 @@
-﻿using System;
-using UnityEngine;
-using Unity.Jobs;
-using Unity.Entities;
-using Ecosystem.ECS.Hybrid;
-using Unity.Mathematics;
-using Unity.Transforms;
-using Unity.Collections;
+﻿using Unity.Entities;
 
 namespace Ecosystem.ECS.Events
 {
     /// <summary>
     /// Kills desired entities
     /// </summary>
-    public class DeathEventSystem : ComponentSystem
+    public class DeathEventSystem : SystemBase
     {
+        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            m_EndSimulationEcbSystem = World
+                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        }
         protected override void OnUpdate()
         {
+            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.WithAll<DeathCommand>().ForEach((Entity entity, /*int entityInQueryIndex,*/
-                ref DeathCommand deathCmd) =>
+            Entities.ForEach((Entity entity, int entityInQueryIndex,
+                in DeathEvent deathCmd) =>
             {
-                PostUpdateCommands.DestroyEntity(deathCmd.target);
-                PostUpdateCommands.DestroyEntity(entity);
+                commandBuffer.DestroyEntity(entityInQueryIndex, deathCmd.Target);
+                commandBuffer.DestroyEntity(entityInQueryIndex, entity);
 
             });
         }

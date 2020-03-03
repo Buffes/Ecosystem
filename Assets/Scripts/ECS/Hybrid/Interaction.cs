@@ -21,15 +21,11 @@ namespace Ecosystem.ECS.Hybrid
         /// Kills an animal.
         /// </summary>
         /// <param name="animal">The animal entity to kill</param>
-        public void Kill(Entity animal, GameObject prefab)
+        public void Kill(Entity animal)
         {
-            prefab.SetActive(false);
+            KillEntity(animal);
 
-            Entity death = entityManager.CreateEntity(typeof(DeathCommand));
-            entityManager.SetComponentData(death, new DeathCommand { target = animal }); 
-
-            entityManager.CreateEntity(/*Food*/); // The animal drops food upon death
-            // TODO: Death event for the animal
+            entityManager.CreateEntity(/*Food*/); // TODO: The animal should drop food upon death
         }
 
         /// <summary>
@@ -39,12 +35,15 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns>The food points of the food that was eaten</returns>
         public int Eat(Entity food, GameObject prefab)
         {
-            prefab.SetActive(false);
-            Entity death = entityManager.CreateEntity(typeof(DeathCommand));
-            entityManager.SetComponentData(death, new DeathCommand { target = food });
-            // TODO: Death event for the food
+            KillEntity(food);
 
             return entityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
+        }
+
+        private void KillEntity(Entity e)
+        {
+            Entity death = entityManager.CreateEntity(typeof(DeathEvent));
+            entityManager.SetComponentData(death, new DeathEvent { Target = e });
         }
     }
 }
