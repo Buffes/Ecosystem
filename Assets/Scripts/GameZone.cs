@@ -18,15 +18,19 @@ public class GameZone : MonoBehaviour
     private float waterSpawnRate = 0.7f;
     private float waterNeighbourRate = 0.005f;
 
+    private bool [,] walkableTiles;
+
     // Start is called before the first frame update
     void Start() 
     {
         diffWaterLand = landIndex - waterIndex;
+        walkableTiles = new bool [tiles.GetLength(0), tiles.GetLength(1)];
         RandomizeStartGrid();
         CheckCorners();
         CheckEdges();
         CheckMiddle();
         SetupTilemap();
+        SetupWalkableTiles();
     }
 
 
@@ -844,5 +848,28 @@ public class GameZone : MonoBehaviour
         {
             tiles[row, col] = 40;
         }
+    }
+
+    private void SetupWalkableTiles()
+    {
+        for (int row = 0; row < tiles.GetLength(0); row++)
+        {
+            for (int col = 0; col < tiles.GetLength(1); col++)
+            {
+                if (tiles[row, col] < 18)
+                {
+                    walkableTiles[row,col] = false;
+                } 
+                else 
+                {
+                    walkableTiles[row,col] = true;
+                }
+            }
+        }
+    }
+
+    public bool [,] GetWalkableTiles()
+    {
+        return walkableTiles;
     }
 }
