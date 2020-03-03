@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Collections;
+using Ecosystem.ECS.Movement.Pathfinding;
 
 
 namespace Ecosystem
@@ -41,6 +42,33 @@ namespace Ecosystem
                     } else 
                     {
                         tiles[i,j] = RandomizeTile(0.005f);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the grid of the pathfinding ECS system to the one present here.
+        /// </summary>
+        private void PassTilesToSystems()
+        {
+            ref var grid = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<PathfindingSystem>().grid;
+            grid = new NativeHashMap<int2,bool>(tiles.Length, Allocator.Temp);
+
+            World.DefaultGameObjectInjectionWorld.GetExistingSystem<PathfindingSystem>()
+                .gridSize = new int2(tiles.GetLength(0), tiles.GetLength(1));
+            
+            for (int i = 0; i < tiles.GetLength(0); i++ )
+            {
+                for (int j = 0; j < tiles.GetLength(1); j++ )
+                {
+                    if (tiles[i,j] == 13)
+                    {
+                        grid.TryAdd(new int2(i, j), false);
+                    }
+                    else 
+                    {
+                        grid.TryAdd(new int2(i, j), true);
                     }
                 }
             }
