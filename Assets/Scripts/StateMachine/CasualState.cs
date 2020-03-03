@@ -7,7 +7,7 @@ namespace Ecosystem.StateMachines {
         IAnimal owner;
         Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
-        private float pathfindInterval = 1f;
+        private readonly float pathfindInterval = 1f;
 
         public CasualState(IAnimal owner) { this.owner = owner; }
 

@@ -3,22 +3,21 @@ using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
-    public class Rabbit : MonoBehaviour, IAnimal {
+    public class AAnimal : MonoBehaviour, IAnimal {
 
         private float Hunger;
-        private float Thirst;
-        //public float Mating { get; set; }
+        //private float Thirst;
+        //private float Mating
         private float HungerLimit;
-        private float ThirstLimit;
+        //private float ThirstLimit;
         //private float MatingLimit = Random.Range(0.3f,0.8f);
 
-        public string FoodSource;
-        //public Transform Trans { get; set; }
-        public float Speed { get; set; }
-        public float SprintSpeed { get; set; }
+        //public float Speed { get; set; }
+        //public float SprintSpeed { get; set; }
         public Movement movement;
         public Sensors Sensors;
-        private float predatorLength;
+        public bool Prey;
+        private float predatorDist;
         private float changePerFrame;
 
         StateMachine stateMachine;
@@ -26,23 +25,25 @@ namespace Ecosystem.Attributes {
         IState hungerState;
         IState fleeState;
 
-        public Rabbit() {
+        public AAnimal() {
             this.stateMachine = new StateMachine();
         }
 
         // Start is called before the first frame update
         void Start() {
             this.Hunger = 1f;
-            this.Thirst = 1f;
+            //this.Thirst = 1f;
             this.HungerLimit = 0.99f;//Random.Range(0.3f,0.8f);
-            this.ThirstLimit = Random.Range(0.3f,0.8f);
+            //this.ThirstLimit = Random.Range(0.3f,0.8f);
+
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
             this.fleeState = new FleeState(this);
-            this.stateMachine.ChangeState(casualState);
-            this.predatorLength = 5f;
+            this.stateMachine.ChangeState(this.casualState);
+
+            this.predatorDist = 5f;
             this.changePerFrame = 0.00001f;
-            Sensors.LookForPredator(true);
+            Sensors.LookForPredator(this.Prey);
         }
 
         public void Move(Vector3 target,float reach,float range) {
@@ -53,24 +54,20 @@ namespace Ecosystem.Attributes {
             Destroy(this);
         }
 
-
         // Update is called once per frame
         void Update() {
             this.Hunger -= this.changePerFrame;
             bool predatorInRange = PredatorInRange();
-            
+
             if (predatorInRange) {
                 if (stateMachine.getCurrentState() != this.fleeState) {
-                    Debug.Log("Rabbit flee");
                     stateMachine.ChangeState(this.fleeState);
                 }
             } else if (Hunger <= HungerLimit) {
                 if (stateMachine.getCurrentState() != this.hungerState) {
-                    Debug.Log("Rabbit hunt");
                     stateMachine.ChangeState(this.hungerState);
                 }
             } else if (stateMachine.getCurrentState() != this.casualState) {
-                Debug.Log("Rabbit casual");
                 stateMachine.ChangeState(this.casualState);
             }
 
@@ -83,12 +80,14 @@ namespace Ecosystem.Attributes {
 
         private bool PredatorInRange() {
             bool ans = false;
-            if (Sensors.FoundPredator()) {
-                Vector3 predatorPos = Sensors.GetFoundPredatorInfo().Position;
-                Vector3 diff = predatorPos - transform.position;
-                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
-                if (diffLength < this.predatorLength) {
-                    ans = true;
+            if (this.Prey) {
+                if (Sensors.FoundPredator()) {
+                    Vector3 predatorPos = Sensors.GetFoundPredatorInfo().Position;
+                    Vector3 diff = predatorPos - transform.position;
+                    float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+                    if (diffLength < this.predatorDist) {
+                        ans = true;
+                    }
                 }
             }
             return ans;
@@ -103,11 +102,11 @@ namespace Ecosystem.Attributes {
         }
 
         public float GetThirst() {
-            return this.Thirst;
+            return 1f; // this.Thirst;
         }
 
         public void SetThirst(float newThirst) {
-            this.Thirst = newThirst;
+            //this.Thirst = newThirst;
         }
 
         public Sensors GetSensors() {

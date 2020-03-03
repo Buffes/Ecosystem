@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2590688212654047890
+--- !u!114 &-1746481451882938438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3693017469720498761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36974753248b04881afefcdec9a6e047, type: 3}
+  m_Script: {fileID: 11500000, guid: 916414920c3d445d995b24e819088e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 3693017471615919652}
   Sensors: {fileID: 3693017471615919653}
+  Prey: 0
 --- !u!1001 &8438886936344652706
 PrefabInstance:
   m_ObjectHideFlags: 0
