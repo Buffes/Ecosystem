@@ -8,10 +8,10 @@ using Unity.Entities;
 namespace Ecosystem.ECS.Events
 {
     /// <summary>
-    /// Commands the entity to die
+    /// Marks the entity to command other entities to die
     /// </summary>
     public struct DeathCommand : IComponentData
     {
-
+        public Entity target;
     }
 }

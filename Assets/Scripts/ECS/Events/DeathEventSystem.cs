@@ -12,7 +12,7 @@ namespace Ecosystem.ECS.Events
     /// <summary>
     /// Kills desired entities
     /// </summary>
-    public class DeathEventSystem : SystemBase
+    public class DeathEventSystem : ComponentSystem
     {
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
         private EntityManager entityManager;
@@ -23,20 +23,23 @@ namespace Ecosystem.ECS.Events
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
+        
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.WithAll<DeathCommand>().ForEach((Entity entity /*,int entityInQueryIndex,*/ ) =>
+            Entities.WithAll<DeathCommand>().ForEach((Entity entity, /*int entityInQueryIndex,*/
+                ref DeathCommand deathCmd) =>
             {
-                entityManager.RemoveComponent<DeathCommand>(entity);
-                entityManager.DestroyEntity(entity);
+                PostUpdateCommands.DestroyEntity(deathCmd.target);
+                PostUpdateCommands.DestroyEntity(entity);
 
                 //CommandBuffer or EntityManager??????
 
-                /*commandBuffer.RemoveComponent<DeathCommand>(entityInQueryIndex, entity);
+               /* commandBuffer.DestroyEntity(entityInQueryIndex, entity);
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);*/
-            }).ScheduleParallel();
+
+            });
         }
     }
 }

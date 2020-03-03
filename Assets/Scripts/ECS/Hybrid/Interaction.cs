@@ -25,7 +25,8 @@ namespace Ecosystem.ECS.Hybrid
         {
             prefab.SetActive(false);
 
-            entityManager.AddComponent<DeathCommand>(animal);
+            Entity death = entityManager.CreateEntity(typeof(DeathCommand));
+            entityManager.SetComponentData(death, new DeathCommand { target = animal }); 
 
             entityManager.CreateEntity(/*Food*/); // The animal drops food upon death
             // TODO: Death event for the animal
@@ -39,7 +40,8 @@ namespace Ecosystem.ECS.Hybrid
         public int Eat(Entity food, GameObject prefab)
         {
             prefab.SetActive(false);
-            entityManager.AddComponent<DeathCommand>(food);
+            Entity death = entityManager.CreateEntity(typeof(DeathCommand));
+            entityManager.SetComponentData(death, new DeathCommand { target = food });
             // TODO: Death event for the food
 
             return entityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
