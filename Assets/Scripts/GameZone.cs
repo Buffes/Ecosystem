@@ -11,9 +11,17 @@ public class GameZone : MonoBehaviour
     public int TileSize = 1;
     public Vector2Int StartPoint = new Vector2Int(0,0);
 
+    private int waterIndex = 17;
+    private int landIndex = 34;
+    private int diffWaterLand = 0;
+
+    private float waterSpawnRate = 0.7f;
+    private float waterNeighbourRate = 0.005f;
+
     // Start is called before the first frame update
     void Start() 
     {
+        diffWaterLand = landIndex - waterIndex;
         RandomizeStartGrid();
         CheckCorners();
         CheckEdges();
@@ -28,12 +36,12 @@ public class GameZone : MonoBehaviour
         {
             for (int j = 0; j < tiles.GetLength(1); j += 2 )
             {
-                if ((i - 2 >= 0 && tiles[i - 2,j] == 13) || (j - 2 >= 0 && tiles[i, j - 2] == 13))
+                if ((i - 2 >= 0 && tiles[i - 2,j] == waterIndex) || (j - 2 >= 0 && tiles[i, j - 2] == waterIndex))
                 {
-                    tiles[i,j] = RandomizeTile(0.7f);
+                    tiles[i,j] = RandomizeTile(waterSpawnRate);
                 } else 
                 {
-                    tiles[i,j] = RandomizeTile(0.005f);
+                    tiles[i,j] = RandomizeTile(waterNeighbourRate);
                 }
             }
         }
@@ -45,47 +53,53 @@ public class GameZone : MonoBehaviour
         float rand = Random.value;
         if (rand <= water)
         {
-            return 13;
+            return waterIndex;
         }
-        return 26;
+        return landIndex;
     }
 
     private void CheckCorners()
     {
-        if (tiles[0,0] >= 26 && tiles[0,2] >= 26 && tiles[2,0] >= 26 && tiles[2,2] >= 26)
+        if (tiles[0,0] >= landIndex && tiles[0,2] >= landIndex && 
+            tiles[2,0] >= landIndex && tiles[2,2] >= landIndex)
         {
-            tiles[0,0] = 39;
+            tiles[0,0] = 51;
         } 
-        else if (tiles[0,0] <= 13 && tiles[0,2] <= 13 && tiles[2,0] <= 13 && tiles[2,2] <= 13)
+        else if (tiles[0,0] <= waterIndex && tiles[0,2] <= waterIndex && 
+                 tiles[2,0] <= waterIndex && tiles[2,2] <= waterIndex)
         {
             tiles[0,0] = 0;
         }
         
-        if (tiles[0,tiles.GetLength(1)-3] >= 26 && tiles[0,tiles.GetLength(1)-1] >= 26 && tiles[2,tiles.GetLength(1)-3] >= 26 && tiles[2,tiles.GetLength(1)-1] >= 26)
+        if (tiles[0,tiles.GetLength(1)-3] >= landIndex && tiles[0,tiles.GetLength(1)-1] >= landIndex && 
+            tiles[2,tiles.GetLength(1)-3] >= landIndex && tiles[2,tiles.GetLength(1)-1] >= landIndex)
         {
-            tiles[0,tiles.GetLength(1)-1] = 39;
+            tiles[0,tiles.GetLength(1)-1] = 51;
         }
-        else if (tiles[0,tiles.GetLength(1)-3] <= 13 && tiles[0,tiles.GetLength(1)-1] <= 13 && tiles[2,tiles.GetLength(1)-3] <= 13 && tiles[2,tiles.GetLength(1)-1] <= 13)
+        else if (tiles[0,tiles.GetLength(1)-3] <= waterIndex && tiles[0,tiles.GetLength(1)-1] <= waterIndex && 
+                 tiles[2,tiles.GetLength(1)-3] <= waterIndex && tiles[2,tiles.GetLength(1)-1] <= waterIndex)
         {
             tiles[0,tiles.GetLength(1)-1] = 0;
         }
 
-        if (tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-3] >= 26 && tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-1] >= 26 && 
-                tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-3] >= 26 && tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] >= 26)
+        if (tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-3] >= landIndex && tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-1] >= landIndex && 
+            tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-3] >= landIndex && tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] >= landIndex)
         {
-            tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] = 39;
+            tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] = 51;
         }
-        else if(tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-3] <= 13 && tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-1] <= 13 && 
-                    tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-3] <= 13 && tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] <= 13)
+        else if(tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-3] <= waterIndex && tiles[tiles.GetLength(0)-3,tiles.GetLength(1)-1] <= waterIndex && 
+                tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-3] <= waterIndex && tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] <= waterIndex)
         {
             tiles[tiles.GetLength(0)-1,tiles.GetLength(1)-1] = 0;
         }
 
-        if (tiles[tiles.GetLength(0)-1, 0] >= 26 && tiles[tiles.GetLength(0)-3, 0] >= 26 && tiles[tiles.GetLength(0)-1, 2] >= 26 && tiles[tiles.GetLength(0)-3, 2] >= 26)
+        if (tiles[tiles.GetLength(0)-1, 0] >= landIndex && tiles[tiles.GetLength(0)-3, 0] >= landIndex && 
+            tiles[tiles.GetLength(0)-1, 2] >= landIndex && tiles[tiles.GetLength(0)-3, 2] >= landIndex)
         {
-            tiles[tiles.GetLength(0)-1, 0] = 39;
+            tiles[tiles.GetLength(0)-1, 0] = 51;
         }
-        else if (tiles[tiles.GetLength(0)-1, 0] <= 13 && tiles[tiles.GetLength(0)-3, 0] <= 13 && tiles[tiles.GetLength(0)-1, 2] <= 13 && tiles[tiles.GetLength(0)-3, 2] <= 13) 
+        else if (tiles[tiles.GetLength(0)-1, 0] <= waterIndex && tiles[tiles.GetLength(0)-3, 0] <= waterIndex && 
+                 tiles[tiles.GetLength(0)-1, 2] <= waterIndex && tiles[tiles.GetLength(0)-3, 2] <= waterIndex) 
         {
             tiles[tiles.GetLength(0)-1, 0] = 0;
         }
@@ -93,24 +107,24 @@ public class GameZone : MonoBehaviour
 
     private void CheckEdges()
     {
-        //CheckUpperEdges();
+        CheckUpperEdges();
         CheckLowerEdges();
         CheckRightEdges();
-        //CheckLeftEdges();
+        CheckLeftEdges();
     }
 
     private void CheckUpperEdges()
     {
         for(int i = 2; i < tiles.GetLength(1)-2; i += 2)
         {
-            if(tiles[0,i] >= 26 && tiles[0,i-2] >= 26 && tiles[0,i+2] >= 26 && 
-               tiles[2,i] >= 26 && tiles[2,i-2] >= 26 && tiles[2,i+2] >= 26)
+            if(tiles[0,i] >= landIndex && tiles[0,i-2] >= landIndex && tiles[0,i+2] >= landIndex && 
+               tiles[2,i] >= landIndex && tiles[2,i-2] >= landIndex && tiles[2,i+2] >= landIndex)
             {
-                tiles[0,i] = 39;
+                tiles[0,i] = 51;
             }
 
-            else if(tiles[0,i] <= 13 && tiles[0,i-2] <= 13 && tiles[0,i+2] <= 13 && 
-                    tiles[2,i] <= 13 && tiles[2,i-2] <= 13 && tiles[2,i+2] <= 13)
+            else if(tiles[0,i] <= waterIndex && tiles[0,i-2] <= waterIndex && tiles[0,i+2] <= waterIndex && 
+                    tiles[2,i] <= waterIndex && tiles[2,i-2] <= waterIndex && tiles[2,i+2] <= waterIndex)
             {
                 tiles[0,i] = 0;
             }
@@ -126,13 +140,13 @@ public class GameZone : MonoBehaviour
     {
         for(int i = 2; i < tiles.GetLength(1)-2; i += 2)
         {
-            if(tiles[tiles.GetLength(0)-1,i] >= 26 && tiles[tiles.GetLength(0)-1,i-2] >= 26 && tiles[tiles.GetLength(0)-1,i+2] >= 26 && 
-               tiles[tiles.GetLength(0)-3,i] >= 26 && tiles[tiles.GetLength(0)-3,i-2] >= 26 && tiles[tiles.GetLength(0)-3,i+2] >= 26)
+            if(tiles[tiles.GetLength(0)-1,i] >= landIndex && tiles[tiles.GetLength(0)-1,i-2] >= landIndex && tiles[tiles.GetLength(0)-1,i+2] >= landIndex && 
+               tiles[tiles.GetLength(0)-3,i] >= landIndex && tiles[tiles.GetLength(0)-3,i-2] >= landIndex && tiles[tiles.GetLength(0)-3,i+2] >= landIndex)
             {
-                tiles[tiles.GetLength(0)-1,i] = 39;
+                tiles[tiles.GetLength(0)-1,i] = 51;
             }
-            else if(tiles[tiles.GetLength(0)-1,i] <= 13 && tiles[tiles.GetLength(0)-1,i-2] <= 13 && tiles[tiles.GetLength(0)-1,i+2] <= 13 && 
-                    tiles[tiles.GetLength(0)-3,i] <= 13 && tiles[tiles.GetLength(0)-3,i-2] <= 13 && tiles[tiles.GetLength(0)-3,i+2] <= 13)
+            else if(tiles[tiles.GetLength(0)-1,i] <= waterIndex && tiles[tiles.GetLength(0)-1,i-2] <= waterIndex && tiles[tiles.GetLength(0)-1,i+2] <= waterIndex && 
+                    tiles[tiles.GetLength(0)-3,i] <= waterIndex && tiles[tiles.GetLength(0)-3,i-2] <= waterIndex && tiles[tiles.GetLength(0)-3,i+2] <= waterIndex)
             {
                 tiles[tiles.GetLength(0)-1,i] = 0;
             }
@@ -148,13 +162,13 @@ public class GameZone : MonoBehaviour
     {
         for(int i = 2; i < tiles.GetLength(0)-2; i += 2)
         {
-            if(tiles[i-2,tiles.GetLength(1)-1] >= 26 && tiles[i,tiles.GetLength(1)-1] >= 26 && tiles[i+2,tiles.GetLength(1)-1] >= 26 && 
-               tiles[i-2,tiles.GetLength(1)-3] >= 26 && tiles[i,tiles.GetLength(1)-3] >= 26 && tiles[i+2,tiles.GetLength(1)-3] >= 26)
+            if(tiles[i-2,tiles.GetLength(1)-1] >= landIndex && tiles[i,tiles.GetLength(1)-1] >= landIndex && tiles[i+2,tiles.GetLength(1)-1] >= landIndex && 
+               tiles[i-2,tiles.GetLength(1)-3] >= landIndex && tiles[i,tiles.GetLength(1)-3] >= landIndex && tiles[i+2,tiles.GetLength(1)-3] >= landIndex)
             {
-                tiles[i, tiles.GetLength(1)-1] = 39;
+                tiles[i, tiles.GetLength(1)-1] = 51;
             }
-            else if(tiles[i-2,tiles.GetLength(1)-1] <= 13 && tiles[i,tiles.GetLength(1)-1] <= 13 && tiles[i+2,tiles.GetLength(1)-1] <= 13 && 
-                    tiles[i-2,tiles.GetLength(1)-3] <= 13 && tiles[i,tiles.GetLength(1)-3] <= 13 && tiles[i+2,tiles.GetLength(1)-3] <= 13)
+            else if(tiles[i-2,tiles.GetLength(1)-1] <= waterIndex && tiles[i,tiles.GetLength(1)-1] <= waterIndex && tiles[i+2,tiles.GetLength(1)-1] <= waterIndex && 
+                    tiles[i-2,tiles.GetLength(1)-3] <= waterIndex && tiles[i,tiles.GetLength(1)-3] <= waterIndex && tiles[i+2,tiles.GetLength(1)-3] <= waterIndex)
             {
                 tiles[i, tiles.GetLength(1)-1] = 0;
             }
@@ -170,13 +184,13 @@ public class GameZone : MonoBehaviour
     {
         for(int i = 2; i < tiles.GetLength(0)-2; i += 2)
         {
-            if(tiles[i-2,0] >= 26 && tiles[i,0] >= 26 && tiles[i+2,0] >= 26 && 
-               tiles[i-2,2] >= 26 && tiles[i,2] >= 26 && tiles[i+2,2] >= 26)
+            if(tiles[i-2,0] >= landIndex && tiles[i,0] >= landIndex && tiles[i+2,0] >= landIndex && 
+               tiles[i-2,2] >= landIndex && tiles[i,2] >= landIndex && tiles[i+2,2] >= landIndex)
             {
-                tiles[i,0] = 39;
+                tiles[i,0] = 51;
             }
-            else if(tiles[i-2,0] <= 13 && tiles[i,0] <= 13 && tiles[i+2,0] <= 13 && 
-                    tiles[i-2,2] <= 13 && tiles[i,2] <= 13 && tiles[i+2,2] <= 13)
+            else if(tiles[i-2,0] <= waterIndex && tiles[i,0] <= waterIndex && tiles[i+2,0] <= waterIndex && 
+                    tiles[i-2,2] <= waterIndex && tiles[i,2] <= waterIndex && tiles[i+2,2] <= waterIndex)
             {
                 tiles[i,0] = 0;
             }
@@ -194,15 +208,15 @@ public class GameZone : MonoBehaviour
         {
             for (int j = 2; j < tiles.GetLength(1) - 1; j += 2) 
             { 
-                if (tiles[i-2,j-2] >= 26 && tiles[i-2,j] >= 26 && tiles[i-2,j+2] >= 26 && 
-                    tiles[i,  j-2] >= 26 && tiles[i,  j] >= 26 && tiles[i,  j+2] >= 26 && 
-                    tiles[i+2,j-2] >= 26 && tiles[i+2,j] >= 26 && tiles[i+2,j+2] >= 26) 
+                if (tiles[i-2,j-2] >= landIndex && tiles[i-2,j] >= landIndex && tiles[i-2,j+2] >= landIndex && 
+                    tiles[i,  j-2] >= landIndex && tiles[i,  j] >= landIndex && tiles[i,  j+2] >= landIndex && 
+                    tiles[i+2,j-2] >= landIndex && tiles[i+2,j] >= landIndex && tiles[i+2,j+2] >= landIndex) 
                 {
-                    tiles[i,j] = 39;
+                    tiles[i,j] = 51;
                 }
-                else if (tiles[i-2,j-2] <= 13 && tiles[i-2,j] <= 13 && tiles[i-2,j+2] <= 13 && 
-                    tiles[i,  j-2] <= 13 && tiles[i,  j] <= 13 && tiles[i,  j+2] <= 13 && 
-                    tiles[i+2,j-2] <= 13 && tiles[i+2,j] <= 13 && tiles[i+2,j+2] <= 13)
+                else if (tiles[i-2,j-2] <= waterIndex && tiles[i-2,j] <= waterIndex && tiles[i-2,j+2] <= waterIndex && 
+                    tiles[i,  j-2] <= waterIndex && tiles[i,  j] <= waterIndex && tiles[i,  j+2] <= waterIndex && 
+                    tiles[i+2,j-2] <= waterIndex && tiles[i+2,j] <= waterIndex && tiles[i+2,j+2] <= waterIndex)
                 {
                     tiles[i,j] = 0;
                 }
@@ -277,6 +291,10 @@ public class GameZone : MonoBehaviour
         var shallowDeepCurvedIn1 = TilesResourceLoader.GetShallowDeepCurveIn1Tile();
         var shallowDeepCurvedIn2 = TilesResourceLoader.GetShallowDeepCurveIn2Tile();
         var shallowDeepCurvedIn3 = TilesResourceLoader.GetShallowDeepCurveIn3Tile();
+        var shallowDeepHorizontal0 = TilesResourceLoader.GetShallowDeepHorizontal0Tile();
+        var shallowDeepHorizontal1 = TilesResourceLoader.GetShallowDeepHorizontal1Tile();
+        var shallowDeepHorizontal2 = TilesResourceLoader.GetShallowDeepHorizontal2Tile();
+        var shallowDeepHorizontal3 = TilesResourceLoader.GetShallowDeepHorizontal3Tile();
         var shallowDeepStraight0 = TilesResourceLoader.GetShallowDeepStraight0Tile();
         var shallowDeepStraight1 = TilesResourceLoader.GetShallowDeepStraight1Tile();
         var shallowDeepStraight2 = TilesResourceLoader.GetShallowDeepStraight2Tile();
@@ -290,6 +308,10 @@ public class GameZone : MonoBehaviour
         var beachShallowCurvedIn1 = TilesResourceLoader.GetBeachShallowCurveIn1Tile();
         var beachShallowCurvedIn2 = TilesResourceLoader.GetBeachShallowCurveIn2Tile();
         var beachShallowCurvedIn3 = TilesResourceLoader.GetBeachShallowCurveIn3Tile();
+        var beachShallowHorizontal0 = TilesResourceLoader.GetBeachShallowHorizontal0Tile();
+        var beachShallowHorizontal1 = TilesResourceLoader.GetBeachShallowHorizontal1Tile();
+        var beachShallowHorizontal2 = TilesResourceLoader.GetBeachShallowHorizontal2Tile();
+        var beachShallowHorizontal3 = TilesResourceLoader.GetBeachShallowHorizontal3Tile();
         var beachShallowStraight0 = TilesResourceLoader.GetBeachShallowStraight0Tile();
         var beachShallowStraight1 = TilesResourceLoader.GetBeachShallowStraight1Tile();
         var beachShallowStraight2 = TilesResourceLoader.GetBeachShallowStraight2Tile();
@@ -303,6 +325,10 @@ public class GameZone : MonoBehaviour
         var grassBeachCurvedIn1 = TilesResourceLoader.GetGrassBeachCurveIn1Tile();
         var grassBeachCurvedIn2 = TilesResourceLoader.GetGrassBeachCurveIn2Tile();
         var grassBeachCurvedIn3 = TilesResourceLoader.GetGrassBeachCurveIn3Tile();
+        var grassBeachHorizontal0 = TilesResourceLoader.GetGrassBeachHorizontal0Tile();
+        var grassBeachHorizontal1 = TilesResourceLoader.GetGrassBeachHorizontal1Tile();
+        var grassBeachHorizontal2 = TilesResourceLoader.GetGrassBeachHorizontal2Tile();
+        var grassBeachHorizontal3 = TilesResourceLoader.GetGrassBeachHorizontal3Tile();
         var grassBeachStraight0 = TilesResourceLoader.GetGrassBeachStraight0Tile();
         var grassBeachStraight1 = TilesResourceLoader.GetGrassBeachStraight1Tile();
         var grassBeachStraight2 = TilesResourceLoader.GetGrassBeachStraight2Tile();
@@ -351,84 +377,120 @@ public class GameZone : MonoBehaviour
                 tilemap.SetTile(pos, shallowDeepStraight3);
                 break;
             case 13:
-                tilemap.SetTile(pos,shallowTile);
+                tilemap.SetTile(pos, shallowDeepHorizontal0);
                 break;
             case 14:
-                tilemap.SetTile(pos, beachShallowCurvedOut0);
+                tilemap.SetTile(pos, shallowDeepHorizontal1);
                 break;
             case 15:
-                tilemap.SetTile(pos, beachShallowCurvedOut1);
+                tilemap.SetTile(pos, shallowDeepHorizontal2);
                 break;
             case 16:
-                tilemap.SetTile(pos, beachShallowCurvedOut2);
+                tilemap.SetTile(pos, shallowDeepHorizontal3);
                 break;
             case 17:
-                tilemap.SetTile(pos, beachShallowCurvedOut3);
+                tilemap.SetTile(pos,shallowTile);
                 break;
             case 18:
-                tilemap.SetTile(pos, beachShallowCurvedIn0);
+                tilemap.SetTile(pos, beachShallowCurvedOut0);
                 break;
             case 19:
-                tilemap.SetTile(pos, beachShallowCurvedIn1);
+                tilemap.SetTile(pos, beachShallowCurvedOut1);
                 break;
             case 20:
-                tilemap.SetTile(pos, beachShallowCurvedIn2);
+                tilemap.SetTile(pos, beachShallowCurvedOut2);
                 break;
             case 21:
-                tilemap.SetTile(pos, beachShallowCurvedIn3);
+                tilemap.SetTile(pos, beachShallowCurvedOut3);
                 break;
             case 22:
-                tilemap.SetTile(pos, beachShallowStraight0);
+                tilemap.SetTile(pos, beachShallowCurvedIn0);
                 break;
             case 23:
-                tilemap.SetTile(pos, beachShallowStraight1);
+                tilemap.SetTile(pos, beachShallowCurvedIn1);
                 break;
             case 24:
-                tilemap.SetTile(pos, beachShallowStraight2);
+                tilemap.SetTile(pos, beachShallowCurvedIn2);
                 break;
             case 25:
-                tilemap.SetTile(pos, beachShallowStraight3);
+                tilemap.SetTile(pos, beachShallowCurvedIn3);
                 break;
             case 26:
-                tilemap.SetTile(pos, beachTile);
+                tilemap.SetTile(pos, beachShallowStraight0);
                 break;
             case 27:
-                tilemap.SetTile(pos, grassBeachCurvedOut0);
+                tilemap.SetTile(pos, beachShallowStraight1);
                 break;
             case 28:
-                tilemap.SetTile(pos, grassBeachCurvedOut1);
+                tilemap.SetTile(pos, beachShallowStraight2);
                 break;
             case 29:
-                tilemap.SetTile(pos, grassBeachCurvedOut2);
+                tilemap.SetTile(pos, beachShallowStraight3);
                 break;
             case 30:
-                tilemap.SetTile(pos, grassBeachCurvedOut3);
+                tilemap.SetTile(pos, beachShallowHorizontal0);
                 break;
             case 31:
-                tilemap.SetTile(pos, grassBeachCurvedIn0);
+                tilemap.SetTile(pos, beachShallowHorizontal1);
                 break;
             case 32:
-                tilemap.SetTile(pos, grassBeachCurvedIn1);
+                tilemap.SetTile(pos, beachShallowHorizontal2);
                 break;
             case 33:
-                tilemap.SetTile(pos, grassBeachCurvedIn2);
+                tilemap.SetTile(pos, beachShallowHorizontal3);
                 break;
             case 34:
-                tilemap.SetTile(pos, grassBeachCurvedIn3);
+                tilemap.SetTile(pos, beachTile);
                 break;
             case 35:
-                tilemap.SetTile(pos, grassBeachStraight0);
+                tilemap.SetTile(pos, grassBeachCurvedOut0);
                 break;
             case 36:
-                tilemap.SetTile(pos, grassBeachStraight1);
+                tilemap.SetTile(pos, grassBeachCurvedOut1);
                 break;
             case 37:
-                tilemap.SetTile(pos, grassBeachStraight2);
+                tilemap.SetTile(pos, grassBeachCurvedOut2);
                 break;
             case 38:
-                tilemap.SetTile(pos, grassBeachStraight3);
+                tilemap.SetTile(pos, grassBeachCurvedOut3);
                 break;
             case 39:
+                tilemap.SetTile(pos, grassBeachCurvedIn0);
+                break;
+            case 40:
+                tilemap.SetTile(pos, grassBeachCurvedIn1);
+                break;
+            case 41:
+                tilemap.SetTile(pos, grassBeachCurvedIn2);
+                break;
+            case 42:
+                tilemap.SetTile(pos, grassBeachCurvedIn3);
+                break;
+            case 43:
+                tilemap.SetTile(pos, grassBeachStraight0);
+                break;
+            case 44:
+                tilemap.SetTile(pos, grassBeachStraight1);
+                break;
+            case 45:
+                tilemap.SetTile(pos, grassBeachStraight2);
+                break;
+            case 46:
+                tilemap.SetTile(pos, grassBeachStraight3);
+                break;
+            case 47:
+                tilemap.SetTile(pos, grassBeachHorizontal0);
+                break;
+            case 48:
+                tilemap.SetTile(pos, grassBeachHorizontal1);
+                break;
+            case 49:
+                tilemap.SetTile(pos, grassBeachHorizontal2);
+                break;
+            case 50:
+                tilemap.SetTile(pos, grassBeachHorizontal3);
+                break;
+            case 51:
                 tilemap.SetTile(pos, grassTile);
                 break;
         }
@@ -445,7 +507,7 @@ public class GameZone : MonoBehaviour
 
         else if (prev == 0 || next == 0)
         {
-            if (prev - next == 13){
+            if (prev - next == diffWaterLand){
                 tiles[row,col] = 12;
             } 
             else 
@@ -454,25 +516,25 @@ public class GameZone : MonoBehaviour
             }
         }
 
-        else if (prev == 13 || next == 13)
+        else if (prev == waterIndex || next == waterIndex)
         {
-            if (prev - next == 13){
-                tiles[row,col] = 25;
+            if (prev - next == diffWaterLand){
+                tiles[row,col] = 29;
             } 
             else 
             {
-                tiles[row,col] = 23;
+                tiles[row,col] = 27;
             }
         }
 
-        else if (prev == 26 || next == 26)
+        else if (prev == landIndex || next == landIndex)
         {
-            if (prev - next == 13){
-                tiles[row,col] = 38;
+            if (prev - next == diffWaterLand){
+                tiles[row,col] = 46;
             } 
             else 
             {
-                tiles[row,col] = 36;
+                tiles[row,col] = 44;
             }
         }
 
@@ -489,7 +551,7 @@ public class GameZone : MonoBehaviour
 
         else if (prev == 0 || next == 0)
         {
-            if (prev - next == 13){
+            if (prev - next == diffWaterLand){
                 tiles[row,col] = 11;
             } 
             else 
@@ -498,26 +560,62 @@ public class GameZone : MonoBehaviour
             }
         }
 
-        else if (prev == 13 || next == 13)
+        else if (prev == waterIndex || next == waterIndex)
         {
-            if (prev - next == 13){
-                tiles[row,col] = 24;
+            if (prev - next == diffWaterLand){
+                tiles[row,col] = 28;
             } 
             else 
             {
-                tiles[row,col] = 22;
+                tiles[row,col] = 26;
             }
         }
 
-        else if (prev == 26 || next == 26)
+        else if (prev == landIndex || next == landIndex)
         {
-            if (prev - next == 13){
-                tiles[row,col] = 37;
+            if (prev - next == diffWaterLand){
+                tiles[row,col] = 45;
             } 
             else 
             {
-                tiles[row,col] = 35;
+                tiles[row,col] = 43;
             }
+        }
+    }
+
+    private void FillAcrossTiles(int row, int col, int leftUp, int leftDown)
+    {
+        Debug.Log(tiles[row-1,col]);
+
+        
+        if (tiles[row-1,col] == 12)
+        {
+            tiles[row, col] = 16;
+        }
+
+        else if (tiles[row-1,col] == 10)
+        {
+            tiles[row, col] = 15;
+        }
+        
+        else if(tiles[row-1,col] == 29){
+            tiles[row, col] = 33;
+
+        }
+
+        else if (tiles[row-1,col] == 27)
+        {
+            tiles[row, col] = 32;
+        }
+
+        else if(tiles[row-1,col] == 46){
+            tiles[row, col] = 50;
+
+        }
+
+        else if (tiles[row-1,col] == 44)
+        {
+            tiles[row, col] = 49;
         }
     }
 
@@ -541,36 +639,41 @@ public class GameZone : MonoBehaviour
             tiles[row, col] = left;
         }
 
-        else if (Mathf.Abs(left-right) == 13) 
+        else if (Mathf.Abs(left-right) == diffWaterLand) 
         {
             FillVerticalTiles(row, col);
         }
 
-        else if (Mathf.Abs(up-down) == 13)
+        else if (Mathf.Abs(up-down) == diffWaterLand)
         {
             FillHorizontalTiles(row, col);
+        }
+
+        else if (leftUp == rightDown && leftDown == rightUp)
+        {
+            FillAcrossTiles(row, col, leftUp, leftDown);
         }
 
         else 
         {
             switch (corners)
             {
-                case 143:
+                case 187:
                     FillGrassCorner(row, col);
                     break;
-                case 117:
+                case 153:
                     FillBeachGrassCorner(row, col);
                     break;
-                case 91:
+                case 119:
                     FillBeachShallowCorner(row, col);
                     break;
-                case 65:
+                case 85:
                     FillShallowBeachCorner(row, col);
                     break;
-                case 39:
+                case 51:
                     FillShallowDeepCorner(row, col);
                     break;
-                case 13:
+                case 17:
                     FillDeepCorner(row, col);
                     break;
             }
@@ -639,35 +742,6 @@ public class GameZone : MonoBehaviour
         int rightUp = tiles[row-1, col+1];
         int leftDown = tiles[row+1, col-1];
         int rightDown = tiles[row+1, col+1];
-        Debug.Log(leftUp + " " + rightUp + " " + leftDown + " " + rightDown + " ");
-
-        if(leftUp > rightDown)
-        {
-            tiles[row, col] = 17;
-        }
-
-        else if(rightUp > leftDown) 
-        {
-            tiles[row, col] = 16;
-        }
-
-        else if(leftDown > rightUp) 
-        {
-            tiles[row, col] = 14;
-        }
-
-        else 
-        {
-            tiles[row, col] = 15;
-        }
-    }
-
-    private void FillBeachShallowCorner(int row, int col)
-    {
-        int leftUp = tiles[row-1, col-1];
-        int rightUp = tiles[row-1, col+1];
-        int leftDown = tiles[row+1, col-1];
-        int rightDown = tiles[row+1, col+1];
 
         if(leftUp > rightDown)
         {
@@ -690,6 +764,34 @@ public class GameZone : MonoBehaviour
         }
     }
 
+    private void FillBeachShallowCorner(int row, int col)
+    {
+        int leftUp = tiles[row-1, col-1];
+        int rightUp = tiles[row-1, col+1];
+        int leftDown = tiles[row+1, col-1];
+        int rightDown = tiles[row+1, col+1];
+
+        if(leftUp > rightDown)
+        {
+            tiles[row, col] = 25;
+        }
+
+        else if(rightUp > leftDown) 
+        {
+            tiles[row, col] = 24;
+        }
+
+        else if(leftDown > rightUp) 
+        {
+            tiles[row, col] = 22;
+        }
+
+        else 
+        {
+            tiles[row, col] = 23;
+        }
+    }
+
     private void FillBeachGrassCorner(int row, int col)
     {
         int leftUp = tiles[row-1, col-1];
@@ -699,22 +801,22 @@ public class GameZone : MonoBehaviour
 
         if(leftUp > rightDown)
         {
-            tiles[row, col] = 30;
+            tiles[row, col] = 38;
         }
 
         else if(rightUp > leftDown) 
         {
-            tiles[row, col] = 29;
+            tiles[row, col] = 37;
         }
 
         else if(leftDown > rightUp) 
         {
-            tiles[row, col] = 27;
+            tiles[row, col] = 35;
         }
 
         else 
         {
-            tiles[row, col] = 28;
+            tiles[row, col] = 36;
         }
     }
 
@@ -727,22 +829,22 @@ public class GameZone : MonoBehaviour
 
         if(leftUp > rightDown)
         {
-            tiles[row, col] = 34;
+            tiles[row, col] = 42;
         }
 
         else if(rightUp > leftDown) 
         {
-            tiles[row, col] = 33;
+            tiles[row, col] = 41;
         }
 
         else if(leftDown > rightUp) 
         {
-            tiles[row, col] = 31;
+            tiles[row, col] = 39;
         }
 
         else 
         {
-            tiles[row, col] = 32;
+            tiles[row, col] = 40;
         }
     }
 }
