@@ -585,8 +585,6 @@ public class GameZone : MonoBehaviour
 
     private void FillAcrossTiles(int row, int col, int leftUp, int leftDown)
     {
-        Debug.Log(tiles[row-1,col]);
-
         
         if (tiles[row-1,col] == 12)
         {
