@@ -11,7 +11,14 @@ namespace Demonstration
 
         void Start()
         {
-            pathfinding = new OOPathfinding(100, 100);
+            if (OOPathfinding.Instance == null)
+            {
+                pathfinding = new OOPathfinding(100, 100);
+            }
+            else 
+            {
+                pathfinding = OOPathfinding.Instance;
+            }
         }
 
         // Update is called once per frame
