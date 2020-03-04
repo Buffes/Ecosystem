@@ -33,7 +33,7 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         /// <param name="food">The food entity to eat</param>
         /// <returns>The food points of the food that was eaten</returns>
-        public int Eat(Entity food, GameObject prefab)
+        public int Eat(Entity food)
         {
             KillEntity(food);
 

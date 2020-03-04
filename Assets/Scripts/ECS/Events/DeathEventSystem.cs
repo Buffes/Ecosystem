@@ -24,7 +24,7 @@ namespace Ecosystem.ECS.Events
                 commandBuffer.DestroyEntity(entityInQueryIndex, deathCmd.Target);
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
 
-            });
+            }).ScheduleParallel();
         }
     }
 }
