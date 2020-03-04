@@ -4,9 +4,9 @@ using Ecosystem.Attributes;
 namespace Ecosystem.StateMachines {
     public class MateState : IState {
 
-        IAnimal owner;
+        AAnimal owner;
 
-        public MateState(IAnimal owner) { this.owner = owner; }
+        public MateState(AAnimal owner) { this.owner = owner; }
 
         public void Enter() {
 

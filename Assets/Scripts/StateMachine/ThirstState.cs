@@ -4,12 +4,12 @@ using Ecosystem.Attributes;
 namespace Ecosystem.StateMachines {
     public class ThirstState : IState {
 
-        IAnimal owner;
+        AAnimal owner;
         Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private float pathfindInterval = 1f;
 
-        public ThirstState(IAnimal owner) { this.owner = owner; }
+        public ThirstState(AAnimal owner) { this.owner = owner; }
 
         public void Enter() {
             owner.GetSensors().LookForWater(true);

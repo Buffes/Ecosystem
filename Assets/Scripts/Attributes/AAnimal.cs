@@ -3,7 +3,7 @@ using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
-    public class AAnimal : MonoBehaviour, IAnimal {
+    public class AAnimal : MonoBehaviour {
 
         private float Hunger;
         //private float Thirst;

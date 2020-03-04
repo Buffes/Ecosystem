@@ -4,12 +4,12 @@ using Ecosystem.Attributes;
 namespace Ecosystem.StateMachines {
     public class CasualState : IState {
 
-        IAnimal owner;
+        AAnimal owner;
         Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private readonly float pathfindInterval = 1f;
 
-        public CasualState(IAnimal owner) { this.owner = owner; }
+        public CasualState(AAnimal owner) { this.owner = owner; }
 
         public void Enter() {
             Vector3 currentPos = owner.GetTransform().position;
