@@ -12,6 +12,5 @@ namespace Ecosystem.ECS.Events
     /// </summary>
     public struct DeathEvent : IComponentData
     {
-        public Entity Target;
     }
 }

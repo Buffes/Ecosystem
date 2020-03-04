@@ -42,8 +42,7 @@ namespace Ecosystem.ECS.Hybrid
 
         private void KillEntity(Entity e)
         {
-            Entity death = entityManager.CreateEntity(typeof(DeathEvent));
-            entityManager.SetComponentData(death, new DeathEvent { Target = e });
+            entityManager.AddComponent<DeathEvent>(e);
         }
     }
 }

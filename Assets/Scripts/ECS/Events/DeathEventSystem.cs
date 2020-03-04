@@ -18,10 +18,8 @@ namespace Ecosystem.ECS.Events
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex,
-                in DeathEvent deathCmd) =>
+            Entities.WithAll<DeathEvent>().ForEach((Entity entity, int entityInQueryIndex) =>
             {
-                commandBuffer.DestroyEntity(entityInQueryIndex, deathCmd.Target);
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
 
             }).ScheduleParallel();
