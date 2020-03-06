@@ -39,20 +39,6 @@ namespace Ecosystem.ECS.Hybrid
 
 
         /// <summary>
-        /// Returns the location where water has been found.
-        /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
-        /// </summary>
-        [Obsolete("Use GetFoundWaterInfo().Position instead")]
-        public Vector3 GetWaterLocation() => entityManager.GetComponentData<LookingForWater>(entity).Position;
-        [Obsolete("Use GetFoundFoodInfo().Position instead")]
-        public Vector3 GetFoodLocation() => entityManager.GetComponentData<LookingForFood>(entity).Position;
-        [Obsolete("Use GetFoundPreyInfo().Position instead")]
-        public Vector3 GetPreyLocation() => entityManager.GetComponentData<LookingForPrey>(entity).Position;
-        [Obsolete("Use GetFoundPredatorInfo().Position instead")]
-        public Vector3 GetPredatorLocation() => entityManager.GetComponentData<LookingForPredator>(entity).Position;
-
-
-        /// <summary>
         /// Returns info about the water that has been found.
         /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
         /// </summary>
