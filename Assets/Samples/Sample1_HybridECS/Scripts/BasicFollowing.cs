@@ -18,7 +18,7 @@ namespace Ecosystem.Samples
         [Tooltip("How often this unit calculates a new path")]
         private float pathfindInterval = 1f;
 
-        private float timeSinceLastFrame = 0;
+        private float timeUntilNextPathfind = 0;
 
         private void Start()
         {
@@ -30,9 +30,9 @@ namespace Ecosystem.Samples
 
         private void Update()
         {
-            timeSinceLastFrame += Time.deltaTime;
-            if (timeSinceLastFrame < pathfindInterval) return;
-            timeSinceLastFrame = 0f;
+            timeUntilNextPathfind -= Time.deltaTime;
+            if (timeUntilNextPathfind > 0f) return;
+            timeUntilNextPathfind = pathfindInterval;
 
             Vector3 closestTarget = new Vector3();
 
