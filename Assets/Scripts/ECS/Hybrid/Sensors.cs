@@ -32,10 +32,10 @@ namespace Ecosystem.ECS.Hybrid
         /// Returns if water has been found. Make sure to have enabled
         /// <see cref="LookForWater(bool)"/> first.
         /// </summary>
-        public bool FoundWater() => entityManager.GetComponentData<LookingForWater>(entity).HasFound;
-        public bool FoundFood() => entityManager.GetComponentData<LookingForFood>(entity).HasFound;
-        public bool FoundPrey() => entityManager.GetComponentData<LookingForPrey>(entity).HasFound;
-        public bool FoundPredator() => entityManager.GetComponentData<LookingForPredator>(entity).HasFound;
+        public bool FoundWater() => GetComp<LookingForWater>().HasFound;
+        public bool FoundFood() => GetComp<LookingForFood>().HasFound;
+        public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
+        public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
 
 
         /// <summary>
