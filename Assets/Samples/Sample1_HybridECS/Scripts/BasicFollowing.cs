@@ -20,16 +20,19 @@ namespace Ecosystem.Samples
 
         private float timeSinceLastFrame = 0;
 
+        private void Start()
+        {
+            sensors.LookForFood(true);
+            sensors.LookForPredator(true);
+            sensors.LookForPrey(true);
+            sensors.LookForWater(true);
+        }
+
         private void Update()
         {
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
-
-            sensors.LookForFood(true);
-            sensors.LookForPredator(true);
-            sensors.LookForPrey(true);
-            sensors.LookForWater(true);
 
             Vector3 closestTarget = new Vector3();
 

@@ -88,11 +88,11 @@ namespace Ecosystem.ECS.Hybrid
 
         private void AddRemoveComp<T>(bool add, T component) where T : struct, IComponentData
         {
-            if (add)
+            if (add && !entityManager.HasComponent<T>(entity))
             {
                 entityManager.AddComponentData(entity, component);
             }
-            else
+            else if (!add && entityManager.HasComponent<T>(entity))
             {
                 entityManager.RemoveComponent<T>(entity);
             }
