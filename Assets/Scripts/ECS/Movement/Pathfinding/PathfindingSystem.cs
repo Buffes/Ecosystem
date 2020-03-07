@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Ecosystem.Grid;
 
 namespace Ecosystem.ECS.Movement.Pathfinding
 {
@@ -15,7 +16,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     {
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
-        public NativeHashMap<int2, bool> grid; // The bools here will need to be inverted for fish.
+        // The bools here will need to be inverted for aquatic animals and all set to true for flyers.
+        public NativeArray<bool> grid;
         public int2 gridSize;
 
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
@@ -37,9 +39,13 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             var grid = this.grid;
+            // Error is thrown if gridSize is passed to WithReadOnly directly. Putting it in a NativeContainer is required for some reason.
+            NativeArray<int2> gridSizeArray = new NativeArray<int2>(1, Allocator.Temp);
+            gridSizeArray[0] = gridSize;
+            
             Entities
                 .WithReadOnly(grid)
-                .WithReadOnly(gridSize)
+                .WithReadOnly(gridSizeArray)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in MoveCommand moveCommand,
@@ -49,7 +55,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
                 float3 position = translation.Value;    
-     
+                int2 gridSize = gridSizeArray[0];
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
 
@@ -76,7 +82,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeHashMap<int2, bool> grid, int2 gridSize)
+        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeArray<bool> grid, int2 gridSize)
         {
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
@@ -155,7 +161,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         continue;
                     }
 
-                    if (!grid[neighbourPosition])
+                    if (!grid[CalculateIndex(neighbourPosition, gridSize)])
                     {
                         // Not walkable
                         continue;
@@ -266,6 +272,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 return path;
             }
+        }
+
+        private static int CalculateIndex(int2 position, int2 gridSize)
+        {
+            return gridSize.x * position.y + position.x;
         }
 
         private static bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {

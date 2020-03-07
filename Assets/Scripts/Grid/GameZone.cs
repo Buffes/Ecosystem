@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
+using Unity.Entities;
+using Unity.Collections;
+using Unity.Mathematics;
 
 namespace Ecosystem.Grid
 {
@@ -122,6 +125,7 @@ namespace Ecosystem.Grid
             SetupTilemap();
             SetupWalkableTiles();
             SetupGameObjects();
+            PassWalkableTilesToSystems();
         }
 
         private void InitObjects()
@@ -204,7 +208,7 @@ namespace Ecosystem.Grid
         //The probability of creating water, otherwise create grass. 
         private int RandomizeWater(float water)
         {
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             if (rand <= water)
             {
                 return waterIndex;
@@ -1021,6 +1025,23 @@ namespace Ecosystem.Grid
             }
         }
 
+        private void PassWalkableTilesToSystems()
+        {
+            ref var grid = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>().grid;
+            grid = new NativeArray<bool>(walkableTiles.GetLength(0) * walkableTiles.GetLength(1), Allocator.Temp);
+
+            World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>()
+                .gridSize = new int2(tiles.GetLength(0), tiles.GetLength(1));
+            
+            // Flatten
+            for (int i = 0; i < grid.Length; i++)
+            {
+                int x = i % walkableTiles.GetLength(0);
+                int y = i / walkableTiles.GetLength(1);
+                grid[i] = walkableTiles[x, y];
+            }
+        }
+
         public bool [,] GetWalkableTiles()
         {
             return walkableTiles;
@@ -1132,7 +1153,7 @@ namespace Ecosystem.Grid
             float newBush = value / 3;
             float newTree = (value / 3) * 2;
             float newRock = value;
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             
             if (rand <= newBush)
             {
@@ -1162,7 +1183,7 @@ namespace Ecosystem.Grid
         private Scenary RandomizeDesertScenary(float value, int row, int col) 
         {
             float newRock = value / 2;
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             
             if (rand <= newRock)
             {
@@ -1183,7 +1204,7 @@ namespace Ecosystem.Grid
 
         private GameObject GetRandomBush()
         {
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
         
             if (rand <= 1f/9)
             {
@@ -1225,7 +1246,7 @@ namespace Ecosystem.Grid
 
         private GameObject GetRandomTree()
         {
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
 
             if (rand <= 1f/30)
             {
@@ -1352,7 +1373,7 @@ namespace Ecosystem.Grid
 
         private GameObject GetRandomRock()
         {
-           float rand = Random.value;
+           float rand = UnityEngine.Random.value;
         
             if (rand <= 1f/12)
             {
