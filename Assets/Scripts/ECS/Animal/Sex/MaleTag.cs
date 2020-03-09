@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Entities;
 
-namespace EcoSystem.ECS.Animal.Sex
+namespace Ecosystem.ECS.Animal.Sex
 {
     /// <summary>
     /// Marks an entity as Male
