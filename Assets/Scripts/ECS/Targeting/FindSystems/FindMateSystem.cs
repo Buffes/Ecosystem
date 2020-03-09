@@ -61,7 +61,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                         if (targetDistance > hearing.Range) continue; // Out of range
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; //If not the same type of animal
-                        if (sexType.SexTypeId != targetSexType.SexTypeId) continue;
+                        if (sexType.SexTypeId == targetSexType.SexTypeId) continue; // If the same sex
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
 
                         closestMateIndex = i;
