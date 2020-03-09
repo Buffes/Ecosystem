@@ -35,16 +35,19 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var entities = query.ToEntityArray(Allocator.TempJob);
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
             var animalTypes = query.ToComponentDataArray<AnimalTypeData>(Allocator.TempJob);
+            var sexTypes = query.ToComponentDataArray<SexTypeData>(Allocator.TempJob);
 
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(animalTypes)
+                .WithReadOnly(sexTypes)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForMate lookingForMate,
                 in Translation position,
                 in Hearing hearing,
-                in AnimalTypeData animalType) =>
+                in AnimalTypeData animalType,
+                in SexTypeData sexType) =>
                 {
                     int closestMateIndex = -1;
                     float closestMateDistance = 0f;
@@ -52,11 +55,13 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     for (int i = 0; i < entities.Length; i++)
                     {
                         AnimalTypeData targetAnimalType = animalTypes[i];
+                        SexTypeData targetSexType = sexTypes[i];
                         float3 targetPosition = positions[i].Value;
                         float targetDistance = math.distance(targetPosition, position.Value);
 
                         if (targetDistance > hearing.Range) continue; // Out of range
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; //If not the same type of animal
+                        if (sexType.SexTypeId != targetSexType.SexTypeId) continue;
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
 
                         closestMateIndex = i;
