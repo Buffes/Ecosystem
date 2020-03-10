@@ -21,7 +21,7 @@ namespace Ecosystem.StateMachines {
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
 
-            Vector3 currentPos = owner.GetTransform().position;
+            Vector3 currentPos = owner.GetMovement().GetPosition();
 
             if (owner.GetSensors().FoundWater()) {
                 nextTarget = owner.GetSensors().GetFoundWaterInfo().Position;

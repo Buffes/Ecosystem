@@ -12,7 +12,7 @@ namespace Ecosystem.StateMachines {
         public CasualState(AAnimal owner) { this.owner = owner; }
 
         public void Enter() {
-            Vector3 currentPos = owner.GetTransform().position;
+            Vector3 currentPos = owner.GetMovement().GetPosition();
             nextTarget = RandomTarget(currentPos);
         }
 
@@ -21,7 +21,7 @@ namespace Ecosystem.StateMachines {
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
 
-            Vector3 currentPos = owner.GetTransform().position;
+            Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2.5f) {
