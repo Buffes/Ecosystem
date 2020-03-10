@@ -15,7 +15,7 @@ namespace Ecosystem.Grid
         public static List<Vector3Int> tilePositions;
 
         private TilesAssetsToTilemap tilesAssetsToTilemap;
-        private ScenaryToTilemap scenaryToTilemap;
+        public ScenaryToTilemap scenaryToTilemap;
 
         //The numbers of the shallow and beach tiles
         private int waterIndex = 17;
@@ -25,10 +25,10 @@ namespace Ecosystem.Grid
         private int diffWaterLand = 0;
 
         //The rate of chance for spawning an object if there is a similar object as neighbour
-        private float waterNeighbourRate = 0.65f;
+        public float waterNeighbourRate = 0.65f;
 
         //The rate of objects spawning
-        private float waterSpawnRate = 0.005f;
+        public float waterSpawnRate = 0.005f;
     
         //Matrix of walkable tiles
         public static bool [,] walkableTiles;
@@ -46,7 +46,6 @@ namespace Ecosystem.Grid
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
 
             SetupWalkableTiles();
-            scenaryToTilemap = new ScenaryToTilemap();
         }
 
         private void InitObjects()
