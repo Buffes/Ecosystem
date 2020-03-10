@@ -145,25 +145,25 @@ namespace Ecosystem.Grid
 
         private GameObject GetRandomBush()
         {
-            int rand = Random.Range(0, bushes.Count-1);
+            int rand = Random.Range(0, bushes.Count);
             return bushes[rand];
         }
 
         private GameObject GetRandomTree()
         {
-            int rand = Random.Range(0, trees.Count-1);
+            int rand = Random.Range(0, trees.Count);
             return trees[rand];
         }
 
         private GameObject GetRandomRock()
         {
-            int rand = Random.Range(0, rocks.Count-1);
+            int rand = Random.Range(0, rocks.Count);
             return rocks[rand];
         }
 
         private GameObject GetRandomCactus()
         {
-            int rand = Random.Range(0, cacti.Count-1);
+            int rand = Random.Range(0, cacti.Count);
             return cacti[rand];
         }
 
