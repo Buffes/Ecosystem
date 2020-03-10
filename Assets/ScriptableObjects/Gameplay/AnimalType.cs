@@ -6,8 +6,8 @@ namespace Ecosystem.Gameplay
     [CreateAssetMenu(menuName = "Gameplay/AnimalType")]
     public class AnimalType : AnimalTypeComponent
     {
-        [Tooltip("The type of meat that comes from this animal")]
-        public FoodType Meat;
+        [Tooltip("The meat that comes from this animal")]
+        public GameObject Meat;
 
         [Tooltip("Animals that are prey to this animal")]
         [SerializeField]
