@@ -4,12 +4,12 @@ using Ecosystem.Attributes;
 namespace Ecosystem.StateMachines {
     public class HungerState : IState {
 
-        AAnimal owner;
+        Animal owner;
         Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private float pathfindInterval = 1f;
 
-        public HungerState(AAnimal owner) { this.owner = owner; }
+        public HungerState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
             owner.GetSensors().LookForFood(true);

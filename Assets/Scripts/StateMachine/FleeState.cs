@@ -4,12 +4,12 @@ using Ecosystem.Attributes;
 namespace Ecosystem.StateMachines {
     public class FleeState : IState {
 
-        AAnimal owner;
+        Animal owner;
         Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private float pathfindInterval = 1f;
 
-        public FleeState(AAnimal owner) { this.owner = owner; }
+        public FleeState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
             // Starts sprint

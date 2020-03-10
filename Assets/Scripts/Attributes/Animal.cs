@@ -3,7 +3,7 @@ using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
 
 namespace Ecosystem.Attributes {
-    public class AAnimal : MonoBehaviour {
+    public class Animal : MonoBehaviour {
 
         private float hunger;
         private float hungerLimit;
@@ -23,7 +23,7 @@ namespace Ecosystem.Attributes {
         private IState thirstState;
         private IState fleeState;
 
-        public AAnimal() {
+        public Animal() {
             this.stateMachine = new StateMachine();
         }
 
