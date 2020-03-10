@@ -7,8 +7,8 @@ namespace Ecosystem.ECS.Animal
     /// Specifies the sex of the animal. Male, Female
     /// </summary>
     [Serializable]
-    public struct SexTypeData : IComponentData
+    public struct SexData : IComponentData
     {
-        public Sexes Sex;
+        public Sex Sex;
     }
 }

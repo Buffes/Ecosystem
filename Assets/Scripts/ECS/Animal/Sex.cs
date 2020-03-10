@@ -1,7 +1,7 @@
 ﻿
 namespace Ecosystem.ECS.Animal
 {
-    public enum Sexes
+    public enum Sex
     {
         Male,
         Female

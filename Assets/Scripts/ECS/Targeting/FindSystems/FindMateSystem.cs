@@ -25,7 +25,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             query = GetEntityQuery(
                 ComponentType.ReadOnly<Translation>(),
                 ComponentType.ReadOnly<AnimalTypeData>(),
-                ComponentType.ReadOnly<SexTypeData>()
+                ComponentType.ReadOnly<SexData>()
                 );
             
         }
@@ -37,7 +37,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var entities = query.ToEntityArray(Allocator.TempJob);
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
             var animalTypes = query.ToComponentDataArray<AnimalTypeData>(Allocator.TempJob);
-            var sexTypes = query.ToComponentDataArray<SexTypeData>(Allocator.TempJob);
+            var sexTypes = query.ToComponentDataArray<SexData>(Allocator.TempJob);
             
 
             Entities
@@ -50,7 +50,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in Hearing hearing,
                 in AnimalTypeData animalType,
-                in SexTypeData sexType) =>
+                in SexData sexType) =>
                 {
                     
                     int closestMateIndex = -1;
@@ -58,8 +58,8 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                     for (int i = 0; i < entities.Length; i++)
                     {
-                        AnimalTypeData targetAnimalType = animalTypes[i];                    
-                        SexTypeData targetSexType = sexTypes[i];
+                        AnimalTypeData targetAnimalType = animalTypes[i];
+                        SexData targetSexType = sexTypes[i];
                         float3 targetPosition = positions[i].Value;
                         float targetDistance = math.distance(targetPosition, position.Value);
 
