@@ -26,6 +26,7 @@ namespace Ecosystem.ECS.Hybrid
         public void LookForFood(bool enabled) => AddRemoveComp(enabled, new LookingForFood());
         public void LookForPrey(bool enabled) => AddRemoveComp(enabled, new LookingForPrey());
         public void LookForPredator(bool enabled) => AddRemoveComp(enabled, new LookingForPredator());
+        public void LookForMate(bool enabled) => AddRemoveComp(enabled, new LookingForMate());
 
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace Ecosystem.ECS.Hybrid
         public bool FoundFood() => entityManager.GetComponentData<LookingForFood>(entity).HasFound;
         public bool FoundPrey() => entityManager.GetComponentData<LookingForPrey>(entity).HasFound;
         public bool FoundPredator() => entityManager.GetComponentData<LookingForPredator>(entity).HasFound;
+        public bool FoundMate() => entityManager.GetComponentData<LookingForMate>(entity).HasFound;
 
 
         /// <summary>
@@ -50,6 +52,7 @@ namespace Ecosystem.ECS.Hybrid
         public Vector3 GetPreyLocation() => entityManager.GetComponentData<LookingForPrey>(entity).Position;
         [Obsolete("Use GetFoundPredatorInfo().Position instead")]
         public Vector3 GetPredatorLocation() => entityManager.GetComponentData<LookingForPredator>(entity).Position;
+
 
 
         /// <summary>
@@ -77,6 +80,12 @@ namespace Ecosystem.ECS.Hybrid
         public (Vector3 Position, Entity Entity) GetFoundPredatorInfo()
         {
             LookingForPredator info = GetComp<LookingForPredator>();
+            return (info.Position, info.Entity);
+        }
+
+        public (Vector3 Position, Entity Entity) GetFoundMateInfo()
+        {
+            LookingForMate info = GetComp<LookingForMate>();
             return (info.Position, info.Entity);
         }
 
