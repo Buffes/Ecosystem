@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39e51a4b83c64f25bb54fe6f3e00aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  parent: {fileID: 9038041116143524520, guid: 1949f5a6eb3e44280812a624e4564d07, type: 3}
   berryPrefab: {fileID: 2012532265587641750, guid: 2795401ccfb07483cbf39646a8495795,
     type: 3}
   spawnAmount: 2
-  startX: -5
-  endX: 5
-  startZ: -5
-  endZ: 5
+  startX: 15
+  endX: 25
+  startZ: 8
+  endZ: 18
