@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Ecosystem.ECS.Animal.Sex;
+using System;
 using Unity.Entities;
 
 namespace Ecosystem.ECS.Animal
 {
     /// <summary>
-    /// Specifies the sex of the animal. Male, Female, Hermaphrodite
+    /// Specifies the sex of the animal. Male, Female
     /// </summary>
     [Serializable]
     public struct SexTypeData : IComponentData
     {
-        public int SexTypeId;
+        public Sexes Sex;
     }
 }

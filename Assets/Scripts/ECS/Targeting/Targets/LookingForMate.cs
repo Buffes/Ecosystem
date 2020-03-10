@@ -10,7 +10,7 @@ namespace Ecosystem.ECS.Targeting.Targets
     public struct LookingForMate : IComponentData
     {
         public bool HasFound;
-        public Sexes Sex; //Sex preference
+        /*public Sexes Sex; //Sex preference*/
         public Entity Entity;
         public float3 Position;
 
