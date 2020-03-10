@@ -1,5 +1,5 @@
 ﻿
-namespace Ecosystem.ECS.Animal.Sex
+namespace Ecosystem.ECS.Animal
 {
     public enum Sexes
     {

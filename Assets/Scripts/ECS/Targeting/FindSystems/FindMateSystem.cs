@@ -1,8 +1,6 @@
 ﻿using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
-using Ecosystem.ECS.Animal.Sex;
-
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -26,7 +24,10 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
             query = GetEntityQuery(
                 ComponentType.ReadOnly<Translation>(),
-                ComponentType.ReadOnly<AnimalTypeData>());
+                ComponentType.ReadOnly<AnimalTypeData>(),
+                ComponentType.ReadOnly<SexTypeData>()
+                );
+            
         }
 
         protected override void OnUpdate()
@@ -37,6 +38,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
             var animalTypes = query.ToComponentDataArray<AnimalTypeData>(Allocator.TempJob);
             var sexTypes = query.ToComponentDataArray<SexTypeData>(Allocator.TempJob);
+            
 
             Entities
                 .WithReadOnly(entities)
@@ -50,12 +52,13 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in AnimalTypeData animalType,
                 in SexTypeData sexType) =>
                 {
+                    
                     int closestMateIndex = -1;
                     float closestMateDistance = 0f;
 
                     for (int i = 0; i < entities.Length; i++)
                     {
-                        AnimalTypeData targetAnimalType = animalTypes[i];
+                        AnimalTypeData targetAnimalType = animalTypes[i];                    
                         SexTypeData targetSexType = sexTypes[i];
                         float3 targetPosition = positions[i].Value;
                         float targetDistance = math.distance(targetPosition, position.Value);
@@ -63,7 +66,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                         if (targetDistance > hearing.Range) continue; // Out of range
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; //If not the same type of animal
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
-                        if (sexType.Sex != targetSexType.Sex)   continue; // if the same sex
+                        if (sexType.Sex != targetSexType.Sex)   continue; // If the same sex
 
                         closestMateIndex = i;
                         closestMateDistance = targetDistance;
@@ -87,6 +90,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             entities.Dispose(Dependency);
             positions.Dispose(Dependency);
             animalTypes.Dispose(Dependency);
+            sexTypes.Dispose(Dependency);
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }

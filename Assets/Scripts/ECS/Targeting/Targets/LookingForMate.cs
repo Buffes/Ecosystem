@@ -1,7 +1,6 @@
 ﻿using System;
 using Unity.Entities;
 using Unity.Mathematics;
-using Ecosystem.ECS.Animal.Sex;
 
 namespace Ecosystem.ECS.Targeting.Targets
 {

@@ -1,5 +1,4 @@
-﻿using Ecosystem.ECS.Animal.Sex;
-using System;
+﻿using System;
 using Unity.Entities;
 
 namespace Ecosystem.ECS.Animal
