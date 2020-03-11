@@ -9,6 +9,8 @@ namespace Ecosystem.ECS.Debugging
 {
     public class PathDebuggingSystem : SystemBase
     {
+        private const float PATH_LINE_Y = 1;
+
         public bool Show { get; set; }
         public Material Material { get; set; }
 
@@ -36,7 +38,7 @@ namespace Ecosystem.ECS.Debugging
             points[points.Length - 1] = start;
 
             UnityEngine.Graphics.DrawMesh(
-                    CreateLineMesh(points, 1),
+                    CreateLineMesh(points, PATH_LINE_Y),
                     new Vector3(),
                     Quaternion.identity,
                     Material,
