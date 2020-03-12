@@ -28,7 +28,7 @@ namespace Ecosystem.Attributes {
         }
 
         void Start() {
-            this.hunger = 1f;
+            this.hunger = 0.5f;
             this.hungerLimit = 0.5f;
             this.thirst = 1f;
             this.thirstLimit = 0.5f;
@@ -53,6 +53,8 @@ namespace Ecosystem.Attributes {
 
         void Update() {
             this.hunger -= this.changePerSecond*Time.deltaTime;
+            Debug.Log(this.hunger);
+            Debug.Log(stateMachine.getCurrentState());
             bool predatorInRange = sensors.FoundPredator();
 
             if (predatorInRange) {

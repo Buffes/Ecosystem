@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting
 {
@@ -42,7 +43,9 @@ namespace Ecosystem.ECS.Targeting
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForFood lookingForFood,
                 in Translation position,
+                in Rotation rotation,
                 in Hearing hearing,
+                in Vision vision,
                 in DynamicBuffer<FoodTypesElement> foodTypeBuffer) =>
             {
 
@@ -56,7 +59,10 @@ namespace Ecosystem.ECS.Targeting
                     float3 targetPosition = positions[i].Value;
                     float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (targetDistance > hearing.Range) continue; // Out of range
+                    if (targetDistance > hearing.Range || !IntersectsVision(targetPosition, targetDistance, rotation, vision, position.Value))
+                    {
+                        continue; // Out of range    
+                    } 
                     if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
                     if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
 
@@ -98,6 +104,27 @@ namespace Ecosystem.ECS.Targeting
             }
 
             return false;
+        }
+
+        private static bool IntersectsVision(float3 targetPosition, float targetDistance, Rotation rotation, Vision vision, float3 position)
+        {
+            float3 forward = math.forward(rotation.Value);
+            //Debug.DrawRay(position, forward * vision.Range, Color.red);
+            //Debug.Log("ray: " + position + " to " + position + " + " + forward);
+            //Debug.Log("Rotation: " + rotation.Value);
+            //Debug.Log("forward length: " + math.length(forward));
+            if (targetDistance > vision.Range) return false;
+
+            //float3 forward = math.forward(rotation.Value);
+
+            float forwardAngle = math.atan2(forward.z, forward.x);
+            float3 relativePosition = targetPosition - position;
+            //Debug.Log("relative position: " + relativePosition);
+            float pointAngle = math.atan2(relativePosition.z, relativePosition.x);
+            //Debug.Log("point angle: " + pointAngle);
+            //Debug.Log("forward angle: " + forwardAngle);
+            //Debug.Log(math.abs(pointAngle - forwardAngle) < vision.Angle);
+            return math.abs(pointAngle - forwardAngle) < vision.Angle;
         }
     }
 }
