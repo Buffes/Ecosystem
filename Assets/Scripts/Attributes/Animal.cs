@@ -53,8 +53,6 @@ namespace Ecosystem.Attributes {
 
         void Update() {
             this.hunger -= this.changePerSecond*Time.deltaTime;
-            Debug.Log(this.hunger);
-            Debug.Log(stateMachine.getCurrentState());
             bool predatorInRange = sensors.FoundPredator();
 
             if (predatorInRange) {
