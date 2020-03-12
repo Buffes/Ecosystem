@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using UnityEngine;
 using Ecosystem.ECS.Targeting.Targets;
 using System;
@@ -33,25 +33,10 @@ namespace Ecosystem.ECS.Hybrid
         /// Returns if water has been found. Make sure to have enabled
         /// <see cref="LookForWater(bool)"/> first.
         /// </summary>
-        public bool FoundWater() => entityManager.GetComponentData<LookingForWater>(entity).HasFound;
-        public bool FoundFood() => entityManager.GetComponentData<LookingForFood>(entity).HasFound;
-        public bool FoundPrey() => entityManager.GetComponentData<LookingForPrey>(entity).HasFound;
-        public bool FoundPredator() => entityManager.GetComponentData<LookingForPredator>(entity).HasFound;
-        public bool FoundMate() => entityManager.GetComponentData<LookingForMate>(entity).HasFound;
-
-
-        /// <summary>
-        /// Returns the location where water has been found.
-        /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
-        /// </summary>
-        [Obsolete("Use GetFoundWaterInfo().Position instead")]
-        public Vector3 GetWaterLocation() => entityManager.GetComponentData<LookingForWater>(entity).Position;
-        [Obsolete("Use GetFoundFoodInfo().Position instead")]
-        public Vector3 GetFoodLocation() => entityManager.GetComponentData<LookingForFood>(entity).Position;
-        [Obsolete("Use GetFoundPreyInfo().Position instead")]
-        public Vector3 GetPreyLocation() => entityManager.GetComponentData<LookingForPrey>(entity).Position;
-        [Obsolete("Use GetFoundPredatorInfo().Position instead")]
-        public Vector3 GetPredatorLocation() => entityManager.GetComponentData<LookingForPredator>(entity).Position;
+        public bool FoundWater() => GetComp<LookingForWater>().HasFound;
+        public bool FoundFood() => GetComp<LookingForFood>().HasFound;
+        public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
+        public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
 
 
 
@@ -97,11 +82,11 @@ namespace Ecosystem.ECS.Hybrid
 
         private void AddRemoveComp<T>(bool add, T component) where T : struct, IComponentData
         {
-            if (add)
+            if (add && !entityManager.HasComponent<T>(entity))
             {
                 entityManager.AddComponentData(entity, component);
             }
-            else
+            else if (!add && entityManager.HasComponent<T>(entity))
             {
                 entityManager.RemoveComponent<T>(entity);
             }
