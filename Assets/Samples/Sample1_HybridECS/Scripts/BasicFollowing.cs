@@ -18,18 +18,21 @@ namespace Ecosystem.Samples
         [Tooltip("How often this unit calculates a new path")]
         private float pathfindInterval = 1f;
 
-        private float timeSinceLastFrame = 0;
+        private float timeUntilNextPathfind = 0;
 
-        private void Update()
+        private void Start()
         {
-            timeSinceLastFrame += Time.deltaTime;
-            if (timeSinceLastFrame < pathfindInterval) return;
-            timeSinceLastFrame = 0f;
-
             sensors.LookForFood(true);
             sensors.LookForPredator(true);
             sensors.LookForPrey(true);
             sensors.LookForWater(true);
+        }
+
+        private void Update()
+        {
+            timeUntilNextPathfind -= Time.deltaTime;
+            if (timeUntilNextPathfind > 0f) return;
+            timeUntilNextPathfind = pathfindInterval;
 
             Vector3 closestTarget = new Vector3();
 
