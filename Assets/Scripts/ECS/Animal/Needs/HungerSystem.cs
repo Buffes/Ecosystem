@@ -18,11 +18,19 @@ namespace Ecosystem.ECS.Animal.Needs
 
         protected override void OnUpdate()
         {
+            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref HungerData hungerData) =>
             {
                 hungerData.Hunger -= Time.DeltaTime / 100.0f;
-            });
+
+                if(hungerData.Hunger <= 0.0f)
+                {
+                    //Die
+                }
+
+            }).ScheduleParallel();
             throw new NotImplementedException();
         }
     }

@@ -3,7 +3,8 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.Entities;
+
+using Ecosystem.ECS.Events;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
@@ -19,11 +20,19 @@ namespace Ecosystem.ECS.Animal.Needs
 
         protected override void OnUpdate()
         {
+            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
             {
+                thirstData.Thirst -= Time.DeltaTime / 100.0f;
 
-            });
+                if(thirstData.Thirst <= 0.0f)
+                {
+                    //Die
+                }
+
+            }).ScheduleParallel();
 
             throw new NotImplementedException();
         }
