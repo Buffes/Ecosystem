@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using UnityEngine;
 using Ecosystem.ECS.Targeting.Targets;
 using System;
@@ -26,6 +26,7 @@ namespace Ecosystem.ECS.Hybrid
         public void LookForFood(bool enabled) => AddRemoveComp(enabled, new LookingForFood());
         public void LookForPrey(bool enabled) => AddRemoveComp(enabled, new LookingForPrey());
         public void LookForPredator(bool enabled) => AddRemoveComp(enabled, new LookingForPredator());
+        public void LookForMate(bool enabled) => AddRemoveComp(enabled, new LookingForMate());
 
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace Ecosystem.ECS.Hybrid
         public bool FoundFood() => GetComp<LookingForFood>().HasFound;
         public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
         public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
+
 
 
         /// <summary>
@@ -63,6 +65,12 @@ namespace Ecosystem.ECS.Hybrid
         public (Vector3 Position, Entity Entity) GetFoundPredatorInfo()
         {
             LookingForPredator info = GetComp<LookingForPredator>();
+            return (info.Position, info.Entity);
+        }
+
+        public (Vector3 Position, Entity Entity) GetFoundMateInfo()
+        {
+            LookingForMate info = GetComp<LookingForMate>();
             return (info.Position, info.Entity);
         }
 
