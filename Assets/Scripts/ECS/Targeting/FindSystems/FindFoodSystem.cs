@@ -1,5 +1,4 @@
 ﻿using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Results;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
@@ -37,11 +36,11 @@ namespace Ecosystem.ECS.Targeting
             var foodTypes = query.ToComponentDataArray<FoodTypeData>(Allocator.TempJob);
 
             Entities
-                .WithAll<LookingForFood>()
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(foodTypes)
                 .ForEach((Entity entity, int entityInQueryIndex,
+                ref LookingForFood lookingForFood,
                 in Translation position,
                 in Hearing hearing,
                 in DynamicBuffer<FoodTypesElement> foodTypeBuffer) =>
@@ -68,15 +67,13 @@ namespace Ecosystem.ECS.Targeting
                 // Set result
                 if (closestFoodIndex != -1)
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new FoundFood
-                    {
-                        Entity = entities[closestFoodIndex],
-                        Position = positions[closestFoodIndex].Value
-                    });
+                    lookingForFood.HasFound = true;
+                    lookingForFood.Entity = entities[closestFoodIndex];
+                    lookingForFood.Position = positions[closestFoodIndex].Value;
                 }
                 else
                 {
-                    commandBuffer.RemoveComponent<FoundFood>(entityInQueryIndex, entity);
+                    lookingForFood.HasFound = false;
                 }
 
             }).ScheduleParallel();
