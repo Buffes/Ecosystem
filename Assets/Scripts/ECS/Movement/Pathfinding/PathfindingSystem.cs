@@ -17,8 +17,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
         // The bools here will need to be inverted for aquatic animals and all set to true for flyers.
-        public NativeArray<bool> grid;
-        public NativeArray<int2> gridSizeArray;
 
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
@@ -30,18 +28,13 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         }
 
-        protected override void OnDestroy()
-        {
-            grid.Dispose();
-        }
-
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            var grid = this.grid;
-            var gridSizeArray = this.gridSizeArray;
-            // Error is thrown if gridSize is passed to WithReadOnly directly. Putting it in a NativeContainer is required for some reason.
-            //gridSizeArray[0] = gridSize;
+            NativeArray<bool> grid = GameZone.walkableTiles;
+            var gridSizeArray = new NativeArray<int2>(1, Allocator.TempJob);
+            // Error is thrown if an int2 is passed to WithReadOnly directly. Putting it in a NativeContainer is required for some reason.
+            gridSizeArray[0] = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
             
             Entities
                 .WithReadOnly(grid)
@@ -75,6 +68,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
                 path.Dispose();
             }).ScheduleParallel();
+
+            gridSizeArray.Dispose(Dependency);
+
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
 

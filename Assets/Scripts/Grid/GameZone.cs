@@ -34,7 +34,7 @@ namespace Ecosystem.Grid
         public float waterSpawnRate = 0.005f;
     
         //Matrix of walkable tiles
-        public static bool [,] walkableTiles;
+        public static NativeArray<bool> walkableTiles;
 
 
         // Start is called before the first frame update
@@ -49,13 +49,12 @@ namespace Ecosystem.Grid
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
 
             SetupWalkableTiles();
-            PassWalkableTilesToSystems();
         }
 
         private void InitObjects()
         {
             diffWaterLand = landIndex - waterIndex;
-            walkableTiles = new bool [tiles.GetLength(0), tiles.GetLength(1)];
+            walkableTiles = new NativeArray<bool>(tiles.Length, Allocator.Persistent);
             
         }
 
@@ -649,37 +648,42 @@ namespace Ecosystem.Grid
                 {
                     if (tiles[row, col] < 18)
                     {
-                        walkableTiles[row,col] = false;
+                        walkableTiles[CalculateIndex(row, col)] = false;
                     } 
                     else 
                     {
-                        walkableTiles[row,col] = true;
+                        walkableTiles[CalculateIndex(row, col)] = true;
                     }
                 }
             }
             
         }
 
-        private void PassWalkableTilesToSystems()
+        private int CalculateIndex(int row, int col)
         {
-            ref var grid = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>().grid;
-            grid = new NativeArray<bool>(walkableTiles.GetLength(0) * walkableTiles.GetLength(1), Allocator.Persistent);
-
-            ref var gridSizeArray = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>()
-                .gridSizeArray;
-            gridSizeArray = new NativeArray<int2>(1, Allocator.Persistent);
-            gridSizeArray[0] = new int2(tiles.GetLength(0), tiles.GetLength(1));
-            
-            // Flatten
-            for (int i = 0; i < grid.Length; i++)
-            {
-                int x = i % walkableTiles.GetLength(0);
-                int y = i / walkableTiles.GetLength(1);
-                grid[i] = walkableTiles[x, y];
-            }
+            return col * tiles.GetLength(0) + row;
         }
 
-        public bool [,] GetWalkableTiles()
+        // private void PassWalkableTilesToSystems()
+        // {
+        //     ref var grid = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>().grid;
+        //     grid = new NativeArray<bool>(walkableTiles.GetLength(0) * walkableTiles.GetLength(1), Allocator.Persistent);
+
+        //     ref var gridSizeArray = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>()
+        //         .gridSizeArray;
+        //     gridSizeArray = new NativeArray<int2>(1, Allocator.Persistent);
+        //     gridSizeArray[0] = new int2(tiles.GetLength(0), tiles.GetLength(1));
+            
+        //     // Flatten
+        //     for (int i = 0; i < grid.Length; i++)
+        //     {
+        //         int x = i % walkableTiles.GetLength(0);
+        //         int y = i / walkableTiles.GetLength(1);
+        //         grid[i] = walkableTiles[x, y];
+        //     }
+        // }
+
+        public NativeArray<bool> GetWalkableTiles()
         {
             return walkableTiles;
         }
