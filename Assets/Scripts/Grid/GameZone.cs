@@ -664,25 +664,6 @@ namespace Ecosystem.Grid
             return col * tiles.GetLength(0) + row;
         }
 
-        // private void PassWalkableTilesToSystems()
-        // {
-        //     ref var grid = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>().grid;
-        //     grid = new NativeArray<bool>(walkableTiles.GetLength(0) * walkableTiles.GetLength(1), Allocator.Persistent);
-
-        //     ref var gridSizeArray = ref World.DefaultGameObjectInjectionWorld.GetExistingSystem<ECS.Movement.Pathfinding.PathfindingSystem>()
-        //         .gridSizeArray;
-        //     gridSizeArray = new NativeArray<int2>(1, Allocator.Persistent);
-        //     gridSizeArray[0] = new int2(tiles.GetLength(0), tiles.GetLength(1));
-            
-        //     // Flatten
-        //     for (int i = 0; i < grid.Length; i++)
-        //     {
-        //         int x = i % walkableTiles.GetLength(0);
-        //         int y = i / walkableTiles.GetLength(1);
-        //         grid[i] = walkableTiles[x, y];
-        //     }
-        // }
-
         public NativeArray<bool> GetWalkableTiles()
         {
             return walkableTiles;
