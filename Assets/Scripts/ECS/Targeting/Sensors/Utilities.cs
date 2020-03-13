@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Targeting.Sensors
 {
-    public static class Intersections
+    public static class Utilities
     {
         /// <summary>
         /// Checks intersection between a point at targetPosition and a circle sector defined by the vision parameter.

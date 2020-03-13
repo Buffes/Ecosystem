@@ -5,7 +5,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting
 {
@@ -59,7 +58,7 @@ namespace Ecosystem.ECS.Targeting
                     float3 targetPosition = positions[i].Value;
                     float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (targetDistance > hearing.Range && !Intersections.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                    if (targetDistance > hearing.Range && !Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
                     {
                         continue; // Out of hearing and vision range    
                     } 
