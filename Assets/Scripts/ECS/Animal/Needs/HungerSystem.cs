@@ -1,11 +1,18 @@
-﻿using System;
+﻿
+
+using System;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+using Ecosystem.ECS.Events;
+
 namespace Ecosystem.ECS.Animal.Needs
 {
+    /// <summary>
+    /// System for increasing hunger on an animal.
+    /// </summary>
     public class HungerSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
@@ -23,11 +30,11 @@ namespace Ecosystem.ECS.Animal.Needs
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref HungerData hungerData) =>
             {
-                hungerData.Hunger -= Time.DeltaTime / 100.0f;
+                hungerData.Hunger += Time.DeltaTime / 1000.0f;
 
                 if(hungerData.Hunger <= 0.0f)
                 {
-                    //Die
+                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
                 }
 
             }).ScheduleParallel();

@@ -8,6 +8,9 @@ using Ecosystem.ECS.Events;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
+    /// <summary>
+    /// System for increasing the thirst of an animal.
+    /// </summary>
     public class ThirstSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
@@ -25,11 +28,11 @@ namespace Ecosystem.ECS.Animal.Needs
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
             {
-                thirstData.Thirst -= Time.DeltaTime / 100.0f;
+                thirstData.Thirst += Time.DeltaTime / 1000.0f;
 
-                if(thirstData.Thirst <= 0.0f)
+                if(thirstData.Thirst > 1.0f)
                 {
-                    //Die
+                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
                 }
 
             }).ScheduleParallel();
