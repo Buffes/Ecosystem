@@ -28,7 +28,7 @@ namespace Ecosystem.Attributes {
         }
 
         void Start() {
-            this.hunger = 0.5f;
+            this.hunger = 1f;
             this.hungerLimit = 0.5f;
             this.thirst = 1f;
             this.thirstLimit = 0.5f;
