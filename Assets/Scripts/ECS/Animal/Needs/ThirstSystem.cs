@@ -28,9 +28,9 @@ namespace Ecosystem.ECS.Animal.Needs
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
             {
-                thirstData.Thirst += Time.DeltaTime / 1000.0f;
+                thirstData.Thirst -= Time.DeltaTime / 1000.0f;
 
-                if(thirstData.Thirst > 1.0f)
+                if(thirstData.Thirst <= 0.0f)
                 {
                     commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
                 }

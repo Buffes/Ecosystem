@@ -4,7 +4,7 @@ using Unity.Entities;
 namespace Ecosystem.ECS.Animal.Needs
 {
     /// <summary>
-    /// A float value between 0 and 1 indicating the level of hunger. Hunger > 1 == death
+    /// A float value ranging from 0 to infinity indicating the level of hunger. Hunger <= 0 == death
     /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]

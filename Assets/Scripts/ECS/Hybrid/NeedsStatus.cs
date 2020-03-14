@@ -41,23 +41,25 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
-        /// Decrease the hunger of an animal when drinking.
+        /// Sate the hunger of an animal when eating.
         /// </summary>
-        /// <param name="value">Float value between 0 and 1</param>
-        public void DecreaseHunger(float value)
+        /// <param name="value">Float value</param>
+        public void SateHunger(float value)
         {
+            if (value <= 0.0f) return;
             float cur = GetComp<HungerData>().Hunger;
-            entityManager.SetComponentData<HungerData>(entity, new HungerData { Hunger = cur - value });
+            entityManager.SetComponentData<HungerData>(entity, new HungerData { Hunger = cur + value });
         }
 
         /// <summary>
-        /// Decrease the thirst of an animal when drinking.
+        /// Sate the thirst of an animal when drinking.
         /// </summary>
-        /// <param name="value">Float value between 0 and 1</param>
-        public void DecreaseThirst(float value)
+        /// <param name="value">Float value</param>
+        public void SateThirst(float value)
         {
+            if (value <= 0.0f) return;
             float cur = GetComp<ThirstData>().Thirst;
-            entityManager.SetComponentData<ThirstData>(entity, new ThirstData { Thirst = cur - value });
+            entityManager.SetComponentData<ThirstData>(entity, new ThirstData { Thirst = cur + value });
         }
 
         private T GetComp<T>() where T : struct, IComponentData
