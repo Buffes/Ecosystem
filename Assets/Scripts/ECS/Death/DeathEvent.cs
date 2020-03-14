@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Events
+namespace Ecosystem.ECS.Death
 {
     /// <summary>
     /// Marks the entity to command other entities to die
