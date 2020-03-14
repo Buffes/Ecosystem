@@ -38,7 +38,7 @@ namespace Ecosystem.Grid
 
 
         // Start is called before the first frame update
-        void Start() 
+        void Awake() 
         {
             InitObjects();
             RandomizeStartGrid();

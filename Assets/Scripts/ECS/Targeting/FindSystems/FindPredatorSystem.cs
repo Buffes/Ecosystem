@@ -42,7 +42,9 @@ namespace Ecosystem.ECS.Targeting
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForPredator lookingForPredator,
                 in Translation position,
+                in Rotation rotation,
                 in Hearing hearing,
+                in Vision vision,
                 in AnimalTypeData animalType) =>
             {
 
@@ -56,7 +58,10 @@ namespace Ecosystem.ECS.Targeting
                     float3 targetPosition = positions[i].Value;
                     float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (targetDistance > hearing.Range) continue; // Out of range
+                    if (targetDistance > hearing.Range && !Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                    {
+                        continue; // Out of hearing and vision range    
+                    } 
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
 

@@ -42,7 +42,9 @@ namespace Ecosystem.ECS.Targeting
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForFood lookingForFood,
                 in Translation position,
+                in Rotation rotation,
                 in Hearing hearing,
+                in Vision vision,
                 in DynamicBuffer<FoodTypesElement> foodTypeBuffer) =>
             {
 
@@ -56,7 +58,10 @@ namespace Ecosystem.ECS.Targeting
                     float3 targetPosition = positions[i].Value;
                     float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (targetDistance > hearing.Range) continue; // Out of range
+                    if (targetDistance > hearing.Range && !Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                    {
+                        continue; // Out of hearing and vision range    
+                    } 
                     if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
                     if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
 
