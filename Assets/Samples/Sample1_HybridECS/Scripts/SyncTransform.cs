@@ -10,6 +10,8 @@ namespace Ecosystem.Samples
 
         private void Update()
         {
+            if (!movement.HasConverted) return;
+
             transform.position = movement.GetPosition();
             transform.rotation = movement.GetRotation();
         }

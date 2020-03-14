@@ -23,11 +23,18 @@ namespace Ecosystem.Attributes {
         private IState thirstState;
         private IState fleeState;
 
-        public Animal() {
+        private void Awake() {
             this.stateMachine = new StateMachine();
+
+            sensors.Converted += Init;
         }
 
-        void Start() {
+        private void OnDestroy()
+        {
+            sensors.Converted -= Init;
+        }
+
+        private void Init() {
             this.hunger = 1f;
             this.hungerLimit = 0.5f;
             this.thirst = 1f;
@@ -52,6 +59,8 @@ namespace Ecosystem.Attributes {
         }
 
         void Update() {
+            if (!sensors.HasConverted) return;
+
             this.hunger -= this.changePerSecond*Time.deltaTime;
             bool predatorInRange = sensors.FoundPredator();
 

@@ -20,7 +20,17 @@ namespace Ecosystem.Samples
 
         private float timeUntilNextPathfind = 0;
 
-        private void Start()
+        private void Awake()
+        {
+            sensors.Converted += Init;
+        }
+
+        private void OnDestroy()
+        {
+            sensors.Converted -= Init;
+        }
+
+        private void Init()
         {
             sensors.LookForFood(true);
             sensors.LookForPredator(true);
@@ -30,6 +40,8 @@ namespace Ecosystem.Samples
 
         private void Update()
         {
+            if (!sensors.HasConverted) return;
+
             timeUntilNextPathfind -= Time.deltaTime;
             if (timeUntilNextPathfind > 0f) return;
             timeUntilNextPathfind = pathfindInterval;
