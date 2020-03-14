@@ -64,18 +64,5 @@ namespace Ecosystem.ECS.Hybrid
         {
             return entityManager.GetComponentData<T>(entity);
         }
-
-        private void AddRemoveComp<T>(bool add, T component) where T : struct, IComponentData
-        {
-            if (add)
-            {
-                entityManager.AddComponentData(entity, component);
-            }
-            else
-            {
-                entityManager.RemoveComponent<T>(entity);
-            }
-        }
-
     }
 }
