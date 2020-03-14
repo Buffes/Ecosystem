@@ -1,6 +1,4 @@
 ﻿using Unity.Entities;
-using UnityEngine;
-using System;
 
 using Ecosystem.ECS.Animal.Needs;
 
@@ -9,17 +7,8 @@ namespace Ecosystem.ECS.Hybrid
     /// <summary>
     /// 
     /// </summary>
-    public class NeedsStatus : MonoBehaviour, IConvertGameObjectToEntity
+    public class NeedsStatus : HybridBehaviour, IConvertGameObjectToEntity
     {
-        private Entity entity;
-        private EntityManager entityManager;
-
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            this.entity = entity;
-            entityManager = dstManager;
-        }
-
         /// <summary>
         /// Get hunger as float
         /// </summary>
@@ -48,7 +37,7 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (value <= 0.0f) return;
             float cur = GetComp<HungerData>().Hunger;
-            entityManager.SetComponentData<HungerData>(entity, new HungerData { Hunger = cur + value });
+            EntityManager.SetComponentData<HungerData>(Entity, new HungerData { Hunger = cur + value });
         }
 
         /// <summary>
@@ -59,12 +48,12 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (value <= 0.0f) return;
             float cur = GetComp<ThirstData>().Thirst;
-            entityManager.SetComponentData<ThirstData>(entity, new ThirstData { Thirst = cur + value });
+            EntityManager.SetComponentData<ThirstData>(Entity, new ThirstData { Thirst = cur + value });
         }
 
         private T GetComp<T>() where T : struct, IComponentData
         {
-            return entityManager.GetComponentData<T>(entity);
+            return EntityManager.GetComponentData<T>(Entity);
         }
     }
 }
