@@ -37,7 +37,7 @@ namespace Ecosystem.ECS.Hybrid
             _entityManager = dstManager;
 
             HasConverted = true;
-            Converted();
+            Converted?.Invoke();
         }
     }
 }
