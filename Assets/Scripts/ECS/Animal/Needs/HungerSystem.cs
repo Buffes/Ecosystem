@@ -38,7 +38,8 @@ namespace Ecosystem.ECS.Animal.Needs
                 }
 
             }).ScheduleParallel();
-            throw new NotImplementedException();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
