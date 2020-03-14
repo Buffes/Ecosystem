@@ -51,6 +51,12 @@ namespace Ecosystem.Grid
             SetupWalkableTiles();
         }
 
+        void OnDestroy()
+        {
+            walkableTiles.Dispose();
+
+        }
+
         private void InitObjects()
         {
             diffWaterLand = landIndex - waterIndex;

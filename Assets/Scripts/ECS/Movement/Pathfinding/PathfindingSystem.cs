@@ -33,7 +33,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             NativeArray<bool> grid = GameZone.walkableTiles;
             var gridSizeArray = new NativeArray<int2>(1, Allocator.TempJob);
-            // Error is thrown if an int2 is passed to WithReadOnly directly. Putting it in a NativeContainer is required for some reason.
             gridSizeArray[0] = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
             
             Entities
@@ -70,7 +69,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             }).ScheduleParallel();
 
             gridSizeArray.Dispose(Dependency);
-
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
 
