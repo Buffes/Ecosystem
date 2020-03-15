@@ -32,12 +32,10 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             NativeArray<bool> grid = GameZone.walkableTiles;
-            var gridSizeArray = new NativeArray<int2>(1, Allocator.TempJob);
-            gridSizeArray[0] = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
+            var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
             
             Entities
                 .WithReadOnly(grid)
-                .WithReadOnly(gridSizeArray)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in MoveCommand moveCommand,
@@ -47,7 +45,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
                 float3 position = translation.Value;    
-                int2 gridSize = gridSizeArray[0];
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
 
@@ -68,7 +65,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 path.Dispose();
             }).ScheduleParallel();
 
-            gridSizeArray.Dispose(Dependency);
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
 
