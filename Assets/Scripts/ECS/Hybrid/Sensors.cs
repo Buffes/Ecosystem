@@ -37,6 +37,7 @@ namespace Ecosystem.ECS.Hybrid
         public bool FoundFood() => GetComp<LookingForFood>().HasFound;
         public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
         public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
+        public bool FoundMate() => GetComp<LookingForMate>().HasFound;
 
 
 
