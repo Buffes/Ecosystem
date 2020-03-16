@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
+using Unity.Collections;
+using Unity.Mathematics;
 
 namespace Ecosystem.Grid
 {
@@ -33,6 +35,9 @@ namespace Ecosystem.Grid
         //Matrix of walkable tiles
         public static bool [,] walkableTiles;
 
+        //Matrix of water tiles
+        public static NativeList<int2> WaterTiles;
+
 
         // Start is called before the first frame update
         void Awake() 
@@ -46,6 +51,12 @@ namespace Ecosystem.Grid
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
 
             SetupWalkableTiles();
+            SetupWaterTiles();
+        }
+
+        void OnDestroy()
+        {
+            WaterTiles.Dispose();
         }
 
         private void InitObjects()
@@ -75,7 +86,7 @@ namespace Ecosystem.Grid
         //The probability of creating water, otherwise create grass. 
         private int RandomizeWater(float water)
         {
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             if (rand <= water)
             {
                 return waterIndex;
@@ -651,6 +662,27 @@ namespace Ecosystem.Grid
                     }
                 }
             }
+        }
+
+        private void SetupWaterTiles()
+        {
+            WaterTiles = new NativeList<int2>(Allocator.Persistent);
+
+            for (int row = 0; row < tiles.GetLength(0); row++)
+            {
+                for (int col = 0; col < tiles.GetLength(1); col++)
+                {
+                    if (tiles[row, col] == 17) //TODO: Capture all beach corner etc tiles
+                    {
+                        WaterTiles.Add(new int2(row, col));
+                    } 
+                }
+            }
+        }
+
+                private int CalculateIndex(int row, int col)
+        {
+            return col * tiles.GetLength(0) + row;
         }
 
         public bool [,] GetWalkableTiles()
