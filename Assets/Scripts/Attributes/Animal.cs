@@ -9,6 +9,8 @@ namespace Ecosystem.Attributes {
         private float hungerLimit;
         private float thirst;
         private float thirstLimit;
+        private float reproductiveUrge;
+        private float reproductiveUrgeLimit;
 
         [SerializeField]
         private Movement movement = default;
@@ -22,6 +24,7 @@ namespace Ecosystem.Attributes {
         private IState hungerState;
         private IState thirstState;
         private IState fleeState;
+        private IState mateState;
 
         public Animal() {
             this.stateMachine = new StateMachine();
@@ -32,12 +35,15 @@ namespace Ecosystem.Attributes {
             this.hungerLimit = 0.5f;
             this.thirst = 1f;
             this.thirstLimit = 0.5f;
+            this.reproductiveUrge = 1f;
+            this.reproductiveUrgeLimit = 0.5f;
 
             this.changePerSecond = 0.0001f;
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
             this.thirstState = new ThirstState(this);
+            this.mateState = new MateState(this);
             this.fleeState = new FleeState(this);
             this.stateMachine.ChangeState(this.casualState);
             sensors.LookForPredator(true);
