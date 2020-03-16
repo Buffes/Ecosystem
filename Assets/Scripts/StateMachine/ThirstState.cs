@@ -24,7 +24,7 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.GetMovement().GetPosition();
 
             if (owner.GetSensors().FoundWater()) {
-                nextTarget = owner.GetSensors().GetFoundWaterInfo().Position;
+                nextTarget = owner.GetSensors().GetFoundWaterInfo();
                 Vector3 diff = nextTarget - currentPos;
                 float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
                 if (diffLength <= 2f) {
