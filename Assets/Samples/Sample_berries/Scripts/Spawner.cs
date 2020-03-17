@@ -27,8 +27,6 @@ namespace Ecosystem.Berries {
         }
 
         private void SpawnPrefabs(GameObject prefab,int amount) {
-            Debug.Log(parent);
-            Debug.Log(parent.position);
             for (int i = 0; i < spawnAmount; i++) {
                 //Instantiate(
                 //    prefab,
