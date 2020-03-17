@@ -23,10 +23,10 @@ namespace Ecosystem.Berries {
         private int endZ = 100;
 
         public void SpawnBerries() {
-            SpawnPrefabs(berryPrefab,spawnAmount);
+            SpawnPrefabs(berryPrefab);
         }
 
-        private void SpawnPrefabs(GameObject prefab,int amount) {
+        private void SpawnPrefabs(GameObject prefab) {
             for (int i = 0; i < spawnAmount; i++) {
                 GameObject o = Instantiate(prefab) as GameObject;
                 o.transform.position = parent.transform.position + new Vector3(Random.Range(startX,endX),parent.transform.position.y-1.5f,Random.Range(startZ,endZ));
