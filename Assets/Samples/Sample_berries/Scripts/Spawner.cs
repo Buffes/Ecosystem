@@ -28,11 +28,6 @@ namespace Ecosystem.Berries {
 
         private void SpawnPrefabs(GameObject prefab,int amount) {
             for (int i = 0; i < spawnAmount; i++) {
-                //Instantiate(
-                //    prefab,
-                //    new Vector3(Random.Range(startX,endX),prefab.transform.position.y,Random.Range(startZ,endZ)),
-                //    new Quaternion(),
-                //    parent);
                 GameObject o = Instantiate(prefab) as GameObject;
                 o.transform.position = parent.transform.position + new Vector3(Random.Range(startX,endX),parent.transform.position.y-1.5f,Random.Range(startZ,endZ));
             }
