@@ -47,7 +47,7 @@ MonoBehaviour:
   berryPrefab: {fileID: 2012532265587641750, guid: 2795401ccfb07483cbf39646a8495795,
     type: 3}
   spawnAmount: 2
-  startX: 15
-  endX: 25
-  startZ: 8
-  endZ: 18
+  startX: -5
+  endX: 5
+  startZ: -5
+  endZ: 5
