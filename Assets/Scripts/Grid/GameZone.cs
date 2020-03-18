@@ -672,7 +672,7 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
-                    if (tiles[row, col] == 17) //TODO: Capture all beach corner etc tiles
+                    if (tiles[row, col] < 34) // All water tiles
                     {
                         WaterTiles.Add(new int2(row, col));
                     } 
