@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
+using Ecosystem.ECS.Animal;
 
 namespace Ecosystem.Attributes {
     public class Animal : MonoBehaviour {
@@ -12,6 +13,8 @@ namespace Ecosystem.Attributes {
         private float mating;
         private float matingLimit;
 
+        [SerializeField]
+        private AnimalDNAAuthoring animalDNAAuthoring = default;
         [SerializeField]
         private Movement movement = default;
         [SerializeField]
@@ -47,6 +50,16 @@ namespace Ecosystem.Attributes {
             this.mateState = new MateState(this);
             this.stateMachine.ChangeState(this.casualState);
             sensors.LookForPredator(true);
+        }
+
+        /// <summary>
+        /// Sets the DNA that this animal will spawn with.
+        /// <para/>
+        /// If not called, default values will be used.
+        /// </summary>
+        public void InitDNA(DNA dna)
+        {
+            animalDNAAuthoring.DNA = dna;
         }
 
         public void Move(Vector3 target,float reach,float range) {
