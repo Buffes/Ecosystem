@@ -16,7 +16,7 @@ namespace Ecosystem.ECS.Animal
             ref AgeData age) =>
             {
                 // Store age in seconds.
-                age.Age += deltaTime / 1000f;
+                age.Age += deltaTime;
 
             }).ScheduleParallel();
         }
