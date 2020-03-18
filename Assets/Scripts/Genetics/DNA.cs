@@ -2,7 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 
-namespace Ecosystem
+namespace Ecosystem.Genetics
 {
     /// <summary>
     /// Contains gene information differentiating entities of the same species from each other.

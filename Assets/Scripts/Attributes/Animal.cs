@@ -2,8 +2,10 @@
 using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
 using Ecosystem.ECS.Animal;
+using Ecosystem.Genetics;
 
-namespace Ecosystem.Attributes {
+namespace Ecosystem.Attributes
+{
     public class Animal : MonoBehaviour {
 
         private float hunger;
