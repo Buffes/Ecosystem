@@ -57,7 +57,7 @@ namespace Ecosystem.Attributes
         /// <summary>
         /// Sets the DNA that this animal will spawn with.
         /// <para/>
-        /// If not called, default values will be used.
+        /// If not called, new DNA with default values will be created.
         /// </summary>
         public void InitDNA(DNA dna)
         {

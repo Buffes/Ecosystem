@@ -1,41 +1,65 @@
 ﻿using Ecosystem.ECS.Animal.Stats;
 using Ecosystem.Genetics;
 using System;
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 namespace Ecosystem.ECS.Animal
 {
     /// <summary>
-    /// Adds animal base stats and DNA to the entity. Optionally applies injected DNA to affect the
-    /// base stats.
+    /// Adds DNA to the entity and applies the gene values. Optionally uses injected DNA.
     /// </summary>
     public class AnimalDNAAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
-        [SerializeField]
-        private bool isMale = default;
-        [SerializeField]
-        private float baseSpeed = default;
-        [SerializeField]
-        private float baseHearingRange = default;
-        [SerializeField]
-        private float baseVisionRange = default;
-        [SerializeField]
-        [Range(0f, 1f)]
-        [Tooltip("0 to 360 degrees")]
-        private float baseVisionSpan = default;
-
+        /// <summary>
+        /// This animal's DNA.
+        /// <para/>
+        /// If not set, new DNA with default values will be created.
+        /// </summary>
         public DNA DNA { private get; set; }
+
+        private Entity entity;
+        private EntityManager entityManager;
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            if (DNA == null) DNA = DNA.DefaultGenes(isMale);
+            this.entity = entity;
+            this.entityManager = dstManager;
 
+            SetGenes();
             dstManager.AddComponentData(entity, DNA);
-            dstManager.AddComponentData(entity, new SexData { Sex = DNA.IsMale ? Sex.Male : Sex.Female });
-            dstManager.AddComponentData(entity, new BaseSpeed { Value = DNA.NextGene(baseSpeed) });
-            dstManager.AddComponentData(entity, new BaseHearing { Range = DNA.NextGene(baseHearingRange) });
-            dstManager.AddComponentData(entity, new BaseVision { Range = DNA.NextGene(baseVisionRange), Angle = baseVisionSpan * (float)Math.PI * 2 });
+        }
+
+        private void SetGenes()
+        {
+            SetComponent((ref SexData sex) =>
+            {
+                if (DNA == null) DNA = DNA.DefaultGenes(sex.Sex == Sex.Male);
+                sex.Sex = DNA.IsMale ? Sex.Male : Sex.Female;
+            });
+
+            SetComponent((ref BaseSpeed speed) => DNA.NextGene(ref speed.Value));
+            SetComponent((ref BaseHearing hearing) => DNA.NextGene(ref hearing.Range));
+            SetComponent((ref BaseVision vision) => DNA.NextGene(ref vision.Range));
+        }
+
+        private delegate void ModifyComponentDelegate<T>(ref T t) where T : struct, IComponentData;
+
+        private void SetComponent<T>(ModifyComponentDelegate<T> modifyComponentDelegate)
+            where T : struct, IComponentData
+        {
+            if (!entityManager.HasComponent<T>(entity))
+            {
+                Debug.LogError("A component of type type:" + typeof(T).Name
+                + " needs to be added before (above in the hierarchy) the "
+                + typeof(AnimalDNAAuthoring).Name + ".");
+                return;
+            }
+
+            T componentData = entityManager.GetComponentData<T>(entity);
+            modifyComponentDelegate(ref componentData);
+            entityManager.SetComponentData(entity, componentData);
         }
     }
 }

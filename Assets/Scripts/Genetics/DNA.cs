@@ -45,6 +45,12 @@ namespace Ecosystem.Genetics
         }
 
         /// <summary>
+        /// Applies the next gene to the value. Adds a new default gene with the given value if past the
+        /// current total genes count.
+        /// </summary>
+        public void NextGene(ref float value) => value = NextGene(value);
+
+        /// <summary>
         /// Returns the next gene value. Adds a new default gene with the default value if past the
         /// current total genes count.
         /// </summary>
