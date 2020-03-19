@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 1417320361461698763}
   sensors: {fileID: 1417320361461698762}
+  needsStatus: {fileID: 0}
 --- !u!114 &4349097642268222215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,6 +29,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 80
   Angle: 0.35
+--- !u!114 &4827089211357477633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417320361461698739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d953637fb3a33b043b70eefe1fa353a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4211798334385777249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417320361461698739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08986a4dde1471ad7a71a50831b88790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Age: 0
 --- !u!1001 &6194591868486016333
 PrefabInstance:
   m_ObjectHideFlags: 0

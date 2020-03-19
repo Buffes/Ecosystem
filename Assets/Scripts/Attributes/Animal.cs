@@ -14,6 +14,8 @@ namespace Ecosystem.Attributes {
         private Movement movement = default;
         [SerializeField]
         private Sensors sensors = default;
+        [SerializeField]
+        private NeedsStatus needsStatus = default;
 
         private float changePerSecond;
 

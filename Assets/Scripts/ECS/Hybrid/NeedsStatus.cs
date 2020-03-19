@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 
 using Ecosystem.ECS.Animal.Needs;
+using Ecosystem.ECS.Animal;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -18,6 +19,12 @@ namespace Ecosystem.ECS.Hybrid
         {
             this.entity = entity;
             entityManager = dstManager;
+        }
+
+        public float GetAge()
+        {
+            AgeData age = GetComp<AgeData>();
+            return age.Age;
         }
 
         /// <summary>
