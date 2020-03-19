@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace Ecosystem.ECS.Animal.Stats
+namespace Ecosystem.ECS.Stats
 {
     [GenerateAuthoringComponent]
     public struct BaseHearing : IComponentData

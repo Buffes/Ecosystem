@@ -1,7 +1,5 @@
-﻿using Ecosystem.ECS.Animal.Stats;
+﻿using Ecosystem.ECS.Stats;
 using Ecosystem.Genetics;
-using System;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 

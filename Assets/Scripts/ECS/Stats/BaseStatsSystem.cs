@@ -2,7 +2,7 @@
 using Ecosystem.ECS.Targeting.Sensors;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Animal.Stats
+namespace Ecosystem.ECS.Stats
 {
     /// <summary>
     /// Recalculates practical stats from base stats.
