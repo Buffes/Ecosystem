@@ -2,9 +2,9 @@
 
 namespace Ecosystem.ECS.Animal.Stats
 {
+    [GenerateAuthoringComponent]
     public struct BaseVision : IComponentData
     {
         public float Range;
-        public float Angle;
     }
 }

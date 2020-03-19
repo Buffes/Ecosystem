@@ -10,6 +10,7 @@ namespace Ecosystem.ECS.Animal.Stats
     /// If the stats are affected by other factors, such as an animal being temporarily crippled,
     /// that would be an extra calculation step that runs after this system.
     /// </summary>
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public class BaseStatsSystem : SystemBase
     {
         protected override void OnUpdate()
@@ -27,7 +28,6 @@ namespace Ecosystem.ECS.Animal.Stats
             Entities.ForEach((ref Vision vision, in BaseVision baseVision) =>
             {
                 vision.Range = baseVision.Range;
-                vision.Angle = baseVision.Angle;
             }).ScheduleParallel();
         }
     }
