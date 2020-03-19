@@ -27,28 +27,15 @@ namespace Ecosystem.ECS.Animal
 
         public DNA DNA { private get; set; }
 
-        private void ApplyGenes()
-        {
-            isMale = DNA.IsMale;
-
-            DNA.NextGene(ref baseSpeed);
-            DNA.NextGene(ref baseHearingRange);
-            DNA.NextGene(ref baseVisionRange);
-            DNA.NextGene(ref baseVisionSpan);
-
-            DNA.UpdateGenes();
-        }
-
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             if (DNA == null) DNA = DNA.DefaultGenes(isMale);
-            ApplyGenes();
 
             dstManager.AddComponentData(entity, DNA);
-            dstManager.AddComponentData(entity, new SexData { Sex = isMale ? Sex.Male : Sex.Female });
-            dstManager.AddComponentData(entity, new BaseSpeed { Value = baseSpeed });
-            dstManager.AddComponentData(entity, new BaseHearing { Range = baseHearingRange });
-            dstManager.AddComponentData(entity, new BaseVision { Range = baseVisionRange, Angle = baseVisionSpan * (float)Math.PI * 2 });
+            dstManager.AddComponentData(entity, new SexData { Sex = DNA.IsMale ? Sex.Male : Sex.Female });
+            dstManager.AddComponentData(entity, new BaseSpeed { Value = DNA.NextGene(baseSpeed) });
+            dstManager.AddComponentData(entity, new BaseHearing { Range = DNA.NextGene(baseHearingRange) });
+            dstManager.AddComponentData(entity, new BaseVision { Range = DNA.NextGene(baseVisionRange), Angle = baseVisionSpan * (float)Math.PI * 2 });
         }
     }
 }

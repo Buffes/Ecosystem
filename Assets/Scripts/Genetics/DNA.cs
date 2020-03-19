@@ -1,66 +1,68 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Ecosystem.Genetics
 {
     /// <summary>
     /// Contains gene information differentiating entities of the same species from each other.
     /// <para/>
-    /// A gene is represented by a float value starting at default = 1. It then has a chance to be
-    /// mutated by an amount in each new generation. For example, if it is mutated by 30% it becomes
+    /// A gene is represented by a float value which has a chance to be mutated by an amount in
+    /// each new generation. For example, if a gene with the value 1 is mutated by 30%, it becomes
     /// either 1 * 1.3 = 1.3 or 1 / 1.3 = 0.77.
     /// </summary>
-    public class DNA : IComponentData
+    public partial class DNA : IComponentData
     {
-        private const float MUTATION_CHANCE = 0.2f; // Chance of mutation per gene
-        private const float MAX_MUTATION_AMOUNT = 0.3f; // Max amount a gene can mutate per generation
+        public class Gene
+        {
+            public float Value;
+            public IGeneType Type;
 
-        private const float DEFAULT_GENE = 1f; // Default value of a new gene
+            public Gene(float value, IGeneType type)
+            {
+                Value = value;
+                Type = type;
+            }
+        }
+
+        private float mutationRate; // Chance of mutation per gene per generation
+        private float maxMutationAmount; // Max amount a gene can mutate per generation
 
         public bool IsMale { get; private set; }
-        private float[] genes;
+        private List<Gene> genes = new List<Gene>();
 
         private int lastGeneIndex = -1;
 
         public DNA() : this(false) { }
-        private DNA(bool isMale, float[] genes = null)
+        private DNA(bool isMale, List<Gene> genes = null,
+            float mutationRate = 0.2f, float maxMutationAmount = 0.3f)
         {
             IsMale = isMale;
-            this.genes = genes ?? new float[0];
+            this.genes = genes ?? new List<Gene>();
+            this.mutationRate = mutationRate;
+            this.maxMutationAmount = maxMutationAmount;
         }
 
         /// <summary>
-        /// Returns the next gene, or a new default gene if past the length of the genes array.
-        /// <para/>
-        /// Use it to iterate through all genes that you are interested in and then call
-        /// <see cref="UpdateGenes"/> to resize the genes array.
+        /// Returns the next gene value. Adds a new default gene with the default value if past the
+        /// current total genes count.
         /// </summary>
-        public float NextGene()
-        {
-            return ++lastGeneIndex < genes.Length ? genes[lastGeneIndex] : DEFAULT_GENE;
-        }
-
-        /// <param name="appliedTo">A variable to apply the gene to (multiplied with)</param>
-        public float NextGene(ref float appliedTo)
-        {
-            float gene = NextGene();
-            appliedTo *= gene;
-            return gene;
-        }
+        public float NextGene(float defaultValue)
+            => NextGene(defaultValue, DefaultGeneType);
 
         /// <summary>
-        /// Updates the genes array to match the amount of genes iterated by <see cref="NextGene"/>.
+        /// Returns the next gene value. Adds a new gene with the default value if past the current
+        /// total genes count.
         /// </summary>
-        public void UpdateGenes()
+        public float NextGene(float defaultValue, IGeneType geneType)
         {
-            int diff = lastGeneIndex + 1 - genes.Length;
-
-            // Append a new default gene value for every new gene
-            if (diff > 0) genes = genes.Concat(Enumerable.Repeat(DEFAULT_GENE, diff)).ToArray();
-            // Truncate to the new amount of genes
-            else if (diff < 0) System.Array.Resize(ref genes, genes.Length + diff);
+            if (++lastGeneIndex < genes.Count) return genes[lastGeneIndex].Value;
+            genes.Add(new Gene(defaultValue, geneType));
+            return defaultValue;
         }
+
+        public IGeneType DefaultGeneType => new ValueGeneType(maxMutationAmount);
 
         /// <summary>
         /// Returns new DNA with default genes and a random sex.
@@ -77,34 +79,34 @@ namespace Ecosystem.Genetics
         /// </summary>
         public static DNA InheritedDNA(DNA parent1, DNA parent2)
         {
-            if (parent1.genes.Length != parent2.genes.Length)
-            {
-                throw new System.ArgumentException("The parents' genes do not have the same format");
-            }
+            if (parent1.genes.Count != parent2.genes.Count) throw ParentGeneMismatchException;
 
-            float[] genes = new float[parent1.genes.Length];
+            int amount = parent1.genes.Count;
+            List<Gene> genes = new List<Gene>(amount);
 
-            for (int i = 0; i < genes.Length; i++)
+            for (int i = 0; i < amount; i++)
             {
-                genes[i] = InheritedGene(parent1.genes[i], parent2.genes[i]);
+                if (parent1.genes[i].Type != parent2.genes[i].Type) throw ParentGeneMismatchException;
+
+                genes[i] = InheritedGene(parent1.genes[i], parent2.genes[i], parent1.mutationRate);
             }
 
             return new DNA(CoinFlip(), genes);
         }
-
-        private static float InheritedGene(float gene1, float gene2)
-            => Mutation(CoinFlip(gene1, gene2), MAX_MUTATION_AMOUNT, MUTATION_CHANCE);
-
-        private static float Mutation(float gene, float maxAmount, float chance)
-            => Roll(chance) ? Mutation(gene, Random.value * maxAmount, CoinFlip()) : gene;
-
-        private static float Mutation(float gene, float amount, bool up)
-        => gene * (up ? 1 * (1 + amount) : 1 / (1 + amount));
+        
+        private static Gene InheritedGene(Gene gene1, Gene gene2, float mutationRate)
+        {
+            Gene selectedGene = CoinFlip(gene1, gene2);
+            if (Roll(mutationRate)) selectedGene.Type.Mutate(ref selectedGene.Value);
+            return selectedGene;
+        }
 
         private static T CoinFlip<T>(T heads, T tails) => CoinFlip() ? heads : tails;
 
         private static bool CoinFlip() => Roll(0.5f);
 
         private static bool Roll(float chance) => Random.value < chance;
+
+        private static Exception ParentGeneMismatchException => new ArgumentException("The parents' genes do not have the same format");
     }
 }
