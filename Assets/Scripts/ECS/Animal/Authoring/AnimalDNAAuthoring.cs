@@ -47,14 +47,6 @@ namespace Ecosystem.ECS.Animal
         private void SetComponent<T>(ModifyComponentDelegate<T> modifyComponentDelegate)
             where T : struct, IComponentData
         {
-            if (!entityManager.HasComponent<T>(entity))
-            {
-                Debug.LogError("A component of type type:" + typeof(T).Name
-                + " needs to be added before (above in the hierarchy) the "
-                + typeof(AnimalDNAAuthoring).Name + ".");
-                return;
-            }
-
             T componentData = entityManager.GetComponentData<T>(entity);
             modifyComponentDelegate(ref componentData);
             entityManager.SetComponentData(entity, componentData);
