@@ -12,7 +12,7 @@ namespace Ecosystem.Genetics
     /// each new generation. For example, if a gene with the value 1 is mutated by 30%, it becomes
     /// either 1 * 1.3 = 1.3 or 1 / 1.3 = 0.77.
     /// </summary>
-    public partial class DNA : IComponentData
+    public class DNA : IComponentData
     {
         public class Gene
         {
@@ -101,11 +101,11 @@ namespace Ecosystem.Genetics
             return selectedGene;
         }
 
-        private static T CoinFlip<T>(T heads, T tails) => CoinFlip() ? heads : tails;
+        public static T CoinFlip<T>(T heads, T tails) => CoinFlip() ? heads : tails;
 
-        private static bool CoinFlip() => Roll(0.5f);
+        public static bool CoinFlip() => Roll(0.5f);
 
-        private static bool Roll(float chance) => Random.value < chance;
+        public static bool Roll(float chance) => Random.value < chance;
 
         private static Exception ParentGeneMismatchException => new ArgumentException("The parents' genes do not have the same format");
     }
