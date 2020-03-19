@@ -6,6 +6,8 @@ namespace Ecosystem.Samples
     public class BasicFollowing : MonoBehaviour
     {
         [SerializeField]
+        private HybridEntity hybridEntity = default;
+        [SerializeField]
         private Movement movement = default;
         [SerializeField]
         private Sensors sensors = default;
@@ -22,12 +24,12 @@ namespace Ecosystem.Samples
 
         private void Awake()
         {
-            sensors.Converted += Init;
+            hybridEntity.Converted += Init;
         }
 
         private void OnDestroy()
         {
-            sensors.Converted -= Init;
+            hybridEntity.Converted -= Init;
         }
 
         private void Init()
@@ -40,7 +42,7 @@ namespace Ecosystem.Samples
 
         private void Update()
         {
-            if (!sensors.HasConverted) return;
+            if (!hybridEntity.HasConverted) return;
 
             timeUntilNextPathfind -= Time.deltaTime;
             if (timeUntilNextPathfind > 0f) return;

@@ -11,6 +11,8 @@ namespace Ecosystem.Attributes {
         private float thirstLimit;
 
         [SerializeField]
+        private HybridEntity hybridEntity = default;
+        [SerializeField]
         private Movement movement = default;
         [SerializeField]
         private Sensors sensors = default;
@@ -26,12 +28,12 @@ namespace Ecosystem.Attributes {
         private void Awake() {
             this.stateMachine = new StateMachine();
 
-            sensors.Converted += Init;
+            hybridEntity.Converted += Init;
         }
 
         private void OnDestroy()
         {
-            sensors.Converted -= Init;
+            hybridEntity.Converted -= Init;
         }
 
         private void Init() {
@@ -59,7 +61,7 @@ namespace Ecosystem.Attributes {
         }
 
         void Update() {
-            if (!sensors.HasConverted) return;
+            if (!hybridEntity.HasConverted) return;
 
             this.hunger -= this.changePerSecond*Time.deltaTime;
             bool predatorInRange = sensors.FoundPredator();
