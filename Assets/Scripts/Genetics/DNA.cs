@@ -14,7 +14,7 @@ namespace Ecosystem.Genetics
     /// </summary>
     public class DNA : IComponentData
     {
-        public class Gene
+        private class Gene
         {
             public float Value;
             public IGeneType Type;
