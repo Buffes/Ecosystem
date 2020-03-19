@@ -7,7 +7,7 @@ namespace Ecosystem.ECS.Hybrid
     /// <summary>
     /// 
     /// </summary>
-    public class NeedsStatus : HybridBehaviour, IConvertGameObjectToEntity
+    public class NeedsStatus : HybridBehaviour
     {
         /// <summary>
         /// Get hunger as float
