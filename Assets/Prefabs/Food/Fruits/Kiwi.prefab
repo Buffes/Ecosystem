@@ -90,6 +90,9 @@ GameObject:
   - component: {fileID: 4000012737768072}
   - component: {fileID: 205000011425727650}
   - component: {fileID: 65000012312222778}
+  - component: {fileID: -2803927453677537126}
+  - component: {fileID: -6429082686985117397}
+  - component: {fileID: -7498986762365597997}
   m_Layer: 0
   m_Name: Kiwi
   m_TagString: Untagged
@@ -149,6 +152,45 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.052674174, y: 0.047236618, z: 0.06999999}
   m_Center: {x: 0.000042781234, y: 0.023618309, z: -0.00024713762}
+--- !u!114 &-2803927453677537126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013319535190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 0
+--- !u!114 &-6429082686985117397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013319535190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2a594a63958e3409f9155cfe7db8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodType: {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
+--- !u!114 &-7498986762365597997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013319535190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ef55c3f5233496c8e0b234937c6485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeSpan: 10
 --- !u!1 &1000013751242518
 GameObject:
   m_ObjectHideFlags: 0

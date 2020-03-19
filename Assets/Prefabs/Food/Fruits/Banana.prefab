@@ -169,6 +169,9 @@ GameObject:
   - component: {fileID: 4000011058139782}
   - component: {fileID: 205000012222720888}
   - component: {fileID: 65000014227713688}
+  - component: {fileID: -2108525383364997442}
+  - component: {fileID: -4974349287975161989}
+  - component: {fileID: -196680902691483522}
   m_Layer: 0
   m_Name: Banana
   m_TagString: Untagged
@@ -228,3 +231,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.12030336, y: 0.024656516, z: 0.059219643}
   m_Center: {x: 0.000095807016, y: 0.012759129, z: -0.013771878}
+--- !u!114 &-2108525383364997442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013571059214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 0
+--- !u!114 &-4974349287975161989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013571059214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2a594a63958e3409f9155cfe7db8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodType: {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
+--- !u!114 &-196680902691483522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013571059214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ef55c3f5233496c8e0b234937c6485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeSpan: 10

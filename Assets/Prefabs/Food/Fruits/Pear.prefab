@@ -169,6 +169,9 @@ GameObject:
   - component: {fileID: 4000013089370440}
   - component: {fileID: 205000012269396850}
   - component: {fileID: 65000010828692110}
+  - component: {fileID: -5308283025964376534}
+  - component: {fileID: 4858688554356127578}
+  - component: {fileID: -6380417315192283487}
   m_Layer: 0
   m_Name: Pear
   m_TagString: Untagged
@@ -228,3 +231,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.08400971, y: 0.15003213, z: 0.08027937}
   m_Center: {x: -0.0003721863, y: 0.0749509, z: 0.0007176511}
+--- !u!114 &-5308283025964376534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013251634520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2a594a63958e3409f9155cfe7db8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodType: {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
+--- !u!114 &4858688554356127578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013251634520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 0
+--- !u!114 &-6380417315192283487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013251634520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ef55c3f5233496c8e0b234937c6485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeSpan: 10
