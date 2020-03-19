@@ -29,7 +29,7 @@ namespace Ecosystem.Attributes {
 
         void Start() {
             this.hunger = 1f;
-            this.hungerLimit = 0.5f;
+            this.hungerLimit = 0.9995f;
             this.thirst = 1f;
             this.thirstLimit = 0.5f;
 
@@ -61,6 +61,7 @@ namespace Ecosystem.Attributes {
                 }
             } else if (hunger <= hungerLimit) {
                 if (stateMachine.getCurrentState() != this.hungerState) {
+                    Debug.Log("hungry");
                     stateMachine.ChangeState(this.hungerState);
                 }
             } else if (thirst <= thirstLimit) {
@@ -68,6 +69,7 @@ namespace Ecosystem.Attributes {
                     stateMachine.ChangeState(this.thirstState);
                 }
             } else if (stateMachine.getCurrentState() != this.casualState) {
+                Debug.Log("not hungry");
                 stateMachine.ChangeState(this.casualState);
             }
 
