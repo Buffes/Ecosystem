@@ -45,4 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hearingDebugMaterial: {fileID: 2100000, guid: 79bd39ba4842035468e6230c781507c5,
     type: 2}
+  pathDebugMaterial: {fileID: 2100000, guid: f9473c36d3721764d9f0966081f9ecaa, type: 2}
   hearingDebugShow: 1
+  pathDebugShow: 1
