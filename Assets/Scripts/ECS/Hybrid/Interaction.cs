@@ -1,6 +1,7 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Death;
 using Unity.Entities;
-using Ecosystem.ECS.Events;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Hybrid
 {

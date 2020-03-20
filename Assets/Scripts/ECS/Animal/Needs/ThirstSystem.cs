@@ -3,8 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-
-using Ecosystem.ECS.Events;
+using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
@@ -25,10 +24,12 @@ namespace Ecosystem.ECS.Animal.Needs
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
+            float deltaTime = Time.DeltaTime;
+
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
             {
-                thirstData.Thirst -= Time.DeltaTime / 1000.0f;
+                thirstData.Thirst -= deltaTime / 1000.0f;
 
                 if(thirstData.Thirst <= 0.0f)
                 {
