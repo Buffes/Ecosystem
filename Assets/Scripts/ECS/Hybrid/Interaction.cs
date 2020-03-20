@@ -2,8 +2,8 @@
 using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Pool;
 using Unity.Entities;
-using Ecosystem.ECS.Events;
 using UnityEngine;
+using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Hybrid
 {

@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace Ecosystem.ECS.Events
+namespace Ecosystem.ECS.Death
 {
     /// <summary>
     /// Kills desired entities
