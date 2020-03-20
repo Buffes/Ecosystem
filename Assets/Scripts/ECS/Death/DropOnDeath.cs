@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Animal
+namespace Ecosystem.ECS.Death
 {
     /// <summary>
     /// Spawns an entity on death.
