@@ -1,16 +1,15 @@
 ﻿using System;
 using Unity.Entities;
-using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Movement
 {
     /// <summary>
-    /// Input data defining what direction the entitiy wants to go.
+    /// Defines how fast the entity moves.
     /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]
-    public struct MovementInput : IComponentData
+    public struct MovementSpeed : IComponentData
     {
-        public float3 Direction;
+        public float Value;
     }
 }

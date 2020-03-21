@@ -1,23 +1,11 @@
-﻿using Ecosystem.ECS.Stats;
-using Unity.Entities;
+﻿using Unity.Entities;
 
 namespace Ecosystem.ECS.Movement
 {
-    [GenerateAuthoringComponent]
+    /// <summary>
+    /// Trying to move faster than normal.
+    /// </summary>
     public struct Sprinting : IComponentData
     {
-    }
-
-    public class BuffSystem : SystemBase
-    {
-        protected override void OnUpdate()
-        {
-            Entities
-                .WithAll<Sprinting>()
-                .ForEach((DynamicBuffer<SpeedBuff> speedBuffs) =>
-                {
-                    speedBuffs.Add(new SpeedBuff { Multiplier = 2 });
-                }).ScheduleParallel();
-        }
     }
 }
