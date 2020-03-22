@@ -40,7 +40,7 @@ namespace Ecosystem.ECS.Animal
                 // Average of once per second
                 if (random.NextFloat() < 0.0167f)
                 {
-                    float deathProbability = math.exp(- math.exp(lifespan.Value - age.Age));
+                    float deathProbability = math.exp(- math.exp(60f * lifespan.Value - age.Age));
                     if (random.NextFloat() < deathProbability)
                     {
                         commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
