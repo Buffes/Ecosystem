@@ -1,8 +1,7 @@
-﻿using Ecosystem.ECS.Animal;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Events
+namespace Ecosystem.ECS.Death
 {
     /// <summary>
     /// Drops items on death.

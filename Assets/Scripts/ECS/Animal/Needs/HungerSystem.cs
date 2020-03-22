@@ -5,8 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-
-using Ecosystem.ECS.Events;
+using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
