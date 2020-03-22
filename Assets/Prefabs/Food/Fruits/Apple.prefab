@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 65000012155365366}
   - component: {fileID: 4146015926848805862}
   - component: {fileID: -3247271814135681992}
-  - component: {fileID: -7460328874635793528}
+  - component: {fileID: 4425135154846877167}
   m_Layer: 0
   m_Name: Apple
   m_TagString: Untagged
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000013678658166}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2ef55c3f5233496c8e0b234937c6485, type: 3}
   m_Name: 
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodType: {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
---- !u!114 &-7460328874635793528
+--- !u!114 &4425135154846877167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
