@@ -16,7 +16,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     {
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
-        // The bools here will need to be inverted for aquatic animals and all set to true for flyers.
 
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
@@ -25,7 +24,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             base.OnCreate();
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
         }
 
         protected override void OnUpdate()

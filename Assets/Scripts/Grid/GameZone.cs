@@ -50,14 +50,6 @@ namespace Ecosystem.Grid
             CheckMiddle();
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
-            // tiles[9,9] = 15;
-            // tiles[10,9] = 15;
-            // tiles[11,9] = 15;
-            // tiles[11,10] = 15;
-            // tiles[11,11] = 15;
-            // tiles[10,11] = 15;
-            // tiles[9,11] = 15;
-            // tiles[9,10] = 15;
             SetupWalkableTiles();
             SetupWaterTiles();
         }
@@ -92,8 +84,6 @@ namespace Ecosystem.Grid
                 }
             }
         }
-
-        public static GameZone Instance {get; set;}
 
         //The probability of creating water, otherwise create grass. 
         private int RandomizeWater(float water)
