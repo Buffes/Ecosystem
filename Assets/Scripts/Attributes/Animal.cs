@@ -73,34 +73,51 @@ namespace Ecosystem.Attributes
         }
 
         void Update() {
-            this.hunger -= this.changePerSecond*Time.deltaTime;
-            bool predatorInRange = sensors.FoundPredator();
+            this.hunger -= this.changePerSecond * Time.deltaTime;
+            this.thirst -= this.changePerSecond * Time.deltaTime;
+            this.mating -= this.changePerSecond * Time.deltaTime;
+            float diffHunger = 100f;
+            float diffThirst = 100f;
 
-            if (predatorInRange) {
+            if (sensors.FoundPredator()) {
                 if (stateMachine.getCurrentState() != this.fleeState) {
                     stateMachine.ChangeState(this.fleeState);
                 }
-            } else if (hunger <= hungerLimit) {
-                if (stateMachine.getCurrentState() != this.hungerState) {
-                    stateMachine.ChangeState(this.hungerState);
+            } else if ((hunger <= hungerLimit) || (thirst <= thirstLimit)) {
+                if (hunger <= hungerLimit) {
+                    sensors.LookForFood(true);
+                    if (sensors.FoundFood()) {
+                        diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
+                    }
                 }
-            } else if (thirst <= thirstLimit) {
-                if (stateMachine.getCurrentState() != this.thirstState) {
-                    stateMachine.ChangeState(this.thirstState);
+                if (thirst <= thirstLimit) {
+                    sensors.LookForWater(true);
+                    if (sensors.FoundWater()) {
+                        diffThirst = DiffLength(sensors.GetFoundWaterInfo().Position);
+                    }
+                }
+                IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
+                if (stateMachine.getCurrentState() != closest) {
+                    stateMachine.ChangeState(closest);
                 }
             } else if (mating <= matingLimit) {
-                if (stateMachine.getCurrentState() != this.mateState) {
+                sensors.LookForMate(true);
+                if (sensors.FoundMate() && stateMachine.getCurrentState() != this.mateState) {
                     stateMachine.ChangeState(this.mateState);
                 }
-            } else if (stateMachine.getCurrentState() != this.casualState) {
-                stateMachine.ChangeState(this.casualState);
+            } else {
+                if (stateMachine.getCurrentState() != this.casualState) {
+                    stateMachine.ChangeState(this.casualState);
+                }
             }
 
             stateMachine.Update();
         }
 
-        public float GetHunger() {
-            return this.hunger;
+        private float DiffLength(Vector3 target) {
+            Vector3 currentPos = movement.GetPosition();
+            Vector3 diff = target - currentPos;
+            return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
         }
 
         public void SetHunger(float newHunger) {
@@ -111,6 +128,10 @@ namespace Ecosystem.Attributes
             this.thirst = newThirst;
         }
 
+        public void SetMating(float newMating) {
+            this.mating = newMating;
+        }
+
         public Sensors GetSensors() {
             return this.sensors;
         }
@@ -119,8 +140,7 @@ namespace Ecosystem.Attributes
             return this.movement;
         }
 
-        public Transform GetTransform() {
-            return transform;
-        }
+
+
     }
 }
