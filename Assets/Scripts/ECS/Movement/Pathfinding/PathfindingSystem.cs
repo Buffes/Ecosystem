@@ -56,7 +56,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize);
                 // Add path checkpoints
 
-                for (int i = 0; i < path.Length; i++)
+                for (int i = 0; i < path.Length - 1; i++)
                 {
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
@@ -285,8 +285,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static float3 GetWorldPosition(int2 gridCoords)
         {
-            float x = gridCoords.x + 0.5f;
-            float z = gridCoords.y + 0.5f;
+            float x = gridCoords.x;
+            float z = gridCoords.y;
             return new float3(x, 0f, z);
         }
 
