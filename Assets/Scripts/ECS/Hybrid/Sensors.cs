@@ -1,24 +1,14 @@
 using Unity.Entities;
 using UnityEngine;
 using Ecosystem.ECS.Targeting.Targets;
-using System;
 
 namespace Ecosystem.ECS.Hybrid
 {
     /// <summary>
     /// Functionality for awareness of surroundings (e.g., vision and hearing).
     /// </summary>
-    public class Sensors : MonoBehaviour, IConvertGameObjectToEntity
+    public class Sensors : HybridBehaviour
     {
-        private Entity entity;
-        private EntityManager entityManager;
-
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            this.entity = entity;
-            entityManager = dstManager;
-        }
-
         /// <summary>
         /// Start/stop actively looking for water.
         /// </summary>
@@ -37,6 +27,7 @@ namespace Ecosystem.ECS.Hybrid
         public bool FoundFood() => GetComp<LookingForFood>().HasFound;
         public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
         public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
+        public bool FoundMate() => GetComp<LookingForMate>().HasFound;
 
 
 
@@ -77,18 +68,18 @@ namespace Ecosystem.ECS.Hybrid
 
         private T GetComp<T>() where T : struct, IComponentData
         {
-            return entityManager.GetComponentData<T>(entity);
+            return EntityManager.GetComponentData<T>(Entity);
         }
 
         private void AddRemoveComp<T>(bool add, T component) where T : struct, IComponentData
         {
-            if (add && !entityManager.HasComponent<T>(entity))
+            if (add && !EntityManager.HasComponent<T>(Entity))
             {
-                entityManager.AddComponentData(entity, component);
+                EntityManager.AddComponentData(Entity, component);
             }
-            else if (!add && entityManager.HasComponent<T>(entity))
+            else if (!add && EntityManager.HasComponent<T>(Entity))
             {
-                entityManager.RemoveComponent<T>(entity);
+                EntityManager.RemoveComponent<T>(Entity);
             }
         }
     }

@@ -9,22 +9,34 @@ namespace Ecosystem.Debugging
     /// </summary>
     public class VisualDebuggingManager : MonoBehaviour
     {
+        [Header("Materials")]
         [SerializeField]
         private Material hearingDebugMaterial = default;
         [SerializeField]
+        private Material pathDebugMaterial = default;
+
+        [Header("Enable/Disable")]
+        [SerializeField]
         private bool hearingDebugShow = default;
+        [SerializeField]
+        private bool pathDebugShow = default;
 
         private HearingDebuggingSystem hearingDebuggingSystem;
+        private PathDebuggingSystem pathDebuggingSystem;
 
         private void Awake()
         {
-            hearingDebuggingSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<HearingDebuggingSystem>();
+            World world = World.DefaultGameObjectInjectionWorld;
+            hearingDebuggingSystem = world.GetOrCreateSystem<HearingDebuggingSystem>();
+            pathDebuggingSystem = world.GetOrCreateSystem<PathDebuggingSystem>();
         }
 
         private void Update()
         {
             hearingDebuggingSystem.Material = hearingDebugMaterial;
             hearingDebuggingSystem.Show = hearingDebugShow;
+            pathDebuggingSystem.Material = pathDebugMaterial;
+            pathDebuggingSystem.Show = pathDebugShow;
         }
     }
 }

@@ -5,17 +5,8 @@ using UnityEngine;
 
 namespace Ecosystem.ECS.Hybrid
 {
-    public class Movement : MonoBehaviour, IConvertGameObjectToEntity
+    public class Movement : HybridBehaviour
     {
-        private Entity entity;
-        private EntityManager entityManager;
-
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            this.entity = entity;
-            entityManager = dstManager;
-        }
-
         /// <summary>
         /// Sends a move command to move to the specified target position.
         /// Avoid calling this too often because for every frame that it is called in,
@@ -26,7 +17,7 @@ namespace Ecosystem.ECS.Hybrid
         /// <param name="range">the max distance of the resulting path</param>
         public void Move(Vector3 target, float reach, float range)
         {
-            entityManager.AddComponentData(entity, new MoveCommand
+            EntityManager.AddComponentData(Entity, new MoveCommand
             {
                 target = target,
                 reach = reach,
@@ -37,12 +28,12 @@ namespace Ecosystem.ECS.Hybrid
 
         public Vector3 GetPosition()
         {
-            return entityManager.GetComponentData<Translation>(entity).Value;
+            return EntityManager.GetComponentData<Translation>(Entity).Value;
         }
 
         public Quaternion GetRotation()
         {
-            return entityManager.GetComponentData<Rotation>(entity).Value;
+            return EntityManager.GetComponentData<Rotation>(Entity).Value;
         }
     }
 }

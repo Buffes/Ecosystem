@@ -1,4 +1,5 @@
-﻿using Ecosystem.Gameplay;
+﻿using Ecosystem.ECS.Death;
+using Ecosystem.Gameplay;
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;

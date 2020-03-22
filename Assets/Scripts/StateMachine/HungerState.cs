@@ -13,11 +13,10 @@ namespace Ecosystem.StateMachines {
 
         public void Enter() {
             owner.GetSensors().LookForFood(true);
-            nextTarget = RandomTarget(owner.GetTransform().position);
+            nextTarget = RandomTarget(owner.GetMovement().GetPosition());
         }
 
         public void Execute() {
-
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
