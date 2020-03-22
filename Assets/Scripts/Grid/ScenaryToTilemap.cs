@@ -99,21 +99,21 @@ namespace Ecosystem.Grid
             {
                 GameObject ob = GetRandomBush();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.walkableTiles[row, col] = false;
+                GameZone.walkableTiles[ col * tiles.GetLength(0) + row] = false;
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
                 GameObject ob = GetRandomTree();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.walkableTiles[row, col] = false;
+                GameZone.walkableTiles[ col * tiles.GetLength(0) + row] = false;
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.walkableTiles[row, col] = false;
+                GameZone.walkableTiles[ col * tiles.GetLength(0) + row] = false;
                 return Scenary.Rock;
             }
             
@@ -129,14 +129,14 @@ namespace Ecosystem.Grid
             {
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.walkableTiles[row, col] = false;
+                GameZone.walkableTiles[col * tiles.GetLength(0) + row] = false;
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
                 GameObject ob = GetRandomCactus();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.walkableTiles[row, col] = false;
+                GameZone.walkableTiles[ col * tiles.GetLength(0) + row] = false;
                 return Scenary.Cactus;
             }
             
