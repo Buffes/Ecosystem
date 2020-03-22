@@ -37,9 +37,10 @@ namespace Ecosystem.ECS.Animal
                 // Store age in seconds.
                 age.Age += deltaTime;
                 
-                // Average of once per second
+                // Average of once per second.
                 if (random.NextFloat() < 0.0167f)
                 {
+                    // Death by old age.
                     float deathProbability = math.exp(- math.exp(60f * lifespan.Value - age.Age));
                     if (random.NextFloat() < deathProbability)
                     {
