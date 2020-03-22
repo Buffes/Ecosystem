@@ -1,4 +1,4 @@
-using Ecosystem.ECS.Events;
+using Ecosystem.ECS.Death;
 using Ecosystem.ECS.Random;
 using Unity.Entities;
 using Unity.Mathematics;
