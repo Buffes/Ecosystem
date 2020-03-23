@@ -1,22 +1,11 @@
-﻿
-using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Pool;
-using Unity.Entities;
-using UnityEngine;
+﻿using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Death;
+using Unity.Entities;
 
 namespace Ecosystem.ECS.Hybrid
 {
-    public class Interaction : MonoBehaviour, IConvertGameObjectToEntity
+    public class Interaction : HybridBehaviour
     {
-        private EntityManager entityManager;
-        private EntityCommandBuffer ecb;
-
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            entityManager = dstManager;
-        }
-
         /// <summary>
         /// Kills an animal.
         /// </summary>
@@ -25,7 +14,7 @@ namespace Ecosystem.ECS.Hybrid
         {
             KillEntity(animal);
 
-            entityManager.CreateEntity(/*Food*/); // TODO: The animal should drop food upon death
+            EntityManager.CreateEntity(/*Food*/); // TODO: The animal should drop food upon death
         }
 
         /// <summary>
@@ -37,12 +26,12 @@ namespace Ecosystem.ECS.Hybrid
         {
             KillEntity(food);
 
-            return entityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
+            return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
         }
 
         private void KillEntity(Entity e)
         {
-            entityManager.AddComponent<DeathEvent>(e);
+            EntityManager.AddComponent<DeathEvent>(e);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Ecosystem.Attributes
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
         [SerializeField]
+        private HybridEntity hybridEntity = default;
+        [SerializeField]
         private Movement movement = default;
         [SerializeField]
         private Sensors sensors = default;
@@ -31,11 +33,18 @@ namespace Ecosystem.Attributes
         private IState fleeState;
         private IState mateState;
 
-        public Animal() {
+        private void Awake() {
             this.stateMachine = new StateMachine();
+
+            hybridEntity.Converted += Init;
         }
 
-        void Start() {
+        private void OnDestroy()
+        {
+            hybridEntity.Converted -= Init;
+        }
+
+        private void Init() {
             this.hunger = 1f;
             this.hungerLimit = 0.5f;
             this.thirst = 1f;
@@ -73,6 +82,8 @@ namespace Ecosystem.Attributes
         }
 
         void Update() {
+            if (!hybridEntity.HasConverted) return;
+
             this.hunger -= this.changePerSecond * Time.deltaTime;
             this.thirst -= this.changePerSecond * Time.deltaTime;
             this.mating -= this.changePerSecond * Time.deltaTime;
