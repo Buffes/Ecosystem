@@ -47,6 +47,19 @@ namespace Ecosystem.StateMachines {
                 case 7: target.x += 5; target.z += 5; break;
                 default: break;
             }
+
+            if (target.x >= Ecosystem.Grid.GameZone.tiles.GetLength(0)) {
+                target.x = Ecosystem.Grid.GameZone.tiles.GetLength(0) - 0.1f;
+            } else if (target.x <= 0) {
+                target.x = 0.1f;
+            }
+
+            if (target.z >= Ecosystem.Grid.GameZone.tiles.GetLength(1)) {
+                target.z = Ecosystem.Grid.GameZone.tiles.GetLength(1) - 0.1f;
+            } else if (target.z <= 0) {
+                target.z = 0.1f;
+            }
+
             return target;
         }
 
