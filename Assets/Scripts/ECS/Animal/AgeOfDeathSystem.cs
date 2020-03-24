@@ -7,7 +7,7 @@ using Unity.Mathematics;
 namespace Ecosystem.ECS.Animal
 {
     /// <summary>
-    /// Determines the age of death for an animal based on its expected lifespan. Based on a normal distribution.
+    /// Determines the age of death for an animal based on its average lifespan. Based on a logistic distribution.
     /// </summary>
     public class AgeOfDeathSystem : SystemBase
     {
@@ -34,10 +34,13 @@ namespace Ecosystem.ECS.Animal
             {
                 var random = randomArray[nativeThreadIndex];
                 
-                // Calculate the age of death by old age using inverse transform sampling on normal distribution.
-                float u = random.NextFloat();
-                float gompertzTransform = math.log(1f - 10f * math.log(1f-u));
-                float exactDeathAge = lifespan.Value + 10f * gompertzTransform - 5f; //TODO: CHange to normal dist
+                // Calculate the age of death by old age using inverse transform sampling on logistic distribution.
+                float u = random.NextFloat(0.00001f, 1.0f);
+                float scale = 0.5f + 1f / (lifespan.Value + 2); // Smaller std deviation for shorter lifespans 
+                float exactDeathAge = lifespan.Value + scale * math.log(u / (1f-u));
+                // Clamp to within 3 standard deviations. scale is about 0.5 * std deviation.
+                exactDeathAge = math.clamp(exactDeathAge, -6f*scale + lifespan.Value, 6f*scale + lifespan.Value);
+                exactDeathAge = math.max(0f, exactDeathAge); // no negative ages
                 commandBuffer.AddComponent<AgeOfDeathData>(entityInQueryIndex, entity, new AgeOfDeathData { Value = exactDeathAge});
                 
                 randomArray[nativeThreadIndex] = random; // Necessary to update the generator.

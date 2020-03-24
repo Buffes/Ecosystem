@@ -1,8 +1,5 @@
 using Ecosystem.ECS.Death;
-using Ecosystem.ECS.Random;
 using Unity.Entities;
-using Unity.Mathematics;
-
 
 namespace Ecosystem.ECS.Animal
 {
@@ -33,8 +30,7 @@ namespace Ecosystem.ECS.Animal
 
                 // Store age in seconds.
                 age.Age += deltaTime;
-                
-                if (age.Age >= ageOfDeath.Value)
+                if (age.Age >= 60f * ageOfDeath.Value)
                 {
                     // Death by old age.
                     commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
