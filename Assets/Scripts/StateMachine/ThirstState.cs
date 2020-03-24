@@ -26,7 +26,7 @@ namespace Ecosystem.StateMachines {
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2f) {
-                owner.SetThirst(1f);
+                owner.GetNeedsStatus().SateThirst(1f);
             }
 
             // Move owner

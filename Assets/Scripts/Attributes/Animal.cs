@@ -8,9 +8,7 @@ namespace Ecosystem.Attributes
 {
     public class Animal : MonoBehaviour {
 
-        private float hunger;
         private float hungerLimit;
-        private float thirst;
         private float thirstLimit;
         private float mating;
         private float matingLimit;
@@ -23,6 +21,10 @@ namespace Ecosystem.Attributes
         private Movement movement = default;
         [SerializeField]
         private Sensors sensors = default;
+        [SerializeField]
+        private NeedsStatus needs = default;
+        [SerializeField]
+        private Interaction interaction = default;
 
         private float changePerSecond;
 
@@ -45,9 +47,10 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.hunger = 1f;
+            this.needs.SateHunger(1f);
+            this.needs.SateThirst(1f);
+
             this.hungerLimit = 0.5f;
-            this.thirst = 1f;
             this.thirstLimit = 0.5f;
             this.mating = 1f;
             this.matingLimit = 0.5f;
@@ -84,24 +87,24 @@ namespace Ecosystem.Attributes
         void Update() {
             if (!hybridEntity.HasConverted) return;
 
-            this.hunger -= this.changePerSecond * Time.deltaTime;
-            this.thirst -= this.changePerSecond * Time.deltaTime;
             this.mating -= this.changePerSecond * Time.deltaTime;
             float diffHunger = 100f;
             float diffThirst = 100f;
+            float currentHunger = this.needs.GetHungerStatus();
+            float currentThirst = this.needs.GetThirstStatus();
 
             if (sensors.FoundPredator()) {
                 if (stateMachine.getCurrentState() != this.fleeState) {
                     stateMachine.ChangeState(this.fleeState);
                 }
-            } else if ((hunger <= hungerLimit) || (thirst <= thirstLimit)) {
-                if (hunger <= hungerLimit) {
+            } else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit)) {
+                if (currentHunger <= hungerLimit) {
                     sensors.LookForFood(true);
                     if (sensors.FoundFood()) {
                         diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
                     }
                 }
-                if (thirst <= thirstLimit) {
+                if (currentThirst <= thirstLimit) {
                     sensors.LookForWater(true);
                     if (sensors.FoundWater()) {
                         diffThirst = DiffLength(sensors.GetFoundWaterInfo().Position);
@@ -131,16 +134,8 @@ namespace Ecosystem.Attributes
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
         }
 
-        public void SetHunger(float newHunger) {
-            this.hunger = newHunger;
-        }
-
-        public void SetThirst(float newThirst) {
-            this.thirst = newThirst;
-        }
-
-        public void SetMating(float newMating) {
-            this.mating = newMating;
+        public NeedsStatus GetNeedsStatus() {
+            return this.needs;
         }
 
         public Sensors GetSensors() {
@@ -151,7 +146,9 @@ namespace Ecosystem.Attributes
             return this.movement;
         }
 
-
+        public Interaction GetInteraction() {
+            return this.interaction;
+        }
 
     }
 }
