@@ -22,11 +22,12 @@ namespace Ecosystem.ECS.Reproduction
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            Entities.WithAll<ReproductionEvent>().ForEach((Entity entity, int entityInQueryIndex,
-                ref LookingForMate lookingForMate) =>
+            Entities.WithAll<ReproductionEvent>().ForEach((Entity entity, int entityInQueryIndex
+                ,ref LookingForMate lookingForMate
+                ,in SexData sexData) =>
             {
                 Entity target = lookingForMate.Entity;
-                //TODO Main event
+                //TODO if female, become pregnant
                 commandBuffer.RemoveComponent<ReproductionEvent>(target.Index, target);
                 commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
 
