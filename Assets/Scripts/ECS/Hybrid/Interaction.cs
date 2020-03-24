@@ -31,7 +31,7 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
-        /// Reproduce with a partner. (The idea with this is that both the partner and the current entity add the Event-component to eachother. WIP)
+        /// Reproduce with a partner. (The idea with this is that both the partner and the current entity add the Event-component to eachother.)
         /// </summary>
         /// <param name="partner"></param>
         public void Reproduce(Entity partner)

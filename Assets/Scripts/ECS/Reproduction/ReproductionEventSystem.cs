@@ -9,9 +9,13 @@ using Unity.Transforms;
 
 namespace Ecosystem.ECS.Reproduction
 {
+    /// <summary>
+    /// System for animals to become pregnant during the reproduction event. The idea is for the event to occur for both the animals seperatly.
+    /// </summary>
     public class ReproductionEventSystem : SystemBase
     {
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -26,9 +30,10 @@ namespace Ecosystem.ECS.Reproduction
                 ,ref LookingForMate lookingForMate
                 ,in SexData sexData) =>
             {
-                Entity target = lookingForMate.Entity;
-                //TODO if female, become pregnant
-                commandBuffer.RemoveComponent<ReproductionEvent>(target.Index, target);
+                if(sexData.Sex == Sex.Female)
+                {
+                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyTag()); // If female, become pregnant
+                }
                 commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
 
             }).ScheduleParallel();
