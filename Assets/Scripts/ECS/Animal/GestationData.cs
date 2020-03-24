@@ -3,6 +3,9 @@ using Unity.Entities;
 
 namespace Ecosystem.ECS.Animal
 {
+    /// <summary>
+    /// Time for the babies to birth
+    /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]
     public struct GestationData : IComponentData

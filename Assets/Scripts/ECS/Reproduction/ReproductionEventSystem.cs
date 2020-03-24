@@ -26,9 +26,13 @@ namespace Ecosystem.ECS.Reproduction
                 ref LookingForMate lookingForMate) =>
             {
                 Entity target = lookingForMate.Entity;
-                
+                //TODO Main event
+                commandBuffer.RemoveComponent<ReproductionEvent>(target.Index, target);
+                commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
 
             }).ScheduleParallel();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }

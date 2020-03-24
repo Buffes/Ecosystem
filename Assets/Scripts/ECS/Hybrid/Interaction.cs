@@ -1,5 +1,6 @@
 ﻿using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Death;
+using Ecosystem.ECS.Reproduction;
 using Unity.Entities;
 
 namespace Ecosystem.ECS.Hybrid
@@ -29,9 +30,19 @@ namespace Ecosystem.ECS.Hybrid
             return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
         }
 
+        /// <summary>
+        /// Reproduce with a partner. (The idea with this is that both the partner and the current entity add the Event-component to eachother. WIP)
+        /// </summary>
+        /// <param name="partner"></param>
+        public void Reproduce(Entity partner)
+        {
+            EntityManager.AddComponent<ReproductionEvent>(partner);
+        }
+
         private void KillEntity(Entity e)
         {
             EntityManager.AddComponent<DeathEvent>(e);
         }
+
     }
 }
