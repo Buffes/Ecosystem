@@ -5,7 +5,6 @@ namespace Ecosystem.StateMachines {
     public class FleeState : IState {
 
         Animal owner;
-        Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private float pathfindInterval = 1f;
 
@@ -21,7 +20,7 @@ namespace Ecosystem.StateMachines {
             timeSinceLastFrame = 0f;
 
             Vector3 predatorPos = owner.GetSensors().GetFoundPredatorInfo().Position;
-            Vector3 currentPos = owner.GetMovement().GetPosition();//GetTransform().position;
+            Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = currentPos - predatorPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             Vector3 target = currentPos + 5f*diff/diffLength;
