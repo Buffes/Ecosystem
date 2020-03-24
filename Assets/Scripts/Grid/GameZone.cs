@@ -653,20 +653,20 @@ namespace Ecosystem.Grid
                 {
                     if (tiles[row, col] < 18)
                     {
-                        walkableTiles[CalculateIndex(row, col)] = false;
+                        SetWalkable(false, row, col);
                     } 
                     else 
                     {
-                        walkableTiles[CalculateIndex(row, col)] = true;
+                        SetWalkable(true, row, col);
                     }
                 }
             }
             
         }
 
-        private int CalculateIndex(int row, int col)
+        public static void SetWalkable(bool walkable, int x, int y)
         {
-            return col * tiles.GetLength(0) + row;
+            walkableTiles[y * tiles.GetLength(0) + x] = walkable;
         }
 
         public NativeArray<bool> GetWalkableTiles()
