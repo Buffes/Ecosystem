@@ -16,7 +16,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     {
         private const int MOVE_STRAIGHT_COST = 10;
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
-        // The bools here will need to be inverted for aquatic animals and all set to true for flyers.
 
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
@@ -285,8 +284,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static float3 GetWorldPosition(int2 gridCoords)
         {
-            float x = gridCoords.x + 0.5f;
-            float z = gridCoords.y + 0.5f;
+            float x = gridCoords.x;
+            float z = gridCoords.y;
             return new float3(x, 0f, z);
         }
 
