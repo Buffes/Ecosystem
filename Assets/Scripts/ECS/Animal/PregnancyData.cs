@@ -6,7 +6,8 @@ namespace Ecosystem.ECS.Animal
     /// <summary>
     /// Marks the animal as pregnant
     /// </summary>
-    public struct PregnancyTag : IComponentData
+    public struct PregnancyData : IComponentData
     {
+        public Entity Father;
     }
 }

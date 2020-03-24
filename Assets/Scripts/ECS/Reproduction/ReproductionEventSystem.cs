@@ -32,7 +32,7 @@ namespace Ecosystem.ECS.Reproduction
             {
                 if(sexData.Sex == Sex.Female)
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyTag()); // If female, become pregnant
+                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { Father = lookingForMate.Entity }); // If female, become pregnant
                 }
                 commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
 
