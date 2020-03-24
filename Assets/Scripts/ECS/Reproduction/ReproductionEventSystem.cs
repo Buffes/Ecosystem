@@ -1,11 +1,6 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
-using Unity.Collections;
-using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Transforms;
 
 namespace Ecosystem.ECS.Reproduction
 {
