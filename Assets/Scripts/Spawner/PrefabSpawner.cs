@@ -36,7 +36,7 @@ public class PrefabSpawner : MonoBehaviour
                     int n = UnityEngine.Random.Range(0, length);
                     if (grid[n])
                     {
-                        Instantiate(whatToSpawnPrefab[k], new Vector3(n % GameZone.tiles.GetLength(0), 1, (n - n % GameZone.tiles.GetLength(0)) / GameZone.tiles.GetLength(0)), Quaternion.Euler(UnityEngine.Random.Range(0, 360), 0, 0));
+                        Instantiate(whatToSpawnPrefab[k], new Vector3(n % GameZone.tiles.GetLength(0), 1, (n - n % GameZone.tiles.GetLength(0)) / GameZone.tiles.GetLength(0)), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
                         grid[n] = false;
                     }
 
