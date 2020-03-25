@@ -36,6 +36,9 @@ namespace Ecosystem.Grid
         //Matrix of walkable tiles
         public static NativeArray<bool> walkableTiles;
 
+        //Matrix of water tiles
+        public static NativeList<int2> WaterTiles;
+
 
         // Start is called before the first frame update
         void Awake() 
@@ -48,10 +51,12 @@ namespace Ecosystem.Grid
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWalkableTiles();
+            SetupWaterTiles();
         }
 
         void OnDestroy()
         {
+            WaterTiles.Dispose();
             walkableTiles.Dispose();
 
         }
@@ -79,8 +84,6 @@ namespace Ecosystem.Grid
                 }
             }
         }
-
-        public static GameZone Instance {get; set;}
 
         //The probability of creating water, otherwise create grass. 
         private int RandomizeWater(float water)
@@ -667,6 +670,22 @@ namespace Ecosystem.Grid
         public static void SetWalkable(bool walkable, int x, int y)
         {
             walkableTiles[y * tiles.GetLength(0) + x] = walkable;
+        }
+
+        private void SetupWaterTiles()
+        {
+            WaterTiles = new NativeList<int2>(Allocator.Persistent);
+
+            for (int row = 0; row < tiles.GetLength(0); row++)
+            {
+                for (int col = 0; col < tiles.GetLength(1); col++)
+                {
+                    if (tiles[row, col] < 34) // All water tiles
+                    {
+                        WaterTiles.Add(new int2(row, col));
+                    } 
+                }
+            }
         }
 
         public NativeArray<bool> GetWalkableTiles()

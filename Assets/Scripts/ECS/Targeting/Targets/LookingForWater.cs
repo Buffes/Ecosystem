@@ -8,7 +8,6 @@ namespace Ecosystem.ECS.Targeting.Targets
     public struct LookingForWater : IComponentData
     {
         public bool HasFound;
-        public Entity Entity;
         public float3 Position;
     }
 }
