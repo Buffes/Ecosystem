@@ -30,6 +30,16 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
+        /// Get sexual urge as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetSexualUrgesStatus()
+        {
+            SexualUrgesData value = GetComp<SexualUrgesData>();
+            return value.Urge;
+        }
+
+        /// <summary>
         /// Sate the hunger of an animal when eating.
         /// </summary>
         /// <param name="value">Float value</param>
@@ -37,7 +47,7 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (value <= 0.0f) return;
             float cur = GetComp<HungerData>().Hunger;
-            EntityManager.SetComponentData<HungerData>(Entity, new HungerData { Hunger = cur + value });
+            EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
         }
 
         /// <summary>
@@ -48,7 +58,18 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (value <= 0.0f) return;
             float cur = GetComp<ThirstData>().Thirst;
-            EntityManager.SetComponentData<ThirstData>(Entity, new ThirstData { Thirst = cur + value });
+            EntityManager.SetComponentData(Entity, new ThirstData { Thirst = cur + value });
+        }
+
+        /// <summary>
+        /// Sate the sexual urges of an animal when reproducing.
+        /// </summary>
+        /// <param name="value">Float value</param>
+        public void SateSexualUrge(float value)
+        {
+            if (value <= 0.0f) return;
+            float cur = GetComp<SexualUrgesData>().Urge;
+            EntityManager.SetComponentData(Entity, new SexualUrgesData { Urge = cur + value });
         }
 
         private T GetComp<T>() where T : struct, IComponentData

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
+using Unity.Entities;
+using Unity.Collections;
+using Unity.Mathematics;
 
 namespace Ecosystem.Grid
 {
@@ -31,7 +34,10 @@ namespace Ecosystem.Grid
         public float waterSpawnRate = 0.005f;
     
         //Matrix of walkable tiles
-        public static bool [,] walkableTiles;
+        public static NativeArray<bool> walkableTiles;
+
+        //Matrix of water tiles
+        public static NativeList<int2> WaterTiles;
 
 
         // Start is called before the first frame update
@@ -44,14 +50,21 @@ namespace Ecosystem.Grid
             CheckMiddle();
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
-
             SetupWalkableTiles();
+            SetupWaterTiles();
+        }
+
+        void OnDestroy()
+        {
+            WaterTiles.Dispose();
+            walkableTiles.Dispose();
+
         }
 
         private void InitObjects()
         {
             diffWaterLand = landIndex - waterIndex;
-            walkableTiles = new bool [tiles.GetLength(0), tiles.GetLength(1)];
+            walkableTiles = new NativeArray<bool>(tiles.Length, Allocator.Persistent);
             
         }
 
@@ -75,7 +88,7 @@ namespace Ecosystem.Grid
         //The probability of creating water, otherwise create grass. 
         private int RandomizeWater(float water)
         {
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             if (rand <= water)
             {
                 return waterIndex;
@@ -643,17 +656,39 @@ namespace Ecosystem.Grid
                 {
                     if (tiles[row, col] < 18)
                     {
-                        walkableTiles[row,col] = false;
+                        SetWalkable(false, row, col);
                     } 
                     else 
                     {
-                        walkableTiles[row,col] = true;
+                        SetWalkable(true, row, col);
                     }
+                }
+            }
+            
+        }
+
+        public static void SetWalkable(bool walkable, int x, int y)
+        {
+            walkableTiles[y * tiles.GetLength(0) + x] = walkable;
+        }
+
+        private void SetupWaterTiles()
+        {
+            WaterTiles = new NativeList<int2>(Allocator.Persistent);
+
+            for (int row = 0; row < tiles.GetLength(0); row++)
+            {
+                for (int col = 0; col < tiles.GetLength(1); col++)
+                {
+                    if (tiles[row, col] < 34) // All water tiles
+                    {
+                        WaterTiles.Add(new int2(row, col));
+                    } 
                 }
             }
         }
 
-        public bool [,] GetWalkableTiles()
+        public NativeArray<bool> GetWalkableTiles()
         {
             return walkableTiles;
         }
