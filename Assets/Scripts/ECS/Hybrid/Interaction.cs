@@ -31,12 +31,13 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
-        /// Reproduce with a partner. (The idea with this is that both the partner and the current entity add the Event-component to eachother.)
+        /// Reproduce with a partner. Attaches a reproductionEvent to both parts.
         /// </summary>
         /// <param name="partner"></param>
         public void Reproduce(Entity partner)
         {
-            EntityManager.AddComponent<ReproductionEvent>(partner);
+            EntityManager.AddComponentData(partner, new ReproductionEvent { Partner = Entity});
+            EntityManager.AddComponentData(Entity, new ReproductionEvent { Partner = partner });
         }
 
         private void KillEntity(Entity e)

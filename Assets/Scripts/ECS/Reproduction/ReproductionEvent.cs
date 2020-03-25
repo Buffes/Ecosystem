@@ -7,5 +7,6 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public struct ReproductionEvent : IComponentData
     {
+        public Entity Partner;
     }
 }
