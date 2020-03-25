@@ -24,7 +24,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             base.OnCreate();
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
         }
 
         protected override void OnUpdate()
@@ -55,7 +54,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize);
                 // Add path checkpoints
 
-                for (int i = 0; i < path.Length; i++)
+                for (int i = 0; i < path.Length - 1; i++)
                 {
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
