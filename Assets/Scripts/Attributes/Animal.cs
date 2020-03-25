@@ -104,7 +104,7 @@ namespace Ecosystem.Attributes
                 if (thirst <= thirstLimit) {
                     sensors.LookForWater(true);
                     if (sensors.FoundWater()) {
-                        diffThirst = DiffLength(sensors.GetFoundWaterInfo().Position);
+                        diffThirst = DiffLength(sensors.GetFoundWaterInfo());
                     }
                 }
                 IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
