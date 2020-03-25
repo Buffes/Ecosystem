@@ -1,12 +1,11 @@
 ﻿using Unity.Entities;
-using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
     /// <summary>
-    /// System for increasing the thirst of an animal.
+    /// System for increasing the sexual urges of an animal
     /// </summary>
-    public class ThirstSystem : SystemBase
+    public class SexualUrgesSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
@@ -23,14 +22,9 @@ namespace Ecosystem.ECS.Animal.Needs
             float deltaTime = Time.DeltaTime;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,
-                ref ThirstData thirstData) =>
+                ref SexualUrgesData sexualUrgesData) =>
             {
-                thirstData.Thirst -= deltaTime / 1000.0f;
-
-                if(thirstData.Thirst <= 0.0f)
-                {
-                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
-                }
+                sexualUrgesData.Urge -= deltaTime / 1000.0f;
 
             }).ScheduleParallel();
 
