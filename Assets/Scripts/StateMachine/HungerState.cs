@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Unity.Entities;
 using Ecosystem.Attributes;
 
 namespace Ecosystem.StateMachines {
@@ -25,8 +26,8 @@ namespace Ecosystem.StateMachines {
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2.5f) {
-                owner.SetHunger(1f);
-                // TODO: destroy food
+                Entity food = owner.GetSensors().GetFoundFoodInfo().Entity;
+                owner.GetNeedsStatus().SateHunger(owner.GetInteraction().Eat(food));
             }
 
             // Move owner
