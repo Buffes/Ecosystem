@@ -40,13 +40,13 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 in Translation translation) =>
             {
 
-                float3 target = moveCommand.target;
-                float reach = moveCommand.reach;
+                float3 target = moveCommand.Target;
+                float reach = moveCommand.Reach;
+                float range = moveCommand.Range;
                 float3 position = translation.Value;    
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
 
-                
                 // Clear any existing path
                 pathBuffer.Clear();
                 // Offset the target by the reach

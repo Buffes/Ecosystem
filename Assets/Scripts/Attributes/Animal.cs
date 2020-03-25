@@ -46,6 +46,8 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
+            Debug.Log("init");
+            Debug.Log(hybridEntity.HasConverted);
             this.needs.SateHunger(1f);
             this.needs.SateThirst(1f);
             this.needs.SateSexualUrge(1f);

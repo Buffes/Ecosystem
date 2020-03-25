@@ -20,10 +20,10 @@ namespace Ecosystem.ECS.Hybrid
         {
             EntityManager.AddComponentData(Entity, new MoveCommand
             {
-                target = target,
-                reach = reach,
-                pathfind = true,
-                range = range
+                Target = target,
+                Reach = reach,
+                Pathfind = true,
+                Range = range
             });
         }
 
