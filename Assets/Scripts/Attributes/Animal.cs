@@ -10,7 +10,6 @@ namespace Ecosystem.Attributes
 
         private float hungerLimit;
         private float thirstLimit;
-        private float mating;
         private float matingLimit;
 
         [SerializeField]
@@ -49,10 +48,10 @@ namespace Ecosystem.Attributes
         private void Init() {
             this.needs.SateHunger(1f);
             this.needs.SateThirst(1f);
+            this.needs.SateSexualUrge(1f);
 
             this.hungerLimit = 0.5f;
             this.thirstLimit = 0.5f;
-            this.mating = 1f;
             this.matingLimit = 0.5f;
 
             this.changePerSecond = 0.0001f;
@@ -87,11 +86,11 @@ namespace Ecosystem.Attributes
         void Update() {
             if (!hybridEntity.HasConverted) return;
 
-            this.mating -= this.changePerSecond * Time.deltaTime;
             float diffHunger = 100f;
             float diffThirst = 100f;
             float currentHunger = this.needs.GetHungerStatus();
             float currentThirst = this.needs.GetThirstStatus();
+            float currentMating = this.needs.GetSexualUrgesStatus();
 
             if (sensors.FoundPredator()) {
                 if (stateMachine.getCurrentState() != this.fleeState) {
@@ -114,7 +113,7 @@ namespace Ecosystem.Attributes
                 if (stateMachine.getCurrentState() != closest) {
                     stateMachine.ChangeState(closest);
                 }
-            } else if (mating <= matingLimit) {
+            } else if (currentMating <= matingLimit) {
                 sensors.LookForMate(true);
                 if (sensors.FoundMate() && stateMachine.getCurrentState() != this.mateState) {
                     stateMachine.ChangeState(this.mateState);

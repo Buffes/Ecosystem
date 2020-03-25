@@ -26,8 +26,8 @@ namespace Ecosystem.StateMachines {
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2.5f) {
-                // Set mating to 1
-                // spawn child
+                // Reproduction event
+                owner.GetNeedsStatus().SateSexualUrge(1f);
             }
 
             // Move owner
