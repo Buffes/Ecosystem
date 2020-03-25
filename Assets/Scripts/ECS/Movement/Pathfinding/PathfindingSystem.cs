@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Ecosystem.Grid;
 
 namespace Ecosystem.ECS.Movement.Pathfinding
 {
@@ -28,8 +29,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-
-            Entities.ForEach((Entity entity, int entityInQueryIndex,
+            NativeArray<bool> grid = GameZone.walkableTiles;
+            var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
+            
+            Entities
+                .WithReadOnly(grid)
+                .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
@@ -38,7 +43,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
                 float3 position = translation.Value;    
-     
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
 
@@ -47,10 +51,10 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 pathBuffer.Clear();
                 // Offset the target by the reach
                 target = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target));
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize);
                 // Add path checkpoints
 
-                for (int i = 0; i < path.Length; i++)
+                for (int i = 0; i < path.Length - 1; i++)
                 {
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
@@ -65,24 +69,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition)
+        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeArray<bool> grid, int2 gridSize)
         {
-            // Temporary representation of the grid, mapping coordinates to a boolean for walkability. 
-            // false = not walkable, true = walkable. We assume equal weights for all positions in the grid for now.
-            // TODO: Change this into reading from the grid when that is implemented. 
-            //============================================================
-            int2 gridSize = new int2(100, 100);
-            NativeHashMap<int2, bool> pathFindingMap = new NativeHashMap<int2, bool>(gridSize.x * gridSize.y, Allocator.Temp);
-            
-            for (int y = 0; y < gridSize.y; y++)
-            {
-                for (int x = 0; x < gridSize.x; x++)
-                {
-                    pathFindingMap.TryAdd(new int2(x, y), true);
-                }
-            }
-            //============================================================
-
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
             neighbourOffsetArray[0] = new int2(-1, 0); // Left
@@ -96,7 +84,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
             NativeList<PathNode> pathNodes = new NativeList<PathNode>(Allocator.Temp); // Add pathNodes to this lazily as needed
             int index = 0;
-            NativeHashMap<int2, int> indexOfPathNode = new NativeHashMap<int2, int>(gridSize.x * gridSize.y, Allocator.Temp);
+            NativeHashMap<int2, int> indexOfPathNode = new NativeHashMap<int2, int>(grid.Length, Allocator.Temp);
             
             // openList Could be optimized by implementing a NativePriorityQueue and using that instead.
             NativeList<int> openList = new NativeList<int>(Allocator.Temp);
@@ -160,7 +148,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         continue;
                     }
 
-                    if (!pathFindingMap[neighbourPosition])
+                    if (!grid[CalculateIndex(neighbourPosition, gridSize)])
                     {
                         // Not walkable
                         continue;
@@ -190,7 +178,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             closedList.Dispose();
             indexOfPathNode.Dispose();
             neighbourOffsetArray.Dispose();
-            pathFindingMap.Dispose(); // Dispose the temporary map
 
             if (targetNode.cameFromNodeIndex == -1) {
                 // Didn't find a path!
@@ -274,6 +261,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             }
         }
 
+        private static int CalculateIndex(int2 position, int2 gridSize)
+        {
+            return gridSize.x * position.y + position.x;
+        }
+
         private static bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {
             return
                 gridPosition.x >= 0 && 
@@ -291,8 +283,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static float3 GetWorldPosition(int2 gridCoords)
         {
-            float x = gridCoords.x + 0.5f;
-            float z = gridCoords.y + 0.5f;
+            float x = gridCoords.x;
+            float z = gridCoords.y;
             return new float3(x, 0f, z);
         }
 

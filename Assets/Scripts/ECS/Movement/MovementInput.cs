@@ -5,13 +5,12 @@ using Unity.Mathematics;
 namespace Ecosystem.ECS.Movement
 {
     /// <summary>
-    /// Input data defining what direction the entitiy wants to go and if to sprint or not.
+    /// Input data defining what direction the entitiy wants to go.
     /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]
     public struct MovementInput : IComponentData
     {
         public float3 Direction;
-        public bool Sprint;
     }
 }

@@ -8,11 +8,8 @@ namespace Ecosystem.Attributes
 {
     public class Animal : MonoBehaviour {
 
-        private float hunger;
         private float hungerLimit;
-        private float thirst;
         private float thirstLimit;
-        private float mating;
         private float matingLimit;
 
         [SerializeField]
@@ -24,7 +21,9 @@ namespace Ecosystem.Attributes
         [SerializeField]
         private Sensors sensors = default;
         [SerializeField]
-        private NeedsStatus needsStatus = default;
+        private NeedsStatus needs = default;
+        [SerializeField]
+        private Interaction interaction = default;
 
         private float changePerSecond;
 
@@ -47,11 +46,12 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.hunger = 1f;
+            this.needs.SateHunger(1f);
+            this.needs.SateThirst(1f);
+            this.needs.SateSexualUrge(1f);
+
             this.hungerLimit = 0.5f;
-            this.thirst = 1f;
             this.thirstLimit = 0.5f;
-            this.mating = 1f;
             this.matingLimit = 0.5f;
 
             this.changePerSecond = 0.0001f;
@@ -86,42 +86,55 @@ namespace Ecosystem.Attributes
         void Update() {
             if (!hybridEntity.HasConverted) return;
 
-            this.hunger -= this.changePerSecond*Time.deltaTime;
-            bool predatorInRange = sensors.FoundPredator();
+            float diffHunger = 100f;
+            float diffThirst = 100f;
+            float currentHunger = this.needs.GetHungerStatus();
+            float currentThirst = this.needs.GetThirstStatus();
+            float currentMating = this.needs.GetSexualUrgesStatus();
 
-            if (predatorInRange) {
+            if (sensors.FoundPredator()) {
                 if (stateMachine.getCurrentState() != this.fleeState) {
                     stateMachine.ChangeState(this.fleeState);
                 }
-            } else if (hunger <= hungerLimit) {
-                if (stateMachine.getCurrentState() != this.hungerState) {
-                    stateMachine.ChangeState(this.hungerState);
+            } else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit)) {
+                if (currentHunger <= hungerLimit) {
+                    sensors.LookForFood(true);
+                    if (sensors.FoundFood()) {
+                        diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
+                    }
                 }
-            } else if (thirst <= thirstLimit) {
-                if (stateMachine.getCurrentState() != this.thirstState) {
-                    stateMachine.ChangeState(this.thirstState);
+                if (currentThirst <= thirstLimit) {
+                    sensors.LookForWater(true);
+                    if (sensors.FoundWater()) {
+                        diffThirst = DiffLength(sensors.GetFoundWaterInfo());
+                    }
                 }
-            } else if (mating <= matingLimit) {
-                if (stateMachine.getCurrentState() != this.mateState) {
+                IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
+                if (stateMachine.getCurrentState() != closest) {
+                    stateMachine.ChangeState(closest);
+                }
+            } else if (currentMating <= matingLimit) {
+                sensors.LookForMate(true);
+                if (sensors.FoundMate() && stateMachine.getCurrentState() != this.mateState) {
                     stateMachine.ChangeState(this.mateState);
                 }
-            } else if (stateMachine.getCurrentState() != this.casualState) {
-                stateMachine.ChangeState(this.casualState);
+            } else {
+                if (stateMachine.getCurrentState() != this.casualState) {
+                    stateMachine.ChangeState(this.casualState);
+                }
             }
 
             stateMachine.Update();
         }
 
-        public float GetHunger() {
-            return this.hunger;
+        private float DiffLength(Vector3 target) {
+            Vector3 currentPos = movement.GetPosition();
+            Vector3 diff = target - currentPos;
+            return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
         }
 
-        public void SetHunger(float newHunger) {
-            this.hunger = newHunger;
-        }
-
-        public void SetThirst(float newThirst) {
-            this.thirst = newThirst;
+        public NeedsStatus GetNeedsStatus() {
+            return this.needs;
         }
 
         public Sensors GetSensors() {
@@ -132,8 +145,9 @@ namespace Ecosystem.Attributes
             return this.movement;
         }
 
-        public Transform GetTransform() {
-            return transform;
+        public Interaction GetInteraction() {
+            return this.interaction;
         }
+
     }
 }

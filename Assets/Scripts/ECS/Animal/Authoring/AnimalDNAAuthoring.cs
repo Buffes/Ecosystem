@@ -1,4 +1,4 @@
-﻿using Ecosystem.ECS.Stats;
+﻿using Ecosystem.ECS.Stats.Base;
 using Ecosystem.Genetics;
 using Unity.Entities;
 using UnityEngine;
@@ -38,8 +38,8 @@ namespace Ecosystem.ECS.Animal
             });
 
             SetComponent((ref BaseSpeed speed) => DNA.NextGene(ref speed.Value));
-            SetComponent((ref BaseHearing hearing) => DNA.NextGene(ref hearing.Range));
-            SetComponent((ref BaseVision vision) => DNA.NextGene(ref vision.Range));
+            SetComponent((ref BaseHearingRange hearingRange) => DNA.NextGene(ref hearingRange.Value));
+            SetComponent((ref BaseVisionRange visionRange) => DNA.NextGene(ref visionRange.Value));
         }
 
         private delegate void ModifyComponentDelegate<T>(ref T t) where T : struct, IComponentData;

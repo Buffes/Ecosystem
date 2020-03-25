@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Ecosystem.ECS.Player
 {
     /// <summary>
-    /// Movement input controls for entities with a PlayerTag component.
+    /// Movement input controls for player-controlled entities.
     /// </summary>
     public class PlayerInputSystem : SystemBase
     {
@@ -22,13 +22,19 @@ namespace Ecosystem.ECS.Player
                 direction = math.normalize(direction);
             }
 
-            Entities.ForEach((ref MovementInput movementInput, ref PlayerTag playerTag) =>
-            {
+            Entities
+                .WithAll<PlayerTag>()
+                .ForEach((ref MovementInput movementInput) =>
+                {
+                    movementInput.Direction = direction;
+                }).ScheduleParallel();
 
-                movementInput.Direction = direction;
-                movementInput.Sprint = sprint;
-
-            }).ScheduleParallel();
+            if (sprint)
+                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag>().WithNone<Sprinting>().ForEach((Entity entity)
+                    => EntityManager.AddComponentData(entity, new Sprinting())).Run();
+            else
+                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag, Sprinting>().ForEach((Entity entity)
+                    => EntityManager.RemoveComponent<Sprinting>(entity)).Run();
         }
     }
 }

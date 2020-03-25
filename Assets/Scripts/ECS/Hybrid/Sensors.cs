@@ -35,10 +35,10 @@ namespace Ecosystem.ECS.Hybrid
         /// Returns info about the water that has been found.
         /// Make sure that water has been found first by checking <see cref="FoundWater()"/>.
         /// </summary>
-        public (Vector3 Position, Entity Entity) GetFoundWaterInfo()
+        public Vector3 GetFoundWaterInfo()
         {
             LookingForWater info = GetComp<LookingForWater>();
-            return (info.Position, info.Entity);
+            return info.Position;
         }
 
         public (Vector3 Position, Entity Entity) GetFoundFoodInfo()

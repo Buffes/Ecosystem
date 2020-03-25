@@ -1,4 +1,5 @@
-﻿using Ecosystem.ECS.Movement.Pathfinding;
+﻿using Ecosystem.ECS.Movement;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -24,6 +25,22 @@ namespace Ecosystem.ECS.Hybrid
                 pathfind = true,
                 range = range
             });
+        }
+
+        /// <summary>
+        /// Starts/stops sprinting.
+        /// </summary>
+        public void Sprint(bool enabled)
+        {
+            if (enabled == EntityManager.HasComponent<Sprinting>(Entity)) return;
+            if (enabled)
+            {
+                EntityManager.AddComponentData(Entity, new Sprinting());
+            }
+            else
+            {
+                EntityManager.RemoveComponent<Sprinting>(Entity);
+            }
         }
 
         public Vector3 GetPosition()

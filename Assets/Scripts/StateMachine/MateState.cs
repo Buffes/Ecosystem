@@ -12,8 +12,7 @@ namespace Ecosystem.StateMachines {
         public MateState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
-            Vector3 currentPos = owner.GetMovement().GetPosition();
-            nextTarget = RandomTarget(currentPos);
+
         }
 
         public void Execute() {
@@ -23,46 +22,20 @@ namespace Ecosystem.StateMachines {
 
             Vector3 currentPos = owner.GetMovement().GetPosition();
 
-            if (owner.GetSensors().FoundMate()) {
-                nextTarget = owner.GetSensors().GetFoundMateInfo().Position;
-                Vector3 diff = nextTarget - currentPos;
-                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
-                if (diffLength <= 2.5f) {
-                    // Set mating to 1
-                    // spawn child
-                }
-            } else {
-                Vector3 diff = nextTarget - currentPos;
-                float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
-                if (diffLength <= 2.5f) {
-                    nextTarget = RandomTarget(currentPos);
-                }
+            nextTarget = owner.GetSensors().GetFoundMateInfo().Position;
+            Vector3 diff = nextTarget - currentPos;
+            float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+            if (diffLength <= 2.5f) {
+                // Reproduction event
+                owner.GetNeedsStatus().SateSexualUrge(1f);
             }
+
             // Move owner
             owner.Move(nextTarget,1f,100f);
         }
 
-        private Vector3 RandomTarget(Vector3 currentPos) {
-            Vector3 target = currentPos;
-            int tile = new System.Random().Next(8);
-
-
-            switch (tile) {
-                case 0: target.x -= 5; target.z -= 5; break;
-                case 1: target.z -= 5; break;
-                case 2: target.x += 5; target.z -= 5; break;
-                case 3: target.x -= 5; break;
-                case 4: target.x += 5; break;
-                case 5: target.x -= 5; target.z += 5; break;
-                case 6: target.z += 5; break;
-                case 7: target.x += 5; target.z += 5; break;
-                default: break;
-            }
-            return target;
-        }
-
         public void Exit() {
-            owner.GetSensors().LookForMate(true);
+            owner.GetSensors().LookForMate(false);
         }
     }
 }

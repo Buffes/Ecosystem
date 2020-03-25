@@ -1,10 +1,4 @@
-﻿
-
-using System;
-using Unity.Collections;
-using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Transforms;
+﻿using Unity.Entities;
 using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Animal.Needs
