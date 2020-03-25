@@ -36,7 +36,7 @@ namespace Ecosystem.ECS.Animal
                 
                 // Calculate the age of death by old age using inverse transform sampling on logistic distribution.
                 float u = random.NextFloat(0.00001f, 1.0f);
-                float scale = 0.5f + 1f / (lifespan.Value + 2); // Smaller std deviation for shorter lifespans 
+                float scale = 0.05f * math.sqrt(lifespan.Value); // Smaller std deviation for shorter lifespans 
                 float exactDeathAge = lifespan.Value + scale * math.log(u / (1f-u));
                 // Clamp to within 3 standard deviations. scale is about 0.5 * std deviation.
                 exactDeathAge = math.clamp(exactDeathAge, -6f*scale + lifespan.Value, 6f*scale + lifespan.Value);
