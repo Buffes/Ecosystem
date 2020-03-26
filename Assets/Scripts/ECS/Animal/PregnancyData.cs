@@ -1,5 +1,5 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
+using Ecosystem.Genetics;
 
 namespace Ecosystem.ECS.Animal
 {
@@ -9,5 +9,6 @@ namespace Ecosystem.ECS.Animal
     public struct PregnancyData : IComponentData
     {
         public Entity Father;
+        public DNA DNAfromFather;
     }
 }

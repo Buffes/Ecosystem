@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Targets;
+using Ecosystem.Genetics;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -27,7 +27,7 @@ namespace Ecosystem.ECS.Reproduction
             {
                 if(sexData.Sex == Sex.Female)
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { Father = reproductionEvent.Partner }); // If female, become pregnant
+                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { DNAfromFather = EntityManager.GetComponentData<DNA>(reproductionEvent.Partner) }); // If female, become pregnant
                 }
                 commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
 
