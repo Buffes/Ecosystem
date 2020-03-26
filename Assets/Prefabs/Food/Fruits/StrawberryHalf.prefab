@@ -168,7 +168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012122895030}
   - component: {fileID: 205000012545026206}
-  - component: {fileID: 65000011173157372}
   m_Layer: 0
   m_Name: StrawberryHalf
   m_TagString: Untagged
@@ -215,16 +214,3 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23000011524662772}
   m_Enabled: 1
---- !u!65 &65000011173157372
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011718721764}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.037308797, y: 0.019222269, z: 0.029343676}
-  m_Center: {x: 0.0040537124, y: 0.009866246, z: 0.0007325532}
