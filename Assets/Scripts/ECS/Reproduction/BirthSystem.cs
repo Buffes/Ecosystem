@@ -1,6 +1,5 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
-using Ecosystem.Attributes;
 using Ecosystem.Genetics;
 using Unity.Transforms;
 using UnityEngine;
@@ -38,11 +37,8 @@ namespace Ecosystem.ECS.Reproduction
             {
                 //TODO Spawn new animal of the same type as parents
                 DNA newDNA = DNA.InheritedDNA(dna, pregnancyData.DNAfromFather); // inherit genes from parents
-                //Entity baby = new Entity();
-                Attributes.Animal baby = new Attributes.Animal();
+                Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
                 baby.InitDNA(newDNA);
-                GameObject babyObject = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value);
-
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);

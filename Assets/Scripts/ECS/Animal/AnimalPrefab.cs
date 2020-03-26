@@ -1,4 +1,5 @@
 ﻿using Unity.Entities;
+using Ecosystem.Attributes;
 using UnityEngine;
 
 namespace Ecosystem.ECS.Animal
@@ -6,6 +7,6 @@ namespace Ecosystem.ECS.Animal
     [GenerateAuthoringComponent]
     public struct AnimalPrefab : IComponentData
     {
-        public GameObject Prefab;
+        public Attributes.Animal Prefab;
     }
 }
