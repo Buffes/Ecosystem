@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5070148452478974442}
   - component: {fileID: 3352532566447112004}
+  - component: {fileID: 5893786082833397114}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -130,6 +131,20 @@ MonoBehaviour:
   sensors: {fileID: 5070148453820763527}
   needs: {fileID: 7943262905448898125}
   interaction: {fileID: 2502699101382559291}
+--- !u!114 &5893786082833397114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148452478974443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb142c22429a82e45a49a6ceeb7794f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hybridEntity: {fileID: 205040342004547871}
+  movement: {fileID: 5070148453820763526}
 --- !u!1 &5070148453820763646
 GameObject:
   m_ObjectHideFlags: 0
