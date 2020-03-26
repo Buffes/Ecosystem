@@ -15,7 +15,6 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.GetMovement().GetPosition();
             nextTarget = RandomTarget(currentPos);
             //nextTarget = currentPos + new Vector3(currentPos.x + 5f, 0, currentPos.z);
-            Debug.Log("Entering casual state");
         }
 
         public void Execute() {
@@ -31,7 +30,7 @@ namespace Ecosystem.StateMachines {
                 nextTarget = RandomTarget(currentPos);
             }
             // Move owner
-            owner.Move(nextTarget,1f,10f);
+            owner.Move(nextTarget,1f,100);
         }
 
         private Vector3 RandomTarget(Vector3 currentPos) {

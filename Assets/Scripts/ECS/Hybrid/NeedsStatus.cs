@@ -48,7 +48,6 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (value <= 0.0f) return;
             float cur = GetComp<HungerData>().Hunger;
-            Debug.Log(cur);
             EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
         }
 

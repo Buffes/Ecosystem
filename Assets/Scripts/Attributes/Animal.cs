@@ -44,8 +44,6 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            Debug.Log("init");
-            Debug.Log(hybridEntity.HasConverted);
             this.needs.SateHunger(1f);
             this.needs.SateThirst(1f);
             this.needs.SateSexualUrge(1f);
@@ -73,8 +71,8 @@ namespace Ecosystem.Attributes
             animalDNAAuthoring.DNA = dna;
         }
 
-        public void Move(Vector3 target,float reach,float range) {
-            movement.Move(target,reach,range);
+        public void Move(Vector3 target, float reach, int maxTiles) {
+            movement.Move(target, reach, maxTiles);
         }
 
         public void Die() {

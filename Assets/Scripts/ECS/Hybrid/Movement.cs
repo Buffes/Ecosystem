@@ -16,14 +16,14 @@ namespace Ecosystem.ECS.Hybrid
         /// <param name="target">the target position to move to</param>
         /// <param name="reach">the distance away from the target to end the movement at</param>
         /// <param name="range">the max distance of the resulting path</param>
-        public void Move(Vector3 target, float reach, float range)
+        public void Move(Vector3 target, float reach, int maxTiles)
         {
             EntityManager.AddComponentData(Entity, new MoveCommand
             {
                 Target = target,
                 Reach = reach,
                 Pathfind = true,
-                Range = range
+                MaxTiles = maxTiles
             });
         }
 

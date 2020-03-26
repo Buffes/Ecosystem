@@ -42,7 +42,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 float3 target = moveCommand.Target;
                 float reach = moveCommand.Reach;
-                float range = moveCommand.Range;
+                int maxTiles = moveCommand.MaxTiles;
                 float3 position = translation.Value;    
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
@@ -51,7 +51,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 pathBuffer.Clear();
                 // Offset the target by the reach
                 target = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize);
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize, maxTiles);
                 // Add path checkpoints
 
                 for (int i = 0; i < path.Length - 1; i++)
@@ -69,7 +69,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeArray<bool> grid, int2 gridSize)
+        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeArray<bool> grid, int2 gridSize, int maxTiles)
         {
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
@@ -107,6 +107,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     break;
                 }
 
+                if (pathNodes.Length >= maxTiles)
+                {
+                    // Reached maximum search range
+                    break;
+                }
+
                 // Remove current node from Open List
                 for (int i = 0; i < openList.Length; i++) {
                     if (openList[i] == currentNodeIndex) {
@@ -125,6 +131,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     if (!IsPositionInsideGrid(neighbourPosition, gridSize))
                     {
                         // Neighbour not a valid position
+                        continue;
+                    }
+
+                    if (!grid[CalculateIndex(neighbourPosition, gridSize)])
+                    {
+                        // Not walkable
                         continue;
                     }
                     
@@ -148,12 +160,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         continue;
                     }
 
-                    if (!grid[CalculateIndex(neighbourPosition, gridSize)])
-                    {
-                        // Not walkable
-                        continue;
-                    }
-
                     int2 currentNodePosition = new int2(currentNode.x, currentNode.y);
 
                     int tentativeGCost = currentNode.gCost + Heuristic(currentNodePosition, neighbourPosition);
@@ -171,7 +177,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     }
                 }
             }
-
+            
             PathNode targetNode = pathNodes[targetNodeIndex];
 
             openList.Dispose();

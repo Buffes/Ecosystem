@@ -13,6 +13,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         public float3 Target; // Target position to move to
         public float Reach; // Distance away from the target to end the movement at
         public bool Pathfind; // If to use pathfinding or to just move straight
-        public float Range; // Max range of a pathfinding solution
+        public int MaxTiles; // Max number of tiles to search before stopping
     }
 }
