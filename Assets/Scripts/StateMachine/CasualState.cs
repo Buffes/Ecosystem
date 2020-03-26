@@ -20,7 +20,6 @@ namespace Ecosystem.StateMachines {
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
-            Debug.Log("Moving to: " + nextTarget);
 
             Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = nextTarget - currentPos;
