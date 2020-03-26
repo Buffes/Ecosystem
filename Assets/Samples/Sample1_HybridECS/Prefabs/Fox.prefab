@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1746481451882938438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3693017469720498761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916414920c3d445d995b24e819088e68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {fileID: 3693017471615919652}
-  sensors: {fileID: 3693017471615919653}
 --- !u!1001 &8438886936344652706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,11 +83,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 54ebd0d0cdfca8d48be3c648fec0bb90,
         type: 2}
-    - target: {fileID: 5070148453820763521, guid: 1ab49e1f0a45e6143b303a5638864304,
-        type: 3}
-      propertyPath: Range
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 5070148453998145580, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -109,33 +90,3 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c28069643d0787748b4261ac7685883a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
---- !u!1 &3693017469720498761 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 8438886936344652706}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3693017471615919652 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5070148453820763526, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 8438886936344652706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba6c8ccefe007e54e87c518a1855a3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3693017471615919653 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5070148453820763527, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 8438886936344652706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 307dd1c283006b8428c060adaa23d135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
