@@ -10,15 +10,29 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// </summary>
     public class PathFollowingSystem : SystemBase
     {
+        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            m_EndSimulationEcbSystem = World
+                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        }
         protected override void OnUpdate()
         {
+            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref MovementInput movementInput,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in Translation translation) =>
             {
 
-                if (pathBuffer.Length == 0) return;
+                if (pathBuffer.Length == 0)
+                {
+                    commandBuffer.AddComponent<FinishedPathTag>(entityInQueryIndex, entity);
+                    return;
+                }
+                commandBuffer.RemoveComponent<FinishedPathTag>(entityInQueryIndex, entity);
 
                 for (int i = pathBuffer.Length - 1; i >= 0; i--)
                 {
@@ -42,6 +56,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 movementInput.Direction = float3.zero;
 
             }).ScheduleParallel();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
