@@ -25,8 +25,6 @@ namespace Ecosystem.Attributes
         [SerializeField]
         private Interaction interaction = default;
 
-        private float changePerSecond;
-
         private StateMachine stateMachine;
         private IState casualState;
         private IState hungerState;
@@ -55,8 +53,6 @@ namespace Ecosystem.Attributes
             this.hungerLimit = 0.5f;
             this.thirstLimit = 0.5f;
             this.matingLimit = 0.5f;
-
-            this.changePerSecond = 0.0001f;
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
