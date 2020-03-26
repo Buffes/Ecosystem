@@ -23,6 +23,8 @@ namespace Ecosystem.ECS.Death
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
 
             }).ScheduleParallel();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
