@@ -22,21 +22,18 @@ namespace Ecosystem.ECS.Reproduction
 
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-
             Entities.WithAll<BirthEvent>().ForEach((Entity entity, int entityInQueryIndex
-                , ref PregnancyData pregnancyData
+                , PregnancyData pregnancyData
                 , in Translation position
                 , in Rotation rotation
                 , in DNA dna
                 , in AnimalPrefab prefab) =>
             {
 
-                DNA newDNA = DNA.InheritedDNA(dna, pregnancyData.DNAfromFather); // inherit genes from parents
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
-                baby.InitDNA(newDNA); // Initialize the baby's DNA 
+                baby.InitDNA(DNA.InheritedDNA(dna, pregnancyData.DNAfromFather)); // Initialize the baby's DNA 
 
-            }).ScheduleParallel();
+            }).WithoutBurst().Run();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }

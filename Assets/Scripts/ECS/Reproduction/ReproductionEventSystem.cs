@@ -22,16 +22,16 @@ namespace Ecosystem.ECS.Reproduction
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             Entities.ForEach((Entity entity, int entityInQueryIndex
-                ,ref ReproductionEvent reproductionEvent
-                ,in SexData sexData) =>
+                , ReproductionEvent reproductionEvent
+                , in SexData sexData) =>
             {
                 if(sexData.Sex == Sex.Female)
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { DNAfromFather = EntityManager.GetComponentData<DNA>(reproductionEvent.Partner) }); // If female, become pregnant
+                    EntityManager.AddComponentData(entity, new PregnancyData { DNAfromFather = reproductionEvent.PartnerDNA }); // If female, become pregnant
                 }
-                commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
+                EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
-            }).ScheduleParallel();
+            }).WithoutBurst().Run();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
