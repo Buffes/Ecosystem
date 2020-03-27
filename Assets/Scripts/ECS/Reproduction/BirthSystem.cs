@@ -11,18 +11,13 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class BirthSystem : SystemBase
     {
-        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
 
         protected override void OnUpdate()
         {
-            Entities.WithAll<BirthEvent>().ForEach((Entity entity, int entityInQueryIndex
+            Entities
+                .WithoutBurst()
+                .WithAll<BirthEvent>()
+                .ForEach((Entity entity
                 , PregnancyData pregnancyData
                 , in Translation position
                 , in Rotation rotation
@@ -33,9 +28,7 @@ namespace Ecosystem.ECS.Reproduction
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
                 baby.InitDNA(DNA.InheritedDNA(dna, pregnancyData.DNAfromFather)); // Initialize the baby's DNA 
 
-            }).WithoutBurst().Run();
-
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+            }).Run();
         }
     }
 }

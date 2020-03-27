@@ -9,19 +9,11 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class ReproductionEventSystem : SystemBase
     {
-        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
-
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            Entities.ForEach((Entity entity, int entityInQueryIndex
+            Entities
+                .WithoutBurst()
+                .ForEach((Entity entity
                 , ReproductionEvent reproductionEvent
                 , in SexData sexData) =>
             {
@@ -31,9 +23,8 @@ namespace Ecosystem.ECS.Reproduction
                 }
                 EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
-            }).WithoutBurst().Run();
+            }).Run();
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
