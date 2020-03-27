@@ -9,7 +9,7 @@ namespace Ecosystem.StateMachines
 
         Animal owner;
         private float timeSinceLastFrame = 0f;
-        private float pathfindInterval = 0.5f;
+        private float pathfindInterval = 1f;
 
         public HuntState(Animal owner) { this.owner = owner; }
 
@@ -30,7 +30,7 @@ namespace Ecosystem.StateMachines
             Vector3 diff = currentPos - preyPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2));
 
-            if (diffLength <= 0.6f)
+            if (diffLength <= 1f)
             {
                 Entity prey = owner.GetSensors().GetFoundPreyInfo().Entity;
                 owner.GetInteraction().Kill(prey);
