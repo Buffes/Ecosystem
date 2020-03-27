@@ -12,6 +12,7 @@ namespace Ecosystem.StateMachines {
 
         public void Enter() {
             // Starts sprint
+            owner.GetMovement().Sprint(true);
         }
 
         public void Execute() {
@@ -29,6 +30,7 @@ namespace Ecosystem.StateMachines {
 
         public void Exit() {
             // End sprint
+            owner.GetMovement().Sprint(false);
         }
     }
 }
