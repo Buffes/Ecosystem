@@ -13,15 +13,11 @@ namespace Ecosystem.ECS.Reproduction
     {
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
-        private EntityQuery query;
-
         protected override void OnCreate()
         {
             base.OnCreate();
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-            query = GetEntityQuery(ComponentType.ReadOnly<EntityArchetype>());
         }
 
         protected override void OnUpdate()
@@ -35,10 +31,11 @@ namespace Ecosystem.ECS.Reproduction
                 , in DNA dna
                 , in AnimalPrefab prefab) =>
             {
-                //TODO Spawn new animal of the same type as parents
+
                 DNA newDNA = DNA.InheritedDNA(dna, pregnancyData.DNAfromFather); // inherit genes from parents
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
-                baby.InitDNA(newDNA);
+                baby.InitDNA(newDNA); // Initialize the baby's DNA 
+
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);

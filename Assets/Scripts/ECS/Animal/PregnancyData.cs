@@ -8,7 +8,6 @@ namespace Ecosystem.ECS.Animal
     /// </summary>
     public struct PregnancyData : IComponentData
     {
-        public Entity Father;
         public DNA DNAfromFather;
     }
 }
