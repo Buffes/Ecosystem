@@ -35,9 +35,6 @@ public class ResourceReg : MonoBehaviour
         
         deltaTimeGrass += Time.deltaTime;
         deltaTimeSeaweed += Time.deltaTime;
-        
-        
-        //bool yesboi;
 
         if (deltaTimeGrass >= GrassSpawnTime)
         {
