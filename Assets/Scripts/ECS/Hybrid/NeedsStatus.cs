@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 
 using Ecosystem.ECS.Animal.Needs;
-using UnityEngine;
+using Ecosystem.ECS.Animal;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -10,6 +10,15 @@ namespace Ecosystem.ECS.Hybrid
     /// </summary>
     public class NeedsStatus : HybridBehaviour
     {
+        /// <summary>
+        /// Get age in seconds as float
+        /// </summary>
+        public float GetAge()
+        {
+            AgeData age = GetComp<AgeData>();
+            return age.Age;
+        }
+
         /// <summary>
         /// Get hunger as float
         /// </summary>
