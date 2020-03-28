@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 1417320361461698763}
   sensors: {fileID: 1417320361461698762}
-  needsStatus: {fileID: 0}
 --- !u!114 &4349097642268222215
 MonoBehaviour:
   m_ObjectHideFlags: 0
