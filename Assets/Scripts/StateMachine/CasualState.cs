@@ -20,6 +20,7 @@ namespace Ecosystem.StateMachines {
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
+            Debug.Log("Moving to: " + nextTarget);
 
             Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = nextTarget - currentPos;
@@ -28,25 +29,26 @@ namespace Ecosystem.StateMachines {
                 nextTarget = RandomTarget(currentPos);
             }
             // Move owner
-            owner.Move(nextTarget,1f,100f);
+            owner.Move(nextTarget,1f,50);
         }
 
         private Vector3 RandomTarget(Vector3 currentPos) {
             Vector3 target = currentPos;
             int tile = new System.Random().Next(8);
 
-
+            int value = 5;
             switch (tile) {
-                case 0: target.x -= 5; target.z -= 5; break;
-                case 1: target.z -= 5; break;
-                case 2: target.x += 5; target.z -= 5; break;
-                case 3: target.x -= 5; break;
-                case 4: target.x += 5; break;
-                case 5: target.x -= 5; target.z += 5; break;
-                case 6: target.z += 5; break;
-                case 7: target.x += 5; target.z += 5; break;
+                case 0: target.x -= value; target.z -= value; break;
+                case 1: target.z -= value; break;
+                case 2: target.x += value; target.z -= value; break;
+                case 3: target.x -= value; break;
+                case 4: target.x += value; break;
+                case 5: target.x -= value; target.z += value; break;
+                case 6: target.z += value; break;
+                case 7: target.x += value; target.z += value; break;
                 default: break;
             }
+
 
             if (target.x >= Ecosystem.Grid.GameZone.tiles.GetLength(0)) {
                 target.x = Ecosystem.Grid.GameZone.tiles.GetLength(0) - 0.1f;

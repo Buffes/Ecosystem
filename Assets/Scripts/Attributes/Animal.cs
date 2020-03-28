@@ -71,8 +71,8 @@ namespace Ecosystem.Attributes
             animalDNAAuthoring.DNA = dna;
         }
 
-        public void Move(Vector3 target,float reach,float range) {
-            movement.Move(target,reach,range);
+        public void Move(Vector3 target, float reach, int maxTiles) {
+            movement.Move(target, reach, maxTiles);
         }
 
         public void Die() {

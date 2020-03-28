@@ -10,9 +10,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     [Serializable]
     public struct MoveCommand : IComponentData
     {
-        public float3 target; // Target position to move to
-        public float reach; // Distance away from the target to end the movement at
-        public bool pathfind; // If to use pathfinding or to just move straight
-        public float range; // Max range of a pathfinding solution
+        public float3 Target; // Target position to move to
+        public float Reach; // Distance away from the target to end the movement at
+        public bool Pathfind; // If to use pathfinding or to just move straight
+        public int MaxTiles; // Max number of tiles to search before stopping
     }
 }
