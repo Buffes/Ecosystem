@@ -42,7 +42,7 @@ namespace Ecosystem.ECS.Animal
                 exactDeathAge = math.clamp(exactDeathAge, -6f*scale + lifespan.Value, 6f*scale + lifespan.Value);
                 exactDeathAge = math.max(0f, exactDeathAge); // no negative ages
                 commandBuffer.AddComponent<AgeOfDeathData>(entityInQueryIndex, entity, new AgeOfDeathData { Value = exactDeathAge});
-                
+                commandBuffer.AddComponent<AgeData>(entityInQueryIndex, entity, new AgeData {Age = 0f});
                 randomArray[nativeThreadIndex] = random; // Necessary to update the generator.
             }).ScheduleParallel();
 
