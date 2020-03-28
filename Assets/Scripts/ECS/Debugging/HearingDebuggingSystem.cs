@@ -126,7 +126,9 @@ namespace Ecosystem.ECS.Debugging
                 typeof(CircleMesh),
                 typeof(ShapeStyle));
             EntityManager.SetSharedComponentData(hearingDebugEntityPrefab, new ShapeStyle { Material = Material });
+#if UNITY_EDITOR
             EntityManager.SetName(hearingDebugEntityPrefab, HEARING_DEBUG_ENTITY_NAME);
+#endif
         }
 
         private struct DisplayingHearingDebug : ISystemStateComponentData
