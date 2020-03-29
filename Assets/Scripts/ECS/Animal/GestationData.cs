@@ -11,6 +11,5 @@ namespace Ecosystem.ECS.Animal
     public struct GestationData : IComponentData
     {
         public float GestationPeriod; // Max Value
-        public float TimeSinceFertilisation;
     }
 }

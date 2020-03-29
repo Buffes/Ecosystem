@@ -26,7 +26,8 @@ namespace Ecosystem.ECS.Reproduction
             {
 
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
-                baby.InitDNA(DNA.InheritedDNA(dna, pregnancyData.DNAfromFather)); // Initialize the baby's DNA 
+                baby.InitDNA(pregnancyData.DNAforBaby); // Initialize the baby's DNA 
+                EntityManager.RemoveComponent<BirthEvent>(entity);
 
             }).Run();
         }

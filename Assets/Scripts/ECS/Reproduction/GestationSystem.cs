@@ -22,10 +22,11 @@ namespace Ecosystem.ECS.Reproduction
             float deltaTime = Time.DeltaTime;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex
-                , ref GestationData gestationData) =>
+                , ref PregnancyData pregnancyData
+                , in GestationData gestationData) =>
             {
-                gestationData.TimeSinceFertilisation += deltaTime / 1000.0f;
-                if(gestationData.TimeSinceFertilisation >= gestationData.GestationPeriod)
+                pregnancyData.TimeSinceFertilisation += deltaTime / 1000.0f;
+                if(pregnancyData.TimeSinceFertilisation >= gestationData.GestationPeriod)
                 {
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new BirthEvent());
                 }

@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
 using Ecosystem.Genetics;
+using Ecosystem.ECS.Animal.Needs;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -15,12 +16,16 @@ namespace Ecosystem.ECS.Reproduction
                 .WithoutBurst()
                 .ForEach((Entity entity
                 , ReproductionEvent reproductionEvent
-                , in SexData sexData) =>
+                , ref SexualUrgesData sexualUrgesData
+                , in SexData sexData
+                , in DNA dna) =>
             {
-                if(sexData.Sex == Sex.Female)
+                if(sexData.Sex == Sex.Female && EntityManager.HasComponent<PregnancyData>(entity))
                 {
-                    EntityManager.AddComponentData(entity, new PregnancyData { DNAfromFather = reproductionEvent.PartnerDNA }); // If female, become pregnant
+                    DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
+                    EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA, TimeSinceFertilisation = 0.0f }); // If female, become pregnant
                 }
+                sexualUrgesData.Urge += 1.0f; // Sate the sexual urge of the animal
                 EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
             }).Run();
