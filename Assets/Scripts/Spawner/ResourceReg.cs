@@ -10,97 +10,83 @@ using UnityEngine;
 /// Spawns the prefab given as seaweed and the prefab given as grass in the water and on land respectively.
 /// Spwans happens at predecided intervals 
 /// </summary>
-public class ResourceReg : MonoBehaviour
+
+namespace Ecosystem.Spawner
 {
 
-    public GameObject grass;
-    public float GrassSpawnTime;
-    private float deltaTimeGrass = 0f;
-    private float searchTime = 0f;
-
-    private bool lookingForFreeTile = true;
-    private int gridSize;
-
-    public GameObject seaweed;
-    public float SeaweedSpawnTime;
-    private float deltaTimeSeaweed = 0f;
-
-    public static List<int> occupiedWaterSpace = new List<int>();
-
-    private NativeArray<bool> grid;
-    private int[,] tiles;
-
-    void Update()
+    public class ResourceReg : MonoBehaviour
     {
-        
-        deltaTimeGrass += Time.deltaTime;
-        deltaTimeSeaweed += Time.deltaTime;
 
-        if (deltaTimeGrass >= GrassSpawnTime)
+        public GameObject grass;
+        public float GrassSpawnTime;
+        private float deltaTimeGrass = 0f;
+        private int searchTries;
+
+        private bool lookingForFreeTile = true;
+        private int gridSize;
+
+        public GameObject seaweed;
+        public float SeaweedSpawnTime;
+        private float deltaTimeSeaweed = 0f;
+
+        public static List<Vector3> occupiedSpace = new List<Vector3>();
+
+        private NativeArray<bool> grid;
+        private int[,] tiles;
+
+        void Update()
         {
-            tiles = GameZone.tiles;
-            grid = GameZone.walkableTiles;
-            gridSize = grid.Length;
-            RegenerateGrass(grid, tiles);
-            deltaTimeGrass = 0f;
+
+            deltaTimeGrass += Time.deltaTime;
+            deltaTimeSeaweed += Time.deltaTime;
+
+            if (deltaTimeGrass >= GrassSpawnTime)
+            {
+                tiles = GameZone.tiles;
+                grid = GameZone.walkableTiles;
+                gridSize = grid.Length;
+                RegeneratePlant(grid, tiles, grass);
+                deltaTimeGrass = 0f;
+            }
+
+            if (deltaTimeSeaweed >= SeaweedSpawnTime)
+            {
+                tiles = GameZone.tiles;
+                grid = GameZone.walkableTiles;
+                gridSize = grid.Length;
+                RegeneratePlant(grid, tiles, seaweed);
+                deltaTimeSeaweed = 0f;
+            }
         }
 
-        if(deltaTimeSeaweed >= SeaweedSpawnTime)
+        private void RegeneratePlant(NativeArray<bool> grid, int[,] tiles, GameObject plant)
         {
-            tiles = GameZone.tiles;
-            grid = GameZone.walkableTiles;
-            gridSize = grid.Length;
-            RegenerateSeaweed(grid, tiles);
-            deltaTimeSeaweed = 0f;    
-        }  
-    }
+            lookingForFreeTile = true;
+            searchTries = 0;
 
-    private void RegenerateGrass(NativeArray<bool> grid, int[,] tiles)
-    {
-        lookingForFreeTile = true;
-        searchTime = 0f;
-        
-        while (lookingForFreeTile)
-        {
-            if (searchTime > 100f)
-                break;
-            
-            int n = UnityEngine.Random.Range(0, gridSize);
-            int x = n % GameZone.tiles.GetLength(0);
-            int y = (n - x) / GameZone.tiles.GetLength(0);
-            if (grid[n] && tiles[x,y] == 51)
+            while (lookingForFreeTile)
             {
-                GameObject o = Instantiate(grass) as GameObject;
-                o.transform.position = new Vector3(x, 1, y);
-                grid[n] = false;
-                lookingForFreeTile = false;
+                if (searchTries > Mathf.Sqrt(gridSize))
+                {
+                    break;
+                }
+
+
+                int n = Random.Range(0, gridSize);
+                int x = n % tiles.GetLength(0);
+                int y = (n - x) / tiles.GetLength(0);
+
+
+                if ((grid[n] && tiles[x, y] == 51 && !occupiedSpace.Contains(new Vector3(x, 1, y)) && plant == grass) ||
+                    (!grid[n] && tiles[x, y] < 34 && !occupiedSpace.Contains(new Vector3(x, 1, y)) && plant == seaweed))
+                {
+                    GameObject o = Instantiate(plant, new Vector3(x, 1, y), Quaternion.Euler(0, Random.Range(0, 360), 0)) as GameObject;
+                    lookingForFreeTile = false;
+                    occupiedSpace.Add(new Vector3(x, 1, y));
+                }
+                searchTries += 1;
             }
-            searchTime += Time.deltaTime;
-        }
-    }
 
-    private void RegenerateSeaweed(NativeArray<bool> grid, int[,] tiles)
-    { 
-        lookingForFreeTile = true;
-        searchTime = 0f;
-
-        while (lookingForFreeTile)
-        {
-            if(searchTime > 100f) // To not get stuck when there's no tiles left we check ~700 tiles if they are a valid spawnpoint, if no spawnpoint is found we skip the spawning this time            {
-                break;
-            
-            int n = UnityEngine.Random.Range(0, gridSize);
-            int x = n % GameZone.tiles.GetLength(0);
-            int y = (n - x) / GameZone.tiles.GetLength(0);
-
-            if (!grid[n] && tiles[x,y] < 34  && !occupiedWaterSpace.Contains(n))
-            {
-                GameObject o = Instantiate(seaweed) as GameObject;
-                o.transform.position = new Vector3(x, 1, y);
-                lookingForFreeTile = false;
-                occupiedWaterSpace.Add(n);
-            }
-            searchTime += Time.deltaTime;
         }
     }
 }
