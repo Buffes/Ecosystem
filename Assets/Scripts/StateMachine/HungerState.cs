@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using Ecosystem.Attributes;
-using Ecosystem.Spawner;
 
 namespace Ecosystem.StateMachines {
     public class HungerState : IState {
@@ -29,7 +28,6 @@ namespace Ecosystem.StateMachines {
             if (diffLength <= 2.5f) {
                 Entity food = owner.GetSensors().GetFoundFoodInfo().Entity;
                 owner.GetNeedsStatus().SateHunger(owner.GetInteraction().Eat(food));
-                ResourceReg.occupiedSpace.Remove(nextTarget);
             }
 
             // Move owner
