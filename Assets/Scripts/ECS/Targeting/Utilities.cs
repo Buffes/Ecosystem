@@ -1,4 +1,6 @@
 
+using Ecosystem.ECS.Movement.Pathfinding;
+using Unity.Entities;
 using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Targeting.Sensors
@@ -27,6 +29,27 @@ namespace Ecosystem.ECS.Targeting.Sensors
             float targetAngle = math.atan2(relativePosition.z, relativePosition.x);
             bool intersects = math.abs(targetAngle - forwardAngle) < vision.Angle;
             return intersects;
+        }
+
+
+        public static bool IsUnreachable(DynamicBuffer<UnreachablePosition> buffer, float3 position)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i].Position.Equals(GetGridCoords(position)))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        private static int2 GetGridCoords(float3 worldPosition)
+        {
+            int x = (int)worldPosition.x - (worldPosition.x < 0 ? 1 : 0);
+            int z = (int)worldPosition.z - (worldPosition.z < 0 ? 1 : 0);
+            return new int2(x, z);
         }
     }
 }

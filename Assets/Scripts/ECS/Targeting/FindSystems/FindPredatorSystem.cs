@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
@@ -35,6 +36,9 @@ namespace Ecosystem.ECS.Targeting
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
             var preyTypeBuffers = GetBufferFromEntity<PreyTypesElement>();
 
+            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
+            var UnreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+            
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
@@ -64,6 +68,7 @@ namespace Ecosystem.ECS.Targeting
                     } 
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
+                    if (Utilities.IsUnreachable(UnreachableBuffers[entity], targetPosition)) continue;
 
                     closestPredatorIndex = i;
                     closestPredatorDistance = targetDistance;

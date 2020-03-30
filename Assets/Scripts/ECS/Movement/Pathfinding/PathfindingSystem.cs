@@ -36,6 +36,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 .WithReadOnly(grid)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
+                ref DynamicBuffer<UnreachablePosition> unreachablePositionsBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
             {
@@ -60,6 +61,13 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
+                
+                if (pathBuffer.Length <= 1)
+                {
+                    // Add to unreachable buffer
+                    unreachablePositionsBuffer.Add(new UnreachablePosition { Position = GetGridCoords(target) });
+                }
+                
                 path.Dispose();
             }).ScheduleParallel();
 
