@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Ecosystem.Eatable {
-    public class Spawner : MonoBehaviour {
+    public class FruitSpawner : MonoBehaviour {
 
         [SerializeField]
         private Transform parent = default;
