@@ -25,8 +25,6 @@ namespace Ecosystem.Attributes
         [SerializeField]
         private Interaction interaction = default;
 
-        private float changePerSecond;
-
         private StateMachine stateMachine;
         private IState casualState;
         private IState hungerState;
@@ -54,8 +52,6 @@ namespace Ecosystem.Attributes
             this.thirstLimit = 0.5f;
             this.matingLimit = 0.5f;
 
-            this.changePerSecond = 0.0001f;
-
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
             this.thirstState = new ThirstState(this);
@@ -75,8 +71,8 @@ namespace Ecosystem.Attributes
             animalDNAAuthoring.DNA = dna;
         }
 
-        public void Move(Vector3 target,float reach,float range) {
-            movement.Move(target,reach,range);
+        public void Move(Vector3 target, float reach, int maxTiles) {
+            movement.Move(target, reach, maxTiles);
         }
 
         public void Die() {
