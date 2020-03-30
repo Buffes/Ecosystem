@@ -1,5 +1,4 @@
 ﻿using Ecosystem.Grid;
-using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
@@ -28,8 +27,6 @@ namespace Ecosystem.Spawner
         public GameObject seaweed;
         public float SeaweedSpawnTime;
         private float deltaTimeSeaweed = 0f;
-
-        public static List<Vector3> occupiedSpace = new List<Vector3>();
 
         private NativeArray<bool> grid;
         private int[,] tiles;
@@ -67,9 +64,8 @@ namespace Ecosystem.Spawner
             while (lookingForFreeTile)
             {
                 if (searchTries > Mathf.Sqrt(gridSize))
-                {
                     break;
-                }
+                
 
 
                 int n = Random.Range(0, gridSize);
@@ -77,12 +73,11 @@ namespace Ecosystem.Spawner
                 int y = (n - x) / tiles.GetLength(0);
 
 
-                if ((grid[n] && tiles[x, y] == 51 && !occupiedSpace.Contains(new Vector3(x, 1, y)) && plant == grass) ||
-                    (!grid[n] && tiles[x, y] < 34 && !occupiedSpace.Contains(new Vector3(x, 1, y)) && plant == seaweed))
+                if ((grid[n] && tiles[x, y] == 51 && plant == grass) ||
+                    (!grid[n] && tiles[x, y] < 34 && plant == seaweed))
                 {
                     GameObject o = Instantiate(plant, new Vector3(x, 1, y), Quaternion.Euler(0, Random.Range(0, 360), 0)) as GameObject;
                     lookingForFreeTile = false;
-                    occupiedSpace.Add(new Vector3(x, 1, y));
                 }
                 searchTries += 1;
             }
