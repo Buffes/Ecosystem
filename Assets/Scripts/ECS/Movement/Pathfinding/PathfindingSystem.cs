@@ -51,8 +51,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Clear any existing path
                 pathBuffer.Clear();
                 // Offset the target by the reach
-                target = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize, maxTiles);
+                float3 offsetTarget = target - reach * math.normalize(target - translation.Value);
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(offsetTarget), grid, gridSize, maxTiles);
                 // Add path checkpoints
 
                 for (int i = 0; i < path.Length - 1; i++)
@@ -290,8 +290,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static int2 GetGridCoords(float3 worldPosition)
         {
-            int x = (int)worldPosition.x - (worldPosition.x < 0 ? 1 : 0);
-            int z = (int)worldPosition.z - (worldPosition.z < 0 ? 1 : 0);
+            int x = (int)math.round(worldPosition.x);
+            int z = (int)math.round(worldPosition.z);
             return new int2(x, z);
         }
 

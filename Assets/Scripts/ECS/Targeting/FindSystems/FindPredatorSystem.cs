@@ -37,12 +37,13 @@ namespace Ecosystem.ECS.Targeting
             var preyTypeBuffers = GetBufferFromEntity<PreyTypesElement>();
 
             // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
-            var UnreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
             
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(preyTypeBuffers)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForPredator lookingForPredator,
                 in Translation position,
@@ -68,7 +69,7 @@ namespace Ecosystem.ECS.Targeting
                     } 
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(UnreachableBuffers[entity], targetPosition)) continue;
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
 
                     closestPredatorIndex = i;
                     closestPredatorDistance = targetDistance;

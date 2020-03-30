@@ -37,12 +37,13 @@ namespace Ecosystem.ECS.Targeting
             var foodTypes = query.ToComponentDataArray<FoodTypeData>(Allocator.TempJob);
 
             // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
-            var UnreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
             
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(foodTypes)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForFood lookingForFood,
                 in Translation position,
@@ -68,12 +69,12 @@ namespace Ecosystem.ECS.Targeting
                     } 
                     if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
                     if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(UnreachableBuffers[entity], targetPosition)) continue;
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
 
                     closestFoodIndex = i;
                     closestFoodDistance = targetDistance;
                 }
-
+                
                 // Set result
                 if (closestFoodIndex != -1)
                 {

@@ -21,10 +21,11 @@ namespace Ecosystem.ECS.Targeting
             var waterTiles = GameZone.WaterTiles;
            
             // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
-            var UnreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
 
             Entities
                 .WithReadOnly(waterTiles)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForWater lookingForWater,
                 in Translation position,
@@ -48,7 +49,7 @@ namespace Ecosystem.ECS.Targeting
                     } 
 
                     if (closestWaterIndex != -1 && targetDistance >= closestWaterDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(UnreachableBuffers[entity], targetPosition)) continue;
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
                     
                     closestWaterIndex = i;
                     closestWaterDistance = targetDistance;

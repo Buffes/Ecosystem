@@ -114,12 +114,6 @@ namespace Ecosystem.Attributes
                     {
                         diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
                     }
-            {
-                if (stateMachine.getCurrentState() != this.huntState)
-                {
-                    stateMachine.ChangeState(this.huntState);
-                }
-            }
                 }
                 if (currentThirst <= thirstLimit)
                 {

@@ -26,8 +26,14 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in Translation translation) =>
             {
-                if (pathBuffer.Length == 0) return;
-
+                 if (pathBuffer.Length == 0)
+                {
+                    commandBuffer.AddComponent<FinishedPathTag>(entityInQueryIndex, entity);
+                    return;
+                }
+                
+                commandBuffer.RemoveComponent<FinishedPathTag>(entityInQueryIndex, entity);
+                
                 for (int i = pathBuffer.Length - 1; i >= 0; i--)
                 {
                     float3 checkpoint = pathBuffer[i].Checkpoint;
@@ -45,14 +51,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                         }
                     }
                     pathBuffer.RemoveAt(i);
-                    if (pathBuffer.Length == 0)
-                    {
-                        commandBuffer.AddComponent<FinishedPathTag>(entityInQueryIndex, entity);
-                    }
-                    else
-                    {
-                        commandBuffer.RemoveComponent<FinishedPathTag>(entityInQueryIndex, entity);
-                    }
                 }
 
                 movementInput.Direction = float3.zero;

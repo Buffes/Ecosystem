@@ -9,6 +9,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// </summary>
     [Serializable]
     [InternalBufferCapacity(20)]
+    [GenerateAuthoringComponent]
     public struct UnreachablePosition : IBufferElementData
     {
         public int2 Position;
