@@ -31,7 +31,6 @@ namespace Ecosystem.Attributes
         private IState thirstState;
         private IState fleeState;
         private IState mateState;
-        private IState huntState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
