@@ -1,12 +1,8 @@
-﻿using Ecosystem.ECS.Debugging.Graphics;
-using Ecosystem.ECS.Debugging.Selection;
-using Ecosystem.ECS.Targeting.Sensors;
-using Ecosystem.ECS.Animal.Needs;
+﻿using Ecosystem.ECS.Animal.Needs;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 using Unity.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Debugging
@@ -21,12 +17,7 @@ namespace Ecosystem.ECS.Debugging
         public Color MateColor { get; set; }
         public float Height { get; set; }
 
-        private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
         private EntityQuery query;
-
-        //private Mesh mesh;
-        private TextMesh bar;
 
         private Mesh mesh;
 
@@ -34,11 +25,7 @@ namespace Ecosystem.ECS.Debugging
         {
             mainCamera = Camera.main;
 
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
             query = GetEntityQuery(
-                ComponentType.ReadOnly<Selected>(),
                 ComponentType.ReadOnly<Translation>(),
                 ComponentType.ReadOnly<HungerData>(),
                 ComponentType.ReadOnly<ThirstData>(),
@@ -83,24 +70,7 @@ namespace Ecosystem.ECS.Debugging
         protected override void OnUpdate()
         {
             if (!Show) return;
-
-            Entities
-                .WithoutBurst()
-                .WithAll<Selected>()
-                .ForEach((Entity entity,
-                    in Translation translation,
-                    in HungerData hungerData,
-                    in ThirstData thirstData,
-                    in SexualUrgesData sexualUrgesData) =>
-                {
-
-
-                }).Run();
-        }
-
-        private void otherDraw()
-        {
-
+            Draw();
         }
 
         private void Draw()
@@ -111,25 +81,52 @@ namespace Ecosystem.ECS.Debugging
             var urge = query.ToComponentDataArray<SexualUrgesData>(Allocator.TempJob);
 
             MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-            List<Matrix4x4> matrices = new List<Matrix4x4>();
 
             for (int i = 0; i < translations.Length; i++)
             {
                 float3 position = translations[i].Value;
-                position.y += Height;
+                position.y += Height;             
+                Matrix4x4 m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
+
                 materialPropertyBlock.SetFloat("_Fill", hunger[i].Hunger / 1.0f);
-                matrices.Add(Matrix4x4.TRS(position, Quaternion.identity, Vector3.one));
+                UnityEngine.Graphics.DrawMesh(
+                    mesh,
+                    m,
+                    Material,
+                    1,
+                    mainCamera,
+                    0,
+                    materialPropertyBlock
+                );
+
+                position.y += 0.5f;
+                m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
+                materialPropertyBlock.SetFloat("_Fill", thirst[i].Thirst / 1.0f);
+                UnityEngine.Graphics.DrawMesh(
+                    mesh,
+                    m,
+                    Material,
+                    1,
+                    mainCamera,
+                    0,
+                    materialPropertyBlock
+                );
+
+                position.y += 0.5f;
+                m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
+                materialPropertyBlock.SetFloat("_Fill", urge[i].Urge / 1.0f);
+                UnityEngine.Graphics.DrawMesh(
+                    mesh,
+                    m,
+                    Material,
+                    1,
+                    mainCamera,
+                    0,
+                    materialPropertyBlock
+                );
+
+
             }
-
-            materialPropertyBlock.SetFloat("_Fill", 2.0f / 1.0f);
-
-            UnityEngine.Graphics.DrawMeshInstanced(
-                mesh,
-                0,
-                Material,
-                matrices,
-                materialPropertyBlock
-            );
 
             translations.Dispose(Dependency);
             hunger.Dispose(Dependency);
