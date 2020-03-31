@@ -4,12 +4,16 @@ using Ecosystem.ECS.Movement;
 
 namespace Ecosystem.ECS.Animal {
     /// <summary>
-    /// System for increasing the energy of an animal.
+    /// System for updating the energy of an animal.
     /// </summary>
     public class EnergySystem : SystemBase {
+        private float recoveryTime;
+        private float recoveryLimit;
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
         protected override void OnCreate() {
+            recoveryTime = 0f;
+            recoveryLimit = 0.5f;
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
@@ -19,15 +23,22 @@ namespace Ecosystem.ECS.Animal {
 
             float deltaTime = Time.DeltaTime;
 
-            Entities.ForEach((Entity entity,int entityInQueryIndex,
+            Entities.ForEach((Entity entity,EntityManager entityManager,int entityInQueryIndex,
                 ref EnergyData energyData) => {
-                    if (EntityManager.HasComponent<Sprinting>(entity)) {
+                    if (entityManager.HasComponent<Sprinting>(entity)) {
                         energyData.Energy -= deltaTime / 100.0f;
+                        if (energyData.Energy <= 0.0f) {
+                            commandBuffer.RemoveComponent<Sprinting>(entityInQueryIndex,entity);
+                        }
+                    }
+                    else if (recoveryTime < recoveryLimit) {
+                        recoveryTime += deltaTime/100f;
+                        if (entityManager.HasComponent<Sprinting>(entity)) {
+                            commandBuffer.RemoveComponent<Sprinting>(entityInQueryIndex,entity);
+                        }
                     }
                     
-                    if (energyData.Energy <= 0.0f) {
-                        commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex,entity);
-                    }
+                    
 
                 }).ScheduleParallel();
 
