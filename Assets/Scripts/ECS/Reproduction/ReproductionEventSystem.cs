@@ -20,7 +20,7 @@ namespace Ecosystem.ECS.Reproduction
                 , in SexData sexData
                 , in DNA dna) =>
             {
-                if(sexData.Sex == Sex.Female && EntityManager.HasComponent<PregnancyData>(entity))
+                if(sexData.Sex == Sex.Female && !EntityManager.HasComponent<PregnancyData>(entity))
                 {
                     DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
                     EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA, TimeSinceFertilisation = 0.0f }); // If female, become pregnant
