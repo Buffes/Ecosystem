@@ -58,10 +58,8 @@ namespace Ecosystem.Attributes
             this.thirstState = new ThirstState(this);
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
-            this.huntState = new HuntState(this);
             this.stateMachine.ChangeState(this.casualState);
             sensors.LookForPredator(true);
-            sensors.LookForPrey(true);
         }
 
         /// <summary>
@@ -96,13 +94,6 @@ namespace Ecosystem.Attributes
                 if (stateMachine.getCurrentState() != this.fleeState)
                 {
                     stateMachine.ChangeState(this.fleeState);
-                }
-            }
-            else if (sensors.FoundPrey())
-            {
-                if (stateMachine.getCurrentState() != this.huntState)
-                {
-                    stateMachine.ChangeState(this.huntState);
                 }
             }
             else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit))
