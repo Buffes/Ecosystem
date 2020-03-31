@@ -8,20 +8,11 @@ namespace Ecosystem.ECS.Animal.Needs
     /// </summary>
     public class MaxHungerSystem : SystemBase
     {
-        private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        protected override void OnCreate()
-        {
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
 
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            Entities.ForEach((Entity entity,int entityInQueryIndex,MaxHungerData maxHungerData,
-                ref HungerData hungerData) =>
+            Entities.ForEach((ref HungerData hungerData,in MaxHungerData maxHungerData) =>
             {
                     if (hungerData.Hunger >= maxHungerData.MaxHunger)
                     {
@@ -29,8 +20,6 @@ namespace Ecosystem.ECS.Animal.Needs
                     }
 
                 }).ScheduleParallel();
-
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
