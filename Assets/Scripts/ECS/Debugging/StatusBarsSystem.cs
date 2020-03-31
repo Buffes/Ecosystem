@@ -56,33 +56,5 @@ namespace Ecosystem.ECS.Debugging
                 }).Run();
         }
 
-        private void Draw()
-        {
-            var translations = query.ToComponentDataArray<Translation>(Allocator.TempJob);
-
-            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-            List<Matrix4x4> matrices = new List<Matrix4x4>();
-            //List<Vector4> colors = new List<Vector4>();
-
-            for (int i = 0; i < translations.Length; i++)
-            {
-                float3 position = translations[i].Value;
-                position.y += Height;
-                matrices.Add(Matrix4x4.TRS(position, Quaternion.identity, Vector3.one));
-            }
-
-            //materialPropertyBlock.SetVectorArray("_Colors", colors);
-
-            UnityEngine.Graphics.DrawMeshInstanced(
-                mesh,
-                0,
-                Material,
-                matrices,
-                materialPropertyBlock
-            );
-
-            translations.Dispose(Dependency);
-        }
-
     }
 }
