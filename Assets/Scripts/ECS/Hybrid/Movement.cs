@@ -43,11 +43,6 @@ namespace Ecosystem.ECS.Hybrid
             }
         }
 
-        public bool FinishedPath()
-        {
-            return EntityManager.HasComponent<FinishedPathTag>(Entity);
-        }
-
         public Vector3 GetPosition()
         {
             return EntityManager.GetComponentData<Translation>(Entity).Value;

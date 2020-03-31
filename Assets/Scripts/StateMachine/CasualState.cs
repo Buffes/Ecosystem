@@ -24,7 +24,7 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
-            if (diffLength <= 2.5f || owner.GetMovement().FinishedPath()) {
+            if (diffLength <= 2.5f) {
                 nextTarget = RandomTarget(currentPos);
             }
             // Move owner

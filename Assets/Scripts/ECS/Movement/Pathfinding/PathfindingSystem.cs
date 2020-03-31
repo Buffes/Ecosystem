@@ -31,7 +31,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             NativeArray<bool> grid = GameZone.walkableTiles;
             var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
-            
+            double time = Time.ElapsedTime;
             Entities
                 .WithReadOnly(grid)
                 .ForEach((Entity entity, int entityInQueryIndex,
@@ -65,7 +65,11 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 if (pathBuffer.Length <= 1)
                 {
                     // Add to unreachable buffer
-                    unreachablePositionsBuffer.Add(new UnreachablePosition { Position = GetGridCoords(target) });
+                    unreachablePositionsBuffer.Add(new UnreachablePosition 
+                                                    { 
+                                                        Position = GetGridCoords(target),
+                                                        Timestamp = time
+                                                    });
                 }
                 
                 path.Dispose();

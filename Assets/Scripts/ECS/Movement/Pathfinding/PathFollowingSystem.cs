@@ -26,13 +26,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in Translation translation) =>
             {
-                 if (pathBuffer.Length == 0)
-                {
-                    commandBuffer.AddComponent<FinishedPathTag>(entityInQueryIndex, entity);
-                    return;
-                }
-                
-                commandBuffer.RemoveComponent<FinishedPathTag>(entityInQueryIndex, entity);
+                 if (pathBuffer.Length == 0) return;
                 
                 for (int i = pathBuffer.Length - 1; i >= 0; i--)
                 {
