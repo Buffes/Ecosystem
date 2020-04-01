@@ -44,15 +44,15 @@ namespace Ecosystem.ECS.Debugging
             Vector2[] uv = new Vector2[4];
             int[] triangles = new int[6];
 
-            vertices[0] = new Vector3(0,0.5f);
-            vertices[1] = new Vector3(4,0.5f);
+            vertices[0] = new Vector3(0,0.25f);
+            vertices[1] = new Vector3(1,0.25f);
             vertices[2] = new Vector3(0,0);
-            vertices[3] = new Vector3(4,0);
+            vertices[3] = new Vector3(1,0);
 
-            uv[0] = new Vector2(0,0.5f);
-            uv[1] = new Vector2(4,0.5f);
+            uv[0] = new Vector2(0,0.25f);
+            uv[1] = new Vector2(1,0.25f);
             uv[2] = new Vector2(0,0);
-            uv[3] = new Vector2(4,0);
+            uv[3] = new Vector2(1,0);
 
             triangles[0] = 0;
             triangles[1] = 1;
@@ -78,34 +78,23 @@ namespace Ecosystem.ECS.Debugging
                     in Translation position,
                     in HungerData hungerData,
                     in ThirstData thirstData,
-                    in SexualUrgesData urgesData) =>
+                    in SexualUrgesData urgesData,
+                    in MaxHungerData maxHungerData,
+                    in MaxThirstData maxThirstData) =>
                 {
                     MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
                     
                     float3 pos = position.Value;
                     pos.y += Height;
-                    pos.x -= 2.0f;
-                    var cam = mainCamera.transform;
+                    pos.x -= 0.5f;
+                    /*var cam = mainCamera.transform;
                     var forward = (Vector3)pos - cam.position;
                     forward.Normalize();
                     var up = Vector3.Cross(forward, cam.right);
-                    //Matrix4x4 m = Matrix4x4.LookAt(cam.position, pos, up);
+                    Matrix4x4 m = Matrix4x4.LookAt(cam.position, pos, up);*/
                     Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-
-                    materialPropertyBlock.SetFloat("_Fill", 0.5f);
-                    UnityEngine.Graphics.DrawMesh(
-                        mesh,
-                        m,
-                        Material,
-                        1,
-                        mainCamera,
-                        0,
-                        materialPropertyBlock
-                    );
-                    pos.y += 0.9f;
-                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
-                    materialPropertyBlock.SetFloat("_Fill", 0.75f);
+                    materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger/maxHungerData.MaxHunger);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
                         m,
@@ -116,8 +105,23 @@ namespace Ecosystem.ECS.Debugging
                         materialPropertyBlock
                     );
 
-                    pos.y += 0.9f;
+                    pos.y += 0.5f;
                     m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                    
+                    materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst/maxThirstData.MaxThirst);
+                    UnityEngine.Graphics.DrawMesh(
+                        mesh,
+                        m,
+                        Material,
+                        1,
+                        mainCamera,
+                        0,
+                        materialPropertyBlock
+                    );
+
+                    pos.y += 0.5f;
+                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+
                     materialPropertyBlock.SetFloat("_Fill", 1.0f);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
@@ -128,6 +132,7 @@ namespace Ecosystem.ECS.Debugging
                         0,
                         materialPropertyBlock
                     );
+
                 }).Run();
             //Draw();
         }

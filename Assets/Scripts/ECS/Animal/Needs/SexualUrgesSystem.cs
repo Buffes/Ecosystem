@@ -24,7 +24,7 @@ namespace Ecosystem.ECS.Animal.Needs
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref SexualUrgesData sexualUrgesData) =>
             {
-                sexualUrgesData.Urge -= deltaTime / 1000.0f;
+                sexualUrgesData.Urge -= deltaTime / 1.0f;
 
             }).ScheduleParallel();
 
