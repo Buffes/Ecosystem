@@ -23,7 +23,6 @@ namespace Ecosystem.ECS.Animal
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
             var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
 
             Entities
@@ -47,6 +46,8 @@ namespace Ecosystem.ECS.Animal
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+
+            CompleteDependency();
         }
     }
 }

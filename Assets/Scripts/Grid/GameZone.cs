@@ -674,18 +674,6 @@ namespace Ecosystem.Grid
             walkableTiles[y * tiles.GetLength(0) + x] = walkable;
         }
 
-        public static bool IsWalkable(int x, int y)
-        {
-            if ( x < 0 || y < 0 || x > tiles.GetLength(0) || y > tiles.GetLength(1)) return false; // outside grid
-            
-            return walkableTiles[y * tiles.GetLength(0) + x];
-        }
-
-        public static bool IsWalkable(float x, float y)
-        {
-            return IsWalkable((int)math.round(x), (int)math.round(y));
-        }
-
         private void SetupWaterTiles()
         {
             WaterTiles = new NativeList<int2>(Allocator.Persistent);

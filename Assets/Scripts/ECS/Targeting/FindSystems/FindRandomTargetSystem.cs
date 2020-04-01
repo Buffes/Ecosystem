@@ -1,6 +1,7 @@
 using Ecosystem.ECS.Random;
 using Ecosystem.ECS.Targeting.Targets;
 using Ecosystem.Grid;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -12,13 +13,24 @@ namespace Ecosystem.ECS.Targeting
     /// </summary>
     public class FindRandomTargetSystem : SystemBase
     {
+        private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+
+        protected override void OnCreate()
+        {
+            m_EndSimulationEcbSystem = World
+                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        }
 
         protected override void OnUpdate()
         {
+            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+            var walkableTiles = GameZone.walkableTiles;
+            int2 gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
             var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
 
             Entities
                 .WithNativeDisableParallelForRestriction(randomArray)
+                .WithReadOnly(walkableTiles)
                 .ForEach((int nativeThreadIndex, Entity entity,
                     ref LookingForRandomTarget lookingForRandomTarget,
                     in Translation translation) =>
@@ -39,7 +51,7 @@ namespace Ecosystem.ECS.Targeting
                     
                     target = translation.Value + new float3(tile.x, 0f, tile.y);
                     
-                    if (GameZone.IsWalkable(target.x, target.y))
+                    if (IsWalkable(walkableTiles, gridSize, target.x, target.y))
                     {
                         break;
                     }
@@ -57,7 +69,17 @@ namespace Ecosystem.ECS.Targeting
                 }
 
                 randomArray[nativeThreadIndex] = random; // Necessary to update the generator.
-            }).ScheduleParallel();
+            }).ScheduleParallel(this.Dependency);
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+        }
+
+        private static bool IsWalkable(NativeArray<bool> grid, int2 gridSize, float x, float y)
+        {
+            int xInt = (int)math.round(x);
+            int yInt = (int)math.round(y);
+
+            return grid[xInt + yInt * gridSize.x];
         }
     }
 }
