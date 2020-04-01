@@ -15,7 +15,7 @@ namespace Ecosystem.Samples
         [SerializeField]
         private float reach = 1f;
         [SerializeField]
-        private float range = 100f;
+        private int range = 100;
         [SerializeField]
         [Tooltip("How often this unit calculates a new path")]
         private float pathfindInterval = 1f;
