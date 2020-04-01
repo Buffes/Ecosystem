@@ -177,6 +177,8 @@ GameObject:
   - component: {fileID: 5070148453820763531}
   - component: {fileID: 5070148453820763524}
   - component: {fileID: 8235464667470886990}
+  - component: {fileID: 5527276491452916582}
+  - component: {fileID: 4948810070810170730}
   - component: {fileID: 205040342004547871}
   m_Layer: 0
   m_Name: Entity
@@ -593,6 +595,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destroy: {fileID: 5070148452478974443}
+--- !u!114 &5527276491452916582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08a9bc3c26ab394b9a8b57d36fc435f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Value: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &4948810070810170730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074cb838b896b194bbdc1eb5d9c1f324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animal: {fileID: 3352532566447112004}
 --- !u!114 &205040342004547871
 MonoBehaviour:
   m_ObjectHideFlags: 0
