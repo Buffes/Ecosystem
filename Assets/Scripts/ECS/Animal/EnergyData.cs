@@ -3,7 +3,7 @@ using Unity.Entities;
 
 namespace Ecosystem.ECS.Animal {
     /// <summary>
-    /// A float value ranging from 0 to infinity indicating the level of energy. Energy <= 0 == death?
+    /// A float value ranging from 0 to infinity indicating the level of energy.
     /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]
