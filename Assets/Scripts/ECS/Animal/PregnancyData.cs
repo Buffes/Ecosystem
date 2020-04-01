@@ -1,13 +1,14 @@
-﻿using System;
-using Unity.Entities;
+﻿using Unity.Entities;
+using Ecosystem.Genetics;
 
 namespace Ecosystem.ECS.Animal
 {
     /// <summary>
-    /// Marks the animal as pregnant
+    /// Marks the animal as pregnant. Carries the DNA of the baby and the time since fertilisation.
     /// </summary>
-    public struct PregnancyData : IComponentData
+    public class PregnancyData : IComponentData
     {
-        public Entity Father;
+        public DNA DNAforBaby;
+        public float TimeSinceFertilisation;
     }
 }
