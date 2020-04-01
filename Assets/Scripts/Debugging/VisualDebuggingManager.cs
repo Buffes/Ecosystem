@@ -41,7 +41,7 @@ namespace Ecosystem.Debugging
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
         private AnimalStateDebugging animalStateDebuggingSystem;
-        private StatusBarsSystem statusBarsSystem;
+        private StatusBarDebuggingSystem statusBarDebuggingSystem;
 
         private void Awake()
         {
@@ -49,7 +49,7 @@ namespace Ecosystem.Debugging
             hearingDebuggingSystem = world.GetOrCreateSystem<HearingDebuggingSystem>();
             pathDebuggingSystem = world.GetOrCreateSystem<PathDebuggingSystem>();
             animalStateDebuggingSystem = world.GetOrCreateSystem<AnimalStateDebugging>();
-            statusBarsSystem = world.GetOrCreateSystem<StatusBarsSystem>();
+            statusBarDebuggingSystem = world.GetOrCreateSystem<StatusBarDebuggingSystem>();
         }
 
         private void Update()
@@ -71,12 +71,12 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
 
-            statusBarsSystem.Material = statusMaterial;
-            statusBarsSystem.Show = statusDebugShow;
-            statusBarsSystem.Height = statusHeight;
-            statusBarsSystem.HungerColor = hungerColor;
-            statusBarsSystem.ThirstColor = thirstColor;
-            statusBarsSystem.MateColor = mateColor;
+            statusBarDebuggingSystem.Material = statusMaterial;
+            statusBarDebuggingSystem.Show = statusDebugShow;
+            statusBarDebuggingSystem.Height = statusHeight;
+            statusBarDebuggingSystem.HungerColor = hungerColor;
+            statusBarDebuggingSystem.ThirstColor = thirstColor;
+            statusBarDebuggingSystem.MateColor = mateColor;
         }
     }
 }

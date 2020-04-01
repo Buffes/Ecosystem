@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Animal.Needs;
+using Ecosystem.ECS.Debugging.Selection;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -7,7 +8,7 @@ using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Debugging
 {
-    public class StatusBarsSystem : SystemBase
+    public class StatusBarDebuggingSystem : SystemBase
     {
         Camera mainCamera;
         public bool Show { get; set; }
@@ -70,6 +71,21 @@ namespace Ecosystem.ECS.Debugging
         protected override void OnUpdate()
         {
             if (!Show) return;
+            /*Entities
+                .WithoutBurst()
+                .WithAll<Selected>()
+                .ForEach((Entity entity, 
+                    in Translation position,
+                    in HungerData hungerData,
+                    in ThirstData thirstData,
+                    in SexualUrgesData urgesData) =>
+                {
+                    MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                    float3 pos = position.Value;
+                    pos.y += Height;
+                    Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+
+                }).Run();*/
             Draw();
         }
 
