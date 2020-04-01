@@ -10,7 +10,7 @@ namespace Ecosystem.ECS.Debugging
 {
     public class StatusBarDebuggingSystem : SystemBase
     {
-        Camera mainCamera;
+        public Camera mainCamera { get; set; }
         public bool Show { get; set; }
         public Material Material { get; set; }
         public Color HungerColor { get; set; }
@@ -24,7 +24,7 @@ namespace Ecosystem.ECS.Debugging
 
         protected override void OnCreate()
         {
-            mainCamera = Camera.main;
+            //mainCamera = Camera.main;
 
             query = GetEntityQuery(
                 ComponentType.ReadOnly<Translation>(),
@@ -44,13 +44,13 @@ namespace Ecosystem.ECS.Debugging
             Vector2[] uv = new Vector2[4];
             int[] triangles = new int[6];
 
-            vertices[0] = new Vector3(0,1);
-            vertices[1] = new Vector3(4,1);
+            vertices[0] = new Vector3(0,0.5f);
+            vertices[1] = new Vector3(4,0.5f);
             vertices[2] = new Vector3(0,0);
             vertices[3] = new Vector3(4,0);
 
-            uv[0] = new Vector2(0,1);
-            uv[1] = new Vector2(4,1);
+            uv[0] = new Vector2(0,0.5f);
+            uv[1] = new Vector2(4,0.5f);
             uv[2] = new Vector2(0,0);
             uv[3] = new Vector2(4,0);
 
@@ -71,7 +71,7 @@ namespace Ecosystem.ECS.Debugging
         protected override void OnUpdate()
         {
             if (!Show) return;
-            /*Entities
+            Entities
                 .WithoutBurst()
                 .WithAll<Selected>()
                 .ForEach((Entity entity, 
@@ -81,12 +81,55 @@ namespace Ecosystem.ECS.Debugging
                     in SexualUrgesData urgesData) =>
                 {
                     MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                    
                     float3 pos = position.Value;
                     pos.y += Height;
+                    pos.x -= 2.0f;
+                    var cam = mainCamera.transform;
+                    var forward = (Vector3)pos - cam.position;
+                    forward.Normalize();
+                    var up = Vector3.Cross(forward, cam.right);
+                    //Matrix4x4 m = Matrix4x4.LookAt(cam.position, pos, up);
                     Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-                }).Run();*/
-            Draw();
+
+                    materialPropertyBlock.SetFloat("_Fill", 0.5f);
+                    UnityEngine.Graphics.DrawMesh(
+                        mesh,
+                        m,
+                        Material,
+                        1,
+                        mainCamera,
+                        0,
+                        materialPropertyBlock
+                    );
+                    pos.y += 0.9f;
+                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                    materialPropertyBlock.SetFloat("_Fill", 0.75f);
+                    UnityEngine.Graphics.DrawMesh(
+                        mesh,
+                        m,
+                        Material,
+                        1,
+                        mainCamera,
+                        0,
+                        materialPropertyBlock
+                    );
+
+                    pos.y += 0.9f;
+                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                    materialPropertyBlock.SetFloat("_Fill", 1.0f);
+                    UnityEngine.Graphics.DrawMesh(
+                        mesh,
+                        m,
+                        Material,
+                        1,
+                        mainCamera,
+                        0,
+                        materialPropertyBlock
+                    );
+                }).Run();
+            //Draw();
         }
 
         private void Draw()
