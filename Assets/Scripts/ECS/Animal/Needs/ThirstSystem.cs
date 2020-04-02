@@ -29,7 +29,7 @@ namespace Ecosystem.ECS.Animal.Needs
 
                 if(thirstData.Thirst <= 0.0f)
                 {
-                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
+                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(2));
                 }
 
             }).ScheduleParallel();
