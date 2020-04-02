@@ -58,71 +58,58 @@ namespace Ecosystem.ECS.Debugging
             return mesh;
 
         }
+        private void Draw(float cur, float max, Matrix4x4 matrix, Color color)
+        {
+            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+            materialPropertyBlock.SetVector("_Color", color);
+            materialPropertyBlock.SetFloat("_Fill", cur / max);
+            UnityEngine.Graphics.DrawMesh(
+                mesh,
+                matrix,
+                Material,
+                1,
+                mainCamera,
+                0,
+                materialPropertyBlock
+            );
+        }
+
         protected override void OnUpdate()
         {
             if (!Show) return;
-            Entities
-                .WithoutBurst()
-                .WithAll<Selected>()
-                .ForEach((Entity entity, 
-                    in Translation position,
-                    in HungerData hungerData,
-                    in ThirstData thirstData,
-                    in SexualUrgesData urgesData,
-                    in MaxHungerData maxHungerData,
-                    in MaxThirstData maxThirstData) =>
-                {
-                    MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-                    
-                    float3 pos = position.Value;
-                    pos.y += Height;
-                    pos.x -= 0.5f;
-                    Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+            Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
+                in Translation position,
+                in HungerData hungerData,
+                in MaxHungerData maxHunger) =>
+            {
+                float3 pos = position.Value;
+                pos.y += Height;
+                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                Draw(hungerData.Hunger, maxHunger.MaxHunger, m, HungerColor);
+            }).Run();
 
-                    materialPropertyBlock.SetVector("_Color", HungerColor);
-                    materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger / maxHungerData.MaxHunger);
-                    UnityEngine.Graphics.DrawMesh(
-                        mesh,
-                        m,
-                        Material,
-                        1,
-                        mainCamera,
-                        0,
-                        materialPropertyBlock
-                    );
-                    
+            Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
+                in Translation position,
+                in ThirstData thirstData,
+                in MaxThirstData maxThirst) =>
+            {
+                float3 pos = position.Value;
+                pos.y += Height + 0.5f;
+                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                Draw(thirstData.Thirst, maxThirst.MaxThirst, m, ThirstColor);
+            }).Run();
 
-                    pos.y += 0.5f;
-                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+            Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
+                in Translation position,
+                in SexualUrgesData urgesData) =>
+            {
+                float3 pos = position.Value;
+                pos.y += Height + 1.0f;
+                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                Draw(urgesData.Urge, 1.0f, m, MateColor);
+            }).Run();
 
-                    materialPropertyBlock.SetVector("_Color", ThirstColor);
-                    materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst / maxThirstData.MaxThirst);
-                    UnityEngine.Graphics.DrawMesh(
-                        mesh,
-                        m,
-                        Material,
-                        1,
-                        mainCamera,
-                        0,
-                        materialPropertyBlock
-                    );
-
-                    pos.y += 0.5f;
-                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
-
-                    materialPropertyBlock.SetVector("_Color", MateColor);
-                    materialPropertyBlock.SetFloat("_Fill", urgesData.Urge/1.0f);
-                    UnityEngine.Graphics.DrawMesh(
-                        mesh,
-                        m,
-                        Material,
-                        1,
-                        mainCamera,
-                        0,
-                        materialPropertyBlock
-                    );
-
-                }).Run();
+            
         }
     }
 }
