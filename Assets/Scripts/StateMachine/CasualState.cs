@@ -23,8 +23,6 @@ namespace Ecosystem.StateMachines {
 
             if (!owner.GetSensors().FoundRandomTarget()) return;
             Vector3 currentPos = owner.GetMovement().GetPosition();
-            // Debug.Log("My position is: " + currentPos);
-            // Debug.Log("My target is: " + nextTarget);
             Vector3 diff = nextTarget - currentPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2.5f) {

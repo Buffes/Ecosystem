@@ -83,8 +83,6 @@ namespace Ecosystem.ECS.Targeting
         {
             int xInt = (int)math.round(x);
             int zInt = (int)math.round(z);
-            
-            //Debug.Log("Position " + xInt + ", " + zInt + " is walkable: " + grid[xInt + zInt * gridSize.x]);
 
             if ( xInt < 0 || zInt < 0 || xInt > gridSize.x - 1 || zInt > gridSize.y - 1) return false; // outside grid
             
