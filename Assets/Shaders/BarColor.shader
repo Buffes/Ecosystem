@@ -14,6 +14,7 @@
                 CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
+                // make fog work
                 #pragma multi_compile_fog
 
                 #pragma multi_compile_instancing
@@ -30,6 +31,7 @@
                 struct v2f {
                     float2 uv : TEXCOORD0;
                     float4 vertex : SV_POSITION;
+                    // If you need instance data in the fragment shader, uncomment next line
                     //UNITY_VERTEX_INPUT_INSTANCE_ID
                 };
 
@@ -43,6 +45,7 @@
                 v2f vert(appdata v) {
                     v2f o;
                     UNITY_SETUP_INSTANCE_ID(v);
+                    // If you need instance data in the fragment shader, uncomment next line
                     // UNITY_TRANSFER_INSTANCE_ID(v, o);
 
                     float fill = UNITY_ACCESS_INSTANCED_PROP(Props, _Fill);
@@ -57,8 +60,10 @@
 
                 fixed4 frag(v2f i) : SV_Target {
 
+                    // Could access instanced data here too like:
                     // UNITY_SETUP_INSTANCE_ID(i);
                     // UNITY_ACCESS_INSTANCED_PROP(Props, _Foo);
+                    // But, remember to uncomment lines flagged above
 
                     return tex2D(_MainTex, i.uv);
                 }
