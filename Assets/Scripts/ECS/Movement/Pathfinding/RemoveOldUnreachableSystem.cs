@@ -20,13 +20,12 @@ public class RemoveOldUnreachableSystem : SystemBase
         .ForEach((Entity entity,
             ref DynamicBuffer<UnreachablePosition> unreachablePositions) =>
         {
-            for (int i = 0; i < unreachablePositions.Length; i++)
+            while (unreachablePositions.Length > 0)
             {
-                double difference = now - unreachablePositions[i].Timestamp;
-                if (difference > REMOVE_TIME)
-                {
-                    unreachablePositions.RemoveAt(i);
-                }
+                double difference = now - unreachablePositions[0].Timestamp;
+                if (difference < REMOVE_TIME) break;
+
+                unreachablePositions.RemoveAt(0);
             }
         }).Run();
     }
