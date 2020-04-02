@@ -18,20 +18,10 @@ namespace Ecosystem.ECS.Debugging
         public Color MateColor { get; set; }
         public float Height { get; set; }
 
-        private EntityQuery query;
-
         private Mesh mesh;
 
         protected override void OnCreate()
         {
-            //mainCamera = Camera.main;
-
-            query = GetEntityQuery(
-                ComponentType.ReadOnly<Translation>(),
-                ComponentType.ReadOnly<HungerData>(),
-                ComponentType.ReadOnly<ThirstData>(),
-                ComponentType.ReadOnly<SexualUrgesData>());
-
             mesh = CreateMesh();
         }
 
@@ -87,14 +77,8 @@ namespace Ecosystem.ECS.Debugging
                     float3 pos = position.Value;
                     pos.y += Height;
                     pos.x -= 0.5f;
-                    /*var cam = mainCamera.transform;
-                    var forward = (Vector3)pos - cam.position;
-                    forward.Normalize();
-                    var up = Vector3.Cross(forward, cam.right);
-                    Matrix4x4 m = Matrix4x4.LookAt(cam.position, pos, up);*/
                     Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-                    //materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger/maxHungerData.MaxHunger);
                     materialPropertyBlock.SetVector("_Color", HungerColor);
                     materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger / maxHungerData.MaxHunger);
                     UnityEngine.Graphics.DrawMesh(
@@ -111,7 +95,6 @@ namespace Ecosystem.ECS.Debugging
                     pos.y += 0.5f;
                     m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-                    //materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst/maxThirstData.MaxThirst);
                     materialPropertyBlock.SetVector("_Color", ThirstColor);
                     materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst / maxThirstData.MaxThirst);
                     UnityEngine.Graphics.DrawMesh(
@@ -127,9 +110,8 @@ namespace Ecosystem.ECS.Debugging
                     pos.y += 0.5f;
                     m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-                    //materialPropertyBlock.SetFloat("_Fill", 1.0f);
                     materialPropertyBlock.SetVector("_Color", MateColor);
-                    materialPropertyBlock.SetFloat("_Fill", 1.0f);
+                    materialPropertyBlock.SetFloat("_Fill", urgesData.Urge/1.0f);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
                         m,

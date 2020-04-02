@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/BarTest"
+﻿Shader "Custom/BarTest"
 {
 	Properties{
 	[PerRendererData] _Color("Color", Color) = (1,1,1,1)
