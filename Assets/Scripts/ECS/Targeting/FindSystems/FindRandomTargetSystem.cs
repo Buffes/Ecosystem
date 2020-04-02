@@ -53,9 +53,9 @@ namespace Ecosystem.ECS.Targeting
                     tile.x += tile.x > 0 ? min : -min;
                     tile.y += tile.y > 0 ? min : -min;
                     
-                    float3 potentialtarget = translation.Value + new float3(tile.x, 0f, tile.y);
+                    float3 potentialtarget = new float3(translation.Value.x + tile.x, 0f, translation.Value.z + tile.y);
                     
-                    if (IsWalkable(walkableTiles, gridSize, potentialtarget.x, potentialtarget.y))
+                    if (IsWalkable(walkableTiles, gridSize, potentialtarget.x, potentialtarget.z))
                     {
                         target = potentialtarget;
                         break;
@@ -79,14 +79,16 @@ namespace Ecosystem.ECS.Targeting
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
 
-        private static bool IsWalkable(NativeArray<bool> grid, int2 gridSize, float x, float y)
+        private static bool IsWalkable(NativeArray<bool> grid, int2 gridSize, float x, float z)
         {
             int xInt = (int)math.round(x);
-            int yInt = (int)math.round(y);
-
-            if ( xInt < 0 || yInt < 0 || xInt > gridSize.x || yInt > gridSize.y) return false; // outside grid
+            int zInt = (int)math.round(z);
             
-            return grid[xInt + yInt * gridSize.x];
+            //Debug.Log("Position " + xInt + ", " + zInt + " is walkable: " + grid[xInt + zInt * gridSize.x]);
+
+            if ( xInt < 0 || zInt < 0 || xInt > gridSize.x - 1 || zInt > gridSize.y - 1) return false; // outside grid
+            
+            return grid[xInt + zInt * gridSize.x];
         }
     }
 }

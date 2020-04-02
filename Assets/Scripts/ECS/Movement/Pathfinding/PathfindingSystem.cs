@@ -282,8 +282,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static int2 GetGridCoords(float3 worldPosition)
         {
-            int x = (int)worldPosition.x - (worldPosition.x < 0 ? 1 : 0);
-            int z = (int)worldPosition.z - (worldPosition.z < 0 ? 1 : 0);
+            int x = (int)math.round(worldPosition.x);;
+            int z = (int)math.round(worldPosition.z);;
             return new int2(x, z);
         }
 
