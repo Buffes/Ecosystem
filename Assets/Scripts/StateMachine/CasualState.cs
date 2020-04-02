@@ -13,6 +13,7 @@ namespace Ecosystem.StateMachines {
 
         public void Enter() {
             owner.GetSensors().LookForRandomTarget(true);
+            nextTarget = owner.GetMovement().GetPosition();
         }
 
         public void Execute() {
@@ -29,7 +30,7 @@ namespace Ecosystem.StateMachines {
                 nextTarget = owner.GetSensors().GetFoundRandomTargetInfo();
             }
             // Move owner
-            owner.Move(nextTarget,1f,50);
+            owner.Move(nextTarget,0f,200);
         }
 
 

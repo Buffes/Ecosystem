@@ -5,6 +5,8 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.Jobs.LowLevel.Unsafe;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting
 {
@@ -29,13 +31,15 @@ namespace Ecosystem.ECS.Targeting
             var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
 
             Entities
-                .WithNativeDisableParallelForRestriction(randomArray)
+                .WithoutBurst()
+                .WithNativeDisableContainerSafetyRestriction(randomArray)
                 .WithReadOnly(walkableTiles)
                 .ForEach((int nativeThreadIndex, Entity entity,
                     ref LookingForRandomTarget lookingForRandomTarget,
                     in Translation translation) =>
             {
-                var random = randomArray[nativeThreadIndex];
+                int randomIndex = nativeThreadIndex % JobsUtility.MaxJobThreadCount;
+                var random = randomArray[randomIndex];
                 
                 float3 target = translation.Value;
                 
@@ -49,16 +53,17 @@ namespace Ecosystem.ECS.Targeting
                     tile.x += tile.x > 0 ? min : -min;
                     tile.y += tile.y > 0 ? min : -min;
                     
-                    target = translation.Value + new float3(tile.x, 0f, tile.y);
+                    float3 potentialtarget = translation.Value + new float3(tile.x, 0f, tile.y);
                     
-                    if (IsWalkable(walkableTiles, gridSize, target.x, target.y))
+                    if (IsWalkable(walkableTiles, gridSize, potentialtarget.x, potentialtarget.y))
                     {
+                        target = potentialtarget;
                         break;
                     }
                 }
 
                 // Set result
-                if (!target.Equals(translation.Value))
+                if (math.distance(target, translation.Value) > 1f)
                 {
                     lookingForRandomTarget.HasFound = true;
                     lookingForRandomTarget.Position = target;
@@ -68,8 +73,8 @@ namespace Ecosystem.ECS.Targeting
                     lookingForRandomTarget.HasFound = false;
                 }
 
-                randomArray[nativeThreadIndex] = random; // Necessary to update the generator.
-            }).ScheduleParallel(this.Dependency);
+                randomArray[randomIndex] = random; // Necessary to update the generator.
+            }).Run();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
@@ -79,6 +84,8 @@ namespace Ecosystem.ECS.Targeting
             int xInt = (int)math.round(x);
             int yInt = (int)math.round(y);
 
+            if ( xInt < 0 || yInt < 0 || xInt > gridSize.x || yInt > gridSize.y) return false; // outside grid
+            
             return grid[xInt + yInt * gridSize.x];
         }
     }
