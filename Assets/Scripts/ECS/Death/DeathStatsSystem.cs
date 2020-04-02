@@ -3,9 +3,6 @@ using UnityEngine;
 using System.Threading;
 
 namespace Ecosystem.ECS.Death {
-    /// <summary>
-    /// Kills desired entities
-    /// </summary>
     public class DeathStatsSystem : SystemBase {
 
         private int hunger;
