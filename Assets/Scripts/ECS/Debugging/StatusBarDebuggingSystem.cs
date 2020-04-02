@@ -94,7 +94,9 @@ namespace Ecosystem.ECS.Debugging
                     Matrix4x4 m = Matrix4x4.LookAt(cam.position, pos, up);*/
                     Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
-                    materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger/maxHungerData.MaxHunger);
+                    //materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger/maxHungerData.MaxHunger);
+                    materialPropertyBlock.SetVector("_Color", HungerColor);
+                    materialPropertyBlock.SetFloat("_Fill", hungerData.Hunger / maxHungerData.MaxHunger);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
                         m,
@@ -104,11 +106,14 @@ namespace Ecosystem.ECS.Debugging
                         0,
                         materialPropertyBlock
                     );
-
-                    pos.y += 0.5f;
-                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
                     
-                    materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst/maxThirstData.MaxThirst);
+
+                    pos.y += 0.5f;
+                    m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+
+                    //materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst/maxThirstData.MaxThirst);
+                    materialPropertyBlock.SetVector("_Color", ThirstColor);
+                    materialPropertyBlock.SetFloat("_Fill", thirstData.Thirst / maxThirstData.MaxThirst);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
                         m,
@@ -122,6 +127,8 @@ namespace Ecosystem.ECS.Debugging
                     pos.y += 0.5f;
                     m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
 
+                    //materialPropertyBlock.SetFloat("_Fill", 1.0f);
+                    materialPropertyBlock.SetVector("_Color", MateColor);
                     materialPropertyBlock.SetFloat("_Fill", 1.0f);
                     UnityEngine.Graphics.DrawMesh(
                         mesh,
@@ -134,69 +141,6 @@ namespace Ecosystem.ECS.Debugging
                     );
 
                 }).Run();
-            //Draw();
         }
-
-        private void Draw()
-        {
-            var translations = query.ToComponentDataArray<Translation>(Allocator.TempJob);
-            var hunger = query.ToComponentDataArray<HungerData>(Allocator.TempJob);
-            var thirst = query.ToComponentDataArray<ThirstData>(Allocator.TempJob);
-            var urge = query.ToComponentDataArray<SexualUrgesData>(Allocator.TempJob);
-
-            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-
-            for (int i = 0; i < translations.Length; i++)
-            {
-                float3 position = translations[i].Value;
-                position.y += Height;             
-                Matrix4x4 m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
-
-                materialPropertyBlock.SetFloat("_Fill", hunger[i].Hunger / 1.0f);
-                UnityEngine.Graphics.DrawMesh(
-                    mesh,
-                    m,
-                    Material,
-                    1,
-                    mainCamera,
-                    0,
-                    materialPropertyBlock
-                );
-
-                position.y += 0.5f;
-                m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
-                materialPropertyBlock.SetFloat("_Fill", thirst[i].Thirst / 1.0f);
-                UnityEngine.Graphics.DrawMesh(
-                    mesh,
-                    m,
-                    Material,
-                    1,
-                    mainCamera,
-                    0,
-                    materialPropertyBlock
-                );
-
-                position.y += 0.5f;
-                m = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
-                materialPropertyBlock.SetFloat("_Fill", urge[i].Urge / 1.0f);
-                UnityEngine.Graphics.DrawMesh(
-                    mesh,
-                    m,
-                    Material,
-                    1,
-                    mainCamera,
-                    0,
-                    materialPropertyBlock
-                );
-
-
-            }
-
-            translations.Dispose(Dependency);
-            hunger.Dispose(Dependency);
-            thirst.Dispose(Dependency);
-            urge.Dispose(Dependency);
-        }
-
     }
 }
