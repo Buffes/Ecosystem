@@ -9,8 +9,8 @@ namespace Ecosystem.ECS.Death
     {
         public DeathCause Cause;
 
-        public DeathEvent(int cause) {
-            Cause = (DeathCause)cause;
+        public DeathEvent(DeathCause cause) {
+            Cause = cause;
         }
     }
 }
