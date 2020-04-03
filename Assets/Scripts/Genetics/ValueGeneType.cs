@@ -13,8 +13,25 @@ namespace Ecosystem.Genetics
 
         public void Mutate(ref float value)
         {
-            float amount = Random.value * maxMutationAmount;
-            value *= DNA.CoinFlip(1 * (1 + amount), 1 / (1 + amount));
+            value += NextGaussianFloat() * (value * maxMutationAmount);
+            if (value < 0) value = 0;
+        }
+
+        /// <summary>
+        /// Returns a random float with the standard normal distribution.
+        /// </summary>
+        private float NextGaussianFloat()
+        {
+            float u, v, S;
+            do
+            {
+                u = 2.0f * Random.value - 1.0f;
+                v = 2.0f * Random.value - 1.0f;
+                S = u * u + v * v;
+            }
+            while (S >= 1.0);
+            float fac = Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+            return u * fac;
         }
     }
 }

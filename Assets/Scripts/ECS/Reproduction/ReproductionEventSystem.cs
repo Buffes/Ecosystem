@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Targets;
+using Ecosystem.Genetics;
+using Ecosystem.ECS.Animal.Needs;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -9,31 +10,26 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class ReproductionEventSystem : SystemBase
     {
-        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
-
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            Entities.WithAll<ReproductionEvent>().ForEach((Entity entity, int entityInQueryIndex
-                ,ref LookingForMate lookingForMate
-                ,in SexData sexData) =>
+            Entities
+                .WithoutBurst()
+                .ForEach((Entity entity
+                , ReproductionEvent reproductionEvent
+                , ref SexualUrgesData sexualUrgesData
+                , in SexData sexData
+                , in DNA dna) =>
             {
-                if(sexData.Sex == Sex.Female)
+                if(sexData.Sex == Sex.Female && !EntityManager.HasComponent<PregnancyData>(entity))
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { Father = lookingForMate.Entity }); // If female, become pregnant
+                    DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
+                    EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA, TimeSinceFertilisation = 0.0f }); // If female, become pregnant
                 }
-                commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
+                sexualUrgesData.Urge += 1.0f; // Sate the sexual urge of the animal
+                EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
-            }).ScheduleParallel();
+            }).Run();
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }

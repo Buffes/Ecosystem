@@ -6,7 +6,9 @@ using Ecosystem.Genetics;
 
 namespace Ecosystem.Attributes
 {
-    public class Animal : MonoBehaviour {
+    public class Animal : MonoBehaviour
+    {
+        public StateMachine StateMachine { get => stateMachine; }
 
         private float hungerLimit;
         private float thirstLimit;

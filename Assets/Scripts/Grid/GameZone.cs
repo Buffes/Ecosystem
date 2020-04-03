@@ -39,6 +39,8 @@ namespace Ecosystem.Grid
         //Matrix of water tiles
         public static NativeList<int2> WaterTiles;
 
+        //Matrix of occupied tiles
+        public static NativeArray<bool> occupiedTiles;
 
         // Start is called before the first frame update
         void Awake() 
@@ -58,14 +60,14 @@ namespace Ecosystem.Grid
         {
             WaterTiles.Dispose();
             walkableTiles.Dispose();
-
+            occupiedTiles.Dispose();
         }
 
         private void InitObjects()
         {
             diffWaterLand = landIndex - waterIndex;
             walkableTiles = new NativeArray<bool>(tiles.Length, Allocator.Persistent);
-            
+            occupiedTiles = new NativeArray<bool>(tiles.Length,Allocator.Persistent);
         }
 
         private void RandomizeStartGrid()
@@ -670,6 +672,10 @@ namespace Ecosystem.Grid
         public static void SetWalkable(bool walkable, int x, int y)
         {
             walkableTiles[y * tiles.GetLength(0) + x] = walkable;
+        }
+
+        public static void SetOccupied(bool occupied,int x,int y) {
+            occupiedTiles[y * tiles.GetLength(0) + x] = occupied;
         }
 
         private void SetupWaterTiles()
