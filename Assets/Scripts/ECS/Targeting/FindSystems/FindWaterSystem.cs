@@ -1,4 +1,5 @@
 using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Ecosystem.Grid;
@@ -17,10 +18,14 @@ namespace Ecosystem.ECS.Targeting
     {
         protected override void OnUpdate()
         {
-           var waterTiles = GameZone.WaterTiles;
+            var waterTiles = GameZone.WaterTiles;
            
+            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+
             Entities
                 .WithReadOnly(waterTiles)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForWater lookingForWater,
                 in Translation position,
@@ -44,6 +49,7 @@ namespace Ecosystem.ECS.Targeting
                     } 
 
                     if (closestWaterIndex != -1 && targetDistance >= closestWaterDistance) continue; // Not the closest
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
                     
                     closestWaterIndex = i;
                     closestWaterDistance = targetDistance;

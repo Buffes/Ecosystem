@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
@@ -39,12 +40,15 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var animalTypes = query.ToComponentDataArray<AnimalTypeData>(Allocator.TempJob);
             var sexTypes = query.ToComponentDataArray<SexData>(Allocator.TempJob);
             
+            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
 
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(animalTypes)
                 .WithReadOnly(sexTypes)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForMate lookingForMate,
                 in Translation position,
@@ -67,6 +71,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; //If not the same type of animal
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
                         if (sexType.Sex != targetSexType.Sex)   continue; // If the same sex
+                        if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
 
                         closestMateIndex = i;
                         closestMateDistance = targetDistance;

@@ -10,6 +10,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
     /// </summary>
     public class PathFollowingSystem : SystemBase
     {
+        
         protected override void OnUpdate()
         {
             Entities.ForEach((Entity entity, int entityInQueryIndex,
@@ -17,9 +18,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in Translation translation) =>
             {
-
                 if (pathBuffer.Length == 0) return;
-
+                
                 for (int i = pathBuffer.Length - 1; i >= 0; i--)
                 {
                     float3 checkpoint = pathBuffer[i].Checkpoint;

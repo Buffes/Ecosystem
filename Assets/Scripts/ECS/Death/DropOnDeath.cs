@@ -7,6 +7,7 @@ namespace Ecosystem.ECS.Death
     /// Spawns an entity on death.
     /// </summary>
     [Serializable]
+    [GenerateAuthoringComponent]
     public struct DropOnDeath : IComponentData
     {
         public Entity Prefab;

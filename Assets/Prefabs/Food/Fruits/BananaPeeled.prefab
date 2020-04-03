@@ -168,7 +168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011999443348}
   - component: {fileID: 205000010942831666}
-  - component: {fileID: 65000013710026792}
   m_Layer: 0
   m_Name: BananaPeeled
   m_TagString: Untagged
@@ -215,16 +214,3 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23000012837891966}
   m_Enabled: 1
---- !u!65 &65000013710026792
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011164890620}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.10632925, y: 0.022204183, z: 0.03669039}
-  m_Center: {x: 0.0016570445, y: 0.011461785, z: -0.0027117906}
