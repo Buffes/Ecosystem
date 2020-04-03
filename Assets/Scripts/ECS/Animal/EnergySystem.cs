@@ -26,7 +26,7 @@ namespace Ecosystem.ECS.Animal {
                     energyData.Energy -= deltaTime / 100.0f;
                     if (energyData.Energy <= 0.0f) {
                         energyData.Energy = 0f;
-                        exhaustedData.TimeUntilSprintPossible = 1f;
+                        commandBuffer.AddComponent<ExhaustedData>(entityInQueryIndex,entity);
                     }
                 }).ScheduleParallel();
 
@@ -34,14 +34,17 @@ namespace Ecosystem.ECS.Animal {
                 ref EnergyData energyData, ref ExhaustedData exhaustedData) => {
 
                     energyData.Energy += deltaTime / 100.0f;
-                    if (exhaustedData.TimeUntilSprintPossible > 0f) {
-                        exhaustedData.TimeUntilSprintPossible = deltaTime / 100f; ;
-                    }
-                    else if (exhaustedData.TimeUntilSprintPossible != 0f) {
-                        exhaustedData.TimeUntilSprintPossible = 0f;
-                        commandBuffer.RemoveComponent<ExhaustedData>(entityInQueryIndex, entity);
-                    }
 
+                }).ScheduleParallel();
+
+            Entities.ForEach((Entity entity,int entityInQueryIndex,
+                ref ExhaustedData exhaustedData) => {
+
+                    exhaustedData.TimeUntilSprintPossible -= deltaTime / 100f;
+                    if (exhaustedData.TimeUntilSprintPossible <= 0f) {
+                        exhaustedData.TimeUntilSprintPossible = 0f;
+                        commandBuffer.RemoveComponent<ExhaustedData>(entityInQueryIndex,entity);
+                    }
                 }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
