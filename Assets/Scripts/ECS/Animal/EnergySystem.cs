@@ -31,7 +31,7 @@ namespace Ecosystem.ECS.Animal {
                 }).ScheduleParallel();
 
             Entities.WithNone<Sprinting>().ForEach((Entity entity,int entityInQueryIndex,
-                ref EnergyData energyData, ref ExhaustedData exhaustedData) => {
+                ref EnergyData energyData) => {
 
                     energyData.Energy += deltaTime / 100.0f;
 
@@ -42,7 +42,6 @@ namespace Ecosystem.ECS.Animal {
 
                     exhaustedData.TimeUntilSprintPossible -= deltaTime / 100f;
                     if (exhaustedData.TimeUntilSprintPossible <= 0f) {
-                        exhaustedData.TimeUntilSprintPossible = 0f;
                         commandBuffer.RemoveComponent<ExhaustedData>(entityInQueryIndex,entity);
                     }
                 }).ScheduleParallel();
