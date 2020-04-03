@@ -10,6 +10,6 @@ namespace Ecosystem.ECS.Animal
     [GenerateAuthoringComponent]
     public struct GestationData : IComponentData
     {
-        public float GestationPeriod;
+        public float GestationPeriod; // Max Value
     }
 }

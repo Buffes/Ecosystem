@@ -21,8 +21,9 @@ namespace Ecosystem.ECS.Death
             Entities.WithAll<DeathEvent>().ForEach((Entity entity, int entityInQueryIndex) =>
             {
                 commandBuffer.DestroyEntity(entityInQueryIndex, entity);
-
             }).ScheduleParallel();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }
