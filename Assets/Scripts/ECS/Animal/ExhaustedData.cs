@@ -6,5 +6,8 @@ namespace Ecosystem.ECS.Animal {
     [GenerateAuthoringComponent]
     public struct ExhaustedData : IComponentData {
         public float TimeUntilSprintPossible;
+        public ExhaustedData(float time) {
+            TimeUntilSprintPossible = time;
+        }
     }
 }

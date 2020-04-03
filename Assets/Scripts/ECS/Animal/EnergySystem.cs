@@ -21,12 +21,12 @@ namespace Ecosystem.ECS.Animal {
             float deltaTime = Time.DeltaTime;
 
             Entities.WithAll<Sprinting>().ForEach((Entity entity,int entityInQueryIndex,
-                ref EnergyData energyData, ref ExhaustedData exhaustedData) => {
+                ref EnergyData energyData) => {
                     
                     energyData.Energy -= deltaTime / 100.0f;
                     if (energyData.Energy <= 0.0f) {
                         energyData.Energy = 0f;
-                        commandBuffer.AddComponent<ExhaustedData>(entityInQueryIndex,entity);
+                        commandBuffer.AddComponent<ExhaustedData>(entityInQueryIndex,entity,new ExhaustedData(1f));
                     }
                 }).ScheduleParallel();
 
