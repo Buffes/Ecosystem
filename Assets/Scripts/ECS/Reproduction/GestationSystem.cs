@@ -21,14 +21,14 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime;
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex
-                , ref PregnancyData pregnancyData
-                , in GestationData gestationData) =>
+            Entities.ForEach((Entity entity, int entityInQueryIndex,
+                ref Pregnant pregnant) =>
             {
-                pregnancyData.TimeSinceFertilisation += deltaTime / 1000.0f;
-                if(pregnancyData.TimeSinceFertilisation >= gestationData.GestationPeriod)
+                pregnant.RemainingDuration -= deltaTime;
+                if(pregnant.RemainingDuration <= 0)
                 {
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new BirthEvent());
+                    commandBuffer.RemoveComponent<Pregnant>(entityInQueryIndex, entity);
                 }
             }).ScheduleParallel();
 
