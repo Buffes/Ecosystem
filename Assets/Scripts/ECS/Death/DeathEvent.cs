@@ -7,10 +7,10 @@ namespace Ecosystem.ECS.Death
     /// </summary>
     public struct DeathEvent : IComponentData
     {
-        public int DeathCause;
+        public DeathCause Cause;
 
         public DeathEvent(int cause) {
-            DeathCause = cause;
+            Cause = (DeathCause)cause;
         }
     }
 }
