@@ -31,11 +31,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             NativeArray<bool> grid = GameZone.walkableTiles;
             var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
-            
+            double time = Time.ElapsedTime;
             Entities
                 .WithReadOnly(grid)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
+                ref DynamicBuffer<UnreachablePosition> unreachablePositionsBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
             {
@@ -50,8 +51,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Clear any existing path
                 pathBuffer.Clear();
                 // Offset the target by the reach
-                target = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize, maxTiles);
+                float3 offsetTarget = target - reach * math.normalize(target - translation.Value);
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(offsetTarget), grid, gridSize, maxTiles);
                 // Add path checkpoints
 
                 for (int i = 0; i < path.Length - 1; i++)
@@ -60,6 +61,17 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
+                
+                if (pathBuffer.Length <= 1)
+                {
+                    // Add to unreachable buffer
+                    unreachablePositionsBuffer.Add(new UnreachablePosition 
+                                                    { 
+                                                        Position = GetGridCoords(target),
+                                                        Timestamp = time
+                                                    });
+                }
+                
                 path.Dispose();
             }).ScheduleParallel();
 
@@ -282,8 +294,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         private static int2 GetGridCoords(float3 worldPosition)
         {
-            int x = (int)math.round(worldPosition.x);;
-            int z = (int)math.round(worldPosition.z);;
+            int x = (int)math.round(worldPosition.x);
+            int z = (int)math.round(worldPosition.z);
             return new int2(x, z);
         }
 

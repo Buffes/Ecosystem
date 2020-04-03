@@ -16,8 +16,8 @@ public class CameraMovement : MonoBehaviour {
             transform.position += moveSpeed * new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         }
 
-        // Hold down CTRL or left click and move mouse.
-        if (Input.GetAxisRaw("Fire1") != 0) {
+        // Hold down space and move mouse.
+        if (Input.GetAxisRaw("Jump") != 0) {
             transform.position += moveSpeed * new Vector3(-Input.GetAxisRaw("Mouse X"), 0, -Input.GetAxisRaw("Mouse Y"));
         }
 
