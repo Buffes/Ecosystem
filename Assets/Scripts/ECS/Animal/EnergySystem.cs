@@ -21,26 +21,25 @@ namespace Ecosystem.ECS.Animal {
             float deltaTime = Time.DeltaTime;
 
             Entities.WithAll<Sprinting>().ForEach((Entity entity,int entityInQueryIndex,
-                ref EnergyData energyData, ref ExhaustedData exhaustedData, ref RecoveryData recoveryData) => {
+                ref EnergyData energyData, ref ExhaustedData exhaustedData) => {
                     
                     energyData.Energy -= deltaTime / 100.0f;
                     if (energyData.Energy <= 0.0f) {
                         energyData.Energy = 0f;
-                        exhaustedData.TimeUntilSprintPossible = recoveryData.RecoveryLimit;
-                        recoveryData.RecoveryTime = 0f;
-                        commandBuffer.RemoveComponent<Sprinting>(entityInQueryIndex,entity);
+                        exhaustedData.TimeUntilSprintPossible = 1f;
                     }
                 }).ScheduleParallel();
 
             Entities.WithNone<Sprinting>().ForEach((Entity entity,int entityInQueryIndex,
-                ref EnergyData energyData,ref RecoveryData recoveryData, ref ExhaustedData exhaustedData) => {
-                    
-                    if (recoveryData.RecoveryTime < recoveryData.RecoveryLimit) {
-                        recoveryData.RecoveryTime += deltaTime/100.0f;
-                        exhaustedData.TimeUntilSprintPossible = recoveryData.RecoveryLimit-recoveryData.RecoveryTime;
+                ref EnergyData energyData, ref ExhaustedData exhaustedData) => {
+
+                    energyData.Energy += deltaTime / 100.0f;
+                    if (exhaustedData.TimeUntilSprintPossible > 0f) {
+                        exhaustedData.TimeUntilSprintPossible = deltaTime / 100f; ;
                     }
                     else if (exhaustedData.TimeUntilSprintPossible != 0f) {
                         exhaustedData.TimeUntilSprintPossible = 0f;
+                        commandBuffer.RemoveComponent<ExhaustedData>(entityInQueryIndex, entity);
                     }
 
                 }).ScheduleParallel();
