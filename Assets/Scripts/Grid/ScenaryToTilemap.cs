@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Collections;
 
 namespace Ecosystem.Grid 
 {
@@ -21,7 +22,6 @@ namespace Ecosystem.Grid
 
 
         private SortedDictionary<Scenary, int> sortedScenary = new SortedDictionary<Scenary, int>();
-
 
         void Start()
         {
@@ -100,6 +100,7 @@ namespace Ecosystem.Grid
                 GameObject ob = GetRandomBush();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
                 GameZone.SetWalkable(false, row, col);
+                GameZone.SetOccupied(true,row,col);
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
@@ -107,6 +108,7 @@ namespace Ecosystem.Grid
                 GameObject ob = GetRandomTree();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
                 GameZone.SetWalkable(false, row, col);
+                GameZone.SetOccupied(true,row,col);
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
@@ -114,6 +116,7 @@ namespace Ecosystem.Grid
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
                 GameZone.SetWalkable(false, row, col);
+                GameZone.SetOccupied(true,row,col);
                 return Scenary.Rock;
             }
             
@@ -130,6 +133,7 @@ namespace Ecosystem.Grid
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
                 GameZone.SetWalkable(false, row, col);
+                GameZone.SetOccupied(true,row,col);
                 return Scenary.Rock;
             }
             else if (rand <= value)
@@ -137,6 +141,7 @@ namespace Ecosystem.Grid
                 GameObject ob = GetRandomCactus();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
                 GameZone.SetWalkable(false, row, col);
+                GameZone.SetOccupied(true,row,col);
                 return Scenary.Cactus;
             }
             
@@ -173,6 +178,7 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
+                    GameZone.SetOccupied(false,row,col);
                     gameObjectsInGrid[row, col] = Scenary.Empty;
                 }
             }
@@ -187,7 +193,7 @@ namespace Ecosystem.Grid
             }
             sortedScenary[scenary]++;
         }
-        
+
     }
 }
 
