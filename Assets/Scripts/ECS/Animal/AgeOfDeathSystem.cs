@@ -12,18 +12,19 @@ namespace Ecosystem.ECS.Animal
     public class AgeOfDeathSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        private RandomSystem randomSystem;
 
         protected override void OnCreate()
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            randomSystem = World.GetExistingSystem<RandomSystem>();
         }
 
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-
-            var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
+            var randomArray = randomSystem.RandomArray;
 
             Entities
             .WithNativeDisableContainerSafetyRestriction(randomArray)

@@ -16,11 +16,12 @@ namespace Ecosystem.ECS.Targeting
     public class FindRandomTargetSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
+        private RandomSystem randomSystem;
         protected override void OnCreate()
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            randomSystem =  World.GetExistingSystem<RandomSystem>();
         }
 
         protected override void OnUpdate()
@@ -28,7 +29,7 @@ namespace Ecosystem.ECS.Targeting
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             var walkableTiles = GameZone.walkableTiles;
             int2 gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
-            var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
+            var randomArray = randomSystem.RandomArray;
 
             Entities
                 .WithoutBurst()
