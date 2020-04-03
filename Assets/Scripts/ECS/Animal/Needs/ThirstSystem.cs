@@ -25,7 +25,7 @@ namespace Ecosystem.ECS.Animal.Needs
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
             {
-                thirstData.Thirst -= deltaTime / 1.0f;
+                thirstData.Thirst -= deltaTime / 1000.0f;
 
                 if(thirstData.Thirst <= 0.0f)
                 {
