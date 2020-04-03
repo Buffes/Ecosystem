@@ -21,21 +21,16 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime;
 
-            Entities
-                .WithoutBurst()
-                .ForEach
-                ((Entity entity , int entityInQueryIndex
-                , PregnancyData pregnancyData
+            Entities.ForEach((Entity entity , int entityInQueryIndex
+                , ref PregnancyData pregnancyData
                 , in GestationData gestationData) =>
             {
                 pregnancyData.TimeSinceFertilisation += deltaTime / 1000.0f;
                 if(pregnancyData.TimeSinceFertilisation >= gestationData.GestationPeriod)
                 {
-                    
-                    //EntityManager.AddComponentData(entity, new BirthEvent());
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new BirthEvent());
                 }
-            }).Run();
+            }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
