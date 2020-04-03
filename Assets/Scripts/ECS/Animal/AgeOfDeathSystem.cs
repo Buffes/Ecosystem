@@ -18,7 +18,7 @@ namespace Ecosystem.ECS.Animal
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            randomSystem = World.GetExistingSystem<RandomSystem>();
+            randomSystem = World.GetOrCreateSystem<RandomSystem>();
         }
 
         protected override void OnUpdate()

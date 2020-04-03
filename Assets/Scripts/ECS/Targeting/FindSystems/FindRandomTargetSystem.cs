@@ -17,11 +17,12 @@ namespace Ecosystem.ECS.Targeting
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
         private RandomSystem randomSystem;
+
         protected override void OnCreate()
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            randomSystem =  World.GetExistingSystem<RandomSystem>();
+            randomSystem = World.GetOrCreateSystem<RandomSystem>();
         }
 
         protected override void OnUpdate()
