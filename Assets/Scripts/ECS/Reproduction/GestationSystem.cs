@@ -21,7 +21,7 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime;
 
-            Entities.ForEach((Entity entity , int entityInQueryIndex
+            Entities.ForEach((Entity entity, int entityInQueryIndex
                 , ref PregnancyData pregnancyData
                 , in GestationData gestationData) =>
             {
