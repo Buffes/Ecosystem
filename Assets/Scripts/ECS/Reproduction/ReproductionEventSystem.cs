@@ -14,16 +14,18 @@ namespace Ecosystem.ECS.Reproduction
         {
             Entities
                 .WithoutBurst()
-                .ForEach((Entity entity
-                , ReproductionEvent reproductionEvent
-                , ref SexualUrgesData sexualUrgesData
-                , in SexData sexData
-                , in DNA dna) =>
+                .ForEach((Entity entity,
+                ReproductionEvent reproductionEvent,
+                DNA dna,
+                ref SexualUrgesData sexualUrgesData,
+                in SexData sexData,
+                in GestationData gestationData) =>
             {
-                if(sexData.Sex == Sex.Female && !EntityManager.HasComponent<PregnancyData>(entity))
+                if(sexData.Sex == Sex.Female && !EntityManager.HasComponent<Pregnant>(entity))
                 {
                     DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
-                    EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA, TimeSinceFertilisation = 0.0f }); // If female, become pregnant
+                    EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA }); // If female, become pregnant
+                    EntityManager.AddComponentData(entity, new Pregnant { RemainingDuration = gestationData.GestationPeriod });
                 }
                 sexualUrgesData.Urge += 1.0f; // Sate the sexual urge of the animal
                 EntityManager.RemoveComponent<ReproductionEvent>(entity);
