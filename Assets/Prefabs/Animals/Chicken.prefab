@@ -383,6 +383,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chicken
       objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763520, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animalType
+      value: 
+      objectReference: {fileID: 11400000, guid: bdd7a7559f0396f4f86fb7ae5a3d8b3d,
+        type: 2}
+    - target: {fileID: 5070148453820763521, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Range
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!4 &6101400048629877292 stripped
