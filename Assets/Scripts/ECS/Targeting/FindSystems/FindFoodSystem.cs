@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
@@ -35,10 +36,14 @@ namespace Ecosystem.ECS.Targeting
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
             var foodTypes = query.ToComponentDataArray<FoodTypeData>(Allocator.TempJob);
 
+            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+            
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
                 .WithReadOnly(foodTypes)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForFood lookingForFood,
                 in Translation position,
@@ -64,11 +69,12 @@ namespace Ecosystem.ECS.Targeting
                     } 
                     if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
                     if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
 
                     closestFoodIndex = i;
                     closestFoodDistance = targetDistance;
                 }
-
+                
                 // Set result
                 if (closestFoodIndex != -1)
                 {

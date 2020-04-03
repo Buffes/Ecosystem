@@ -25,7 +25,8 @@ namespace Ecosystem.StateMachines {
             Vector3 diff = currentPos - predatorPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             Vector3 target = currentPos + 5f*diff/diffLength;
-            owner.Move(target,1f,200);
+ 
+            owner.Move(target,0f,200);
         }
 
         public void Exit() {
