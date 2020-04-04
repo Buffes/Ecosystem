@@ -33,7 +33,7 @@ namespace Ecosystem.ECS.Grid
                 .ForEach((Entity entity, int entityInQueryIndex,
                 in CellOccupant occupant, in Translation position) =>
                 {
-                    int2 gridPos = grid.GetGridPosition(position.Value); //gridPosition.Value;
+                    int2 gridPos = grid.GetGridPosition(position.Value);
                     int index = grid.GetCellIndex(gridPos);
 
                     if (occupiedCells[index]) return; // Already occupied
