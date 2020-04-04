@@ -18,7 +18,6 @@ namespace Ecosystem.StateMachines {
         public void Enter() 
         {
             owner.GetSensors().LookForRandomTarget(true);
-            nextTarget = owner.GetMovement().GetPosition();
         }
 
         public void Execute() 
