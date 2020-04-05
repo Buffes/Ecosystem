@@ -99,23 +99,17 @@ namespace Ecosystem.Grid
 
             if (rand <= newBush)
             {
-                GameObject ob = GetRandomBush();
-                Instantiate (ob, spawnPos, Quaternion.identity);
-                gameZone.SetBlockedCell(row, col);
+                Instantiate (GetRandomBush(), spawnPos, Quaternion.identity);
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
-                GameObject ob = GetRandomTree();
-                Instantiate (ob, spawnPos, Quaternion.identity);
-                gameZone.SetBlockedCell(row, col);
+                Instantiate (GetRandomTree(), spawnPos, Quaternion.identity);
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
-                GameObject ob = GetRandomRock();
-                Instantiate (ob, spawnPos, Quaternion.identity);
-                gameZone.SetBlockedCell(row, col);
+                Instantiate (GetRandomRock(), spawnPos, Quaternion.identity);
                 return Scenary.Rock;
             }
             
@@ -131,16 +125,12 @@ namespace Ecosystem.Grid
 
             if (rand <= newRock)
             {
-                GameObject ob = GetRandomRock();
-                Instantiate (ob, spawnPos, Quaternion.identity);
-                gameZone.SetBlockedCell(row, col);
+                Instantiate (GetRandomRock(), spawnPos, Quaternion.identity);
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
-                GameObject ob = GetRandomCactus();
-                Instantiate (ob, spawnPos, Quaternion.identity);
-                gameZone.SetBlockedCell(row, col);
+                Instantiate (GetRandomCactus(), spawnPos, Quaternion.identity);
                 return Scenary.Cactus;
             }
             
