@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Targeting.Targets;
+using Ecosystem.Genetics;
+using Ecosystem.ECS.Animal.Needs;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -9,31 +10,28 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class ReproductionEventSystem : SystemBase
     {
-        EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        }
-
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            Entities.WithAll<ReproductionEvent>().ForEach((Entity entity, int entityInQueryIndex
-                ,ref LookingForMate lookingForMate
-                ,in SexData sexData) =>
+            Entities
+                .WithoutBurst()
+                .ForEach((Entity entity,
+                ReproductionEvent reproductionEvent,
+                DNA dna,
+                ref SexualUrgesData sexualUrgesData,
+                in SexData sexData,
+                in GestationData gestationData) =>
             {
-                if(sexData.Sex == Sex.Female)
+                if(sexData.Sex == Sex.Female && !EntityManager.HasComponent<Pregnant>(entity))
                 {
-                    commandBuffer.AddComponent(entityInQueryIndex, entity, new PregnancyData() { Father = lookingForMate.Entity }); // If female, become pregnant
+                    DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
+                    EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA }); // If female, become pregnant
+                    EntityManager.AddComponentData(entity, new Pregnant { RemainingDuration = gestationData.GestationPeriod });
                 }
-                commandBuffer.RemoveComponent<ReproductionEvent>(entityInQueryIndex, entity);
+                sexualUrgesData.Urge += 1.0f; // Sate the sexual urge of the animal
+                EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
-            }).ScheduleParallel();
+            }).Run();
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }

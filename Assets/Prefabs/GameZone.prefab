@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenaryToTilemap: {fileID: -7102660320631865697}
+  waterNeighbourRate: 0.65
+  waterSpawnRate: 0.005
 --- !u!114 &-7102660320631865697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,8 +60,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7329b2efffacda3489f4894fad041ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greenScenaryNeigbourRate: 0.15
+  greenScenarySpawnRate: 0.05
+  desertScenarySpawnRate: 0.1
   bushes:
-  - {fileID: 1295785772323214, guid: ce9d30e0499f02a4f89abce4f1e0b9a9, type: 3}
+  - {fileID: 8495284459030205181, guid: a69173de36a8543d79efd294c291a5d9, type: 3}
   - {fileID: 1150320398043032, guid: 9e880f22f8032a14497d7c80d09e5060, type: 3}
   - {fileID: 1475206913656112, guid: e0bd15bec4487de469925c62e93db78b, type: 3}
   - {fileID: 1072878899551514, guid: 59e07f35e7740c44ba6fe47b27ded1fc, type: 3}
@@ -82,7 +87,7 @@ MonoBehaviour:
   - {fileID: 1307524633804610, guid: fe568b4d5e7b58f448c28f8b6aba5799, type: 3}
   - {fileID: 1930759134317650, guid: fe330738b4f8177499884b8295d538f5, type: 3}
   - {fileID: 1513628666842536, guid: 573359ce72e3dd846a29433927833465, type: 3}
-  - {fileID: 1678550395178686, guid: 43dd8d83e744f1d4d9d714b8c7b35dad, type: 3}
+  - {fileID: 3708535222110392090, guid: 8145952d9fec54714ad1d0fee902925a, type: 3}
   - {fileID: 1064551770603470, guid: ce9f09ca1fe36b9479b863515f1521b6, type: 3}
   - {fileID: 1229761666185884, guid: 42d9c83dee07a2048b964ecaed683b1b, type: 3}
   - {fileID: 1138320077764492, guid: b1f6516fd8abfb7428f9bebd39ccf196, type: 3}
@@ -97,8 +102,8 @@ MonoBehaviour:
   - {fileID: 1387981355174434, guid: 840fd3aa7e54ab0419c4240f49a0b1cd, type: 3}
   - {fileID: 1132216053683538, guid: 370529a0249ffe44f91b624ad8a3b734, type: 3}
   rocks:
-  - {fileID: 1545284419762390, guid: 77b95d518dd24624b9baaa072094bfcb, type: 3}
-  - {fileID: 1136410170050514, guid: 776e4179c67bbce45bfe586d805ed1b1, type: 3}
+  - {fileID: 7183718706775226097, guid: 304c004e221ce44d58fea2431e8fe5d4, type: 3}
+  - {fileID: 7742891176059143767, guid: d6314e145ddc0493a82779442e68a3a6, type: 3}
   - {fileID: 1588695694357282, guid: ef7f09302dcbb494fa7fa6b50de8f241, type: 3}
   - {fileID: 1765881378657734, guid: e168f5d59d0657f44aea2a71d92ef39d, type: 3}
   - {fileID: 1832396019814904, guid: d0082c69565d1894b95f941dcef0abf3, type: 3}
@@ -109,7 +114,7 @@ MonoBehaviour:
   - {fileID: 1986631312122830, guid: 10d34ca8daa6caf458bcf9746c06a126, type: 3}
   - {fileID: 1822502927068284, guid: e0ff1c3fe24c34d40bd6dc7ad4295f10, type: 3}
   cacti:
-  - {fileID: 1394492790739692, guid: 95a47f97228006949bd0b49cb6e416d6, type: 3}
+  - {fileID: 383084049546728855, guid: d28a4563a4ae34a019f5aaae0b467260, type: 3}
 --- !u!1 &1022454915919162661
 GameObject:
   m_ObjectHideFlags: 0
