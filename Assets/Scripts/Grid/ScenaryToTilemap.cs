@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Unity.Collections;
 
 namespace Ecosystem.Grid 
 {
     public class ScenaryToTilemap : MonoBehaviour
     {
+        [SerializeField] private GameZone gameZone = default;
+
         //Matrix with all GameObjects in the Grid
         private Scenary [,] gameObjectsInGrid;
         private int [,] tiles;
@@ -99,24 +99,21 @@ namespace Ecosystem.Grid
             {
                 GameObject ob = GetRandomBush();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                gameZone.SetBlockedCell(row, col);
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
                 GameObject ob = GetRandomTree();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                gameZone.SetBlockedCell(row, col);
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                gameZone.SetBlockedCell(row, col);
                 return Scenary.Rock;
             }
             
@@ -132,16 +129,14 @@ namespace Ecosystem.Grid
             {
                 GameObject ob = GetRandomRock();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                gameZone.SetBlockedCell(row, col);
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
                 GameObject ob = GetRandomCactus();
                 Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                gameZone.SetBlockedCell(row, col);
                 return Scenary.Cactus;
             }
             
@@ -178,7 +173,6 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
-                    GameZone.SetOccupied(false,row,col);
                     gameObjectsInGrid[row, col] = Scenary.Empty;
                 }
             }
