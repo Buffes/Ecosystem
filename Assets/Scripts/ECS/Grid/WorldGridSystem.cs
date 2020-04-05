@@ -56,11 +56,13 @@ namespace Ecosystem.ECS.Grid
         }
 
         /// <summary>
-        /// Initializes the grid with amount of columns/rows equal to the specified width/height.
+        /// Initializes the grid shape.
         /// </summary>
         public void InitGrid(int width, int height, float cellSize = 1f)
+            => InitGrid(new GridData(width, height, cellSize));
+        public void InitGrid(GridData grid)
         {
-            Grid = new GridData(width, height, cellSize);
+            Grid = grid;
 
             if (OccupiedCells.IsCreated) OccupiedCells.Dispose();
             if (BlockedCells.IsCreated) BlockedCells.Dispose();

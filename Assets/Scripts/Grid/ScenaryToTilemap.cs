@@ -94,25 +94,27 @@ namespace Ecosystem.Grid
             float newTree = (value / 3) * 2;
             float newRock = value;
             float rand = Random.value;
-            
+
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+
             if (rand <= newBush)
             {
                 GameObject ob = GetRandomBush();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, spawnPos, Quaternion.identity);
                 gameZone.SetBlockedCell(row, col);
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
                 GameObject ob = GetRandomTree();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, spawnPos, Quaternion.identity);
                 gameZone.SetBlockedCell(row, col);
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
                 GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, spawnPos, Quaternion.identity);
                 gameZone.SetBlockedCell(row, col);
                 return Scenary.Rock;
             }
@@ -124,18 +126,20 @@ namespace Ecosystem.Grid
         {
             float newRock = value / 2;
             float rand = Random.value;
-            
+
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+
             if (rand <= newRock)
             {
                 GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, spawnPos, Quaternion.identity);
                 gameZone.SetBlockedCell(row, col);
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
                 GameObject ob = GetRandomCactus();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, spawnPos, Quaternion.identity);
                 gameZone.SetBlockedCell(row, col);
                 return Scenary.Cactus;
             }

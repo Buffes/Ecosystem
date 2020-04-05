@@ -31,6 +31,7 @@ namespace Ecosystem.Grid
         //The rate of objects spawning
         public float waterSpawnRate = 0.005f;
 
+        private GridData grid;
         private WorldGridSystem worldGridSystem;
 
         void Awake() 
@@ -49,8 +50,9 @@ namespace Ecosystem.Grid
         {
             diffWaterLand = landIndex - waterIndex;
 
+            grid = new GridData(tiles.GetLength(0), tiles.GetLength(1));
             worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
-            worldGridSystem.InitGrid(tiles.GetLength(0), tiles.GetLength(1));
+            worldGridSystem.InitGrid(grid);
         }
 
         private void RandomizeStartGrid()
@@ -651,6 +653,8 @@ namespace Ecosystem.Grid
 
         public void SetBlockedCell(int x, int y)
             => worldGridSystem.SetOccupiedCell(new int2(x, y), true);
+
+        public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(new int2(x, y));
     }
 }
 
