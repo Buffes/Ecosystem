@@ -26,21 +26,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 26e752b8184b98c4a8f3fd6a559467d6, type: 3}
+      objectReference: {fileID: 2100000, guid: 732820804b039a641adbdbbcb450c84c, type: 3}
     - target: {fileID: -2677295785709943902, guid: 0bff099aba11f4942aae4e55c9c1ae46,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100002, guid: 26e752b8184b98c4a8f3fd6a559467d6, type: 3}
+      objectReference: {fileID: 2100002, guid: 732820804b039a641adbdbbcb450c84c, type: 3}
     - target: {fileID: -1888008254584168722, guid: 0bff099aba11f4942aae4e55c9c1ae46,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 26e752b8184b98c4a8f3fd6a559467d6, type: 3}
+      objectReference: {fileID: 4300000, guid: 732820804b039a641adbdbbcb450c84c, type: 3}
     - target: {fileID: 4553371268278313015, guid: 0bff099aba11f4942aae4e55c9c1ae46,
         type: 3}
       propertyPath: m_Name
-      value: 1tree27
+      value: 1tree20
       objectReference: {fileID: 0}
     - target: {fileID: 9159069694739019248, guid: 0bff099aba11f4942aae4e55c9c1ae46,
         type: 3}
