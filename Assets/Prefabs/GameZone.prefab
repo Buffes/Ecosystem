@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc8923cb5cade64cb4073cd79a5a11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenaryToTilemap: {fileID: -7102660320631865697}
   waterNeighbourRate: 0.65
   waterSpawnRate: 0.005
 --- !u!114 &-7102660320631865697
@@ -60,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7329b2efffacda3489f4894fad041ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameZone: {fileID: 1022454915255237108}
   greenScenaryNeigbourRate: 0.15
   greenScenarySpawnRate: 0.05
   desertScenarySpawnRate: 0.1
