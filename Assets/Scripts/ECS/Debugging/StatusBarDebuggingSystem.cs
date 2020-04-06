@@ -10,7 +10,6 @@ namespace Ecosystem.ECS.Debugging
 {
     public class StatusBarDebuggingSystem : SystemBase
     {
-        public Camera mainCamera { get; set; }
         public bool Show { get; set; }
         public Material Material { get; set; }
         public Color HungerColor { get; set; }
@@ -68,7 +67,7 @@ namespace Ecosystem.ECS.Debugging
                 matrix,
                 Material,
                 1,
-                mainCamera,
+                null,
                 0,
                 materialPropertyBlock
             );

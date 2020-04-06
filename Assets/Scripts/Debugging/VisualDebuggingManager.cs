@@ -36,8 +36,6 @@ namespace Ecosystem.Debugging
         [Header("Status")]
         [SerializeField] private Material statusMaterial = default;
         [SerializeField] private float statusHeight = 2.5f;
-        [SerializeField] private new Camera camera = default;
-
 
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
@@ -72,7 +70,6 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
 
-            statusBarDebuggingSystem.mainCamera = camera;
             statusBarDebuggingSystem.Material = statusMaterial;
             statusBarDebuggingSystem.Show = statusDebugShow;
             statusBarDebuggingSystem.Height = statusHeight;
