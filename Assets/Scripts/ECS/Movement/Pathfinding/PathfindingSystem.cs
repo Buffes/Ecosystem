@@ -51,14 +51,17 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Clear any existing path
                 pathBuffer.Clear();
                 // Offset the target by the reach
-                float3 offsetTarget = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(offsetTarget), grid, gridSize, maxTiles);
+                //float3 offsetTarget = target - reach * math.normalize(target - translation.Value);
+                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize, maxTiles);
                 // Add path checkpoints
 
                 for (int i = 0; i < path.Length - 1; i++)
                 {
+                    float3 checkpoint = GetWorldPosition(path[i]);
+                    if (math.distance(checkpoint, target) < reach) continue; // Within reach.
+                    
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
-                    pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
+                    pathBuffer.Add(new PathElement { Checkpoint = checkpoint });
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
                 
