@@ -35,7 +35,6 @@ namespace Ecosystem.ECS.Targeting
             var randomArray = randomSystem.RandomArray;
 
             Entities
-                .WithoutBurst()
                 .WithNativeDisableContainerSafetyRestriction(randomArray)
                 .WithReadOnly(blockedCells)
                 .WithReadOnly(waterCells)
@@ -83,7 +82,7 @@ namespace Ecosystem.ECS.Targeting
                 }
 
                 randomArray[randomIndex] = random; // Necessary to update the generator.
-            }).Run();
+            }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
