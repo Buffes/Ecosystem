@@ -8,6 +8,6 @@ namespace Ecosystem.ECS.Targeting.Targets
     [GenerateAuthoringComponent]
     public struct DetectedEntityElement : IBufferElementData
     {
-        public Entity entity;
+        public Entity Entity;
     }
 }
