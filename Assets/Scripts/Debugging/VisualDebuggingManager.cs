@@ -14,6 +14,7 @@ namespace Ecosystem.Debugging
         [SerializeField] private bool hearingDebugShow = default;
         [SerializeField] private bool pathDebugShow = default;
         [SerializeField] private bool stateDebugShow = default;
+        [SerializeField] private bool visionDebugShow = default;
 
         [Header("Hearing")]
         [SerializeField] private Material hearingMaterial = default;
@@ -32,10 +33,14 @@ namespace Ecosystem.Debugging
         [SerializeField] private Color mateColor = default;
         [SerializeField] private Color fleeColor = default;
 
+        [Header("Vision")]
+        [SerializeField] private Material visionMaterial = default;
+
 
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
         private AnimalStateDebugging animalStateDebuggingSystem;
+        private VisionDebuggingSystem visionDebuggingSystem;
 
         private void Awake()
         {
@@ -43,6 +48,7 @@ namespace Ecosystem.Debugging
             hearingDebuggingSystem = world.GetOrCreateSystem<HearingDebuggingSystem>();
             pathDebuggingSystem = world.GetOrCreateSystem<PathDebuggingSystem>();
             animalStateDebuggingSystem = world.GetOrCreateSystem<AnimalStateDebugging>();
+            visionDebuggingSystem = world.GetOrCreateSystem<VisionDebuggingSystem>();
         }
 
         private void Update()
@@ -63,6 +69,9 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.ThirstColor = thirstColor;
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
+
+            visionDebuggingSystem.Material = visionMaterial;
+            visionDebuggingSystem.Show = visionDebugShow;
         }
     }
 }
