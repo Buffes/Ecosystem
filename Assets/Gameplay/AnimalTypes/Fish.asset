@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish
   m_EditorClassIdentifier: 
   Meat: {fileID: 0}
-  Name: fish
+  Name: 2
   prey: []
   food: []

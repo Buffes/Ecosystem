@@ -1,49 +1,35 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using System.Threading;
-using System;
+using System.Collections.Generic;
 using System.IO;
 using Ecosystem.Gameplay;
 using Ecosystem.ECS.Animal;
+using Unity.Collections;
 
 namespace Ecosystem.ECS.Death {
     public class DeathStatsSystem : SystemBase {
 
-        public int hunger;
-        public int thirst;
-        public int age;
-        public int predator;
-        public int other;
+        public struct DeathStats {
+            public string name;
+            public int hunger;
+            public int thirst;
+            public int age;
+            public int predator;
+            public int other;
+        }
 
-        public int rabbitHunger;
-        public int rabbitThirst;
-        public int rabbitAge;
-        public int rabbitPredator;
-        public int rabbitOther;
-
-        public int foxHunger;
-        public int foxThirst;
-        public int foxAge;
-        public int foxPredator;
-        public int foxOther;
+        public DeathStats fox;
+        public DeathStats rabbit;
+        public DeathStats fish;
+        public DeathStats eagle;
 
         protected override void OnCreate() {
             base.OnCreate();
-            hunger = 0;
-            thirst = 0;
-            age = 0;
-            predator = 0;
-            other = 0;
-            rabbitHunger = 0;
-            rabbitThirst = 0;
-            rabbitAge = 0;
-            rabbitPredator = 0;
-            rabbitOther = 0;
-            foxHunger = 0;
-            foxThirst = 0;
-            foxAge = 0;
-            foxPredator = 0;
-            foxOther = 0;
+            fox = new DeathStats { name = "Fox" };
+            rabbit = new DeathStats { name = "Rabbit" };
+            fish = new DeathStats { name = "Fish" };
+            eagle = new DeathStats { name = "Eagle" };
         }
 
         protected override void OnUpdate() {
@@ -52,29 +38,49 @@ namespace Ecosystem.ECS.Death {
 
                 switch (deathEvent.Cause) {
                     case DeathCause.Hunger:
-                        Interlocked.Increment(ref hunger);
-                        if (type.AnimalName == AnimalTypeNames.Fox) { Interlocked.Increment(ref foxHunger); }
-                        else { Interlocked.Increment(ref rabbitHunger); }
+                        switch (type.AnimalName) {
+                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.hunger); break;
+                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.hunger); break;
+                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.hunger); break;
+                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.hunger); break;
+                            default: break;
+                        }
                         break;
                     case DeathCause.Thirst:
-                        if (type.AnimalName == AnimalTypeNames.Fox) { Interlocked.Increment(ref foxThirst); }
-                        else { Interlocked.Increment(ref rabbitThirst); }
-                        Interlocked.Increment(ref thirst);
+                        switch (type.AnimalName) {
+                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.thirst); break;
+                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.thirst); break;
+                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.thirst); break;
+                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.thirst); break;
+                            default: break;
+                        }
                         break;
                     case DeathCause.Age:
-                        if (type.AnimalName == AnimalTypeNames.Fox) { Interlocked.Increment(ref foxAge); }
-                        else { Interlocked.Increment(ref rabbitAge); }
-                        Interlocked.Increment(ref age);
+                        switch (type.AnimalName) {
+                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.age); break;
+                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.age); break;
+                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.age); break;
+                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.age); break;
+                            default: break;
+                        }
                         break;
                     case DeathCause.Predators:
-                        if (type.AnimalName == AnimalTypeNames.Fox) { Interlocked.Increment(ref foxPredator); }
-                        else { Interlocked.Increment(ref rabbitPredator); }
-                        Interlocked.Increment(ref predator);
+                        switch (type.AnimalName) {
+                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.predator); break;
+                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.predator); break;
+                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.predator); break;
+                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.predator); break;
+                            default: break;
+                        }
                         break;
                     default:
-                        if (type.AnimalName == AnimalTypeNames.Fox) { Interlocked.Increment(ref foxOther); }
-                        else { Interlocked.Increment(ref rabbitOther); }
-                        Interlocked.Increment(ref other);
+                        switch (type.AnimalName) {
+                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.other); break;
+                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.other); break;
+                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.other); break;
+                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.other); break;
+                            default: break;
+                        }
                         break;
                 }
             }).Run();
@@ -83,13 +89,23 @@ namespace Ecosystem.ECS.Death {
 
         protected override void OnDestroy() {
             base.OnDestroy();
+            List<DeathStats> deathStats = new List<DeathStats> {
+                fox, rabbit, fish, eagle
+            };
+            DeathStats total = new DeathStats { name = "Total"};
+            foreach (DeathStats stats in deathStats) {
+                total.hunger += stats.hunger;
+                total.thirst += stats.thirst;
+                total.age += stats.age;
+                total.predator += stats.predator;
+                total.other += stats.other;
+            }
+            deathStats.Add(total);
             using (StreamWriter sw = new StreamWriter("DeathCauses.csv")) {
-                sw.WriteLine("Cause,Total,Rabbit,Fox");
-                sw.WriteLine("Hunger," + hunger + "," + rabbitHunger + "," + foxHunger);
-                sw.WriteLine("Thirst," + thirst + "," + rabbitThirst + "," + foxThirst);
-                sw.WriteLine("Age," + age + "," + rabbitAge + "," + foxAge);
-                sw.WriteLine("Predators," + predator + "," + rabbitPredator + "," + foxPredator);
-                sw.WriteLine("Other," + other + "," + rabbitOther + "," + foxOther);
+                sw.WriteLine("Animal,Hunger,Thirst,Age,Predators,Other");
+                foreach (DeathStats stats in deathStats) {
+                    sw.WriteLine(stats.name + "," + stats.hunger + "," + stats.thirst + "," + stats.age + "," + stats.predator + "," + stats.other);
+                }
             }
         }
     }

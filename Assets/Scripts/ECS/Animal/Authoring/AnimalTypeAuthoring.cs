@@ -15,7 +15,7 @@ namespace Ecosystem.ECS.Animal
         {
             dstManager.AddComponentData(entity,new AnimalTypeData {
                 AnimalTypeId = animalType.GetInstanceID(),
-                AnimalName = animalType.Name.Equals("fox") ? AnimalTypeNames.Fox : AnimalTypeNames.Rabbit
+                AnimalName = animalType.Name
             });
 
             dstManager.AddComponentData(entity, new DropOnDeath
