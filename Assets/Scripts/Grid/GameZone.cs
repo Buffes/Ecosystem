@@ -671,6 +671,8 @@ namespace Ecosystem.Grid
 
         public static void SetWalkable(bool walkable, int x, int y)
         {
+            if ( x < 0 || y < 0 || x > tiles.GetLength(0) - 1 || y > tiles.GetLength(1) - 1) return; // outside grid
+            
             walkableTiles[y * tiles.GetLength(0) + x] = walkable;
         }
 
