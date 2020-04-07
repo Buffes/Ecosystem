@@ -7,5 +7,6 @@ namespace Ecosystem.ECS.Animal
     public struct AnimalTypeData : IComponentData
     {
         public int AnimalTypeId;
+        public AnimalTypeNames AnimalName;
     }
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Eagle
   m_EditorClassIdentifier: 
   Meat: {fileID: 0}
+  Name: eagle
   prey: []
   food:
   - {fileID: 11400000, guid: 42c1d199ea7f64a80812e71f7ec2dc9d, type: 2}
