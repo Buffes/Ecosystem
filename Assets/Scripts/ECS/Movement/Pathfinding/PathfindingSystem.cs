@@ -55,17 +55,30 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 // Clear any existing path
                 pathBuffer.Clear();
-                // Offset the target by the reach
-                float3 offsetTarget = target - reach * math.normalize(target - translation.Value);
+                
                 NativeList<int2> path  = FindPath(grid.GetGridPosition(position),
-                    grid.GetGridPosition(offsetTarget), blockedCells, waterCells, grid,
+                    grid.GetGridPosition(target), blockedCells, waterCells, grid,
                     canMoveOnLand, canMoveInWater, maxTiles);
+                
                 // Add path checkpoints
-
                 for (int i = 0; i < path.Length - 1; i++)
                 {
+                    float3 checkpoint = grid.GetWorldPosition(path[i]);
+                    float3 nextCheckpoint = grid.GetWorldPosition(path[i + 1]);
+                    float distance = math.distance(checkpoint, target);
+                    float distanceNext = math.distance(nextCheckpoint, target);
+                    
+                    if (distance < reach && distanceNext > reach) 
+                    {
+                        // Put the last checkpoint at the edge of the reach.
+                        float3 endPoint = nextCheckpoint + (distanceNext - reach) * math.normalize(target - nextCheckpoint);
+                        pathBuffer.Add(new PathElement { Checkpoint = endPoint });
+                        continue;
+                    }
+                    if (distance < reach) continue; // Within reach.
+                    
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
-                    pathBuffer.Add(new PathElement { Checkpoint = grid.GetWorldPosition(path[i]) });
+                    pathBuffer.Add(new PathElement { Checkpoint = checkpoint });
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
                 
