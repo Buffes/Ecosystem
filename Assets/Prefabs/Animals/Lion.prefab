@@ -620,6 +620,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lion
       objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763520, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animalType
+      value: 
+      objectReference: {fileID: 11400000, guid: 54ebd0d0cdfca8d48be3c648fec0bb90,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!4 &7752642800463083572 stripped
