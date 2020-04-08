@@ -2,11 +2,11 @@
 
 namespace Ecosystem.ECS.Grid
 {
-    public struct GridData
+    public readonly struct GridData
     {
-        private int width;
-        private int height;
-        private float cellSize;
+        private readonly int width;
+        private readonly int height;
+        private readonly float cellSize;
 
         public int Length => width * height;
 
@@ -18,7 +18,8 @@ namespace Ecosystem.ECS.Grid
         }
 
         /// <summary>
-        /// If not interested in the indexing, such as if used for a hash map.
+        /// If not interested in the indexing, such as if used for a hash map. The width and height
+        /// are irrelevant.
         /// </summary>
         public GridData(float cellSize) : this(0, 0, cellSize) { }
 
@@ -30,9 +31,20 @@ namespace Ecosystem.ECS.Grid
             return new int2(x, z);
         }
 
-        public bool IsInBounds(float3 worldPosition)
+        public float3 GetWorldPosition(int2 gridPosition)
         {
-            int2 gridPosition = GetGridPosition(worldPosition);
+            float x = gridPosition.x + 0.5f;
+            float z = gridPosition.y + 0.5f;
+
+            return new float3(x, 0f, z);
+        }
+
+        /// <summary>
+        /// Returns if the specified position is within the bounds of this grid.
+        /// </summary>
+        public bool IsInBounds(float3 worldPosition) => IsInBounds(GetGridPosition(worldPosition));
+        public bool IsInBounds(int2 gridPosition)
+        {
             int x = gridPosition.x;
             int z = gridPosition.y;
             return x >= 0 && z >= 0 && x < width && z < height;
@@ -46,6 +58,17 @@ namespace Ecosystem.ECS.Grid
         public int GetCellIndex(float3 worldPosition) => GetCellIndex(GetGridPosition(worldPosition));
         public int GetCellIndex(int2 gridPosition) => GetCellIndex(gridPosition.x, gridPosition.y);
         private int GetCellIndex(int x, int z) => z * width + x;
+
+        /// <summary>
+        /// Returns the grid position that has the specified cell index.
+        /// </summary>
+        public int2 GetGridPositionFromIndex(int index)
+        {
+            int x = index % width;
+            int z = (index - x) / width;
+
+            return new int2(x, z);
+        }
 
         /// <summary>
         /// Returns a unique key for the cell at the specified position.

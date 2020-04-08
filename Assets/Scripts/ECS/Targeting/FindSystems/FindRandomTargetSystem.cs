@@ -1,12 +1,11 @@
 using Ecosystem.ECS.Random;
 using Ecosystem.ECS.Targeting.Targets;
-using Ecosystem.Grid;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Jobs.LowLevel.Unsafe;
-using UnityEngine;
+using Ecosystem.ECS.Grid;
 
 namespace Ecosystem.ECS.Targeting
 {
@@ -17,29 +16,35 @@ namespace Ecosystem.ECS.Targeting
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
         private RandomSystem randomSystem;
+        private WorldGridSystem worldGridSystem;
 
         protected override void OnCreate()
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             randomSystem = World.GetOrCreateSystem<RandomSystem>();
+            worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
         }
 
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            var walkableTiles = GameZone.walkableTiles;
-            int2 gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
+            var blockedCells = worldGridSystem.BlockedCells;
+            var waterCells = worldGridSystem.WaterCells;
+            var grid = worldGridSystem.Grid;
             var randomArray = randomSystem.RandomArray;
 
             Entities
-                .WithoutBurst()
                 .WithNativeDisableContainerSafetyRestriction(randomArray)
-                .WithReadOnly(walkableTiles)
+                .WithReadOnly(blockedCells)
+                .WithReadOnly(waterCells)
                 .ForEach((int nativeThreadIndex, Entity entity,
                     ref LookingForRandomTarget lookingForRandomTarget,
                     in Translation translation) =>
             {
+                bool onLand = true;
+                bool inWater = false;
+
                 int randomIndex = nativeThreadIndex % JobsUtility.MaxJobThreadCount;
                 var random = randomArray[randomIndex];
                 
@@ -57,7 +62,8 @@ namespace Ecosystem.ECS.Targeting
                     
                     float3 potentialtarget = new float3(translation.Value.x + tile.x, 0f, translation.Value.z + tile.y);
                     
-                    if (IsWalkable(walkableTiles, gridSize, potentialtarget.x, potentialtarget.z))
+                    if (WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater,
+                        grid.GetGridPosition(potentialtarget)))
                     {
                         target = potentialtarget;
                         break;
@@ -76,19 +82,9 @@ namespace Ecosystem.ECS.Targeting
                 }
 
                 randomArray[randomIndex] = random; // Necessary to update the generator.
-            }).Run();
+            }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
-        }
-
-        private static bool IsWalkable(NativeArray<bool> grid, int2 gridSize, float x, float z)
-        {
-            int xInt = (int)math.round(x);
-            int zInt = (int)math.round(z);
-
-            if ( xInt < 0 || zInt < 0 || xInt > gridSize.x - 1 || zInt > gridSize.y - 1) return false; // outside grid
-            
-            return grid[xInt + zInt * gridSize.x];
         }
     }
 }

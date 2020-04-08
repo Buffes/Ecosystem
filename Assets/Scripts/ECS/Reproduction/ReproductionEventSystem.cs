@@ -27,7 +27,6 @@ namespace Ecosystem.ECS.Reproduction
                     EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA }); // If female, become pregnant
                     EntityManager.AddComponentData(entity, new Pregnant { RemainingDuration = gestationData.GestationPeriod });
                 }
-                sexualUrgesData.Urge += 1.0f; // Sate the sexual urge of the animal
                 EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
             }).Run();

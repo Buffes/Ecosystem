@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Ecosystem.Grid;
-using Unity.Collections;
-using Unity.Mathematics;
+using Ecosystem.ECS.Grid;
+using Unity.Entities;
+using Random = UnityEngine.Random;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -10,22 +10,28 @@ public class PrefabSpawner : MonoBehaviour
     // How many to spawn of each prefab
     public int[] amountToSpawn;
 
-    void Start()
+    private WorldGridSystem worldGridSystem;
+
+    private void Awake()
     {
-        //get the world
-        NativeArray<bool> grid = GameZone.walkableTiles;
-        var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
-        int differentPrefabs = whatToSpawnPrefab.Length;
-        // Spawn
-        spawnPlease(grid, differentPrefabs);
+        worldGridSystem = World.DefaultGameObjectInjectionWorld
+            .GetOrCreateSystem<WorldGridSystem>();
     }
 
-    void spawnPlease(NativeArray<bool> grid, int differentPrefabs)
+    void Start()
+    {
+        GridData grid = worldGridSystem.Grid;
+        int differentPrefabs = whatToSpawnPrefab.Length;
+        // Spawn
+        spawnPlease(grid, differentPrefabs, true, false);
+    }
+
+    void spawnPlease(GridData grid, int differentPrefabs,
+        bool land, bool water)
     {
         //for each prefab find a free spot and spawn the gameobject
         for (int k = 0; k < differentPrefabs; k++)
         {
-
             bool lookingForFreeTile;
             int length = grid.Length;
             for (int i = 0; i < amountToSpawn[k]; i++)
@@ -33,11 +39,13 @@ public class PrefabSpawner : MonoBehaviour
                 lookingForFreeTile = true;
                 while (lookingForFreeTile)
                 {
-                    int n = UnityEngine.Random.Range(0, length);
-                    if (grid[n])
+                    int n = Random.Range(0, length);
+                    if (worldGridSystem.IsWalkable(land, water,
+                        grid.GetGridPositionFromIndex(n)))
                     {
-                        Instantiate(whatToSpawnPrefab[k], new Vector3(n % GameZone.tiles.GetLength(0), 1, (n - n % GameZone.tiles.GetLength(0)) / GameZone.tiles.GetLength(0)), Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0));
-                        grid[n] = false;
+                        Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
+                        spawnPos.y = 1f;
+                        Instantiate(whatToSpawnPrefab[k], spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
                         lookingForFreeTile = false;
                     }
                 }

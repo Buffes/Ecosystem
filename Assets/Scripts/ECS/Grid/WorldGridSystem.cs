@@ -27,7 +27,28 @@ namespace Ecosystem.ECS.Grid
         /// <summary>
         /// Sets a cell as water.
         /// </summary>
-        public void SetWaterCell(int2 gridPos) => WaterCells[Grid.GetCellIndex(gridPos)] = true;
+        public void SetWaterCell(int2 gridPosition) => WaterCells[Grid.GetCellIndex(gridPosition)] = true;
+
+        /// <summary>
+        /// Returns if the specified position is walkable.
+        /// </summary>
+        public bool IsWalkable(bool land, bool water, int2 gridPosition)
+            => IsWalkable(Grid, BlockedCells, WaterCells, land, water, gridPosition);
+
+        /// <summary>
+        /// Returns if the specified position is walkable. Safe to use in systems.
+        /// </summary>
+        public static bool IsWalkable(GridData grid, NativeArray<bool> blockedCells, NativeArray<bool> waterCells,
+            bool land, bool water, int2 gridPosition)
+        {
+            int i = grid.GetCellIndex(gridPosition);
+
+            if (!grid.IsInBounds(gridPosition)) return false;
+            if (blockedCells[i]) return false;
+            if (waterCells[i] && !water) return false;
+            if (!waterCells[i] && !land) return false;
+            return true;
+        }
 
         protected override void OnCreate()
         {
@@ -35,11 +56,13 @@ namespace Ecosystem.ECS.Grid
         }
 
         /// <summary>
-        /// Initializes the grid with amount of columns/rows equal to the specified width/height.
+        /// Initializes the grid shape.
         /// </summary>
         public void InitGrid(int width, int height, float cellSize = 1f)
+            => InitGrid(new GridData(width, height, cellSize));
+        public void InitGrid(GridData grid)
         {
-            Grid = new GridData(width, height, cellSize);
+            Grid = grid;
 
             if (OccupiedCells.IsCreated) OccupiedCells.Dispose();
             if (BlockedCells.IsCreated) BlockedCells.Dispose();

@@ -14,6 +14,7 @@ namespace Ecosystem.Debugging
         [SerializeField] private bool hearingDebugShow = default;
         [SerializeField] private bool pathDebugShow = default;
         [SerializeField] private bool stateDebugShow = default;
+        [SerializeField] private bool statusDebugShow = default;
 
         [Header("Hearing")]
         [SerializeField] private Material hearingMaterial = default;
@@ -24,7 +25,7 @@ namespace Ecosystem.Debugging
         [Header("State")]
         [SerializeField] private Material stateMaterial = default;
         [SerializeField] private float stateRadius = 0.15f;
-        [SerializeField] private float stateHeight = 2.5f;
+        [SerializeField] private float stateHeight = 3.5f;
         [SerializeField] private Color defaultColor = default;
         [SerializeField] private Color casualColor = default;
         [SerializeField] private Color hungerColor = default;
@@ -32,10 +33,14 @@ namespace Ecosystem.Debugging
         [SerializeField] private Color mateColor = default;
         [SerializeField] private Color fleeColor = default;
 
+        [Header("Status")]
+        [SerializeField] private Material statusMaterial = default;
+        [SerializeField] private float statusHeight = 2.5f;
 
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
         private AnimalStateDebugging animalStateDebuggingSystem;
+        private StatusBarDebuggingSystem statusBarDebuggingSystem;
 
         private void Awake()
         {
@@ -43,6 +48,7 @@ namespace Ecosystem.Debugging
             hearingDebuggingSystem = world.GetOrCreateSystem<HearingDebuggingSystem>();
             pathDebuggingSystem = world.GetOrCreateSystem<PathDebuggingSystem>();
             animalStateDebuggingSystem = world.GetOrCreateSystem<AnimalStateDebugging>();
+            statusBarDebuggingSystem = world.GetOrCreateSystem<StatusBarDebuggingSystem>();
         }
 
         private void Update()
@@ -63,6 +69,13 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.ThirstColor = thirstColor;
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
+
+            statusBarDebuggingSystem.Material = statusMaterial;
+            statusBarDebuggingSystem.Show = statusDebugShow;
+            statusBarDebuggingSystem.Height = statusHeight;
+            statusBarDebuggingSystem.HungerColor = hungerColor;
+            statusBarDebuggingSystem.ThirstColor = thirstColor;
+            statusBarDebuggingSystem.MateColor = mateColor;
         }
     }
 }
