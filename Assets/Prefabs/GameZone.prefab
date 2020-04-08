@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1022454915255237109}
   - component: {fileID: 1022454915255237108}
   - component: {fileID: -7102660320631865697}
-  - component: {fileID: -1690056227379068397}
   m_Layer: 0
   m_Name: GameZone
   m_TagString: Untagged
@@ -116,22 +115,6 @@ MonoBehaviour:
   - {fileID: 1822502927068284, guid: e0ff1c3fe24c34d40bd6dc7ad4295f10, type: 3}
   cacti:
   - {fileID: 383084049546728855, guid: d28a4563a4ae34a019f5aaae0b467260, type: 3}
---- !u!114 &-1690056227379068397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022454915255237003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6bb2f03b645bfb45886ac6d90d8f4d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whatToSpawnPrefab:
-  - {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263, type: 3}
-  - {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0, type: 3}
-  amountToSpawn: 3200000032000000
 --- !u!1 &1022454915919162661
 GameObject:
   m_ObjectHideFlags: 0
