@@ -33,6 +33,7 @@ namespace Ecosystem.Attributes
         private IState thirstState;
         private IState fleeState;
         private IState mateState;
+        private IState huntState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
@@ -46,7 +47,7 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.needs.SateHunger(1f);
+            this.needs.SateHunger(0.4f);
             this.needs.SateThirst(1f);
             this.needs.SateSexualUrge(1f);
 
@@ -59,6 +60,7 @@ namespace Ecosystem.Attributes
             this.thirstState = new ThirstState(this);
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
+            this.huntState = new HuntState(this);
             this.stateMachine.ChangeState(this.casualState);
             sensors.LookForPredator(true);
         }
@@ -99,13 +101,21 @@ namespace Ecosystem.Attributes
             }
             else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit))
             {
+                IState hungerOrHuntState = this.hungerState;
                 if (currentHunger <= hungerLimit)
                 {
                     sensors.LookForFood(true);
+                    sensors.LookForPrey(true);
                     if (sensors.FoundFood())
                     {
                         diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
                     }
+                    else if (sensors.FoundPrey())
+                    {
+                        diffHunger = DiffLength(sensors.GetFoundPreyInfo().Position);
+                        hungerOrHuntState = this.huntState;
+                    }
+
                 }
                 if (currentThirst <= thirstLimit)
                 {
@@ -115,7 +125,7 @@ namespace Ecosystem.Attributes
                         diffThirst = DiffLength(sensors.GetFoundWaterInfo());
                     }
                 }
-                IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
+                IState closest = (diffHunger <= diffThirst) ? hungerOrHuntState : this.thirstState;
                 if (stateMachine.getCurrentState() != closest)
                 {
                     stateMachine.ChangeState(closest);

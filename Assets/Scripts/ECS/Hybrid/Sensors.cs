@@ -49,10 +49,10 @@ namespace Ecosystem.ECS.Hybrid
             return (info.Position, info.Entity);
         }
 
-        public (Vector3 Position, Entity Entity) GetFoundPreyInfo()
+        public (Vector3 Position, Vector3 PredictedPosition, Entity Entity) GetFoundPreyInfo()
         {
             LookingForPrey info = GetComp<LookingForPrey>();
-            return (info.Position, info.Entity);
+            return (info.Position, info.PredictedPosition, info.Entity);
         }
 
         public (Vector3 Position, Entity Entity) GetFoundPredatorInfo()

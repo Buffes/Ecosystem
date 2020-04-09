@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Entities;
 using Ecosystem.Attributes;
+using Ecosystem.ECS.Grid;
 
 namespace Ecosystem.StateMachines
 {
@@ -9,7 +10,7 @@ namespace Ecosystem.StateMachines
 
         Animal owner;
         private float timeSinceLastFrame = 0f;
-        private float pathfindInterval = 0.1f;
+        private float pathfindInterval = 1f;
 
         public HuntState(Animal owner) { this.owner = owner; }
 
@@ -24,8 +25,8 @@ namespace Ecosystem.StateMachines
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
-
-            Vector3 preyPos = owner.GetSensors().GetFoundPreyInfo().Position;
+            var preyInfo = owner.GetSensors().GetFoundPreyInfo();
+            Vector3 preyPos = preyInfo.Position;
             Vector3 currentPos = owner.GetMovement().GetPosition();
             Vector3 diff = currentPos - preyPos;
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2));
@@ -34,9 +35,9 @@ namespace Ecosystem.StateMachines
             {
                 Entity prey = owner.GetSensors().GetFoundPreyInfo().Entity;
                 owner.GetInteraction().Kill(prey);
-                //owner.GetNeedsStatus().SateHunger(owner.GetInteraction().Eat(food));
             }
-            owner.Move(preyPos, 0f, 200);
+            Vector3 predictedPosition = preyInfo.PredictedPosition;
+            owner.Move(predictedPosition, 0f, 200);
         }
 
         public void Exit()
