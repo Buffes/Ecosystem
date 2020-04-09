@@ -8,14 +8,21 @@ col6 = Array(:,6);
 col7 = Array(:,7);
 col8 = Array(:,8);
 col9 = Array(:,9);
+p(1).LineWidth = 1.5;
+p(2).LineWidth = 1.5;
+names={'Chickens', 'Lions'};
+legend(p, names);
+set(gca,'FontSize',12)
+xlabel('Time');
+ylabel('#Animals');
+
 
 figure
 subplot(2,2,1)      
-p = plot(col1,col2, col1,col3);
-legend(p, names)
+p = plot(col1,col2, col1,col3);        
 title('#Animals/Time')
 subplot(2,2,2)       
-ps = plot(col1,col4, col1,col7);
+ps = plot(col1,col4, col1,col7);        
 title('Speed/Time')
 subplot(2,2,3)      
 phr = plot(col1,col5, col1,col8);         
