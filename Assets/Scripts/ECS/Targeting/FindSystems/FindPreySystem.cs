@@ -95,7 +95,7 @@ namespace Ecosystem.ECS.Targeting
                 if (closestPreyIndex != -1)
                 {
                     float3 preyPosition = positions[closestPreyIndex].Value;
-                    int length = 5;
+                    int length = 5; // Should probably depend on the distance between the animals.
                     float3 predictedPosition;
                     do
                     {
