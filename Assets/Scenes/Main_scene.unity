@@ -243,9 +243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whatToSpawnPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
-  amountToSpawn: 
+  - {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263, type: 3}
+  amountToSpawn: 64000000
 --- !u!4 &991039967
 Transform:
   m_ObjectHideFlags: 0
@@ -373,7 +372,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -383,7 +382,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}

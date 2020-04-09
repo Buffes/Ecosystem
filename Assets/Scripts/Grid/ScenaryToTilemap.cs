@@ -88,6 +88,11 @@ namespace Ecosystem.Grid
             return gameObjectsInGrid[row, col];
         }
 
+        private Quaternion RandomQuaternion()
+        {
+            return Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        }
+
         private Scenary RandomizeGreenScenary(float value, int row, int col)
         {
             float newBush = value / 3;
@@ -98,7 +103,7 @@ namespace Ecosystem.Grid
             if (rand <= newBush)
             {
                 GameObject ob = GetRandomBush();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
                 GameZone.SetWalkable(false, row, col);
                 GameZone.SetOccupied(true,row,col);
                 return Scenary.Bush;
@@ -106,7 +111,7 @@ namespace Ecosystem.Grid
             else if (rand <= newTree)
             {
                 GameObject ob = GetRandomTree();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
                 GameZone.SetWalkable(false, row, col);
                 GameZone.SetOccupied(true,row,col);
                 return Scenary.Tree;
@@ -114,7 +119,7 @@ namespace Ecosystem.Grid
             else if (rand <= newRock) 
             {
                 GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
                 GameZone.SetWalkable(false, row, col);
                 GameZone.SetOccupied(true,row,col);
                 return Scenary.Rock;
@@ -131,7 +136,7 @@ namespace Ecosystem.Grid
             if (rand <= newRock)
             {
                 GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
                 GameZone.SetWalkable(false, row, col);
                 GameZone.SetOccupied(true,row,col);
                 return Scenary.Rock;
@@ -139,7 +144,7 @@ namespace Ecosystem.Grid
             else if (rand <= value)
             {
                 GameObject ob = GetRandomCactus();
-                Instantiate (ob, new Vector3(row, 0, col), Quaternion.identity);
+                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
                 GameZone.SetWalkable(false, row, col);
                 GameZone.SetOccupied(true,row,col);
                 return Scenary.Cactus;

@@ -54,6 +54,7 @@ namespace Ecosystem.Grid
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWalkableTiles();
             SetupWaterTiles();
+            ToggleShadows();
         }
 
         void OnDestroy()
@@ -61,6 +62,12 @@ namespace Ecosystem.Grid
             WaterTiles.Dispose();
             walkableTiles.Dispose();
             occupiedTiles.Dispose();
+        }
+
+        private void ToggleShadows()
+        {
+            tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard"); //replace shader with standard
+            tilemap.GetComponent<TilemapRenderer>().receiveShadows = true;
         }
 
         private void InitObjects()
