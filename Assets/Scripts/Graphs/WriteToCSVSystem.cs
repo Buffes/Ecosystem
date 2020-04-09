@@ -2,39 +2,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 using Unity.Entities;
-using Unity.Transforms;
 using Ecosystem.ECS.Animal;
-using Unity.Collections;
-using Ecosystem.ECS.Targeting.Sensors;
-using Ecosystem.ECS.Targeting.Targets;
-using Ecosystem.ECS.Death;
-using Ecosystem.Gameplay;
+using Ecosystem.ECS.Stats.Base;
 
 
 public class WriteToCSVSystem : SystemBase
 {
 
-    public static List<(int, Entity)> list = new List<(int, Entity)>();
+    public static List<(int, float, float, float, Entity)> attributeList = new List<(int, float,float, float, Entity)>();
 
     protected override void OnUpdate()
     {
-        //list.Clear();
         Entities.WithoutBurst().
-            ForEach((Entity entity, in AnimalTypeData animalTypeData
+            ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseSpeed baseSpeed, in BaseHearingRange baseHearingRange, in BaseVisionRange baseVisionRange
            ) =>
            {
 
-               if (!list.Contains((animalTypeData.AnimalTypeId, entity)))
-                   list.Add((animalTypeData.AnimalTypeId, entity));
-
+               if (!attributeList.Contains((animalTypeData.AnimalTypeId, baseSpeed.Value, baseHearingRange.Value, baseVisionRange.Value, entity)))
+               {
+                   attributeList.Add((animalTypeData.AnimalTypeId, baseSpeed.Value, baseHearingRange.Value, baseVisionRange.Value, entity));
+               }    
+                   
            }).Run();
-
     }
-        
-   
 }
 
 
