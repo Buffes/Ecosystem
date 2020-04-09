@@ -1,6 +1,6 @@
 ﻿using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Movement.Pathfinding;
-using Ecosystem.ECS.Targeting.Sensors;
+using Ecosystem.ECS.Targeting.Sensing;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Collections;
 using Unity.Entities;
