@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfbfe78cc0149746b1687f973a596a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 80
+  Value: 30
 --- !u!114 &7241647726829484548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,8 +391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f2d37dc1c1ac94c920cfc042f4dd59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 0
-  Angle: 0.35
+  Range: 20
+  Angle: 2.35619
 --- !u!114 &5070148453820763522
 MonoBehaviour:
   m_ObjectHideFlags: 0

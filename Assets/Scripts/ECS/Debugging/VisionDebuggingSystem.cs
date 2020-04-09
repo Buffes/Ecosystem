@@ -32,12 +32,15 @@ namespace Ecosystem.ECS.Debugging {
             Entities
                 .WithoutBurst()
                 .WithAll<Selected>()
-                .ForEach((Entity entity, Vision vision, Translation pos, Rotation rot) => {
+                .ForEach((Entity entity, in Vision vision, in Translation pos, in Rotation rot) => {
                     Mesh mesh = CreateMesh(vision.Angle, vision.Range);
+
+                    var position = pos.Value;
+                    position.y += 0.5f;
 
                     UnityEngine.Graphics.DrawMesh(
                         mesh, 
-                        pos.Value, 
+                        position, 
                         rot.Value, 
                         Material, 
                         0

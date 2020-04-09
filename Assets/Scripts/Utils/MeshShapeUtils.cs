@@ -146,16 +146,14 @@ namespace Ecosystem
             return i;
         }
 
-        public static Mesh CreateCircleSection (float range, float angle) 
+        public static Mesh CreateCircleSection (float angle, float range) 
         {
             Mesh mesh = new Mesh();
-
-            float angle_lookat = angle;
-            float angle_fov = 40;
+            float angle_fov = angle * 90 / Mathf.PI;
             int quality = 15;
 
-            float angle_start = angle_lookat - angle_fov;
-            float angle_end = angle_lookat + angle_fov;
+            float angle_start = -angle_fov;
+            float angle_end = angle_fov;
             float angle_delta = (angle_end - angle_start) / quality;
 
             float angle_curr = angle_start;
@@ -206,8 +204,6 @@ namespace Ecosystem
 
             mesh.vertices = vertices;
             mesh.triangles = triangles;
-
-
 
             return mesh;
         }
