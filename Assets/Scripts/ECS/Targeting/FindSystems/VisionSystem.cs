@@ -41,9 +41,9 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Rotation rotation,
                 in Vision vision) =>
                 {
+                    DynamicBuffer<DetectedEntityElement> detecteds = detectedEntitiesBuffers[entity];
                     for (int i = 0; i < entities.Length; i++)
                     {
-                        DynamicBuffer<DetectedEntityElement> detecteds = detectedEntitiesBuffers[entities[i]];
                         float3 targetPosition = positions[i].Value;
                         float targetDistance = math.distance(targetPosition, position.Value);
 

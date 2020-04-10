@@ -40,9 +40,9 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in Hearing hearing) =>
                 {
+                    DynamicBuffer<DetectedEntityElement> detecteds = detectedEntitiesBuffers[entity];
                     for (int i = 0; i < entities.Length; i++)
                     {
-                        DynamicBuffer<DetectedEntityElement> detecteds = detectedEntitiesBuffers[entities[i]];
                         float3 targetPosition = positions[i].Value;
                         float targetDistance = math.distance(targetPosition, position.Value);
 
