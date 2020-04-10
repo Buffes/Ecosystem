@@ -11,7 +11,7 @@ using Unity.Transforms;
 
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
-    public class FindSystem : SystemBase
+    public class VisionSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
@@ -34,30 +34,30 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
             var entities = query.ToEntityArray(Allocator.TempJob);
             var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
-            
+            var detectedEntitiesBuffers = GetBufferFromEntity<DetectedEntityElement>();
+
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
-                .ForEach((Entity entity, int entityInQueryIndex, 
-                in Translation position, 
-                in Rotation rotation, 
-                in Hearing hearing, 
+                .ForEach((Entity entity, int entityInQueryIndex,
+                in Translation position,
+                in Rotation rotation,
                 in Vision vision) =>
-            {
-                DynamicBuffer<DetectedEntityElement> detectedEntities = commandBuffer.AddBuffer<DetectedEntityElement>(entityInQueryIndex,entity);
-                for (int i = 0; i < entities.Length; i++)
                 {
-                    float3 targetPosition = positions[i].Value;
-                    float targetDistance = math.distance(targetPosition, position.Value);
-
-                    if (targetDistance > hearing.Range && !Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                    for (int i = 0; i < entities.Length; i++)
                     {
-                        continue; // Out of hearing and vision range    
-                    }
-                    detectedEntities.Add(new DetectedEntityElement { Entity = entities[i] });
+                        DynamicBuffer<DetectedEntityElement> detecteds = detectedEntitiesBuffers[entities[i]];
+                        float3 targetPosition = positions[i].Value;
+                        float targetDistance = math.distance(targetPosition, position.Value);
 
-                }
-            }).ScheduleParallel();
+                        if (!Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                        {
+                            continue; // Out of vision range    
+                        }
+                        detecteds.Add(new DetectedEntityElement { Entity = entities[i] });
+
+                    }
+                }).ScheduleParallel();
 
             entities.Dispose(Dependency);
             positions.Dispose(Dependency);
