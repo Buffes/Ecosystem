@@ -21,7 +21,7 @@ namespace Ecosystem.ECS.Death {
         }
         protected override void OnUpdate() {
 
-            Entities.WithoutBurst().ForEach((Entity entity,int entityInQueryIndex,in DeathEvent deathEvent) => {
+            /*Entities.WithoutBurst().ForEach((Entity entity,int entityInQueryIndex,in DeathEvent deathEvent) => {
                 switch(deathEvent.Cause) {
                     case DeathCause.Hunger: Interlocked.Increment(ref hunger); break;
                     case DeathCause.Thirst: Interlocked.Increment(ref thirst); break;
@@ -29,7 +29,7 @@ namespace Ecosystem.ECS.Death {
                     case DeathCause.Predators: Interlocked.Increment(ref predator); break;
                     default: Interlocked.Increment(ref other); break;
                 }
-            }).Run();
+            }).Run();*/
 
         }
     }
