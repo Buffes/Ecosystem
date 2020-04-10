@@ -1,4 +1,6 @@
 using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Grid;
+using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
 using Ecosystem.Grid;
@@ -15,12 +17,24 @@ namespace Ecosystem.ECS.Targeting
     /// </summary>
     public class FindWaterSystem : SystemBase
     {
+        private WorldGridSystem worldGridSystem;
+
+        protected override void OnCreate()
+        {
+            worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
+        }
+
         protected override void OnUpdate()
         {
-           var waterTiles = GameZone.WaterTiles;
+            var grid = worldGridSystem.Grid;
+            var waterTiles = worldGridSystem.WaterCells;
            
+            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
+            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
+
             Entities
                 .WithReadOnly(waterTiles)
+                .WithReadOnly(unreachableBuffers)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForWater lookingForWater,
                 in Translation position,
@@ -34,7 +48,9 @@ namespace Ecosystem.ECS.Targeting
 
                 for (int i = 0; i < waterTiles.Length; i++)
                 {
-                    float3 targetPosition = new float3(waterTiles[i].x, 0, waterTiles[i].y);
+                    if (!waterTiles[i]) continue;
+
+                    float3 targetPosition = grid.GetWorldPosition(grid.GetGridPositionFromIndex(i));
 
                     float targetDistance = math.distance(targetPosition, position.Value);
 
@@ -44,6 +60,7 @@ namespace Ecosystem.ECS.Targeting
                     } 
 
                     if (closestWaterIndex != -1 && targetDistance >= closestWaterDistance) continue; // Not the closest
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
                     
                     closestWaterIndex = i;
                     closestWaterDistance = targetDistance;
@@ -53,7 +70,7 @@ namespace Ecosystem.ECS.Targeting
                 if (closestWaterIndex != -1)
                 {
                     lookingForWater.HasFound = true;
-                    lookingForWater.Position = new float3(waterTiles[closestWaterIndex].x, 0, waterTiles[closestWaterIndex].y);
+                    lookingForWater.Position = grid.GetWorldPosition(grid.GetGridPositionFromIndex(closestWaterIndex));
                 }
                 else
                 {

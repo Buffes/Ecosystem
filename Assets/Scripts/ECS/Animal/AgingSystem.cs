@@ -33,7 +33,7 @@ namespace Ecosystem.ECS.Animal
                 if (age.Age >= 60f * ageOfDeath.Value)
                 {
                     // Death by old age.
-                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity);
+                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Age));
                 }
                 
             }).ScheduleParallel();

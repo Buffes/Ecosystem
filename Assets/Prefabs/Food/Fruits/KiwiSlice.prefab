@@ -89,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012856621994}
   - component: {fileID: 205000012057606328}
-  - component: {fileID: 65000013552860198}
   m_Layer: 0
   m_Name: KiwiSlice
   m_TagString: Untagged
@@ -136,19 +135,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23000012879929340}
   m_Enabled: 1
---- !u!65 &65000013552860198
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010752779832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.04574274, y: 0.003909775, z: 0.04118137}
-  m_Center: {x: -0.000003831461, y: 0.0019502378, z: 0.00014240015}
 --- !u!1 &1000013652905638
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
-using Ecosystem.ECS.Death;
 using Ecosystem.ECS.Random;
 using Unity.Entities;
+using Unity.Jobs.LowLevel.Unsafe;
 using Unity.Mathematics;
 
 
@@ -12,27 +12,28 @@ namespace Ecosystem.ECS.Animal
     public class AgeOfDeathSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        private RandomSystem randomSystem;
 
         protected override void OnCreate()
         {
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            randomSystem = World.GetOrCreateSystem<RandomSystem>();
         }
 
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-
-            float deltaTime = Time.DeltaTime;
-            var randomArray = World.GetExistingSystem<RandomSystem>().RandomArray;
+            var randomArray = randomSystem.RandomArray;
 
             Entities
-            .WithNativeDisableParallelForRestriction(randomArray)
+            .WithNativeDisableContainerSafetyRestriction(randomArray)
             .WithNone<AgeOfDeathData>()
             .ForEach((int nativeThreadIndex, Entity entity, int entityInQueryIndex,
             in LifespanData lifespan) =>
-            {
-                var random = randomArray[nativeThreadIndex];
+            {   
+                int randomIndex = nativeThreadIndex % JobsUtility.MaxJobThreadCount;
+                var random = randomArray[randomIndex];
                 
                 // Calculate the age of death by old age using inverse transform sampling on logistic distribution.
                 float u = random.NextFloat(0.00001f, 1.0f);
@@ -43,7 +44,7 @@ namespace Ecosystem.ECS.Animal
                 exactDeathAge = math.max(0f, exactDeathAge); // no negative ages
                 commandBuffer.AddComponent<AgeOfDeathData>(entityInQueryIndex, entity, new AgeOfDeathData { Value = exactDeathAge});
                 commandBuffer.AddComponent<AgeData>(entityInQueryIndex, entity, new AgeData {Age = 0f});
-                randomArray[nativeThreadIndex] = random; // Necessary to update the generator.
+                randomArray[randomIndex] = random; // Necessary to update the generator.
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);

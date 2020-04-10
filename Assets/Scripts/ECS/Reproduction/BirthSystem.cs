@@ -17,12 +17,12 @@ namespace Ecosystem.ECS.Reproduction
             Entities
                 .WithoutBurst()
                 .WithAll<BirthEvent>()
-                .ForEach((Entity entity
-                , PregnancyData pregnancyData
-                , in Translation position
-                , in Rotation rotation
-                , in DNA dna
-                , in AnimalPrefab prefab) =>
+                .ForEach((Entity entity,
+                PregnancyData pregnancyData,
+                DNA dna,
+                AnimalPrefab prefab,
+                in Translation position,
+                in Rotation rotation) =>
             {
 
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child

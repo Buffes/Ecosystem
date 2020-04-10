@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Ecosystem.Grid;
+using Ecosystem.ECS.Grid;
 
 namespace Ecosystem.ECS.Movement.Pathfinding
 {
@@ -18,27 +17,34 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         private const int MOVE_DIAGONAL_COST = 14; // Approximate sqrt(2) as an int
 
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        private WorldGridSystem worldGridSystem;
 
         protected override void OnCreate()
         {
             base.OnCreate();
             m_EndSimulationEcbSystem = World
                 .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
         }
 
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            NativeArray<bool> grid = GameZone.walkableTiles;
-            var gridSize = new int2(GameZone.tiles.GetLength(0), GameZone.tiles.GetLength(1));
-            
+            var blockedCells = worldGridSystem.BlockedCells;
+            var waterCells = worldGridSystem.WaterCells;
+            var grid = worldGridSystem.Grid;
+            double time = Time.ElapsedTime;
             Entities
-                .WithReadOnly(grid)
+                .WithReadOnly(blockedCells)
+                .WithReadOnly(waterCells)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
+                ref DynamicBuffer<UnreachablePosition> unreachablePositionsBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
             {
+                bool canMoveOnLand = true;
+                bool canMoveInWater = false;
 
                 float3 target = moveCommand.Target;
                 float reach = moveCommand.Reach;
@@ -49,17 +55,43 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 // Clear any existing path
                 pathBuffer.Clear();
-                // Offset the target by the reach
-                target = target - reach * math.normalize(target - translation.Value);
-                NativeList<int2> path  = FindPath(GetGridCoords(position), GetGridCoords(target), grid, gridSize, maxTiles);
+                
+                NativeList<int2> path  = FindPath(grid.GetGridPosition(position),
+                    grid.GetGridPosition(target), blockedCells, waterCells, grid,
+                    canMoveOnLand, canMoveInWater, maxTiles);
+                
                 // Add path checkpoints
-
                 for (int i = 0; i < path.Length - 1; i++)
                 {
+                    float3 checkpoint = grid.GetWorldPosition(path[i]);
+                    float3 nextCheckpoint = grid.GetWorldPosition(path[i + 1]);
+                    float distance = math.distance(checkpoint, target);
+                    float distanceNext = math.distance(nextCheckpoint, target);
+                    
+                    if (distance < reach && distanceNext > reach) 
+                    {
+                        // Put the last checkpoint at the edge of the reach.
+                        float3 endPoint = nextCheckpoint + (distanceNext - reach) * math.normalize(target - nextCheckpoint);
+                        pathBuffer.Add(new PathElement { Checkpoint = endPoint });
+                        continue;
+                    }
+                    if (distance < reach) continue; // Within reach.
+                    
                     // Could be reduced to only put checkpoints at corners (ends of straight lines) instead of every grid cell.
-                    pathBuffer.Add(new PathElement { Checkpoint = GetWorldPosition(path[i]) });
+                    pathBuffer.Add(new PathElement { Checkpoint = checkpoint });
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
+                
+                if (pathBuffer.Length <= 1)
+                {
+                    // Add to unreachable buffer
+                    unreachablePositionsBuffer.Add(new UnreachablePosition 
+                                                    { 
+                                                        Position = grid.GetGridPosition(target),
+                                                        Timestamp = time
+                                                    });
+                }
+                
                 path.Dispose();
             }).ScheduleParallel();
 
@@ -69,7 +101,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         ///<summary>
         /// Path finding using a basic, unoptimized version of the A* algorithm. Uses only value types for Burst compatibility.
         ///</summary>
-        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition, NativeArray<bool> grid, int2 gridSize, int maxTiles)
+        private static NativeList<int2> FindPath(int2 startPosition, int2 targetPosition,
+            NativeArray<bool> blockedCells, NativeArray<bool> waterCells, GridData grid,
+            bool onLand, bool inWater, int maxTiles)
         {
             // Initialize neighbour offset array
             NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
@@ -127,14 +161,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 {
                     int2 neighbourOffset = neighbourOffsetArray[i];
                     int2 neighbourPosition = new int2(currentNode.x + neighbourOffset.x, currentNode.y + neighbourOffset.y);
-                    
-                    if (!IsPositionInsideGrid(neighbourPosition, gridSize))
-                    {
-                        // Neighbour not a valid position
-                        continue;
-                    }
 
-                    if (!grid[CalculateIndex(neighbourPosition, gridSize)])
+                    if (!WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand,
+                        inWater, neighbourPosition))
                     {
                         // Not walkable
                         continue;
@@ -265,33 +294,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 return path;
             }
-        }
-
-        private static int CalculateIndex(int2 position, int2 gridSize)
-        {
-            return gridSize.x * position.y + position.x;
-        }
-
-        private static bool IsPositionInsideGrid(int2 gridPosition, int2 gridSize) {
-            return
-                gridPosition.x >= 0 && 
-                gridPosition.y >= 0 &&
-                gridPosition.x < gridSize.x &&
-                gridPosition.y < gridSize.y;
-        }
-
-        private static int2 GetGridCoords(float3 worldPosition)
-        {
-            int x = (int)worldPosition.x - (worldPosition.x < 0 ? 1 : 0);
-            int z = (int)worldPosition.z - (worldPosition.z < 0 ? 1 : 0);
-            return new int2(x, z);
-        }
-
-        private static float3 GetWorldPosition(int2 gridCoords)
-        {
-            float x = gridCoords.x;
-            float z = gridCoords.y;
-            return new float3(x, 0f, z);
         }
 
         private struct PathNode 

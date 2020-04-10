@@ -1,6 +1,12 @@
 fileFormatVersion: 2
-guid: 2142ffd2a7ab30e45b7c47c097eab133
+<<<<<<< HEAD:Assets/Materials/Debugging/VisionRange.mat.meta
+guid: a83be484d23b20f438491cef8ca78c3a
 NativeFormatImporter:
+=======
+guid: f158fd0749fd2426a8a02adcaf3c89a5
+folderAsset: yes
+DefaultImporter:
+>>>>>>> master:Assets/EgyptMonsters.meta
   externalObjects: {}
   mainObjectFileID: 0
   userData: 
