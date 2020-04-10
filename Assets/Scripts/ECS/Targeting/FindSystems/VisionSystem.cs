@@ -1,9 +1,5 @@
-﻿using Ecosystem.ECS.Animal;
-using Ecosystem.ECS.Movement.Pathfinding;
-using Ecosystem.ECS.Targeting.Sensors;
+﻿using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
-
-using Ecosystem.Grid;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -39,6 +35,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             Entities
                 .WithReadOnly(entities)
                 .WithReadOnly(positions)
+                .WithAll<DynamicBuffer<DetectedEntityElement>>()
                 .ForEach((Entity entity, int entityInQueryIndex,
                 in Translation position,
                 in Rotation rotation,
