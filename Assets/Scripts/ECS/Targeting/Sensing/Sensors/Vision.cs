@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Targeting.Sensors
+namespace Ecosystem.ECS.Targeting.Sensing
 {
     /// <summary>
     /// Vision cone described as a circle sector with a radius and an angle between the forward direction and the edges.

@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Targeting.Sensors
+namespace Ecosystem.ECS.Targeting.Sensing
 {
     [Serializable]
     [GenerateAuthoringComponent]

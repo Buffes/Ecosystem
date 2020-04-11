@@ -1,7 +1,7 @@
 using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Grid;
 using Ecosystem.ECS.Movement.Pathfinding;
-using Ecosystem.ECS.Targeting.Sensors;
+using Ecosystem.ECS.Targeting.Sensing;
 using Ecosystem.ECS.Targeting.Targets;
 using Ecosystem.Grid;
 
