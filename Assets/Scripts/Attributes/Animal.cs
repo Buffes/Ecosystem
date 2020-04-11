@@ -47,7 +47,7 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.needs.SateHunger(0.4f);
+            this.needs.SateHunger(1f);
             this.needs.SateThirst(1f);
             this.needs.SateSexualUrge(1f);
 

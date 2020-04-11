@@ -70,15 +70,17 @@ namespace Ecosystem.ECS.Targeting
                     lookingForPrey.Entity = sensedAnimals[closestPreyIndex].Entity;
                     lookingForPrey.Position = preyPosition;
 
-                    int length = 5; // Should probably depend on the distance between the animals.
+                    int length = 3; // Might need adjusting
                     float3 predictedPosition;
                     do
                     {
-                        predictedPosition = preyPosition + length * math.normalize(directions[lookingForPrey.Entity].Direction);
+                        predictedPosition = preyPosition + length * math.normalizesafe(directions[lookingForPrey.Entity].Direction);
                         length--;
                     }
                     while (length >= 0 && !WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater,
-                        grid.GetGridPosition(predictedPosition)));
+                                                                    grid.GetGridPosition(predictedPosition)));
+
+                    lookingForPrey.PredictedPosition = predictedPosition;
 
                 }
                 else
@@ -87,6 +89,7 @@ namespace Ecosystem.ECS.Targeting
                 }
 
             }).ScheduleParallel();
+
         }
 
         private static bool IsPrey(AnimalTypeData animalType, DynamicBuffer<PreyTypesElement> preyBuffer)
