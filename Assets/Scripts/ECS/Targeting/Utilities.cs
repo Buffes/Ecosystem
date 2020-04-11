@@ -1,9 +1,9 @@
-
 using Ecosystem.ECS.Movement.Pathfinding;
+using Ecosystem.ECS.Targeting.Sensing;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Ecosystem.ECS.Targeting.Sensors
+namespace Ecosystem.ECS.Targeting
 {
     public static class Utilities
     {
@@ -19,13 +19,14 @@ namespace Ecosystem.ECS.Targeting.Sensors
         {
             float3 relativePosition = targetPosition - position;
 
-            if (math.length(relativePosition) > vision.Range) {
+            if (math.length(relativePosition) > vision.Range)
+            {
                 return false; // Target outside range
             }
             relativePosition = math.normalize(relativePosition);
             float3 forward = math.normalize(math.forward(rotation));
             float forwardAngle = math.atan2(forward.z, forward.x);
-            
+
             float targetAngle = math.atan2(relativePosition.z, relativePosition.x);
             bool intersects = math.abs(targetAngle - forwardAngle) < vision.Angle;
             return intersects;
@@ -41,7 +42,7 @@ namespace Ecosystem.ECS.Targeting.Sensors
                     return true;
                 }
             }
-            
+
             return false;
         }
 
