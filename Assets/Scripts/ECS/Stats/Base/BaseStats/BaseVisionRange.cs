@@ -1,4 +1,4 @@
-﻿using Ecosystem.ECS.Targeting.Sensors;
+﻿using Ecosystem.ECS.Targeting.Sensing;
 using Unity.Entities;
 
 namespace Ecosystem.ECS.Stats.Base

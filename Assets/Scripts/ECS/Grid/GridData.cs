@@ -75,15 +75,11 @@ namespace Ecosystem.ECS.Grid
         /// <para/>
         /// Useful as keys in a hash map. Works anywhere in the world without the need of
         /// a width/height in the grid.
-        /// <para/>
-        /// Uses the Cantor pairing function to generate a unique number for each pair of numbers.
         /// </summary>
         public int GetCellKey(float3 worldPosition) => GetCellKey(GetGridPosition(worldPosition));
         public int GetCellKey(int2 gridPosition)
         {
-            int a = gridPosition.x;
-            int b = gridPosition.y;
-            return (a + b) * (a + b + 1) / 2 + b;
+            return (int)math.hash(gridPosition);
         }
     }
 }
