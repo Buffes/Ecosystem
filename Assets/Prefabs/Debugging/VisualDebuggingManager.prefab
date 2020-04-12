@@ -58,5 +58,5 @@ MonoBehaviour:
   thirstColor: {r: 0, g: 0.6884818, b: 1, a: 0}
   mateColor: {r: 1, g: 0, b: 0.797163, a: 0}
   fleeColor: {r: 0.754717, g: 0.14409424, b: 0, a: 0}
-  statusMaterial: {fileID: 2100000, guid: e78cacc067e69874abf18875ec0a48b1, type: 2}
+  statusMaterial: {fileID: 2100000, guid: 93e6151621bd0954a93788e3970bdbcc, type: 2}
   statusHeight: 2.5
