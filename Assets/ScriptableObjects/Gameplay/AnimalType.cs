@@ -9,8 +9,8 @@ namespace Ecosystem.Gameplay
         [Tooltip("The meat that comes from this animal")]
         public GameObject Meat;
 
-        [Tooltip("The name of this animal (fox,rabbit,fish,eagle)")]
-        public Ecosystem.ECS.Animal.AnimalTypeNames Name;
+        [Tooltip("The name of this animal (Fox,Rabbit,Fish,Eagle)")]
+        public string Name;
 
         [Tooltip("Animals that are prey to this animal")]
         [SerializeField]

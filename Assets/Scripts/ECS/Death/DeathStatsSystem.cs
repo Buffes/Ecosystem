@@ -1,9 +1,6 @@
 ﻿using Unity.Entities;
-using UnityEngine;
-using System.Threading;
 using System.Collections.Generic;
 using System.IO;
-using Ecosystem.Gameplay;
 using Ecosystem.ECS.Animal;
 using Unity.Collections;
 
@@ -11,76 +8,52 @@ namespace Ecosystem.ECS.Death {
     public class DeathStatsSystem : SystemBase {
 
         public struct DeathStats {
-            public string name;
+            public NativeString64 name;
             public int hunger;
             public int thirst;
             public int age;
             public int predator;
             public int other;
+
+            public DeathStats(NativeString64 name,int hunger, int thirst, int age, int predator, int other) {
+                this.name = name;
+                this.hunger = hunger;
+                this.thirst = thirst;
+                this.age = age;
+                this.predator = predator;
+                this.other = other;
+            }
         }
 
-        public DeathStats fox;
-        public DeathStats rabbit;
-        public DeathStats fish;
-        public DeathStats eagle;
+        public Dictionary<NativeString64,DeathStats> deathStats;
 
         protected override void OnCreate() {
             base.OnCreate();
-            fox = new DeathStats { name = "Fox" };
-            rabbit = new DeathStats { name = "Rabbit" };
-            fish = new DeathStats { name = "Fish" };
-            eagle = new DeathStats { name = "Eagle" };
+            deathStats = new Dictionary<NativeString64,DeathStats>();
         }
 
         protected override void OnUpdate() {
 
             Entities.WithoutBurst().ForEach((Entity entity,int entityInQueryIndex,in DeathEvent deathEvent,in AnimalTypeData type) => {
-
+                if (!deathStats.ContainsKey(type.AnimalName)) {
+                    deathStats.Add(type.AnimalName,new DeathStats { name = type.AnimalName });
+                }
+                DeathStats ds = deathStats[type.AnimalName];
                 switch (deathEvent.Cause) {
                     case DeathCause.Hunger:
-                        switch (type.AnimalName) {
-                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.hunger); break;
-                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.hunger); break;
-                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.hunger); break;
-                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.hunger); break;
-                            default: break;
-                        }
+                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger+1,ds.thirst,ds.age,ds.predator,ds.other);
                         break;
                     case DeathCause.Thirst:
-                        switch (type.AnimalName) {
-                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.thirst); break;
-                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.thirst); break;
-                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.thirst); break;
-                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.thirst); break;
-                            default: break;
-                        }
+                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst+1,ds.age,ds.predator,ds.other);
                         break;
                     case DeathCause.Age:
-                        switch (type.AnimalName) {
-                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.age); break;
-                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.age); break;
-                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.age); break;
-                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.age); break;
-                            default: break;
-                        }
+                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age+1,ds.predator,ds.other);
                         break;
                     case DeathCause.Predators:
-                        switch (type.AnimalName) {
-                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.predator); break;
-                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.predator); break;
-                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.predator); break;
-                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.predator); break;
-                            default: break;
-                        }
+                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age,ds.predator+1,ds.other);
                         break;
                     default:
-                        switch (type.AnimalName) {
-                            case AnimalTypeNames.Fox: Interlocked.Increment(ref fox.other); break;
-                            case AnimalTypeNames.Rabbit: Interlocked.Increment(ref rabbit.other); break;
-                            case AnimalTypeNames.Fish: Interlocked.Increment(ref fish.other); break;
-                            case AnimalTypeNames.Eagle: Interlocked.Increment(ref eagle.other); break;
-                            default: break;
-                        }
+                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age,ds.predator,ds.other+1);
                         break;
                 }
             }).Run();
@@ -89,21 +62,20 @@ namespace Ecosystem.ECS.Death {
 
         protected override void OnDestroy() {
             base.OnDestroy();
-            List<DeathStats> deathStats = new List<DeathStats> {
-                fox, rabbit, fish, eagle
-            };
-            DeathStats total = new DeathStats { name = "Total"};
-            foreach (DeathStats stats in deathStats) {
+
+            DeathStats total = new DeathStats { name = "Total" };
+            foreach (DeathStats stats in deathStats.Values) {
                 total.hunger += stats.hunger;
                 total.thirst += stats.thirst;
                 total.age += stats.age;
                 total.predator += stats.predator;
                 total.other += stats.other;
             }
-            deathStats.Add(total);
+            
+            deathStats.Add("Total",total);
             using (StreamWriter sw = new StreamWriter("DeathCauses.csv")) {
                 sw.WriteLine("Animal,Hunger,Thirst,Age,Predators,Other");
-                foreach (DeathStats stats in deathStats) {
+                foreach (DeathStats stats in deathStats.Values) {
                     sw.WriteLine(stats.name + "," + stats.hunger + "," + stats.thirst + "," + stats.age + "," + stats.predator + "," + stats.other);
                 }
             }
