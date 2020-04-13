@@ -18,7 +18,7 @@ namespace Ecosystem.ECS.Animal {
         protected override void OnUpdate() {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60f;
 
             Entities.WithAll<Sprinting>().ForEach((Entity entity,int entityInQueryIndex,
                 ref EnergyData energyData) => {

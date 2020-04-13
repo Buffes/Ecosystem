@@ -20,7 +20,7 @@ namespace Ecosystem.ECS.Animal
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60;
 
             Entities
             .ForEach((int nativeThreadIndex, Entity entity, int entityInQueryIndex,

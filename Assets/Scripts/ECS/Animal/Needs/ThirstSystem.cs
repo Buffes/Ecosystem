@@ -20,7 +20,7 @@ namespace Ecosystem.ECS.Animal.Needs
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60f;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref ThirstData thirstData) =>
