@@ -15,8 +15,6 @@ namespace Ecosystem.ECS.Hybrid
         public void Kill(Entity animal)
         {
             KillEntity(animal);
-
-            EntityManager.CreateEntity(/*Food*/); // TODO: The animal should drop food upon death
         }
 
         /// <summary>
