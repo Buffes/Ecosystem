@@ -20,12 +20,12 @@ namespace Ecosystem.ECS.Animal.Needs
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60f;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref HungerData hungerData) =>
             {
-                hungerData.Hunger -= deltaTime / 1000.0f;
+                hungerData.Hunger -= deltaTime;
 
                 if(hungerData.Hunger <= 0.0f)
                 {

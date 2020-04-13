@@ -20,7 +20,7 @@ namespace Ecosystem.ECS.Animal
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60;
 
             Entities
             .ForEach((int nativeThreadIndex, Entity entity, int entityInQueryIndex,
@@ -30,7 +30,7 @@ namespace Ecosystem.ECS.Animal
 
                 // Store age in seconds.
                 age.Age += deltaTime;
-                if (age.Age >= 60f * ageOfDeath.Value)
+                if (age.Age >= ageOfDeath.Value)
                 {
                     // Death by old age.
                     commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Age));
