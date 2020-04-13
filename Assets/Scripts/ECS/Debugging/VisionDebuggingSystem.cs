@@ -25,10 +25,6 @@ namespace Ecosystem.ECS.Debugging {
         protected override void OnUpdate() {
             if (!Show) return;
 
-            UpdateMesh();
-        }
-
-        private void UpdateMesh() {
             Entities
                 .WithoutBurst()
                 .WithAll<Selected>()
