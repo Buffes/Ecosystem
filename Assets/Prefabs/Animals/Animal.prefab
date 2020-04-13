@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Range: 0
-  Angle: 0.35
+  Angle: 2.35619
 --- !u!114 &5070148453820763522
 MonoBehaviour:
   m_ObjectHideFlags: 0

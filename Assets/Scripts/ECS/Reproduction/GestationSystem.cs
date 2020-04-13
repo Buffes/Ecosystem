@@ -21,6 +21,7 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime;
 
+
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref Pregnant pregnant) =>
             {
@@ -30,7 +31,7 @@ namespace Ecosystem.ECS.Reproduction
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new BirthEvent());
                     commandBuffer.RemoveComponent<Pregnant>(entityInQueryIndex, entity);
                 }
-            }).ScheduleParallel();
+            }).Run();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
