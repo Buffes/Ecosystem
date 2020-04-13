@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Death;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -13,6 +14,7 @@ namespace Ecosystem.ECS.Grid.Buckets
     /// Buckets are used to optimize search for nearby entities by only looking at entities in nearby
     /// buckets.
     /// </summary>
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public class EntityBucketSystem : SystemBase
     {
         private const float CELL_SIZE = 20f; // Bucket area = CELL_SIZE ^ 2
@@ -91,7 +93,9 @@ namespace Ecosystem.ECS.Grid.Buckets
                }).Schedule();
 
             var animalBucketsWriter = AnimalBuckets.AsParallelWriter();
-            Entities.ForEach((Entity entity, in Translation position, in AnimalTypeData animalTypeData) =>
+            Entities
+                .WithNone<DeathEvent>()
+                .ForEach((Entity entity, in Translation position, in AnimalTypeData animalTypeData) =>
                 {
                     var data = new BucketAnimalData
                     {
@@ -103,7 +107,9 @@ namespace Ecosystem.ECS.Grid.Buckets
                 }).ScheduleParallel();
 
             var foodBucketsWriter = FoodBuckets.AsParallelWriter();
-            Entities.ForEach((Entity entity, in Translation position, in FoodTypeData foodTypeData) =>
+            Entities
+                .WithNone<DeathEvent>()
+                .ForEach((Entity entity, in Translation position, in FoodTypeData foodTypeData) =>
                 {
                     var data = new BucketFoodData
                     {
