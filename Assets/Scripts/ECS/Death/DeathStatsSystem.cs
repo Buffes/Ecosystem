@@ -1,84 +1,80 @@
 ﻿using Unity.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Ecosystem.ECS.Animal;
 using Unity.Collections;
+using System.Text;
 
-namespace Ecosystem.ECS.Death {
-    public class DeathStatsSystem : SystemBase {
+namespace Ecosystem.ECS.Death
+{
+    public class DeathStatsSystem : SystemBase
+    {
+        public class DeathStats
+        {
+            private Dictionary<DeathCause, int> deathCauseCount = new Dictionary<DeathCause, int>();
 
-        public struct DeathStats {
-            public NativeString64 name;
-            public int hunger;
-            public int thirst;
-            public int age;
-            public int predator;
-            public int other;
+            public void Increment(DeathCause deathCause)
+            {
+                deathCauseCount.TryGetValue(deathCause, out var count);
+                deathCauseCount[deathCause] = count + 1;
+            }
 
-            public DeathStats(NativeString64 name,int hunger, int thirst, int age, int predator, int other) {
-                this.name = name;
-                this.hunger = hunger;
-                this.thirst = thirst;
-                this.age = age;
-                this.predator = predator;
-                this.other = other;
+            public int GetCount(DeathCause deathCause)
+            {
+                deathCauseCount.TryGetValue(deathCause, out var count);
+                return count;
             }
         }
 
-        public Dictionary<NativeString64,DeathStats> deathStats;
+        public Dictionary<NativeString64, DeathStats> deathStats = new Dictionary<NativeString64, DeathStats>();
+        public DeathStats totalDeathStats = new DeathStats();
 
-        protected override void OnCreate() {
-            base.OnCreate();
-            deathStats = new Dictionary<NativeString64,DeathStats>();
+        protected override void OnUpdate()
+        {
+            Entities
+                .WithoutBurst()
+                .ForEach((Entity entity, int entityInQueryIndex,
+                in DeathEvent deathEvent,
+                in AnimalTypeData type) =>
+                {
+                    if (!deathStats.ContainsKey(type.AnimalName))
+                    {
+                        deathStats.Add(type.AnimalName, new DeathStats());
+                    }
+
+                    deathStats[type.AnimalName].Increment(deathEvent.Cause);
+                    totalDeathStats.Increment(deathEvent.Cause);
+                }).Run();
         }
 
-        protected override void OnUpdate() {
+        protected override void OnDestroy()
+        {
+            deathStats.Add("Total", totalDeathStats);
 
-            Entities.WithoutBurst().ForEach((Entity entity,int entityInQueryIndex,in DeathEvent deathEvent,in AnimalTypeData type) => {
-                if (!deathStats.ContainsKey(type.AnimalName)) {
-                    deathStats.Add(type.AnimalName,new DeathStats { name = type.AnimalName });
-                }
-                DeathStats ds = deathStats[type.AnimalName];
-                switch (deathEvent.Cause) {
-                    case DeathCause.Hunger:
-                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger+1,ds.thirst,ds.age,ds.predator,ds.other);
-                        break;
-                    case DeathCause.Thirst:
-                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst+1,ds.age,ds.predator,ds.other);
-                        break;
-                    case DeathCause.Age:
-                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age+1,ds.predator,ds.other);
-                        break;
-                    case DeathCause.Predators:
-                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age,ds.predator+1,ds.other);
-                        break;
-                    default:
-                        deathStats[type.AnimalName] = new DeathStats(type.AnimalName,ds.hunger,ds.thirst,ds.age,ds.predator,ds.other+1);
-                        break;
-                }
-            }).Run();
+            using (StreamWriter sw = new StreamWriter("DeathCauses.csv"))
+            {
+                StringBuilder sb = new StringBuilder();
+                WriteLine(sw, sb, "Animal", (DeathCause deathCause) => deathCause.ToString());
 
+                foreach (KeyValuePair<NativeString64, DeathStats> pair in deathStats)
+                {
+                    WriteLine(sw, sb, pair.Key.ToString(), (DeathCause cause) => pair.Value.GetCount(cause).ToString());
+                }
+            }
         }
 
-        protected override void OnDestroy() {
-            base.OnDestroy();
+        private void WriteLine(StreamWriter sw, StringBuilder sb, string firstValue, Func<DeathCause, string> forEachCause)
+        {
+            sb.Clear();
+            sb.Append(firstValue);
 
-            DeathStats total = new DeathStats { name = "Total" };
-            foreach (DeathStats stats in deathStats.Values) {
-                total.hunger += stats.hunger;
-                total.thirst += stats.thirst;
-                total.age += stats.age;
-                total.predator += stats.predator;
-                total.other += stats.other;
+            foreach (DeathCause deathCause in Enum.GetValues(typeof(DeathCause)))
+            {
+                sb.Append(",").Append(forEachCause(deathCause));
             }
-            
-            deathStats.Add("Total",total);
-            using (StreamWriter sw = new StreamWriter("DeathCauses.csv")) {
-                sw.WriteLine("Animal,Hunger,Thirst,Age,Predators,Other");
-                foreach (DeathStats stats in deathStats.Values) {
-                    sw.WriteLine(stats.name + "," + stats.hunger + "," + stats.thirst + "," + stats.age + "," + stats.predator + "," + stats.other);
-                }
-            }
+
+            sw.WriteLine(sb.ToString());
         }
     }
 }
