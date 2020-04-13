@@ -16,10 +16,6 @@ namespace Ecosystem.ECS.Debugging {
         public bool Show { get; set; }
         public Material Material { get; set; }
 
-        protected override void OnCreate() {
-            UpdateMesh();
-        }
-
         private Mesh CreateMesh(float angle, float range) => MeshShapeUtils.CreateCircleSection(angle, range); //Change this
 
         protected override void OnUpdate() {
