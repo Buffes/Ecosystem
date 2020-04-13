@@ -23,20 +23,21 @@ namespace Ecosystem.ECS.Animal
             float deltaTime = Time.DeltaTime/60;
 
             Entities
-            .ForEach((int nativeThreadIndex, Entity entity, int entityInQueryIndex,
-            ref AgeData age,
-            in AgeOfDeathData ageOfDeath) =>
-            {
-
-                // Store age in seconds.
-                age.Age += deltaTime;
-                if (age.Age >= ageOfDeath.Value)
+                .WithNone<DeathEvent>()
+                .ForEach((int nativeThreadIndex, Entity entity, int entityInQueryIndex,
+                ref AgeData age,
+                in AgeOfDeathData ageOfDeath) =>
                 {
-                    // Death by old age.
-                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Age));
-                }
+
+                    // Store age in seconds.
+                    age.Age += deltaTime;
+                    if (age.Age >= ageOfDeath.Value)
+                    {
+                        // Death by old age.
+                        commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Age));
+                    }
                 
-            }).ScheduleParallel();
+                }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
