@@ -22,17 +22,19 @@ namespace Ecosystem.ECS.Animal.Needs
 
             float deltaTime = Time.DeltaTime/60f;
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex,
+            Entities
+                .WithNone<DeathEvent>()
+                .ForEach((Entity entity, int entityInQueryIndex,
                 ref HungerData hungerData) =>
-            {
-                hungerData.Hunger -= deltaTime;
-
-                if(hungerData.Hunger <= 0.0f)
                 {
-                    commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Hunger));
-                }
+                    hungerData.Hunger -= deltaTime;
 
-            }).ScheduleParallel();
+                    if(hungerData.Hunger <= 0.0f)
+                    {
+                        commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Hunger));
+                    }
+
+                }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
