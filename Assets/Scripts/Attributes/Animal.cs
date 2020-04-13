@@ -46,13 +46,13 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.needs.SateHunger(1f);
-            this.needs.SateThirst(1f);
-            this.needs.SateSexualUrge(1f);
+            //this.needs.SateHunger(1f);
+            //this.needs.SateThirst(1f);
+            //this.needs.SateSexualUrge(1f);
 
-            this.hungerLimit = 0.5f;
-            this.thirstLimit = 0.5f;
-            this.matingLimit = 0.5f;
+            this.hungerLimit = 5f;
+            this.thirstLimit = 5f;
+            this.matingLimit = 5f;
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);

@@ -30,7 +30,7 @@ namespace Ecosystem.ECS.Animal
 
                 // Store age in seconds.
                 age.Age += deltaTime;
-                if (age.Age >= 60f * ageOfDeath.Value)
+                if (age.Age >= ageOfDeath.Value)
                 {
                     // Death by old age.
                     commandBuffer.AddComponent<DeathEvent>(entityInQueryIndex, entity,new DeathEvent(DeathCause.Age));
