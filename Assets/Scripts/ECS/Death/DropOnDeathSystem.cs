@@ -29,6 +29,8 @@ namespace Ecosystem.ECS.Death
                 commandBuffer.SetComponent(entityInQueryIndex, drop, new Translation { Value = position.Value });
 
             }).ScheduleParallel();
+
+            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Ecosystem.ECS.Debugging.Graphics;
 using Ecosystem.ECS.Debugging.Selection;
-using Ecosystem.ECS.Targeting.Sensors;
+using Ecosystem.ECS.Targeting.Sensing;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;

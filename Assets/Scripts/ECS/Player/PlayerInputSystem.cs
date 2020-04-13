@@ -30,11 +30,11 @@ namespace Ecosystem.ECS.Player
                 }).ScheduleParallel();
 
             if (sprint)
-                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag>().WithNone<Sprinting>().ForEach((Entity entity)
-                    => EntityManager.AddComponentData(entity, new Sprinting())).Run();
+                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag>().WithNone<SprintInput>().ForEach((Entity entity)
+                    => EntityManager.AddComponentData(entity, new SprintInput())).Run();
             else
-                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag, Sprinting>().ForEach((Entity entity)
-                    => EntityManager.RemoveComponent<Sprinting>(entity)).Run();
+                Entities.WithStructuralChanges().WithoutBurst().WithAll<PlayerTag, SprintInput>().ForEach((Entity entity)
+                    => EntityManager.RemoveComponent<SprintInput>(entity)).Run();
         }
     }
 }

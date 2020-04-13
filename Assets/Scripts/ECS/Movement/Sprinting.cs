@@ -3,7 +3,7 @@
 namespace Ecosystem.ECS.Movement
 {
     /// <summary>
-    /// Trying to move faster than normal.
+    /// Moving at an increased speed.
     /// </summary>
     public struct Sprinting : IComponentData
     {
