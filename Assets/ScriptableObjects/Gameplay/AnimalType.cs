@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ecosystem.Attributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ecosystem.Gameplay
@@ -8,6 +9,9 @@ namespace Ecosystem.Gameplay
     {
         [Tooltip("The meat that comes from this animal")]
         public GameObject Meat;
+
+        [Tooltip("The prefab that this animal spawns babies from")]
+        public Animal Baby;
 
         [Tooltip("The name of this animal (Fox,Rabbit,Fish,Eagle)")]
         public string Name;
