@@ -1,5 +1,5 @@
 ﻿using Ecosystem.ECS.Debugging.Selection;
-using Ecosystem.ECS.Targeting.Sensors;
+using Ecosystem.ECS.Targeting.Sensing;
 using Ecosystem.StateMachines;
 using System.Collections.Generic;
 using Unity.Collections;

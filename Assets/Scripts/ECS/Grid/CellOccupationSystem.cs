@@ -8,21 +8,22 @@ namespace Ecosystem.ECS.Grid
     /// Sets cells in the world as occupied at every position where there is a cell occupant entity,
     /// and restores the cell after the entity is destroyed.
     /// </summary>
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public class CellOccupationSystem : SystemBase
     {
-        private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+        private EndInitializationEntityCommandBufferSystem m_EndInitializationEcbSystem;
         private WorldGridSystem worldGridSystem;
 
         protected override void OnCreate()
         {
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            m_EndInitializationEcbSystem = World
+                .GetOrCreateSystem<EndInitializationEntityCommandBufferSystem>();
             worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
         }
 
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+            var commandBuffer = m_EndInitializationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
             var grid = worldGridSystem.Grid;
             var occupiedCells = worldGridSystem.OccupiedCells;
@@ -59,7 +60,7 @@ namespace Ecosystem.ECS.Grid
                     commandBuffer.RemoveComponent<OccupyingCell>(entityInQueryIndex, entity);
                 }).ScheduleParallel();
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+            m_EndInitializationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
 }

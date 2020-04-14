@@ -11,5 +11,6 @@ namespace Ecosystem.ECS.Targeting.Targets
         public bool HasFound;
         public Entity Entity;
         public float3 Position;
+        public float3 PredictedPosition;
     }
 }

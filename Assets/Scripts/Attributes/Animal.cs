@@ -33,6 +33,7 @@ namespace Ecosystem.Attributes
         private IState thirstState;
         private IState fleeState;
         private IState mateState;
+        private IState huntState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
@@ -55,6 +56,7 @@ namespace Ecosystem.Attributes
             this.thirstState = new ThirstState(this);
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
+            this.huntState = new HuntState(this);
             this.stateMachine.ChangeState(this.casualState);
         }
 
@@ -84,6 +86,7 @@ namespace Ecosystem.Attributes
             float currentMating = this.needs.GetSexualUrgesStatus();
 
             sensors.LookForPredator(true);
+            sensors.LookForPrey(currentHunger <= hungerLimit);
             sensors.LookForFood(currentHunger <= hungerLimit);
             sensors.LookForWater(currentThirst <= thirstLimit);
             sensors.LookForMate(currentMating <= matingLimit);
@@ -109,6 +112,13 @@ namespace Ecosystem.Attributes
                 if (stateMachine.getCurrentState() != newState)
                 {
                     stateMachine.ChangeState(newState);
+                }
+            }
+            else if (sensors.FoundPrey())
+            {
+                if (stateMachine.getCurrentState() != this.huntState)
+                {
+                    stateMachine.ChangeState(this.huntState);
                 }
             }
             else if (sensors.FoundMate())

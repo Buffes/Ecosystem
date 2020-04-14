@@ -1,5 +1,7 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Grid;
 using Ecosystem.ECS.Grid.Buckets;
+using Ecosystem.ECS.Movement;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Entities;
@@ -13,9 +15,24 @@ namespace Ecosystem.ECS.Targeting
     /// </summary>
     public class FindPreySystem : SystemBase
     {
+        WorldGridSystem worldGridSystem;
+
+        protected override void OnCreate()
+        {
+            worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
+        }
+
         protected override void OnUpdate()
         {
+            var blockedCells = worldGridSystem.BlockedCells;
+            var waterCells = worldGridSystem.WaterCells;
+            var grid = worldGridSystem.Grid;
+            var directions = GetComponentDataFromEntity<MovementInput>();
+
             Entities
+                .WithReadOnly(blockedCells)
+                .WithReadOnly(waterCells)
+                .WithReadOnly(directions)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref LookingForPrey lookingForPrey,
                 in Translation position,
@@ -23,7 +40,8 @@ namespace Ecosystem.ECS.Targeting
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
                 in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
             {
-
+                bool onLand = true;
+                bool inWater = false;
                 int closestPreyIndex = -1;
                 float closestPreyDistance = 0f;
 
@@ -47,9 +65,23 @@ namespace Ecosystem.ECS.Targeting
                 // Set result
                 if (closestPreyIndex != -1)
                 {
+                    float3 preyPosition = sensedAnimals[closestPreyIndex].Position;
                     lookingForPrey.HasFound = true;
                     lookingForPrey.Entity = sensedAnimals[closestPreyIndex].Entity;
-                    lookingForPrey.Position = sensedAnimals[closestPreyIndex].Position;
+                    lookingForPrey.Position = preyPosition;
+
+                    int length = 3; // Might need adjusting
+                    float3 predictedPosition;
+                    do
+                    {
+                        predictedPosition = preyPosition + length * math.normalizesafe(directions[lookingForPrey.Entity].Direction);
+                        length--;
+                    }
+                    while (length >= 0 && !WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater,
+                                                                    grid.GetGridPosition(predictedPosition)));
+
+                    lookingForPrey.PredictedPosition = predictedPosition;
+
                 }
                 else
                 {
@@ -57,6 +89,7 @@ namespace Ecosystem.ECS.Targeting
                 }
 
             }).ScheduleParallel();
+
         }
 
         private static bool IsPrey(AnimalTypeData animalType, DynamicBuffer<PreyTypesElement> preyBuffer)
