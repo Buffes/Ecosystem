@@ -28,7 +28,6 @@ namespace Ecosystem.ECS.Targeting
 
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             var blockedCells = worldGridSystem.BlockedCells;
             var waterCells = worldGridSystem.WaterCells;
             var grid = worldGridSystem.Grid;

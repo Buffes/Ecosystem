@@ -33,6 +33,7 @@ namespace Ecosystem.Debugging
         [SerializeField] private Color thirstColor = default;
         [SerializeField] private Color mateColor = default;
         [SerializeField] private Color fleeColor = default;
+        [SerializeField] private Color huntColor = default;
 
         [Header("Vision")]
         [SerializeField] private Material visionMaterial = default;
@@ -75,6 +76,7 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.ThirstColor = thirstColor;
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
+            animalStateDebuggingSystem.HuntColor = huntColor;
 
             visionDebuggingSystem.Material = visionMaterial;
             visionDebuggingSystem.Show = visionDebugShow;
