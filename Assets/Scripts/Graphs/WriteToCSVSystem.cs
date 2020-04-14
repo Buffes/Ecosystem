@@ -1,21 +1,16 @@
 ﻿
-using System;
-using System.Collections;
+using System;   
 using System.Collections.Generic;
 using Unity.Entities;
 using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Stats.Base;
 using UnityEngine;
 using System.IO;
-using Ecosystem.Gameplay;
-using Unity.Collections;
 
 public class WriteToCSVSystem : SystemBase
 {
 
-    public static List<(int, float, float, float, Entity)> attributeList = new List<(int, float,float, float, Entity)>();
-    private AnimalType chicken;
-    private AnimalType lion;
+    public static List<(int, float, float, float, Entity)> attributeList = new List<(int, float, float, float, Entity)>();
     private float sampleTime = 5f;
     private float currentTime = 0f;
     private float systemAge = 0f;
@@ -35,26 +30,6 @@ public class WriteToCSVSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        /*   int i = 0;
-           Entities.WithoutBurst().
-               ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseSpeed baseSpeed, in BaseHearingRange baseHearingRange, in BaseVisionRange baseVisionRange
-              ) =>
-              {
-
-                  if(i < 3) {
-                      Debug.Log("#1: " + i + ": " +entity);
-                      i++;
-                       }
-
-
-                  if (!attributeList.Contains((animalTypeData.AnimalTypeId, baseSpeed.Value, baseHearingRange.Value, baseVisionRange.Value, entity)))
-                  {
-                      attributeList.Add((animalTypeData.AnimalTypeId, baseSpeed.Value, baseHearingRange.Value, baseVisionRange.Value, entity));
-                  }    
-
-              }).Run();*/
-
-
         if (currentTime > sampleTime)
         {
 
@@ -74,8 +49,8 @@ public class WriteToCSVSystem : SystemBase
                     }
                 }).Run();
 
-                    lionStat = lionStat / lionCount;
-                    chickenStat = chickenStat / chickenCount;
+            lionStat = lionStat / lionCount;
+            chickenStat = chickenStat / chickenCount;
             addRecord(Mathf.RoundToInt(systemAge).ToString(), lionCount.ToString(), lionStat.ToString(), chickenCount.ToString(), chickenStat.ToString(), speedPath);
             reset();
 
@@ -124,38 +99,10 @@ public class WriteToCSVSystem : SystemBase
         }
         systemAge += Time.DeltaTime;
         currentTime += Time.DeltaTime;
-
-
-      /*  Entities.WithoutBurst().
-            ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseSpeed basespeed
-            ) =>
-            {
-                if (i < 6)
-                {
-                    Debug.Log("#2: " + i + ": " + entity);
-                }
-
-            }).Run();
-
-
-
-        Entities.WithoutBurst().
-            ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseSpeed basespeed
-            ) =>
-            {
-                if (i < 6)
-                {   
-                    Debug.Log("#2: " + i + ": " + entity);
-                }
-
-            }).Run();*/
-
     }
 
     private void addRecord(string time, string lionCount, string lionStat, string chickenCount, string chickenStat, string path)
     {
-        //string path = "/Scripts/Graphs/GraphValues.csv";
-
         StreamWriter file = new StreamWriter(Application.dataPath + path, true);
         string line;
         if (path == speedPath)
@@ -165,7 +112,7 @@ public class WriteToCSVSystem : SystemBase
         file.Close();
     }
 
-        private void clear()
+    private void clear()
     {
         StreamWriter speedFile = new StreamWriter(Application.dataPath + speedPath, false);
         speedFile.Close();
@@ -175,17 +122,6 @@ public class WriteToCSVSystem : SystemBase
         visionFile.Close();
     }
 
-   /* private int getChickenID()
-    {
-        return chicken.GetInstanceID();
-    }
-
-    private int getLionID()
-    {
-        return lion.GetInstanceID();
-    }
-    */
-
     private void reset()
     {
         lionStat = 0;
@@ -193,7 +129,7 @@ public class WriteToCSVSystem : SystemBase
         chickenCount = 0;
         chickenStat = 0;
     }
-    
+
 
 
 }
