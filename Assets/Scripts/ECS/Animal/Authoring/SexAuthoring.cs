@@ -1,26 +1,28 @@
-﻿using Ecosystem.ECS.Animal;
-using Unity.Entities;
+﻿using Unity.Entities;
 using UnityEngine;
 
-public class SexAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+namespace Ecosystem.ECS.Animal
 {
-    public enum SexSetting
+    public class SexAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
-        Random,
-        Male,
-        Female
-    }
+        public enum SexSetting
+        {
+            Random,
+            Male,
+            Female
+        }
 
-    [SerializeField]
-    private SexSetting sexSetting = default;
+        [SerializeField]
+        private SexSetting sexSetting = default;
 
-    public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-    {
-        Sex sex;
-        if (sexSetting == SexSetting.Male) sex = Sex.Male;
-        else if (sexSetting == SexSetting.Female) sex = Sex.Female;
-        else sex = Random.value < 0.5f ? Sex.Male : Sex.Female;
+        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        {
+            Sex sex;
+            if (sexSetting == SexSetting.Male) sex = Sex.Male;
+            else if (sexSetting == SexSetting.Female) sex = Sex.Female;
+            else sex = Random.value < 0.5f ? Sex.Male : Sex.Female;
 
-        dstManager.AddComponentData(entity, new SexData { Sex = sex });
+            dstManager.AddComponentData(entity, new SexData { Sex = sex });
+        }
     }
 }
