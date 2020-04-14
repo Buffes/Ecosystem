@@ -33,6 +33,7 @@ namespace Ecosystem.Attributes
         private IState thirstState;
         private IState fleeState;
         private IState mateState;
+        private IState huntState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
@@ -46,10 +47,6 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.needs.SateHunger(1f);
-            this.needs.SateThirst(1f);
-            this.needs.SateSexualUrge(1f);
-
             this.hungerLimit = 0.5f;
             this.thirstLimit = 0.5f;
             this.matingLimit = 0.5f;
@@ -59,8 +56,8 @@ namespace Ecosystem.Attributes
             this.thirstState = new ThirstState(this);
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
+            this.huntState = new HuntState(this);
             this.stateMachine.ChangeState(this.casualState);
-            sensors.LookForPredator(true);
         }
 
         /// <summary>
@@ -84,11 +81,15 @@ namespace Ecosystem.Attributes
         void Update() {
             if (!hybridEntity.HasConverted) return;
 
-            float diffHunger = 100f;
-            float diffThirst = 100f;
             float currentHunger = this.needs.GetHungerStatus();
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
+
+            sensors.LookForPredator(true);
+            sensors.LookForPrey(currentHunger <= hungerLimit);
+            sensors.LookForFood(currentHunger <= hungerLimit);
+            sensors.LookForWater(currentThirst <= thirstLimit);
+            sensors.LookForMate(currentMating <= matingLimit);
 
             if (sensors.FoundPredator())
             {
@@ -97,34 +98,32 @@ namespace Ecosystem.Attributes
                     stateMachine.ChangeState(this.fleeState);
                 }
             }
-            else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit))
+            else if (sensors.FoundFood() || sensors.FoundWater())
             {
-                if (currentHunger <= hungerLimit)
+                IState newState = sensors.FoundFood() ? this.hungerState : this.thirstState;
+
+                if (sensors.FoundFood() && sensors.FoundWater()
+                    && DiffLength(sensors.GetFoundWaterInfo())
+                        < DiffLength(sensors.GetFoundFoodInfo().Position))
                 {
-                    sensors.LookForFood(true);
-                    if (sensors.FoundFood())
-                    {
-                        diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
-                    }
+                    newState = this.thirstState;
                 }
-                if (currentThirst <= thirstLimit)
+
+                if (stateMachine.getCurrentState() != newState)
                 {
-                    sensors.LookForWater(true);
-                    if (sensors.FoundWater())
-                    {
-                        diffThirst = DiffLength(sensors.GetFoundWaterInfo());
-                    }
-                }
-                IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
-                if (stateMachine.getCurrentState() != closest)
-                {
-                    stateMachine.ChangeState(closest);
+                    stateMachine.ChangeState(newState);
                 }
             }
-            else if (currentMating <= matingLimit)
+            else if (sensors.FoundPrey())
             {
-                sensors.LookForMate(true);
-                if (sensors.FoundMate() && stateMachine.getCurrentState() != this.mateState)
+                if (stateMachine.getCurrentState() != this.huntState)
+                {
+                    stateMachine.ChangeState(this.huntState);
+                }
+            }
+            else if (sensors.FoundMate())
+            {
+                if (stateMachine.getCurrentState() != this.mateState)
                 {
                     stateMachine.ChangeState(this.mateState);
                 }

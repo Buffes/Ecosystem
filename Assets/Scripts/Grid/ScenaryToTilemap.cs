@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Unity.Collections;
 
 namespace Ecosystem.Grid 
 {
     public class ScenaryToTilemap : MonoBehaviour
     {
+        [SerializeField] private GameZone gameZone = default;
+
         //Matrix with all GameObjects in the Grid
         private Scenary [,] gameObjectsInGrid;
         private int [,] tiles;
@@ -99,29 +99,22 @@ namespace Ecosystem.Grid
             float newTree = (value / 3) * 2;
             float newRock = value;
             float rand = Random.value;
-            
+
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+
             if (rand <= newBush)
             {
-                GameObject ob = GetRandomBush();
-                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                Instantiate (GetRandomBush(), spawnPos, RandomQuaternion());
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
-                GameObject ob = GetRandomTree();
-                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                Instantiate (GetRandomTree(), spawnPos, RandomQuaternion());
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
-                GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                Instantiate (GetRandomRock(), spawnPos, RandomQuaternion());
                 return Scenary.Rock;
             }
             
@@ -132,21 +125,17 @@ namespace Ecosystem.Grid
         {
             float newRock = value / 2;
             float rand = Random.value;
-            
+
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+
             if (rand <= newRock)
             {
-                GameObject ob = GetRandomRock();
-                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                Instantiate (GetRandomRock(), spawnPos, RandomQuaternion());
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
-                GameObject ob = GetRandomCactus();
-                Instantiate (ob, new Vector3(row, 0, col), RandomQuaternion());
-                GameZone.SetWalkable(false, row, col);
-                GameZone.SetOccupied(true,row,col);
+                Instantiate (GetRandomCactus(), spawnPos, RandomQuaternion());
                 return Scenary.Cactus;
             }
             
@@ -183,7 +172,6 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
-                    GameZone.SetOccupied(false,row,col);
                     gameObjectsInGrid[row, col] = Scenary.Empty;
                 }
             }

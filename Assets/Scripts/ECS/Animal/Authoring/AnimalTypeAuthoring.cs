@@ -13,9 +13,9 @@ namespace Ecosystem.ECS.Animal
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            dstManager.AddComponentData(entity, new AnimalTypeData
-            {
-                AnimalTypeId = animalType.GetInstanceID()
+            dstManager.AddComponentData(entity,new AnimalTypeData {
+                AnimalTypeId = animalType.GetInstanceID(),
+                AnimalName = animalType.Name
             });
 
             dstManager.AddComponentData(entity, new DropOnDeath

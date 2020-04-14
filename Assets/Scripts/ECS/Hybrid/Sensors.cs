@@ -24,12 +24,12 @@ namespace Ecosystem.ECS.Hybrid
         /// Returns if water has been found. Make sure to have enabled
         /// <see cref="LookForWater(bool)"/> first.
         /// </summary>
-        public bool FoundWater() => GetComp<LookingForWater>().HasFound;
-        public bool FoundFood() => GetComp<LookingForFood>().HasFound;
-        public bool FoundPrey() => GetComp<LookingForPrey>().HasFound;
-        public bool FoundPredator() => GetComp<LookingForPredator>().HasFound;
-        public bool FoundMate() => GetComp<LookingForMate>().HasFound;
-        public bool FoundRandomTarget() => GetComp<LookingForRandomTarget>().HasFound;
+        public bool FoundWater() => HasComp<LookingForWater>() && GetComp<LookingForWater>().HasFound;
+        public bool FoundFood() => HasComp<LookingForFood>() && GetComp<LookingForFood>().HasFound;
+        public bool FoundPrey() => HasComp<LookingForPrey>() && GetComp<LookingForPrey>().HasFound;
+        public bool FoundPredator() => HasComp<LookingForPredator>() && GetComp<LookingForPredator>().HasFound;
+        public bool FoundMate() => HasComp<LookingForMate>() && GetComp<LookingForMate>().HasFound;
+        public bool FoundRandomTarget() => HasComp<LookingForRandomTarget>() && GetComp<LookingForRandomTarget>().HasFound;
 
 
 
@@ -49,10 +49,10 @@ namespace Ecosystem.ECS.Hybrid
             return (info.Position, info.Entity);
         }
 
-        public (Vector3 Position, Entity Entity) GetFoundPreyInfo()
+        public (Vector3 Position, Vector3 PredictedPosition, Entity Entity) GetFoundPreyInfo()
         {
             LookingForPrey info = GetComp<LookingForPrey>();
-            return (info.Position, info.Entity);
+            return (info.Position, info.PredictedPosition, info.Entity);
         }
 
         public (Vector3 Position, Entity Entity) GetFoundPredatorInfo()
@@ -73,6 +73,9 @@ namespace Ecosystem.ECS.Hybrid
             return info.Position;
         }
 
+
+        private bool HasComp<T>() where T : struct, IComponentData
+            => EntityManager.HasComponent<T>(Entity);
 
         private T GetComp<T>() where T : struct, IComponentData
         {

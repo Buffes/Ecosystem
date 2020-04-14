@@ -30,5 +30,7 @@ public class FreezeRotationSystem : SystemBase
             commandBuffer.AddComponent<FrozenRotation>(entityInQueryIndex, entity);
 
         }).ScheduleParallel();
+
+        m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
     }
 }

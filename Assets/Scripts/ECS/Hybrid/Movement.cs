@@ -32,14 +32,14 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         public void Sprint(bool enabled)
         {
-            if (enabled == EntityManager.HasComponent<Sprinting>(Entity)) return;
+            if (enabled == EntityManager.HasComponent<SprintInput>(Entity)) return;
             if (enabled)
             {
-                EntityManager.AddComponentData(Entity, new Sprinting());
+                EntityManager.AddComponentData(Entity, new SprintInput());
             }
             else
             {
-                EntityManager.RemoveComponent<Sprinting>(Entity);
+                EntityManager.RemoveComponent<SprintInput>(Entity);
             }
         }
 

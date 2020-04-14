@@ -1,8 +1,7 @@
 ﻿using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Grid.Buckets;
 using Ecosystem.ECS.Movement.Pathfinding;
-using Ecosystem.ECS.Targeting.Sensors;
 using Ecosystem.ECS.Targeting.Targets;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -14,86 +13,50 @@ namespace Ecosystem.ECS.Targeting
     /// </summary>
     public class FindFoodSystem : SystemBase
     {
-        private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
-
-        private EntityQuery query;
-
-        protected override void OnCreate()
-        {
-            m_EndSimulationEcbSystem = World
-                .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-            query = GetEntityQuery(
-                ComponentType.ReadOnly<Translation>(),
-                ComponentType.ReadOnly<FoodTypeData>());
-        }
-
         protected override void OnUpdate()
         {
-            var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-
-            var entities = query.ToEntityArray(Allocator.TempJob);
-            var positions = query.ToComponentDataArray<Translation>(Allocator.TempJob);
-            var foodTypes = query.ToComponentDataArray<FoodTypeData>(Allocator.TempJob);
-
-            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
-            var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
-            
             Entities
-                .WithReadOnly(entities)
-                .WithReadOnly(positions)
-                .WithReadOnly(foodTypes)
-                .WithReadOnly(unreachableBuffers)
-                .ForEach((Entity entity, int entityInQueryIndex,
+                .ForEach((
                 ref LookingForFood lookingForFood,
                 in Translation position,
-                in Rotation rotation,
-                in Hearing hearing,
-                in Vision vision,
-                in DynamicBuffer<FoodTypesElement> foodTypeBuffer) =>
-            {
-
-                int closestFoodIndex = -1;
-                float closestFoodDistance = 0f;
-
-                // Check all food that we can sense
-                for (int i = 0; i < entities.Length; i++)
+                in DynamicBuffer<FoodTypesElement> foodTypeBuffer,
+                in DynamicBuffer<BucketFoodData> sensedFood,
+                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
                 {
-                    FoodTypeData targetFoodType = foodTypes[i];
-                    float3 targetPosition = positions[i].Value;
-                    float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (targetDistance > hearing.Range && !Utilities.IntersectsVision(targetPosition, position.Value, rotation.Value, vision))
+                    int closestFoodIndex = -1;
+                    float closestFoodDistance = 0f;
+
+                    // Check all food that we can sense
+                    for (int i = 0; i < sensedFood.Length; i++)
                     {
-                        continue; // Out of hearing and vision range    
-                    } 
-                    if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
-                    if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
+                        var sensedFoodInfo = sensedFood[i];
 
-                    closestFoodIndex = i;
-                    closestFoodDistance = targetDistance;
-                }
-                
-                // Set result
-                if (closestFoodIndex != -1)
-                {
-                    lookingForFood.HasFound = true;
-                    lookingForFood.Entity = entities[closestFoodIndex];
-                    lookingForFood.Position = positions[closestFoodIndex].Value;
-                }
-                else
-                {
-                    lookingForFood.HasFound = false;
-                }
+                        FoodTypeData targetFoodType = sensedFoodInfo.FoodTypeData;
+                        float3 targetPosition = sensedFoodInfo.Position;
+                        float targetDistance = math.distance(targetPosition, position.Value);
 
-            }).ScheduleParallel();
+                        if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
+                        if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
+                        if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
-            entities.Dispose(Dependency);
-            positions.Dispose(Dependency);
-            foodTypes.Dispose(Dependency);
+                        closestFoodIndex = i;
+                        closestFoodDistance = targetDistance;
+                    }
 
-            m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+                    // Set result
+                    if (closestFoodIndex != -1)
+                    {
+                        lookingForFood.HasFound = true;
+                        lookingForFood.Entity = sensedFood[closestFoodIndex].Entity;
+                        lookingForFood.Position = sensedFood[closestFoodIndex].Position;
+                    }
+                    else
+                    {
+                        lookingForFood.HasFound = false;
+                    }
+
+                }).ScheduleParallel();
         }
 
         private static bool IsWantedFood(FoodTypeData foodType, DynamicBuffer<FoodTypesElement> wantedFoodBuffer)

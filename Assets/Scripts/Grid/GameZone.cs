@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
 using Unity.Entities;
-using Unity.Collections;
 using Unity.Mathematics;
+using Ecosystem.ECS.Grid;
 
 namespace Ecosystem.Grid
 {
@@ -18,7 +17,6 @@ namespace Ecosystem.Grid
         public static List<Vector3Int> tilePositions;
 
         private TilesAssetsToTilemap tilesAssetsToTilemap;
-        public ScenaryToTilemap scenaryToTilemap;
 
         //The numbers of the shallow and beach tiles
         private int waterIndex = 17;
@@ -32,17 +30,10 @@ namespace Ecosystem.Grid
 
         //The rate of objects spawning
         public float waterSpawnRate = 0.005f;
-    
-        //Matrix of walkable tiles
-        public static NativeArray<bool> walkableTiles;
 
-        //Matrix of water tiles
-        public static NativeList<int2> WaterTiles;
+        private GridData grid;
+        private WorldGridSystem worldGridSystem;
 
-        //Matrix of occupied tiles
-        public static NativeArray<bool> occupiedTiles;
-
-        // Start is called before the first frame update
         void Awake() 
         {
             InitObjects();
@@ -52,16 +43,8 @@ namespace Ecosystem.Grid
             CheckMiddle();
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
-            SetupWalkableTiles();
             SetupWaterTiles();
             ToggleShadows();
-        }
-
-        void OnDestroy()
-        {
-            WaterTiles.Dispose();
-            walkableTiles.Dispose();
-            occupiedTiles.Dispose();
         }
 
         private void ToggleShadows()
@@ -73,8 +56,10 @@ namespace Ecosystem.Grid
         private void InitObjects()
         {
             diffWaterLand = landIndex - waterIndex;
-            walkableTiles = new NativeArray<bool>(tiles.Length, Allocator.Persistent);
-            occupiedTiles = new NativeArray<bool>(tiles.Length,Allocator.Persistent);
+
+            grid = new GridData(tiles.GetLength(0), tiles.GetLength(1));
+            worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
+            worldGridSystem.InitGrid(grid);
         }
 
         private void RandomizeStartGrid()
@@ -657,56 +642,26 @@ namespace Ecosystem.Grid
             }
         }
 
-        private void SetupWalkableTiles()
-        {
-            for (int row = 0; row < tiles.GetLength(0); row++)
-            {
-                for (int col = 0; col < tiles.GetLength(1); col++)
-                {
-                    if (tiles[row, col] < 18)
-                    {
-                        SetWalkable(false, row, col);
-                    } 
-                    else 
-                    {
-                        SetWalkable(true, row, col);
-                    }
-                }
-            }
-            
-        }
-
-        public static void SetWalkable(bool walkable, int x, int y)
-        {
-            if ( x < 0 || y < 0 || x > tiles.GetLength(0) - 1 || y > tiles.GetLength(1) - 1) return; // outside grid
-            
-            walkableTiles[y * tiles.GetLength(0) + x] = walkable;
-        }
-
-        public static void SetOccupied(bool occupied,int x,int y) {
-            occupiedTiles[y * tiles.GetLength(0) + x] = occupied;
-        }
-
         private void SetupWaterTiles()
         {
-            WaterTiles = new NativeList<int2>(Allocator.Persistent);
-
             for (int row = 0; row < tiles.GetLength(0); row++)
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
                     if (tiles[row, col] < 34) // All water tiles
                     {
-                        WaterTiles.Add(new int2(row, col));
+                        SetWaterCell(row, col);
                     } 
                 }
             }
         }
 
-        public NativeArray<bool> GetWalkableTiles()
-        {
-            return walkableTiles;
-        }
+        private void SetWaterCell(int x, int y) => worldGridSystem.SetWaterCell(new int2(x, y));
+
+        public void SetBlockedCell(int x, int y)
+            => worldGridSystem.SetOccupiedCell(new int2(x, y), true);
+
+        public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(new int2(x, y));
     }
 }
 

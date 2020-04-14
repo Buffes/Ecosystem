@@ -4,8 +4,6 @@ namespace Ecosystem.Eatable {
     public class FruitSpawner : MonoBehaviour {
 
         [SerializeField]
-        private Transform parent = default;
-        [SerializeField]
         private GameObject fruitPrefab = default;
         [SerializeField]
         [Range(1,10)]
@@ -25,8 +23,12 @@ namespace Ecosystem.Eatable {
 
         private void SpawnPrefabs(GameObject prefab) {
             for (int i = 0; i < spawnAmount; i++) {
-                GameObject o = Instantiate(prefab) as GameObject;
-                o.transform.position = parent.transform.position + new Vector3(Random.Range(-range,range),parent.transform.position.y,Random.Range(-range,range));
+                Instantiate(prefab,
+                    transform.position + new Vector3(
+                        Random.Range(-range, range),
+                        transform.position.y,
+                        Random.Range(-range, range)),
+                    Quaternion.identity);
             }
         }
 
