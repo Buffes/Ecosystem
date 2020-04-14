@@ -19,12 +19,12 @@ namespace Ecosystem.ECS.Animal.Needs
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime/60f;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref SexualUrgesData sexualUrgesData) =>
             {
-                sexualUrgesData.Urge -= deltaTime / 1000.0f;
+                sexualUrgesData.Urge -= deltaTime;
 
             }).ScheduleParallel();
 
