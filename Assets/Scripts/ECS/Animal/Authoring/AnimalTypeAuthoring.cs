@@ -23,6 +23,11 @@ namespace Ecosystem.ECS.Animal
                 Prefab = conversionSystem.GetPrimaryEntity(animalType.Meat)
             });
 
+            dstManager.AddComponentData(entity, new AnimalPrefab
+            {
+                Prefab = animalType.Baby
+            });
+
             DynamicBuffer<PreyTypesElement> preyBuffer = dstManager.AddBuffer<PreyTypesElement>(entity);
             foreach (AnimalType animalType in animalType.Prey)
             {

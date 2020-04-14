@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Eagle
   m_EditorClassIdentifier: 
   Meat: {fileID: 0}
+  Baby: {fileID: 0}
   Name: Eagle
   prey: []
   food:
