@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using Random = UnityEngine.Random;
+using UnityEngine;
 
 namespace Ecosystem.Genetics
 {
@@ -88,13 +89,11 @@ namespace Ecosystem.Genetics
             if (parent1.genes.Count != parent2.genes.Count) throw ParentGeneMismatchException;
 
             int amount = parent1.genes.Count;
-            List<Gene> genes = new List<Gene>(amount);
-
+            List<Gene> genes = new List<Gene>();
             for (int i = 0; i < amount; i++)
             {
-                if (parent1.genes[i].Type != parent2.genes[i].Type) throw ParentGeneMismatchException;
-
-                genes[i] = InheritedGene(parent1.genes[i], parent2.genes[i], parent1.mutationRate);
+                if (parent1.genes[i].GetType() != parent2.genes[i].GetType()) throw ParentGeneMismatchException;
+                genes.Add(InheritedGene(parent1.genes[i], parent2.genes[i], parent1.mutationRate));
             }
 
             return new DNA(CoinFlip(), genes);
