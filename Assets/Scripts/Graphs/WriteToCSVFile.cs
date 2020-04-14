@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class WriteToCSVFile : MonoBehaviour
 {
-    public AnimalType chicken;
-    public AnimalType lion;
+    public static AnimalType chicken;
+    public static AnimalType lion;
     public  float sampleTime = 5f;
     private float currentTime = 0f;
     private float systemAge = 0f;
@@ -19,7 +19,7 @@ public class WriteToCSVFile : MonoBehaviour
         clear();
     }
 
-    private void Update()
+   /* private void Update()
     {
         int nrChickens = 0;
         int nrLions = 0;
@@ -69,7 +69,7 @@ public class WriteToCSVFile : MonoBehaviour
         systemAge += Time.deltaTime;
         currentTime += Time.deltaTime;
 
-    }
+    }*/
 
     public static void addRecord(string time, string nrChickens, string nrLions, string chickenSpeed, string chickenHearingRange,
         string chickenVisionRange, string lionSpeed, string lionHearingRange, string lionVisionRange)
