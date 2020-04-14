@@ -25,6 +25,7 @@ namespace Ecosystem.ECS.Debugging
         public Color ThirstColor { get; set; }
         public Color MateColor { get; set; }
         public Color FleeColor { get; set; }
+        public Color HuntColor { get; set; }
 
         private EntityQuery query;
 
@@ -63,6 +64,7 @@ namespace Ecosystem.ECS.Debugging
                     else if (state is ThirstState) color = ThirstColor;
                     else if (state is MateState) color = MateColor;
                     else if (state is FleeState) color = FleeColor;
+                    else if (state is HuntState) color = HuntColor;
 
                     stateColor.Value = color;
                 }).Run();
