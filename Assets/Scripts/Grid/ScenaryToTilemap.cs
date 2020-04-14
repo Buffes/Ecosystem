@@ -88,6 +88,11 @@ namespace Ecosystem.Grid
             return gameObjectsInGrid[row, col];
         }
 
+        private Quaternion RandomQuaternion()
+        {
+            return Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        }
+
         private Scenary RandomizeGreenScenary(float value, int row, int col)
         {
             float newBush = value / 3;
@@ -99,17 +104,17 @@ namespace Ecosystem.Grid
 
             if (rand <= newBush)
             {
-                Instantiate (GetRandomBush(), spawnPos, Quaternion.identity);
+                Instantiate (GetRandomBush(), spawnPos, RandomQuaternion());
                 return Scenary.Bush;
             }
             else if (rand <= newTree)
             {
-                Instantiate (GetRandomTree(), spawnPos, Quaternion.identity);
+                Instantiate (GetRandomTree(), spawnPos, RandomQuaternion());
                 return Scenary.Tree;
             }
             else if (rand <= newRock) 
             {
-                Instantiate (GetRandomRock(), spawnPos, Quaternion.identity);
+                Instantiate (GetRandomRock(), spawnPos, RandomQuaternion());
                 return Scenary.Rock;
             }
             
@@ -125,12 +130,12 @@ namespace Ecosystem.Grid
 
             if (rand <= newRock)
             {
-                Instantiate (GetRandomRock(), spawnPos, Quaternion.identity);
+                Instantiate (GetRandomRock(), spawnPos, RandomQuaternion());
                 return Scenary.Rock;
             }
             else if (rand <= value)
             {
-                Instantiate (GetRandomCactus(), spawnPos, Quaternion.identity);
+                Instantiate (GetRandomCactus(), spawnPos, RandomQuaternion());
                 return Scenary.Cactus;
             }
             
