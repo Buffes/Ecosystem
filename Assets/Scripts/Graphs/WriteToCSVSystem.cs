@@ -8,6 +8,7 @@ using Ecosystem.ECS.Stats.Base;
 using UnityEngine;
 using System.IO;
 using Ecosystem.Gameplay;
+using Unity.Collections;
 
 public class WriteToCSVSystem : SystemBase
 {
@@ -56,18 +57,25 @@ public class WriteToCSVSystem : SystemBase
 
         if (currentTime > sampleTime)
         {
-            
+
             Entities.WithoutBurst().
                 ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseSpeed baseSpeed
                 ) =>
                 {
-                    //  if(animalTypeData.AnimalTypeId == getLionID())
-                    lionCount++;
-                    lionStat += baseSpeed.Value;
+                    if (animalTypeData.AnimalName.Equals("Fox"))
+                    {
+                        lionCount++;
+                        lionStat += baseSpeed.Value;
+                    }
+                    if (animalTypeData.AnimalName.Equals("Rabbit"))
+                    {
+                        chickenCount++;
+                        chickenStat += baseSpeed.Value;
+                    }
                 }).Run();
 
-            lionStat = lionStat / lionCount;
-           // chickenStat = chickenStat / chickenCount;
+                    lionStat = lionStat / lionCount;
+                    chickenStat = chickenStat / chickenCount;
             addRecord(Mathf.RoundToInt(systemAge).ToString(), lionCount.ToString(), lionStat.ToString(), chickenCount.ToString(), chickenStat.ToString(), speedPath);
             reset();
 
@@ -75,13 +83,20 @@ public class WriteToCSVSystem : SystemBase
                 ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseHearingRange baseHearingRange
                 ) =>
                 {
-                    //  if(animalTypeData.AnimalTypeId == getLionID())
-                    lionCount++;
-                    lionStat += baseHearingRange.Value;
+                    if (animalTypeData.AnimalName.Equals("Fox"))
+                    {
+                        lionCount++;
+                        lionStat += baseHearingRange.Value;
+                    }
+                    if (animalTypeData.AnimalName.Equals("Rabbit"))
+                    {
+                        chickenCount++;
+                        chickenStat += baseHearingRange.Value;
+                    }
                 }).Run();
 
             lionStat = lionStat / lionCount;
-            //chickenStat = chickenStat / chickenCount;
+            chickenStat = chickenStat / chickenCount;
             addRecord(Mathf.RoundToInt(systemAge).ToString(), lionCount.ToString(), lionStat.ToString(), chickenCount.ToString(), chickenStat.ToString(), hearingPath);
             reset();
 
@@ -89,13 +104,20 @@ public class WriteToCSVSystem : SystemBase
                 ForEach((Entity entity, in AnimalTypeData animalTypeData, in BaseVisionRange baseVisionRange
                 ) =>
                 {
-                    //  if(animalTypeData.AnimalTypeId == getLionID())
-                    lionCount++;
-                    lionStat += baseVisionRange.Value;
+                    if (animalTypeData.AnimalName.Equals("Fox"))
+                    {
+                        lionCount++;
+                        lionStat += baseVisionRange.Value;
+                    }
+                    if (animalTypeData.AnimalName.Equals("Rabbit"))
+                    {
+                        chickenCount++;
+                        chickenStat += baseVisionRange.Value;
+                    }
                 }).Run();
 
             lionStat = lionStat / lionCount;
-            //chickenStat = chickenStat / chickenCount;
+            chickenStat = chickenStat / chickenCount;
             addRecord(Mathf.RoundToInt(systemAge).ToString(), lionCount.ToString(), lionStat.ToString(), chickenCount.ToString(), chickenStat.ToString(), visionPath);
             reset();
             currentTime = 0;
