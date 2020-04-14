@@ -14,6 +14,7 @@ namespace Ecosystem.Debugging
         [SerializeField] private bool hearingDebugShow = default;
         [SerializeField] private bool pathDebugShow = default;
         [SerializeField] private bool stateDebugShow = default;
+        [SerializeField] private bool visionDebugShow = default;
         [SerializeField] private bool statusDebugShow = default;
 
         [Header("Hearing")]
@@ -33,6 +34,9 @@ namespace Ecosystem.Debugging
         [SerializeField] private Color mateColor = default;
         [SerializeField] private Color fleeColor = default;
 
+        [Header("Vision")]
+        [SerializeField] private Material visionMaterial = default;
+
         [Header("Status")]
         [SerializeField] private Material statusMaterial = default;
         [SerializeField] private float statusHeight = 2.5f;
@@ -40,6 +44,7 @@ namespace Ecosystem.Debugging
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
         private AnimalStateDebugging animalStateDebuggingSystem;
+        private VisionDebuggingSystem visionDebuggingSystem;
         private StatusBarDebuggingSystem statusBarDebuggingSystem;
 
         private void Awake()
@@ -48,6 +53,7 @@ namespace Ecosystem.Debugging
             hearingDebuggingSystem = world.GetOrCreateSystem<HearingDebuggingSystem>();
             pathDebuggingSystem = world.GetOrCreateSystem<PathDebuggingSystem>();
             animalStateDebuggingSystem = world.GetOrCreateSystem<AnimalStateDebugging>();
+            visionDebuggingSystem = world.GetOrCreateSystem<VisionDebuggingSystem>();
             statusBarDebuggingSystem = world.GetOrCreateSystem<StatusBarDebuggingSystem>();
         }
 
@@ -69,6 +75,9 @@ namespace Ecosystem.Debugging
             animalStateDebuggingSystem.ThirstColor = thirstColor;
             animalStateDebuggingSystem.MateColor = mateColor;
             animalStateDebuggingSystem.FleeColor = fleeColor;
+
+            visionDebuggingSystem.Material = visionMaterial;
+            visionDebuggingSystem.Show = visionDebugShow;
 
             statusBarDebuggingSystem.Material = statusMaterial;
             statusBarDebuggingSystem.Show = statusDebugShow;

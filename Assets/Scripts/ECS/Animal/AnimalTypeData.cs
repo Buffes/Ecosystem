@@ -1,5 +1,6 @@
 ﻿using System;
 using Unity.Entities;
+using Unity.Collections;
 
 namespace Ecosystem.ECS.Animal
 {
@@ -7,5 +8,6 @@ namespace Ecosystem.ECS.Animal
     public struct AnimalTypeData : IComponentData
     {
         public int AnimalTypeId;
+        public NativeString64 AnimalName;
     }
 }

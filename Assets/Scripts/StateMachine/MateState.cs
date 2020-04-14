@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Ecosystem.Attributes;
+using Unity.Entities;
 
 namespace Ecosystem.StateMachines {
     public class MateState : IState {
@@ -27,6 +28,8 @@ namespace Ecosystem.StateMachines {
             float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
             if (diffLength <= 2.5f) {
                 // Reproduction event
+                Entity partner = owner.GetSensors().GetFoundMateInfo().Entity;
+                owner.GetInteraction().Reproduce(partner);
                 owner.GetNeedsStatus().SateSexualUrge(1f);
             }
 
