@@ -44,13 +44,13 @@ namespace Ecosystem.Grid
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWaterTiles();
-            ToggleShadows();
+            ToggleShadows(true);
         }
 
-        private void ToggleShadows()
+        private void ToggleShadows(bool receiveShadows)
         {
             tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard"); //replace shader with standard
-            tilemap.GetComponent<TilemapRenderer>().receiveShadows = true;
+            tilemap.GetComponent<TilemapRenderer>().receiveShadows = receiveShadows;
         }
 
         private void InitObjects()
