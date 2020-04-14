@@ -26,6 +26,10 @@ public class WriteToCSVSystem : SystemBase
     string hearingPath = "/Scripts/Graphs/HearingDoc.csv";
     string visionPath = "/Scripts/Graphs/VisionDoc.csv";
 
+    protected override void OnCreate()
+    {
+        clear();
+    }
 
 
     protected override void OnUpdate()
