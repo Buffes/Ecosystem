@@ -36,6 +36,13 @@ namespace Ecosystem.ECS.Movement
                     commandBuffer.RemoveComponent<Sprinting>(entityInQueryIndex, entity);
                 }).ScheduleParallel();
 
+            Entities
+                .WithAll<Sprinting, ExhaustedData>()
+                .ForEach((Entity entity, int entityInQueryIndex) =>
+                {
+                    commandBuffer.RemoveComponent<Sprinting>(entityInQueryIndex, entity);
+                }).ScheduleParallel();
+
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }
     }
