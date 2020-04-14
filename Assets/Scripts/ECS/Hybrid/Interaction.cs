@@ -24,24 +24,28 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns>The food points of the food that was eaten</returns>
         public int Eat(Entity food)
         {
-            KillEntity(food);
-
-            return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
+            if (KillEntity(food)) return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
+            else return 0;
         }
 
         /// <summary>
         /// Reproduce with a partner. Attaches a reproductionEvent to both parts. Needs DNA component.
         /// </summary>
         /// <param name="partner"></param>
-        public void Reproduce(Entity partner)
+        /// <returns>If success</returns>
+        public bool Reproduce(Entity partner)
         {
+            if (!EntityManager.Exists(partner)) return false;
+
             EntityManager.AddComponentData(partner, new ReproductionEvent { PartnerDNA = EntityManager.GetComponentData<DNA>(Entity)});
             EntityManager.AddComponentData(Entity, new ReproductionEvent { PartnerDNA = EntityManager.GetComponentData<DNA>(partner)});
+            return true;
         }
 
-        private void KillEntity(Entity e)
+        private bool KillEntity(Entity e)
         {
-            EntityManager.AddComponent<DeathEvent>(e);
+            if (!EntityManager.Exists(e)) return false;
+            return EntityManager.AddComponent<DeathEvent>(e);
         }
 
     }

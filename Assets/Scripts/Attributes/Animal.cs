@@ -56,7 +56,6 @@ namespace Ecosystem.Attributes
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
             this.stateMachine.ChangeState(this.casualState);
-            sensors.LookForPredator(true);
         }
 
         /// <summary>
@@ -80,11 +79,14 @@ namespace Ecosystem.Attributes
         void Update() {
             if (!hybridEntity.HasConverted) return;
 
-            float diffHunger = 100f;
-            float diffThirst = 100f;
             float currentHunger = this.needs.GetHungerStatus();
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
+
+            sensors.LookForPredator(true);
+            sensors.LookForFood(currentHunger <= hungerLimit);
+            sensors.LookForWater(currentThirst <= thirstLimit);
+            sensors.LookForMate(currentMating <= matingLimit);
 
             if (sensors.FoundPredator())
             {
@@ -93,34 +95,25 @@ namespace Ecosystem.Attributes
                     stateMachine.ChangeState(this.fleeState);
                 }
             }
-            else if ((currentHunger <= hungerLimit) || (currentThirst <= thirstLimit))
+            else if (sensors.FoundFood() || sensors.FoundWater())
             {
-                if (currentHunger <= hungerLimit)
+                IState newState = sensors.FoundFood() ? this.hungerState : this.thirstState;
+
+                if (sensors.FoundFood() && sensors.FoundWater()
+                    && DiffLength(sensors.GetFoundWaterInfo())
+                        < DiffLength(sensors.GetFoundFoodInfo().Position))
                 {
-                    sensors.LookForFood(true);
-                    if (sensors.FoundFood())
-                    {
-                        diffHunger = DiffLength(sensors.GetFoundFoodInfo().Position);
-                    }
+                    newState = this.thirstState;
                 }
-                if (currentThirst <= thirstLimit)
+
+                if (stateMachine.getCurrentState() != newState)
                 {
-                    sensors.LookForWater(true);
-                    if (sensors.FoundWater())
-                    {
-                        diffThirst = DiffLength(sensors.GetFoundWaterInfo());
-                    }
-                }
-                IState closest = (diffHunger <= diffThirst) ? this.hungerState : this.thirstState;
-                if (stateMachine.getCurrentState() != closest)
-                {
-                    stateMachine.ChangeState(closest);
+                    stateMachine.ChangeState(newState);
                 }
             }
-            else if (currentMating <= matingLimit)
+            else if (sensors.FoundMate())
             {
-                sensors.LookForMate(true);
-                if (sensors.FoundMate() && stateMachine.getCurrentState() != this.mateState)
+                if (stateMachine.getCurrentState() != this.mateState)
                 {
                     stateMachine.ChangeState(this.mateState);
                 }

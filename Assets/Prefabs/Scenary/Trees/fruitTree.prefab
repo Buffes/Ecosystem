@@ -39,12 +39,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293787554305520941}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f39e51a4b83c64f25bb54fe6f3e00aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 4024996429660682, guid: 43dd8d83e744f1d4d9d714b8c7b35dad, type: 3}
   fruitPrefab: {fileID: 1000013678658166, guid: 8fa35cdad352cfa4297d3be64705ecf1,
     type: 3}
   spawnAmount: 1
