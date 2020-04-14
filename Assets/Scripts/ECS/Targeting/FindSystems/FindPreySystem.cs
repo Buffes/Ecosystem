@@ -38,10 +38,11 @@ namespace Ecosystem.ECS.Targeting
                 in Translation position,
                 in DynamicBuffer<PreyTypesElement> preyTypeBuffer,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<UnreachablePosition> unreachablePositions,
+                in MovementTerrain movementTerrain) =>
             {
-                bool onLand = true;
-                bool inWater = false;
+                bool onLand = movementTerrain.MovesOnLand;
+                bool inWater = movementTerrain.MovesOnWater;
                 int closestPreyIndex = -1;
                 float closestPreyDistance = 0f;
 

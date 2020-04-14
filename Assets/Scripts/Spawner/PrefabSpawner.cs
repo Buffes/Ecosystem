@@ -2,6 +2,7 @@
 using Ecosystem.ECS.Grid;
 using Unity.Entities;
 using Random = UnityEngine.Random;
+using Ecosystem.ECS.Movement;
 
 public class PrefabSpawner : MonoBehaviour
 {

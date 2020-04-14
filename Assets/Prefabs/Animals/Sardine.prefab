@@ -1266,6 +1266,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sardine
       objectReference: {fileID: 0}
+    - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Water
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!4 &2003170221973116032 stripped
