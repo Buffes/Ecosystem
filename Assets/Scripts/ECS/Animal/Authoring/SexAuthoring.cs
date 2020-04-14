@@ -20,7 +20,7 @@ namespace Ecosystem.ECS.Animal
             Sex sex;
             if (sexSetting == SexSetting.Male) sex = Sex.Male;
             else if (sexSetting == SexSetting.Female) sex = Sex.Female;
-            else sex = Random.value < 0.5f ? Sex.Male : Sex.Female;
+            else sex = UnityEngine.Random.value < 0.5f ? Sex.Male : Sex.Female;
 
             dstManager.AddComponentData(entity, new SexData { Sex = sex });
         }
