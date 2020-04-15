@@ -1,4 +1,4 @@
-﻿using Ecosystem.ECS.Movement;
+﻿using Ecosystem.ECS.Physics;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -32,12 +32,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                     rotation.Value = quaternion.LookRotation(direction, math.up());
                 }
 
-            }).ScheduleParallel();
-            
-            //Prevent floating entities from moving downwards.
-            Entities.WithAll<Floating>().ForEach((ref PhysicsVelocity velocity) => 
-            {
-                velocity.Linear.y = 0f;
             }).ScheduleParallel();
         }
     }
