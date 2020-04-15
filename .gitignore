@@ -2,6 +2,11 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
+
+# Custom
+*.csv
+
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
