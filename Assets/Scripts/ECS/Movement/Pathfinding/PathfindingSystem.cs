@@ -44,8 +44,6 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 in Translation translation,
                 in MovementTerrain movementTerrain) =>
             {
-                //bool canMoveOnLand = true;
-                //bool canMoveInWater = false;
 
                 float3 target = moveCommand.Target;
                 float reach = moveCommand.Reach;
