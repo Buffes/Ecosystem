@@ -3,7 +3,6 @@ using Ecosystem.ECS.Grid.Buckets;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensing;
 using Ecosystem.ECS.Targeting.Targets;
-using Ecosystem.ECS.Death;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
