@@ -11,6 +11,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
     /// <summary>
     /// Looks for nearby mates and stores info about the closest mate that was found.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindMateSystem : SystemBase
     {
         protected override void OnUpdate()
@@ -42,7 +43,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; // Not the same type of animal
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
-                        if (sexType.Sex != targetSexType.Sex) continue; // Not the opposite sex
+                        if (sexType.Sex == targetSexType.Sex) continue; // Not the opposite sex
                         if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                         closestMateIndex = i;
