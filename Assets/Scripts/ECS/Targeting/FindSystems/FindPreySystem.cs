@@ -8,11 +8,13 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Targeting
+namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
     /// Looks for nearby prey and stores info about the closest prey that was found.
     /// </summary>
+
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindPreySystem : SystemBase
     {
         WorldGridSystem worldGridSystem;

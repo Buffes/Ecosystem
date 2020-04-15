@@ -10,11 +10,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Targeting
+namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
     /// Looks for nearby water and stores info about the closest water that was found.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindWaterSystem : SystemBase
     {
         private WorldGridSystem worldGridSystem;

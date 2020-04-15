@@ -7,11 +7,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Targeting
+namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
     /// Looks for nearby predators and stores info about the closest predator that was found.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindPredatorSystem : SystemBase
     {
         protected override void OnUpdate()

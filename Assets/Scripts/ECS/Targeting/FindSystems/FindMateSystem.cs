@@ -11,6 +11,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
     /// <summary>
     /// Looks for nearby mates and stores info about the closest mate that was found.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindMateSystem : SystemBase
     {
         protected override void OnUpdate()

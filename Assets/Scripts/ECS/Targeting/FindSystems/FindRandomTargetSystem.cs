@@ -7,11 +7,12 @@ using Unity.Transforms;
 using Unity.Jobs.LowLevel.Unsafe;
 using Ecosystem.ECS.Grid;
 
-namespace Ecosystem.ECS.Targeting
+namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
     /// Looks for a random walkable point somewhere around the animal and stores it for movement.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindRandomTargetSystem : SystemBase
     {
         private EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
