@@ -2,6 +2,7 @@
 using Ecosystem.ECS.Animal;
 using Ecosystem.Genetics;
 using Ecosystem.ECS.Animal.Needs;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -13,6 +14,8 @@ namespace Ecosystem.ECS.Reproduction
         protected override void OnUpdate()
         {
             Entities
+                .WithNone<Pregnant>()
+                .WithStructuralChanges()
                 .WithoutBurst()
                 .ForEach((Entity entity,
                 ReproductionEvent reproductionEvent,

@@ -1,4 +1,5 @@
 ﻿using Unity.Entities;
+using UnityEngine;
 using Ecosystem.ECS.Animal;
 
 namespace Ecosystem.ECS.Reproduction
@@ -21,7 +22,6 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime / 60f;
 
-
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref Pregnant pregnant) =>
             {
@@ -31,7 +31,7 @@ namespace Ecosystem.ECS.Reproduction
                     commandBuffer.AddComponent(entityInQueryIndex, entity, new BirthEvent());
                     commandBuffer.RemoveComponent<Pregnant>(entityInQueryIndex, entity);
                 }
-            }).Run();
+            }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }

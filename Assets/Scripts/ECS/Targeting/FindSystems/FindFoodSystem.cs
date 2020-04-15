@@ -6,11 +6,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Ecosystem.ECS.Targeting
+namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
     /// Looks for nearby food and stores info about the closest food that was found.
     /// </summary>
+    [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindFoodSystem : SystemBase
     {
         protected override void OnUpdate()

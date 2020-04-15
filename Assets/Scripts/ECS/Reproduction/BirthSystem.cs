@@ -15,6 +15,7 @@ namespace Ecosystem.ECS.Reproduction
         protected override void OnUpdate()
         {
             Entities
+                .WithStructuralChanges()
                 .WithoutBurst()
                 .WithAll<BirthEvent>()
                 .ForEach((Entity entity,
