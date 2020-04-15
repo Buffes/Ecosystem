@@ -1112,6 +1112,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 22697913672501658, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: movesOnWater
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22697913672501658, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: movesOnLand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22697913672501658, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MovesOnLand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22697913672501658, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MovesOnWater
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1172,6 +1192,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eagle
       objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763520, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animalType
+      value: 
+      objectReference: {fileID: 11400000, guid: a33a5f6a96eac4ef1a0f9feebe659a4a,
+        type: 2}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Land

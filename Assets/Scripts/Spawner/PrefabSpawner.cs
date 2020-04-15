@@ -3,6 +3,7 @@ using Ecosystem.ECS.Grid;
 using Unity.Entities;
 using Random = UnityEngine.Random;
 using Ecosystem.ECS.Movement;
+using Ecosystem.ECS.Animal;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class PrefabSpawner : MonoBehaviour
         //for each prefab find a free spot and spawn the gameobject
         for (int k = 0; k < differentPrefabs; k++)
         {
-            MovementTerrain movementTerrain = whatToSpawnPrefab[k].GetComponentInChildren<MovementTerrain>();
+            MovementTerrainAuthoring movementTerrain = whatToSpawnPrefab[k].GetComponentInChildren<MovementTerrainAuthoring>();
             bool lookingForFreeTile;
             int length = grid.Length;
             for (int i = 0; i < amountToSpawn[k]; i++)
