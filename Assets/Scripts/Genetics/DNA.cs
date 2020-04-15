@@ -89,10 +89,10 @@ namespace Ecosystem.Genetics
             if (parent1.genes.Count != parent2.genes.Count) throw ParentGeneMismatchException;
 
             int amount = parent1.genes.Count;
-            List<Gene> genes = new List<Gene>();
+            List<Gene> genes = new List<Gene>(amount);
             for (int i = 0; i < amount; i++)
             {
-                if (parent1.genes[i].GetType() != parent2.genes[i].GetType()) throw ParentGeneMismatchException;
+                if (parent1.genes[i].Type.GetType() != parent2.genes[i].Type.GetType()) throw ParentGeneMismatchException;
                 genes.Add(InheritedGene(parent1.genes[i], parent2.genes[i], parent1.mutationRate));
             }
 
