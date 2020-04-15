@@ -24,15 +24,15 @@ public class PrefabSpawner : MonoBehaviour
         GridData grid = worldGridSystem.Grid;
         int differentPrefabs = whatToSpawnPrefab.Length;
         // Spawn
-        spawnPlease(grid, differentPrefabs, true, false);
+        spawnPlease(grid, differentPrefabs);
     }
 
-    void spawnPlease(GridData grid, int differentPrefabs,
-        bool land, bool water)
+    void spawnPlease(GridData grid, int differentPrefabs)
     {
         //for each prefab find a free spot and spawn the gameobject
         for (int k = 0; k < differentPrefabs; k++)
         {
+            MovementTerrain movementTerrain = whatToSpawnPrefab[k].GetComponentInChildren<MovementTerrain>();
             bool lookingForFreeTile;
             int length = grid.Length;
             for (int i = 0; i < amountToSpawn[k]; i++)
@@ -41,7 +41,7 @@ public class PrefabSpawner : MonoBehaviour
                 while (lookingForFreeTile)
                 {
                     int n = Random.Range(0, length);
-                    if (worldGridSystem.IsWalkable(land, water,
+                    if (worldGridSystem.IsWalkable(movementTerrain.MovesOnLand, movementTerrain.MovesOnWater,
                         grid.GetGridPositionFromIndex(n)))
                     {
                         Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
