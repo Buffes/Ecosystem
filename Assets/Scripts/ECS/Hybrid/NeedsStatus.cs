@@ -50,26 +50,6 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
-        /// Get max hunger value.
-        /// </summary>
-        /// <returns></returns>
-        public float GetMaxThirst()
-        {
-            MaxThirstData value = GetComp<MaxThirstData>();
-            return value.MaxThirst;
-        }
-
-        /// <summary>
-        /// Get vmax thirst value.
-        /// </summary>
-        /// <returns></returns>
-        public float GetMaxHunger()
-        {
-            MaxHungerData value = GetComp<MaxHungerData>();
-            return value.MaxHunger;
-        }
-
-        /// <summary>
         /// Sate the hunger of an animal when eating.
         /// </summary>
         /// <param name="value">Float value</param>
