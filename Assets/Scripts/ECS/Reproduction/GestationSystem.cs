@@ -19,7 +19,7 @@ namespace Ecosystem.ECS.Reproduction
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
-            float deltaTime = Time.DeltaTime;
+            float deltaTime = Time.DeltaTime / 60f;
 
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,

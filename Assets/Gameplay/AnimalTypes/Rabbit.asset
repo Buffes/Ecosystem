@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rabbit
   m_EditorClassIdentifier: 
   Meat: {fileID: 6036045412324625326, guid: 1e985e15736829647affb3f1e42c6439, type: 3}
+  Baby: {fileID: 4356907975632342146, guid: d926564931b9643789a1f64382be8263, type: 3}
   Name: Rabbit
   prey: []
   food:
