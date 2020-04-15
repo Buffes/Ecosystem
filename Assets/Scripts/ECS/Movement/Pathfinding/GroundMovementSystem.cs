@@ -1,4 +1,4 @@
-﻿using Ecosystem.ECS.Physics;
+﻿using Ecosystem.ECS.Movement;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -11,7 +11,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 /// <summary>
 /// Sets velocity and rotation based on movement input data.
 /// </summary>
-    public class MovementSystem : SystemBase
+    public class GroundMovementSystem : SystemBase
     {
         protected override void OnUpdate()
         {
