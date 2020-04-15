@@ -45,7 +45,7 @@ namespace Ecosystem.ECS.Hybrid
         private bool KillEntity(Entity e)
         {
             if (!EntityManager.Exists(e)) return false;
-            return EntityManager.AddComponent<DeathEvent>(e);
+            return EntityManager.AddComponentData<DeathEvent>(e,new DeathEvent(DeathCause.Predators));
         }
 
     }
