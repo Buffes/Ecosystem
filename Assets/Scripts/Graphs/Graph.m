@@ -12,23 +12,30 @@ VisionArray = csvread('VisionDoc.csv');
 col9 = VisionArray(:,1);
 col10 = VisionArray(:,2);
 col11 = VisionArray(:,3);
+
 names = {'lions', 'chickens'};
 
-
-figure
-subplot(2,2,1)      
+figure(1)      
 p = plot(col1,col2, col1,col4);
 legend(p, names)
-title('#Animals/Time')
-subplot(2,2,2)       
+ylabel('Number of Animals')
+xlabel('Time')
+figure(2)       
 ps = plot(col1,col3, col1,col5);
-title('Speed/Time')
-subplot(2,2,3)      
-phr = plot(col6,col7, col6,col8);         
-title('HearingRange/Time')
-subplot(2,2,4)       
+legend(ps, names)
+ylabel('Average Speed')
+xlabel('Time')
+figure(3)      
+phr = plot(col6,col7, col6,col8);
+legend(phr, names)
+ylabel('Average Hearing Range')
+xlabel('Time')
+figure(4)
 pvr = plot(col9,col10, col9,col11);
-title('VisionRange/Time')
+legend(pvr, names)
+ylabel('Average Vision Range')
+xlabel('Time')
+
 
 
 
