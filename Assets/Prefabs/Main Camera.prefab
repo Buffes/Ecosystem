@@ -96,5 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302d552a208cb8c6fbbf4ec2ff16e6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
-  scrollSpeed: 10
+  moveSpeed: 10
+  boostFactor: 2
+  zoomSpeed: 10
+  verticalSpeed: 10
+  smoothSpeed: 0.15
+  sensitivity: 1.5
+  dragSpeed: 10
