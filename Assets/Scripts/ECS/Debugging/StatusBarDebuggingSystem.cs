@@ -100,12 +100,13 @@ namespace Ecosystem.ECS.Debugging
 
             Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
                 in Translation position,
-                in SexualUrgesData urgesData) =>
+                in SexualUrgesData urgesData,
+                in MaxSexualUrgesData maxUrge) =>
             {
                 float3 pos = position.Value;
                 pos.y += Height + 1.0f;
                 Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
-                Draw(urgesData.Urge, 1.0f, m, MateColor);
+                Draw(urgesData.Urge, maxUrge.MaxUrge, m, MateColor);
             }).Run();
 
             
