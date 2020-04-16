@@ -8,7 +8,7 @@ using Unity.Transforms;
 namespace Ecosystem.ECS.Movement
 {
     /// <summary>
-    /// Moves entities with the Flying component up to the flying height.
+    /// Moves entities with a LandCommand to the ground.
     /// </summary>
     public class LandingSystem : SystemBase
     {

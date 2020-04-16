@@ -11,8 +11,6 @@ namespace Ecosystem.ECS.Movement
     /// </summary>
     public class FlyingSystem : SystemBase
     {
-        private const float FLYING_HEIGHT = 10f;
-
         protected override void OnUpdate()
         {
             Entities
@@ -20,9 +18,10 @@ namespace Ecosystem.ECS.Movement
             .ForEach((
                 ref PhysicsVelocity velocity,
                 in Translation translation,
-                in MovementSpeed movementSpeed) =>
+                in MovementSpeed movementSpeed,
+                in FlightData flightData) =>
             {
-                if (translation.Value.y < FLYING_HEIGHT)
+                if (translation.Value.y < flightData.Altitude)
                 {
                     velocity.Linear.y = movementSpeed.Value;
                 }

@@ -43,6 +43,23 @@ namespace Ecosystem.ECS.Hybrid
             }
         }
 
+        /// <summary>
+        /// Starts/stops flying. Only has an effect if entity has a FlightData component.
+        /// </summary>
+        public void Fly(bool enabled)
+        {
+            if (!EntityManager.HasComponent<FlightData>(Entity)) return;
+            if (enabled == EntityManager.HasComponent<Flying>(Entity)) return;
+            if (enabled)
+            {
+                EntityManager.AddComponentData(Entity, new Flying());
+            }
+            else
+            {
+                EntityManager.RemoveComponent<Flying>(Entity);
+            }
+        }
+
         public Vector3 GetPosition()
         {
             return EntityManager.GetComponentData<Translation>(Entity).Value;
