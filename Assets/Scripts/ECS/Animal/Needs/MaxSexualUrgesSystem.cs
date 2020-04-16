@@ -1,5 +1,4 @@
 ﻿using Unity.Entities;
-using Ecosystem.ECS.Death;
 
 namespace Ecosystem.ECS.Animal.Needs
 {
