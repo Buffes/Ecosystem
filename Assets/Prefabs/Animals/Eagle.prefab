@@ -1238,6 +1238,16 @@ PrefabInstance:
       propertyPath: MovesOnWater
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8358889571667046334, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MovesOnLand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358889571667046334, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MovesOnWater
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!4 &4564373161721369776 stripped
