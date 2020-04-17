@@ -378,12 +378,12 @@ PrefabInstance:
     - target: {fileID: 4675160465158057465, guid: 98c98caacaf7f424b888bca8a6de5ae2,
         type: 3}
       propertyPath: amountToSpawn.Array.data[0]
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4675160465158057465, guid: 98c98caacaf7f424b888bca8a6de5ae2,
         type: 3}
       propertyPath: amountToSpawn.Array.data[1]
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98c98caacaf7f424b888bca8a6de5ae2, type: 3}
@@ -394,6 +394,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_Name

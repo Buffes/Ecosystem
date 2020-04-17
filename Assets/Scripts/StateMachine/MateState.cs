@@ -13,7 +13,7 @@ namespace Ecosystem.StateMachines {
         public MateState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
-
+            owner.GetMovement().Fly(false);
         }
 
         public void Execute() {

@@ -40,7 +40,6 @@ namespace Ecosystem.StateMachines {
         public void Exit() 
         {
             owner.GetSensors().LookForRandomTarget(false);
-            owner.GetMovement().Fly(false);
         }
     }
 }

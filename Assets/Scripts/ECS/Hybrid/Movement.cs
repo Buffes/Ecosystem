@@ -42,23 +42,19 @@ namespace Ecosystem.ECS.Hybrid
                 EntityManager.RemoveComponent<SprintInput>(Entity);
             }
         }
-
         /// <summary>
         /// Starts/stops flying. Only has an effect if entity has a FlightData component.
         /// </summary>
         public void Fly(bool enabled)
         {
-            if (!EntityManager.HasComponent<FlightData>(Entity)) {
-                Debug.Log("no Flight data");
-                return;
-            }
-            if (enabled == EntityManager.HasComponent<Flying>(Entity)) {
-                Debug.Log("already has flying");
-                return;
-            }
-            if (enabled)
+            if (!EntityManager.HasComponent<FlightData>(Entity)) return;
+            
+            if (enabled == EntityManager.HasComponent<Flying>(Entity)) 
             {
-                Debug.Log("Adding flying");
+                EntityManager.RemoveComponent<LandCommand>(Entity);
+            }
+            else if (enabled)
+            {
                 EntityManager.AddComponentData(Entity, new Flying());
             }
             else
