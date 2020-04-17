@@ -1,5 +1,4 @@
-﻿using Ecosystem.ECS.Animal.Needs;
-using Ecosystem.ECS.Movement;
+﻿using Ecosystem.ECS.Movement;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Unity.Entities;
 using Unity.Transforms;
@@ -49,10 +48,10 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         public void Fly(bool enabled)
         {
-            // if (!EntityManager.HasComponent<FlightData>(Entity)) {
-            //     Debug.Log("no Flight data");
-            //     return;
-            // }
+            if (!EntityManager.HasComponent<FlightData>(Entity)) {
+                Debug.Log("no Flight data");
+                return;
+            }
             if (enabled == EntityManager.HasComponent<Flying>(Entity)) {
                 Debug.Log("already has flying");
                 return;
