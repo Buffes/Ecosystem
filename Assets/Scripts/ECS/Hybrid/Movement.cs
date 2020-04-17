@@ -48,16 +48,32 @@ namespace Ecosystem.ECS.Hybrid
         /// </summary>
         public void Fly(bool enabled)
         {
-            if (!EntityManager.HasComponent<FlightData>(Entity)) return;
-            if (enabled == EntityManager.HasComponent<Flying>(Entity)) return;
+            if (!EntityManager.HasComponent<FlightData>(Entity)) {
+                Debug.Log("no flightdata");
+                return;
+            }
+            if (enabled == EntityManager.HasComponent<Flying>(Entity)) {
+                Debug.Log("already has flying");
+                return;
+            }
             if (enabled)
             {
+                Debug.Log("Adding flying");
                 EntityManager.AddComponentData(Entity, new Flying());
             }
             else
             {
-                EntityManager.RemoveComponent<Flying>(Entity);
+                EntityManager.AddComponentData(Entity, new LandCommand());
             }
+        }
+
+        /// <summary>
+        /// If this entity is still flying. It can still fly for a while after flying has been turned off, since it needs time to land.
+        /// </summary>
+        /// <returns>If this entity is still flying.</returns>
+        public bool IsFlying()
+        {
+            return EntityManager.HasComponent<Flying>(Entity);
         }
 
         public Vector3 GetPosition()

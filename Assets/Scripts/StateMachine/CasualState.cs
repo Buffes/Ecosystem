@@ -18,6 +18,7 @@ namespace Ecosystem.StateMachines {
         public void Enter() 
         {
             owner.GetSensors().LookForRandomTarget(true);
+            owner.GetMovement().Fly(true);
         }
 
         public void Execute() 
@@ -39,6 +40,7 @@ namespace Ecosystem.StateMachines {
         public void Exit() 
         {
             owner.GetSensors().LookForRandomTarget(false);
+            owner.GetMovement().Fly(false);
         }
     }
 }
