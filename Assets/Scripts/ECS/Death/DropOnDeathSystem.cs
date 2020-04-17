@@ -26,9 +26,7 @@ namespace Ecosystem.ECS.Death
             {
 
                 Entity drop = commandBuffer.Instantiate(entityInQueryIndex, dropOnDeath.Prefab);
-                var value = position.Value;
-                value.y -= 0.390f;
-                commandBuffer.SetComponent(entityInQueryIndex, drop, new Translation { Value = value });
+                commandBuffer.SetComponent(entityInQueryIndex, drop, new Translation { Value = position.Value });
 
             }).ScheduleParallel();
 
