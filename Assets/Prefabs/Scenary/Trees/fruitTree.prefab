@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 293787554305520941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 204103284619715789}
   m_Father: {fileID: 0}
@@ -39,15 +39,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293787554305520941}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f39e51a4b83c64f25bb54fe6f3e00aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPrefab: {fileID: 1000013678658166, guid: 8fa35cdad352cfa4297d3be64705ecf1,
+  fruitPrefab: {fileID: 1829371231341652, guid: 426b44a7575f71e479fab4f4e8431989,
     type: 3}
   spawnAmount: 1
-  spawnTime: 2
+  spawnTime: 5
   range: 1.5
 --- !u!1 &8233988397309398654
 GameObject:

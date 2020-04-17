@@ -64,7 +64,7 @@ MonoBehaviour:
   greenScenarySpawnRate: 0.05
   desertScenarySpawnRate: 0.1
   bushes:
-  - {fileID: 4164056731790697608, guid: 7d2cbb18ada141045ad5182551348672, type: 3}
+  - {fileID: 4390595859010704324, guid: 5e288258708204b1786b31732aba5af1, type: 3}
   - {fileID: 4164056731790697608, guid: a7883b57de76da940b7addb4b0ad9b08, type: 3}
   - {fileID: 4164056731790697608, guid: 40f2f4ddf0a575640a5094404c14d800, type: 3}
   - {fileID: 4164056731790697608, guid: 8557e0719d0d03f499e01ecac131c66f, type: 3}
