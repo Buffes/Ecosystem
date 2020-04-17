@@ -41,10 +41,9 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 ref DynamicBuffer<PathElement> pathBuffer,
                 ref DynamicBuffer<UnreachablePosition> unreachablePositionsBuffer,
                 in MoveCommand moveCommand,
-                in Translation translation) =>
+                in Translation translation,
+                in MovementTerrain movementTerrain) =>
             {
-                bool canMoveOnLand = true;
-                bool canMoveInWater = false;
 
                 float3 target = moveCommand.Target;
                 float reach = moveCommand.Reach;
@@ -58,7 +57,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 
                 NativeList<int2> path  = FindPath(grid.GetGridPosition(position),
                     grid.GetGridPosition(target), blockedCells, waterCells, grid,
-                    canMoveOnLand, canMoveInWater, maxTiles);
+                    movementTerrain.MovesOnLand, movementTerrain.MovesOnWater, maxTiles);
                 
                 // Add path checkpoints
                 for (int i = 0; i < path.Length - 1; i++)

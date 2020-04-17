@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Jobs.LowLevel.Unsafe;
 using Ecosystem.ECS.Grid;
+using Ecosystem.ECS.Movement;
 
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
@@ -40,10 +41,11 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 .WithReadOnly(waterCells)
                 .ForEach((int nativeThreadIndex, Entity entity,
                     ref LookingForRandomTarget lookingForRandomTarget,
-                    in Translation translation) =>
+                    in Translation translation,
+                    in MovementTerrain movementTerrain) =>
             {
-                bool onLand = true;
-                bool inWater = false;
+                bool onLand = movementTerrain.MovesOnLand;
+                bool inWater = movementTerrain.MovesOnWater;
 
                 int randomIndex = nativeThreadIndex % JobsUtility.MaxJobThreadCount;
                 var random = randomArray[randomIndex];
