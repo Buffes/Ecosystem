@@ -33,16 +33,16 @@ namespace Ecosystem.ECS.Movement
                 in LandCommand landCommand) =>
             {
                 float groundLevel = GetGroundLevel(translation.Value);
-
-                if (translation.Value.y > groundLevel)
+                float offset = 0.1f;
+                if (translation.Value.y <= groundLevel + offset)
+                {
+                    commandBuffer.RemoveComponent<Flying>(entityInQueryIndex, entity);
+                    commandBuffer.RemoveComponent<LandCommand>(entityInQueryIndex, entity);
+                }
+                else
                 {
                     velocity.Linear.y = -movementSpeed.Value;
-                    return;
                 }
-
-                commandBuffer.RemoveComponent<Flying>(entityInQueryIndex, entity);
-                commandBuffer.RemoveComponent<LandCommand>(entityInQueryIndex, entity);
-
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);

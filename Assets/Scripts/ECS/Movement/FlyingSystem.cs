@@ -3,6 +3,7 @@
 using Unity.Entities;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Movement
 {
@@ -15,6 +16,7 @@ namespace Ecosystem.ECS.Movement
         {
             Entities
             .WithAll<Flying>()
+            .WithNone<LandCommand>()
             .ForEach((
                 ref PhysicsVelocity velocity,
                 in Translation translation,
@@ -24,6 +26,10 @@ namespace Ecosystem.ECS.Movement
                 if (translation.Value.y < flightData.Altitude)
                 {
                     velocity.Linear.y = movementSpeed.Value;
+                }
+                else
+                {
+                    velocity.Linear.y = 0f;
                 }
             }).ScheduleParallel();
         }
