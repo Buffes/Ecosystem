@@ -19,17 +19,18 @@ public class GroundCollisionSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        Entities.ForEach((ref Translation translation, ref PhysicsVelocity velocity, ref PhysicsMass mass) =>
-        {
-            float groundLevel = GetGroundLevel(translation.Value);
-
-            if (translation.Value.y < groundLevel)
+        Entities
+            .WithAll<PhysicsMass>()
+            .ForEach((ref Translation translation, ref PhysicsVelocity velocity) =>
             {
-                translation.Value.y = groundLevel;
-                velocity.Linear.y = 0;
-            }
+                float groundLevel = GetGroundLevel(translation.Value);
 
-        }).ScheduleParallel();
+                if (translation.Value.y < groundLevel)
+                {
+                    translation.Value.y = groundLevel;
+                    velocity.Linear.y = 0;
+                }
+            }).ScheduleParallel();
     }
 
     private static float GetGroundLevel(float3 position)
