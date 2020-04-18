@@ -73,6 +73,12 @@ namespace Ecosystem.ECS.Debugging
             );
         }
 
+        public Matrix4x4 RotationMatrixAroundAxis(Ray axis, float rotation)
+        {
+            return Matrix4x4.TRS(-axis.origin, Quaternion.AngleAxis(rotation, axis.direction), Vector3.one)
+                 * Matrix4x4.TRS(axis.origin, Quaternion.identity, Vector3.one);
+        }
+
         protected override void OnUpdate()
         {
             if (!Show) return;
@@ -85,8 +91,9 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height;
                 pos.x -= 0.5f;
+
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
-                
+              
                 Draw(hungerData.Hunger, maxHunger.MaxHunger, m, HungerColor);
             }).Run();
 
@@ -95,11 +102,13 @@ namespace Ecosystem.ECS.Debugging
                 in ThirstData thirstData,
                 in MaxThirstData maxThirst) =>
             {
+
                 float3 pos = position.Value;
                 pos.y += Height + 0.3f;
                 pos.x -= 0.5f;
-                
+
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                
                 Draw(thirstData.Thirst, maxThirst.MaxThirst, m, ThirstColor);
             }).Run();
 
@@ -111,11 +120,15 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height + 0.6f;
                 pos.x -= 0.5f;
+
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+
                 Draw(urgesData.Urge, maxUrge.MaxUrge, m, MateColor);
             }).Run();
 
             
         }
     }
+
+
 }
