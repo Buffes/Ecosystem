@@ -370,8 +370,35 @@ PrefabInstance:
       propertyPath: amountToSpawn.Array.data[2]
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4675160465158057465, guid: 98c98caacaf7f424b888bca8a6de5ae2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98c98caacaf7f424b888bca8a6de5ae2, type: 3}
+--- !u!1 &1013633815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2757748227421460007, guid: 98c98caacaf7f424b888bca8a6de5ae2,
+    type: 3}
+  m_PrefabInstance: {fileID: 903267122}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1013633816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013633815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304b61da2589f46459e92467d1768d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grass: {fileID: 1317140292629962124, guid: a3ab53cba051c293f85226a2cdd652dc, type: 3}
+  GrassSpawnTime: 1
+  seaweed: {fileID: 5832808878485633524, guid: 1582edbbe877f1646b432bec757288da, type: 3}
+  SeaweedSpawnTime: 1
 --- !u!1001 &1963549216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -379,6 +406,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_Name
@@ -448,6 +480,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6590647843537855151, guid: f3a78c7779d625f4cbf0e97a7dac8951,
+        type: 3}
+      propertyPath: smoothSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8983521673646897990, guid: f3a78c7779d625f4cbf0e97a7dac8951,
         type: 3}
       propertyPath: m_Name
