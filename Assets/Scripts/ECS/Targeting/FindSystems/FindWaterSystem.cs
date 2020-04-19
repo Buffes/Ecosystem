@@ -1,11 +1,7 @@
-using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Grid;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensing;
 using Ecosystem.ECS.Targeting.Targets;
-using Ecosystem.Grid;
-
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -28,7 +24,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
         protected override void OnUpdate()
         {
             var grid = worldGridSystem.Grid;
-            var waterTiles = worldGridSystem.WaterCells;
             var drinkableTiles = worldGridSystem.DrinkableCells;
            
             // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
