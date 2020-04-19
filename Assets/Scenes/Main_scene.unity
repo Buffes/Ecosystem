@@ -396,9 +396,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grass: {fileID: 1317140292629962124, guid: a3ab53cba051c293f85226a2cdd652dc, type: 3}
-  GrassSpawnTime: 1
+  GrassSpawnTime: 3
   seaweed: {fileID: 5832808878485633524, guid: 1582edbbe877f1646b432bec757288da, type: 3}
-  SeaweedSpawnTime: 1
+  SeaweedSpawnTime: 3
 --- !u!1001 &1963549216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -483,7 +483,7 @@ PrefabInstance:
     - target: {fileID: 6590647843537855151, guid: f3a78c7779d625f4cbf0e97a7dac8951,
         type: 3}
       propertyPath: smoothSpeed
-      value: 1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8983521673646897990, guid: f3a78c7779d625f4cbf0e97a7dac8951,
         type: 3}

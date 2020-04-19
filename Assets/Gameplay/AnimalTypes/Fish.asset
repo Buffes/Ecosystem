@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Fish
   m_EditorClassIdentifier: 
   Meat: {fileID: 0}
-  Baby: {fileID: 0}
-  Name: Fish
+  Baby: {fileID: 8293078585461854766, guid: 290fdc0c73d1e4649bf63eeb3459216c, type: 3}
+  Name: Sardine
   prey: []
-  food: []
+  food:
+  - {fileID: 11400000, guid: 26814f138066335b7b105d0d95e172e6, type: 2}
