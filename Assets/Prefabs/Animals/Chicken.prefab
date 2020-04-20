@@ -336,7 +336,12 @@ PrefabInstance:
     - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Urge
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: GestationPeriod
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
