@@ -1,5 +1,6 @@
 using Ecosystem.ECS.Animal;
 using Unity.Entities;
+using Unity.Transforms;
 
 namespace Ecosystem.ECS.Growth
 {
@@ -25,6 +26,7 @@ namespace Ecosystem.ECS.Growth
             Entities
                 .WithNone<Adult>()
                 .ForEach((Entity entity, int entityInQueryIndex,
+                ref Scale scale,
                 in AgeData age,
                 in LifespanData lifespan) =>
                 {
@@ -32,7 +34,7 @@ namespace Ecosystem.ECS.Growth
                     
                     if (age.Age < ageOfMaturity)
                     {
-                        
+                        scale.Value = 0.5f;
                     }
                     else
                     {
