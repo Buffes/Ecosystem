@@ -73,11 +73,6 @@ namespace Ecosystem.ECS.Debugging
             );
         }
 
-        public Matrix4x4 RotationMatrixAroundAxis(Ray axis, float rotation)
-        {
-            return Matrix4x4.TRS(-axis.origin, Quaternion.AngleAxis(rotation, axis.direction), Vector3.one)
-                 * Matrix4x4.TRS(axis.origin, Quaternion.identity, Vector3.one);
-        }
 
         protected override void OnUpdate()
         {
