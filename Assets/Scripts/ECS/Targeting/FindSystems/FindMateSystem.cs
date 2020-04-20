@@ -17,8 +17,11 @@ namespace Ecosystem.ECS.Targeting.FindSystems
         protected override void OnUpdate()
         {
             var sexTypes = GetComponentDataFromEntity<SexData>(true);
+            var adultData = GetComponentDataFromEntity<Adult>(true);
 
             Entities
+                .WithAll<Adult>()
+                .WithReadOnly(adultData)
                 .WithReadOnly(sexTypes)
                 .ForEach((
                 ref LookingForMate lookingForMate,
@@ -38,12 +41,14 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                         AnimalTypeData targetAnimalType = sensedAnimalInfo.AnimalTypeData;
                         SexData targetSexType = sexTypes[sensedAnimalInfo.Entity];
+                        bool targetAdult = adultData.Exists(sensedAnimalInfo.Entity);
                         float3 targetPosition = sensedAnimalInfo.Position;
                         float targetDistance = math.distance(targetPosition, position.Value);
 
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; // Not the same type of animal
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
                         if (sexType.Sex == targetSexType.Sex) continue; // Not the opposite sex
+                        if (!targetAdult) continue; // Not an adult
                         if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                         closestMateIndex = i;
