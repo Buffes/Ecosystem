@@ -21,7 +21,9 @@ namespace Ecosystem.ECS.Animal.Needs
 
             float deltaTime = Time.DeltaTime/60f;
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex,
+            Entities
+                .WithNone<Reproduction.Pregnant>()
+                .ForEach((Entity entity, int entityInQueryIndex,
                 ref SexualUrgesData sexualUrgesData) =>
             {
                 sexualUrgesData.Urge -= deltaTime;
