@@ -77,7 +77,7 @@ namespace Ecosystem.Spawner
 
                 int2 gridPos = grid.GetGridPositionFromIndex(n);
                 Vector3 spawnPos = grid.GetWorldPosition(gridPos);
-                spawnPos.y = 1f;
+                spawnPos.y = 0f;
 
                 Instantiate(plant, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
                 worldGridSystem.SetOccupiedCell(gridPos);
