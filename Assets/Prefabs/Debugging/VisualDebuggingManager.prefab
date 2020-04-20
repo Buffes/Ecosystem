@@ -46,13 +46,13 @@ MonoBehaviour:
   hearingDebugShow: 1
   pathDebugShow: 1
   stateDebugShow: 1
-  visionDebugShow: 0
+  visionDebugShow: 1
   statusDebugShow: 1
   hearingMaterial: {fileID: 2100000, guid: 79bd39ba4842035468e6230c781507c5, type: 2}
   pathMaterial: {fileID: 2100000, guid: f9473c36d3721764d9f0966081f9ecaa, type: 2}
   stateMaterial: {fileID: 2100000, guid: 7cdcfc48593ed634d8e1a7fabdcd8f88, type: 2}
   stateRadius: 0.15
-  stateHeight: 2.5
+  stateHeight: 1.25
   defaultColor: {r: 1, g: 1, b: 1, a: 0}
   casualColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
   hungerColor: {r: 1, g: 0.60990745, b: 0, a: 0}
@@ -60,6 +60,6 @@ MonoBehaviour:
   mateColor: {r: 1, g: 0, b: 0.797163, a: 0}
   fleeColor: {r: 0.754717, g: 0.14409424, b: 0, a: 0}
   huntColor: {r: 0.103773594, g: 0.061676756, b: 0.06380923, a: 0}
-  visionMaterial: {fileID: 0}
+  visionMaterial: {fileID: 2100000, guid: a83be484d23b20f438491cef8ca78c3a, type: 2}
   statusMaterial: {fileID: 2100000, guid: 93e6151621bd0954a93788e3970bdbcc, type: 2}
-  statusHeight: 2.5
+  statusHeight: 1.75

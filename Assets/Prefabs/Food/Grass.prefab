@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &403517434268612593
+--- !u!1001 &3207021047642261124
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -62,31 +62,79 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2781775597229810502, guid: 41939f0a77fdd604db248c02d5ac5af5,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781775597229810502, guid: 41939f0a77fdd604db248c02d5ac5af5,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781775597229810502, guid: 41939f0a77fdd604db248c02d5ac5af5,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376392, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_Name
-      value: FoxMeat
+      value: Grass
       objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376399, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: foodType
       value: 
-      objectReference: {fileID: 11400000, guid: b14a02feda3ba0e4285bc37185ffb967,
+      objectReference: {fileID: 11400000, guid: ca094083e1778324d846bea66efea76f,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
+--- !u!4 &3536459094490090064 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2131792970714909908, guid: 41939f0a77fdd604db248c02d5ac5af5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3207021047642261124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4283579440007862986
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3536459094490090064}
+    m_Modifications:
+    - target: {fileID: 100000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_Name
+      value: Grass_g_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f0409aa031b0a854aba63278fae3a9a5, type: 3}
