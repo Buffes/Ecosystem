@@ -73,9 +73,11 @@ namespace Ecosystem.ECS.Debugging
             );
         }
 
+
         protected override void OnUpdate()
         {
             if (!Show) return;
+            Quaternion lookRot = Camera.main.transform.rotation;
             Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
                 in Translation position,
                 in HungerData hungerData,
@@ -83,7 +85,10 @@ namespace Ecosystem.ECS.Debugging
             {
                 float3 pos = position.Value;
                 pos.y += Height;
-                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                pos.x -= 0.5f;
+
+                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+              
                 Draw(hungerData.Hunger, maxHunger.MaxHunger, m, HungerColor);
             }).Run();
 
@@ -92,9 +97,13 @@ namespace Ecosystem.ECS.Debugging
                 in ThirstData thirstData,
                 in MaxThirstData maxThirst) =>
             {
+
                 float3 pos = position.Value;
-                pos.y += Height + 0.5f;
-                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                pos.y += Height + 0.3f;
+                pos.x -= 0.5f;
+
+                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                
                 Draw(thirstData.Thirst, maxThirst.MaxThirst, m, ThirstColor);
             }).Run();
 
@@ -104,12 +113,17 @@ namespace Ecosystem.ECS.Debugging
                 in MaxSexualUrgesData maxUrge) =>
             {
                 float3 pos = position.Value;
-                pos.y += Height + 1.0f;
-                Matrix4x4 m = Matrix4x4.TRS(pos, Quaternion.identity, Vector3.one);
+                pos.y += Height + 0.6f;
+                pos.x -= 0.5f;
+
+                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+
                 Draw(urgesData.Urge, maxUrge.MaxUrge, m, MateColor);
             }).Run();
 
             
         }
     }
+
+
 }
