@@ -44,6 +44,7 @@ namespace Ecosystem.Grid
             SetupTilemap();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWaterTiles();
+            SetupDrinkableTiles();
             ToggleShadows(true);
         }
 
@@ -648,7 +649,7 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
-                    if (tiles[row, col] < 34) // All water tiles
+                    if (tiles[row, col] < 18) // All water tiles
                     {
                         SetWaterCell(row, col);
                     } 
@@ -656,7 +657,23 @@ namespace Ecosystem.Grid
             }
         }
 
+        private void SetupDrinkableTiles()
+        {
+            for (int row = 0; row < tiles.GetLength(0); row++)
+            {
+                for (int col = 0; col < tiles.GetLength(1); col++)
+                {
+                    if (tiles[row, col] < 34 && tiles[row,col] > 17) // All water tiles
+                    {
+                        SetDrinkableCell(row, col);
+                    }
+                }
+            }
+        }
+
         private void SetWaterCell(int x, int y) => worldGridSystem.SetWaterCell(new int2(x, y));
+
+        private void SetDrinkableCell(int x, int y) => worldGridSystem.setDrinkableCell(new int2(x, y));
 
         public void SetBlockedCell(int x, int y)
             => worldGridSystem.SetOccupiedCell(new int2(x, y), true);
