@@ -42,7 +42,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems {
                     in Translation translation,
                     in MovementTerrain movementTerrain) =>
                 {
-                    if (!lookingForPredator.HasFound) return; // No predator to run from
+                    if (!lookingForPredator.HasFound) return; // No predator to flee from
 
                     bool onLand = movementTerrain.MovesOnLand;
                     bool inWater = movementTerrain.MovesOnWater;
