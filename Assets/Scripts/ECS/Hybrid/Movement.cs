@@ -42,6 +42,35 @@ namespace Ecosystem.ECS.Hybrid
                 EntityManager.RemoveComponent<SprintInput>(Entity);
             }
         }
+        /// <summary>
+        /// Starts/stops flying. Only has an effect if entity has a FlightData component.
+        /// </summary>
+        public void Fly(bool enabled)
+        {
+            if (!EntityManager.HasComponent<FlightData>(Entity)) return;
+            
+            if (enabled == EntityManager.HasComponent<Flying>(Entity)) 
+            {
+                EntityManager.RemoveComponent<LandCommand>(Entity);
+            }
+            else if (enabled)
+            {
+                EntityManager.AddComponentData(Entity, new Flying());
+            }
+            else
+            {
+                EntityManager.AddComponentData(Entity, new LandCommand());
+            }
+        }
+
+        /// <summary>
+        /// If this entity is still flying. It can still fly for a while after flying has been turned off, since it needs time to land.
+        /// </summary>
+        /// <returns>If this entity is still flying.</returns>
+        public bool IsFlying()
+        {
+            return EntityManager.HasComponent<Flying>(Entity);
+        }
 
         public Vector3 GetPosition()
         {

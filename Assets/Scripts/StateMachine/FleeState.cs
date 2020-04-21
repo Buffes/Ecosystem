@@ -17,6 +17,7 @@ namespace Ecosystem.StateMachines {
         public void Enter() {
             // Starts sprint
             owner.GetMovement().Sprint(true);
+            owner.GetMovement().Fly(true);
         }
 
         public void Execute() {
