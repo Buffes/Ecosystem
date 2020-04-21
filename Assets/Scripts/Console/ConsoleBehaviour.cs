@@ -28,7 +28,7 @@ namespace Ecosystem.Console
 
         private void Start()
         {
-            console.CommandExecutor = new CommandManager(commandCollection.Commands);
+            console.CommandExecutor = new CommandManager(commandCollection);
             inputField.onSubmit.AddListener((string input) => console.SendInput(this, input));
         }
 
