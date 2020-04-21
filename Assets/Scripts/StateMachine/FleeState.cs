@@ -17,15 +17,12 @@ namespace Ecosystem.StateMachines {
         public void Enter() {
             // Starts sprint
             owner.GetMovement().Sprint(true);
-            owner.GetSensors().LookForFleeTarget(true);
         }
 
         public void Execute() {
             timeSinceLastFrame += Time.deltaTime;
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
-
-            if (!owner.GetSensors().FoundFleeTarget()) return;
 
             nextTarget = owner.GetSensors().GetFoundFleeTargetInfo();
             owner.Move(nextTarget,0f,200);
@@ -34,7 +31,6 @@ namespace Ecosystem.StateMachines {
         public void Exit() {
             // End sprint
             owner.GetMovement().Sprint(false);
-            owner.GetSensors().LookForFleeTarget(false);
         }
     }
 }
