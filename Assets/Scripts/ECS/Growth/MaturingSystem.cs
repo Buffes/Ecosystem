@@ -1,5 +1,6 @@
 using Ecosystem.ECS.Animal;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -23,28 +24,29 @@ namespace Ecosystem.ECS.Growth
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
             float deltaTime = Time.DeltaTime/60;
-
+            
             Entities
-                .WithoutBurst()
                 .WithNone<Adult>()
                 .ForEach((Entity entity, int entityInQueryIndex,
-                ref Scale scale,
+                ref CompositeScale scale,
+                ref Translation translation,
                 in AgeData age,
                 in LifespanData lifespan) =>
                 {
-                    float ageOfMaturity = lifespan.Value * 0.15f; // TODO: Maybe make multiplier dependent on a component. 
-                    Debug.Log("age: " + age.Age);
-                    Debug.Log("age of maturity: " + ageOfMaturity);
+                    float ageOfMaturity = lifespan.Value * 0.003f; // TODO: Maybe make multiplier dependent on a component. 
                     if (age.Age < ageOfMaturity)
                     {
-                        scale.Value = 0.5f;
-                        Debug.Log("Setting scale to .5");
+                        float small = 0.5f;
+                        float ageNorm = age.Age / ageOfMaturity;
+                        float blend = small * (1f - ageNorm) + ageNorm;
+                        scale.Value = float4x4.Scale(blend);
                     }
                     else
                     {
-                        //commandBuffer.AddComponent<Adult>(entityInQueryIndex, entity);
+                        scale.Value = float4x4.Scale(1f);
+                        commandBuffer.AddComponent<Adult>(entityInQueryIndex, entity);
                     }
-                }).Run();
+                }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }

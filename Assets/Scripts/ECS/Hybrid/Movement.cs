@@ -1,6 +1,7 @@
 ﻿using Ecosystem.ECS.Movement;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -51,6 +52,14 @@ namespace Ecosystem.ECS.Hybrid
         public Quaternion GetRotation()
         {
             return EntityManager.GetComponentData<Rotation>(Entity).Value;
+        }
+
+        public Vector3 GetScale()
+        {
+            // Scale factors are along the diagonal of this matrix.
+            float4x4 scale = EntityManager.GetComponentData<CompositeScale>(Entity).Value;
+            
+            return new Vector3(scale.c0.x, scale.c1.y, scale.c2.z);
         }
     }
 }
