@@ -19,7 +19,6 @@ namespace Ecosystem.ECS.Reproduction
                 .WithoutBurst()
                 .WithAll<BirthEvent>()
                 .ForEach((Entity entity,
-                PregnancyParticleSystem particleSystem,
                 PregnancyData pregnancyData,
                 DNA dna,
                 AnimalPrefab prefab,
@@ -31,8 +30,6 @@ namespace Ecosystem.ECS.Reproduction
                 baby.InitDNA(pregnancyData.DNAforBaby); // Initialize the baby's DNA 
                 EntityManager.RemoveComponent<BirthEvent>(entity);
                 EntityManager.RemoveComponent<PregnancyData>(entity);
-                if (particleSystem.ParticleSystem.IsAlive())
-                    particleSystem.ParticleSystem.Stop();
 
             }).Run();
         }

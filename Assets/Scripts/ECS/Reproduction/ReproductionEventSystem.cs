@@ -18,7 +18,6 @@ namespace Ecosystem.ECS.Reproduction
                 .WithStructuralChanges()
                 .WithoutBurst()
                 .ForEach((Entity entity,
-                PregnancyParticleSystem particleSystem,
                 ReproductionEvent reproductionEvent,
                 DNA dna,
                 ref SexualUrgesData sexualUrgesData,
@@ -30,8 +29,6 @@ namespace Ecosystem.ECS.Reproduction
                     DNA newDNA = DNA.InheritedDNA(dna, reproductionEvent.PartnerDNA);
                     EntityManager.AddComponentData(entity, new PregnancyData { DNAforBaby = newDNA }); // If female, become pregnant
                     EntityManager.AddComponentData(entity, new Pregnant { RemainingDuration = gestationData.GestationPeriod });
-                    if (!particleSystem.ParticleSystem.IsAlive())
-                        particleSystem.ParticleSystem.Play();
                 }
                 EntityManager.RemoveComponent<ReproductionEvent>(entity);
 
