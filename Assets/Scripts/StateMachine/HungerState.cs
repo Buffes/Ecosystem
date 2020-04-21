@@ -13,7 +13,7 @@ namespace Ecosystem.StateMachines {
         public HungerState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
-
+            owner.GetMovement().Fly(false);
         }
 
         public void Execute() {
@@ -23,8 +23,7 @@ namespace Ecosystem.StateMachines {
 
             Vector3 currentPos = owner.GetMovement().GetPosition();
             nextTarget = owner.GetSensors().GetFoundFoodInfo().Position;
-            Vector3 diff = nextTarget - currentPos;
-            float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+            float diffLength = Vector3.Distance(nextTarget, currentPos);
             if (diffLength <= 2.5f) {
                 Entity food = owner.GetSensors().GetFoundFoodInfo().Entity;
                 owner.GetNeedsStatus().SateHunger(owner.GetInteraction().Eat(food));

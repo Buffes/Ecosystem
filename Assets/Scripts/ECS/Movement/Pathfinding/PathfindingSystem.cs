@@ -34,9 +34,13 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             var waterCells = worldGridSystem.WaterCells;
             var grid = worldGridSystem.Grid;
             double time = Time.ElapsedTime;
+
+            var flyingComponents = GetComponentDataFromEntity<Flying>(true);
+
             Entities
                 .WithReadOnly(blockedCells)
                 .WithReadOnly(waterCells)
+                .WithReadOnly(flyingComponents)
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 ref DynamicBuffer<UnreachablePosition> unreachablePositionsBuffer,
@@ -48,6 +52,7 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 float3 target = moveCommand.Target;
                 float reach = moveCommand.Reach;
                 int maxTiles = moveCommand.MaxTiles;
+                bool shouldPathfind = moveCommand.Pathfind;
                 float3 position = translation.Value;    
                 // Consume the command
                 commandBuffer.RemoveComponent<MoveCommand>(entityInQueryIndex, entity);
@@ -55,10 +60,17 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 // Clear any existing path
                 pathBuffer.Clear();
                 
-                NativeList<int2> path  = FindPath(grid.GetGridPosition(position),
+                if (!shouldPathfind || flyingComponents.Exists(entity))
+                {
+                    pathBuffer.Add(new PathElement { Checkpoint = target + reach * math.normalize(position - target)});
+                    pathBuffer.Add(new PathElement { Checkpoint = position});
+                    return;
+                } 
+                
+                NativeList<int2> path = FindPath(grid.GetGridPosition(position),
                     grid.GetGridPosition(target), blockedCells, waterCells, grid,
                     movementTerrain.MovesOnLand, movementTerrain.MovesOnWater, maxTiles);
-                
+            
                 // Add path checkpoints
                 for (int i = 0; i < path.Length - 1; i++)
                 {
@@ -84,11 +96,12 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 if (pathBuffer.Length <= 1)
                 {
                     // Add to unreachable buffer
-                    unreachablePositionsBuffer.Add(new UnreachablePosition 
-                                                    { 
-                                                        Position = grid.GetGridPosition(target),
-                                                        Timestamp = time
-                                                    });
+                    unreachablePositionsBuffer
+                        .Add(new UnreachablePosition 
+                            { 
+                                Position = grid.GetGridPosition(target),
+                                Timestamp = time
+                            });
                 }
                 
                 path.Dispose();

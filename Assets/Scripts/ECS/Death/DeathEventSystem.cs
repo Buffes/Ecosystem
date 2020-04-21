@@ -5,6 +5,7 @@ namespace Ecosystem.ECS.Death
     /// <summary>
     /// Kills desired entities
     /// </summary>
+    [UpdateInGroup(typeof(LateSimulationSystemGroup))]
     public class DeathEventSystem : SystemBase
     {
         EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;

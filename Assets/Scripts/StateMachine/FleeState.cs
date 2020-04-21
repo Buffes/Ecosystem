@@ -5,14 +5,19 @@ namespace Ecosystem.StateMachines {
     public class FleeState : IState {
 
         Animal owner;
+        Vector3 nextTarget;
         private float timeSinceLastFrame = 0f;
         private float pathfindInterval = 1f;
 
-        public FleeState(Animal owner) { this.owner = owner; }
+        public FleeState(Animal owner) {
+            this.owner = owner;
+            timeSinceLastFrame = Random.Range(0f,pathfindInterval);
+        }
 
         public void Enter() {
             // Starts sprint
             owner.GetMovement().Sprint(true);
+            owner.GetMovement().Fly(true);
         }
 
         public void Execute() {
@@ -20,13 +25,8 @@ namespace Ecosystem.StateMachines {
             if (timeSinceLastFrame < pathfindInterval) return;
             timeSinceLastFrame = 0f;
 
-            Vector3 predatorPos = owner.GetSensors().GetFoundPredatorInfo().Position;
-            Vector3 currentPos = owner.GetMovement().GetPosition();
-            Vector3 diff = currentPos - predatorPos;
-            float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
-            Vector3 target = currentPos + 5f*diff/diffLength;
- 
-            owner.Move(target,0f,200);
+            nextTarget = owner.GetSensors().GetFoundFleeTargetInfo();
+            owner.Move(nextTarget,0f,200);
         }
 
         public void Exit() {
