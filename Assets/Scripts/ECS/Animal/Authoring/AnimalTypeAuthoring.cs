@@ -25,7 +25,7 @@ namespace Ecosystem.ECS.Animal
 
             dstManager.AddComponentData(entity, new AnimalPrefab
             {
-                Prefab = animalType.Baby.gameObject
+                Prefab = animalType.Baby
             });
 
             DynamicBuffer<PreyTypesElement> preyBuffer = dstManager.AddBuffer<PreyTypesElement>(entity);
