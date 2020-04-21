@@ -18,7 +18,7 @@ namespace Ecosystem.ECS.Hybrid
         public void LookForPredator(bool enabled) => AddRemoveComp(enabled, new LookingForPredator());
         public void LookForMate(bool enabled) => AddRemoveComp(enabled, new LookingForMate());
         public void LookForRandomTarget(bool enabled) => AddRemoveComp(enabled, new LookingForRandomTarget());
-        public void LookForFleeTarget(bool enabled,Vector3 enemyPosition) => AddRemoveComp(enabled, new LookingForFleeTarget { EnemyPosition = enemyPosition });
+        public void LookForFleeTarget(bool enabled) => AddRemoveComp(enabled, new LookingForFleeTarget());
 
 
         /// <summary>

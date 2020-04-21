@@ -38,6 +38,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems {
                 .WithReadOnly(waterCells)
                 .ForEach((int nativeThreadIndex,Entity entity,
                     ref LookingForFleeTarget lookingForFleeTarget,
+                    in LookingForPredator lookingForPredator,
                     in Translation translation,
                     in MovementTerrain movementTerrain) =>
                 {
@@ -48,7 +49,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems {
                     var random = randomArray[randomIndex];
 
                     float3 target = translation.Value;
-                    float3 diff = target - lookingForFleeTarget.EnemyPosition;
+                    float3 diff = target - lookingForPredator.Position;
                     float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
                     float3 startingPoint = target + 3f * diff / diffLength;
 

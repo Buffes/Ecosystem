@@ -93,7 +93,7 @@ namespace Ecosystem.Attributes
 
             if (sensors.FoundPredator())
             {
-                sensors.LookForFleeTarget(true,sensors.GetFoundPredatorInfo().Position);
+                sensors.LookForFleeTarget(true);
                 if (stateMachine.getCurrentState() != this.fleeState)
                 {
                     stateMachine.ChangeState(this.fleeState);
