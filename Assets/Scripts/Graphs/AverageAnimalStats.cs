@@ -55,5 +55,14 @@ namespace Ecosystem.Graphs
             }
             Clear();
         }
+        public void AddDataPointCount(double timestamp)
+        {
+            foreach (var pair in animalStatValueSums)
+            {
+                if (pair.Value.Count == 0) continue;
+                AddDataPoint(timestamp, pair.Key, pair.Value.Count);
+            }
+            Clear();
+        }
     }
 }
