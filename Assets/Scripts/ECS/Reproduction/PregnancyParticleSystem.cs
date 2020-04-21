@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Ecosystem.ECS.Reproduction
 {
     [GenerateAuthoringComponent]
-    public class PregnancyParticleSystemPrefab : IComponentData
+    public class PregnancyParticleSystem : IComponentData
     {
         public ParticleSystem ParticleSystem;
     }

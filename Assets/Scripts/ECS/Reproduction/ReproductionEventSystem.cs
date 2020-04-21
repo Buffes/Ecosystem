@@ -18,7 +18,7 @@ namespace Ecosystem.ECS.Reproduction
                 .WithStructuralChanges()
                 .WithoutBurst()
                 .ForEach((Entity entity,
-                PregnancyParticleSystemPrefab particleSystem,
+                PregnancyParticleSystem particleSystem,
                 ReproductionEvent reproductionEvent,
                 DNA dna,
                 ref SexualUrgesData sexualUrgesData,

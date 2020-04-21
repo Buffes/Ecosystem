@@ -19,7 +19,7 @@ namespace Ecosystem.ECS.Reproduction
                 .WithoutBurst()
                 .WithAll<BirthEvent>()
                 .ForEach((Entity entity,
-                PregnancyParticleSystemPrefab particleSystem,
+                PregnancyParticleSystem particleSystem,
                 PregnancyData pregnancyData,
                 DNA dna,
                 AnimalPrefab prefab,
