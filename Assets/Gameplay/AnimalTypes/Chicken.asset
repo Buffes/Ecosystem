@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
-  m_Name: Rabbit
+  m_Name: Chicken
   m_EditorClassIdentifier: 
   Meat: {fileID: 6036045412324625326, guid: 1e985e15736829647affb3f1e42c6439, type: 3}
-  Baby: {fileID: 4356907975632342146, guid: d926564931b9643789a1f64382be8263, type: 3}
+  Baby: {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263, type: 3}
   Name: Chicken
   prey: []
   food:

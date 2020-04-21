@@ -11,7 +11,7 @@ namespace Ecosystem.Gameplay
         public GameObject Meat;
 
         [Tooltip("The prefab that this animal spawns babies from")]
-        public Animal Baby;
+        public GameObject Baby;
 
         [Tooltip("The name of this animal (Fox,Rabbit,Fish,Eagle)")]
         public string Name;
