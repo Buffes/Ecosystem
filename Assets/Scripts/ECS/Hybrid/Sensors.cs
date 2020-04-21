@@ -18,6 +18,7 @@ namespace Ecosystem.ECS.Hybrid
         public void LookForPredator(bool enabled) => AddRemoveComp(enabled, new LookingForPredator());
         public void LookForMate(bool enabled) => AddRemoveComp(enabled, new LookingForMate());
         public void LookForRandomTarget(bool enabled) => AddRemoveComp(enabled, new LookingForRandomTarget());
+        public void LookForFleeTarget(bool enabled) => AddRemoveComp(enabled, new LookingForFleeTarget());
 
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace Ecosystem.ECS.Hybrid
         public bool FoundPredator() => HasComp<LookingForPredator>() && GetComp<LookingForPredator>().HasFound;
         public bool FoundMate() => HasComp<LookingForMate>() && GetComp<LookingForMate>().HasFound;
         public bool FoundRandomTarget() => HasComp<LookingForRandomTarget>() && GetComp<LookingForRandomTarget>().HasFound;
-
+        public bool FoundFleeTarget() => HasComp<LookingForFleeTarget>() && GetComp<LookingForFleeTarget>().HasFound;
 
 
         /// <summary>
@@ -70,6 +71,11 @@ namespace Ecosystem.ECS.Hybrid
         public Vector3 GetFoundRandomTargetInfo()
         {
             LookingForRandomTarget info = GetComp<LookingForRandomTarget>();
+            return info.Position;
+        }
+
+        public Vector3 GetFoundFleeTargetInfo() {
+            LookingForFleeTarget info = GetComp<LookingForFleeTarget>();
             return info.Position;
         }
 
