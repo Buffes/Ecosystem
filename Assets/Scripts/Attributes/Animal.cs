@@ -57,7 +57,6 @@ namespace Ecosystem.Attributes
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
             this.huntState = new HuntState(this);
-            this.stateMachine.ChangeState(this.casualState);
         }
 
         /// <summary>

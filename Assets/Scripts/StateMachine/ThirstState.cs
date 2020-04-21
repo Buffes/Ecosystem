@@ -12,7 +12,7 @@ namespace Ecosystem.StateMachines {
         public ThirstState(Animal owner) { this.owner = owner; }
 
         public void Enter() {
-
+            owner.GetMovement().Fly(false);
         }
 
         public void Execute() {
@@ -23,8 +23,7 @@ namespace Ecosystem.StateMachines {
             Vector3 currentPos = owner.GetMovement().GetPosition();
 
             nextTarget = owner.GetSensors().GetFoundWaterInfo();
-            Vector3 diff = nextTarget - currentPos;
-            float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+            float diffLength = Vector3.Distance(nextTarget, currentPos);
             if (diffLength <= 2f) {
                 owner.GetNeedsStatus().SateThirst(1f);
             }

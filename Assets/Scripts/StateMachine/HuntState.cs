@@ -18,6 +18,7 @@ namespace Ecosystem.StateMachines
         {
             // Starts sprint
             owner.GetMovement().Sprint(true);
+            owner.GetMovement().Fly(false);
         }
 
         public void Execute()
@@ -28,8 +29,7 @@ namespace Ecosystem.StateMachines
             var preyInfo = owner.GetSensors().GetFoundPreyInfo();
             Vector3 preyPos = preyInfo.Position;
             Vector3 currentPos = owner.GetMovement().GetPosition();
-            Vector3 diff = currentPos - preyPos;
-            float diffLength = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.z, 2));
+            float diffLength = Vector3.Distance(preyPos, currentPos);
 
             if (diffLength <= 1f)
             {
