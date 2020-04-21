@@ -22,7 +22,7 @@ namespace Ecosystem.ECS.Movement
 
             Entities
                 .WithAll<SprintInput>()
-                .WithNone<Sprinting, ExhaustedData>()
+                .WithNone<Sprinting, ExhaustedData, Death.DeathEvent>()
                 .ForEach((Entity entity, int entityInQueryIndex) =>
                 {
                     commandBuffer.AddComponent<Sprinting>(entityInQueryIndex, entity);

@@ -22,7 +22,7 @@ namespace Ecosystem.ECS.Reproduction
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
             float deltaTime = Time.DeltaTime / 60f;
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex,
+            Entities.WithNone<Death.DeathEvent>().ForEach((Entity entity, int entityInQueryIndex,
                 ref Pregnant pregnant) =>
             {
                 pregnant.RemainingDuration -= deltaTime;
