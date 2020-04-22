@@ -6,6 +6,7 @@ using Ecosystem.ECS.Targeting.Targets;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
@@ -26,7 +27,8 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in AnimalTypeData animalType,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<UnreachablePosition> unreachablePositions,
+                in Vision vision) =>
             {
 
                 int closestPredatorIndex = -1;
@@ -40,10 +42,12 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     DynamicBuffer<PreyTypesElement> targetPreyTypes = preyTypeBuffers[sensedAnimalInfo.Entity];
                     float3 targetPosition = sensedAnimalInfo.Position;
                     float targetDistance = math.distance(targetPosition, position.Value);
+                    Quaternion targetRotation = sensedAnimalInfo.Rotation;
 
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
                     if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
+                    if (!Utilities.IntersectsVision(position.Value,targetPosition,targetRotation,vision)) continue; // Predator not looking at prey
 
                     closestPredatorIndex = i;
                     closestPredatorDistance = targetDistance;
