@@ -16,11 +16,11 @@ namespace Ecosystem.Console
         {
             if (IsCommand(input))
             {
-                string[] words = input.Remove(0, CommandPrefix.Length).Split(' ');
-                string label = words.First();
-                string[] args = words.Skip(1).ToArray();
+                string[] inputSplit = input.Remove(0, CommandPrefix.Length).Split(' ');
+                string label = inputSplit.FirstOrDefault();
+                string[] args = inputSplit.Skip(1).ToArray();
 
-                string returnMessage = CommandExecutor?.OnCommand(label, args);
+                string returnMessage = label == null ? null : CommandExecutor?.OnCommand(label, args);
                 sender.SendMessage(returnMessage != null ? returnMessage : INVALID_COMMAND);
                 return;
             }
