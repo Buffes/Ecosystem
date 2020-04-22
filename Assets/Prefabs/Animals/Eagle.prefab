@@ -1145,6 +1145,11 @@ PrefabInstance:
       propertyPath: MovesOnWater
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1230,6 +1235,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SphereRadius
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6099541318120149023, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
