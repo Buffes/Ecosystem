@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.InputSystem.InputAction;
 
 namespace Ecosystem.Console
 {
@@ -10,14 +11,13 @@ namespace Ecosystem.Console
         [Serializable]
         private class MessageEvent : UnityEvent<string> { }
 
-        [SerializeField]
-        private string commandPrefix = "/";
-        [SerializeField]
-        private CommandCollection commandCollection = default;
-        [SerializeField]
-        private TMP_InputField inputField = default;
-        [SerializeField]
-        private MessageEvent messageEvent = default;
+        [SerializeField] private string commandPrefix = "/";
+        [SerializeField] private CommandCollection commandCollection = default;
+
+        [Header("UI")]
+        [SerializeField] private GameObject uiCanvas = default;
+        [SerializeField] private TMP_InputField inputField = default;
+        [SerializeField] private MessageEvent messageEvent = default;
 
         private Console console;
 
@@ -29,7 +29,21 @@ namespace Ecosystem.Console
         private void Start()
         {
             console.CommandExecutor = new CommandManager(commandCollection);
-            inputField.onSubmit.AddListener((string input) => console.SendInput(this, input));
+            inputField.onSubmit.AddListener((string input) => ProcessInput(input));
+        }
+
+        private void ProcessInput(string input)
+        {
+            console.SendInput(this, input);
+            inputField.text = string.Empty;
+        }
+
+        private void Toggle(CallbackContext context)
+        {
+            if (!context.action.triggered) return;
+
+            uiCanvas.SetActive(!uiCanvas.activeSelf);
+            inputField.ActivateInputField();
         }
 
         void ICommandSender.SendMessage(string message)
