@@ -7,6 +7,9 @@ namespace UnityStandardAssets.Utility
     [RequireComponent(typeof (Text))]
     public class FPSCounter : MonoBehaviour
     {
+        private float fixedDeltaTime;
+        private int FPS;
+
         const float fpsMeasurePeriod = 0.5f;
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;
@@ -19,6 +22,7 @@ namespace UnityStandardAssets.Utility
         {
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
             m_Text = GetComponent<Text>();
+            this.fixedDeltaTime = Time.fixedDeltaTime;
         }
 
 
@@ -35,6 +39,15 @@ namespace UnityStandardAssets.Utility
                     m_Text.enabled = true;
                 }
             }
+            if (Input.GetKeyDown("g"))
+            {
+                if (Time.timeScale == 1.0f)
+                    Time.timeScale = 10.0f;
+                else
+                    Time.timeScale = 1.0f;
+            }
+            Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+
             // measure average frames per second
             m_FpsAccumulator++;
             if (Time.realtimeSinceStartup > m_FpsNextPeriod)
@@ -44,6 +57,8 @@ namespace UnityStandardAssets.Utility
                 m_FpsNextPeriod += fpsMeasurePeriod;
                 m_Text.text = string.Format(display, m_CurrentFps);
             }
+
+
         }
     }
 }
