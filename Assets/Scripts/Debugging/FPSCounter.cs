@@ -24,6 +24,17 @@ namespace UnityStandardAssets.Utility
 
         private void Update()
         {
+            if (Input.GetKeyDown("f"))
+            {
+                if (m_Text.IsActive())
+                {
+                    m_Text.enabled = false;
+                }
+                else
+                {
+                    m_Text.enabled = true;
+                }
+            }
             // measure average frames per second
             m_FpsAccumulator++;
             if (Time.realtimeSinceStartup > m_FpsNextPeriod)
