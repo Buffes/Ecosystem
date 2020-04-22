@@ -56,12 +56,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     float3 targetPosition = sensedAnimalInfo.Position;
                     float targetDistance = math.distance(targetPosition, position.Value);
 
-                    if (!IsPrey(targetAnimalType, preyTypeBuffer)) continue; // Not prey
-                    if (closestPreyIndex != -1 && targetDistance >= closestPreyDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
-                    closestPreyIndex = i;
-                    closestPreyDistance = targetDistance;
                 }
 
                 // Set result

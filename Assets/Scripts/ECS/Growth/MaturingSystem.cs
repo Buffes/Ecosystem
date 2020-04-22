@@ -2,7 +2,6 @@ using Ecosystem.ECS.Animal;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace Ecosystem.ECS.Growth
 {
