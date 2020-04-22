@@ -11,9 +11,8 @@ using Unity.Transforms;
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
     /// <summary>
-    /// Looks for the parents of non-adult entities.
+    /// Looks for the parents of non-adult entities. So that baby animals only know where their parent is if they can sense them.
     /// </summary>
-
     [UpdateInGroup(typeof(FindSystemGroup))]
     public class FindParentSystem : SystemBase
     {
@@ -36,72 +35,40 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 .WithReadOnly(waterCells)
                 .WithReadOnly(directions)
                 .WithNone<Adult>()
-                .ForEach((Entity entity, int entityInQueryIndex,
-                in Translation position,
+                .ForEach((ref LookingForParent lookingForParent,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
                 in DynamicBuffer<UnreachablePosition> unreachablePositions,
-                in MovementTerrain movementTerrain) =>
+                in ParentData parent) =>
             {
-                bool onLand = movementTerrain.MovesOnLand;
-                bool inWater = movementTerrain.MovesOnWater;
-                int closestPreyIndex = -1;
-                float closestPreyDistance = 0f;
+                int parentIndex = -1;
+                float3 parentPosition = new float3();
 
                 // Check all animals that we can sense
                 for (int i = 0; i < sensedAnimals.Length; i++)
                 {
                     var sensedAnimalInfo = sensedAnimals[i];
 
-                    AnimalTypeData targetAnimalType = sensedAnimalInfo.AnimalTypeData;
-                    float3 targetPosition = sensedAnimalInfo.Position;
-                    float targetDistance = math.distance(targetPosition, position.Value);
-
-
+                    if (sensedAnimalInfo.Entity == parent.Entity)
+                    {
+                        parentIndex = i;
+                        parentPosition = sensedAnimals[i].Position;
+                    }
                 }
 
                 // Set result
-                if (closestPreyIndex != -1)
+                if (parentIndex != -1)
                 {
-                    float3 preyPosition = sensedAnimals[closestPreyIndex].Position;
-                    lookingForPrey.HasFound = true;
-                    lookingForPrey.Entity = sensedAnimals[closestPreyIndex].Entity;
-                    lookingForPrey.Position = preyPosition;
-
-                    int length = 3; // Might need adjusting
-                    float3 predictedPosition;
-                    do
-                    {
-                        predictedPosition = preyPosition + length * math.normalizesafe(directions[lookingForPrey.Entity].Direction);
-                        length--;
-                    }
-                    while (length >= 0 && !WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater,
-                                                                    grid.GetGridPosition(predictedPosition)));
-
-                    lookingForPrey.PredictedPosition = predictedPosition;
-
+                    float3 ParentPosition = sensedAnimals[parentIndex].Position;
+                    lookingForParent.HasFound = true;
+                    lookingForParent.Entity = sensedAnimals[parentIndex].Entity;
+                    lookingForParent.Position = parentPosition;
                 }
                 else
                 {
-                    lookingForPrey.HasFound = false;
+                    lookingForParent.HasFound = false;
                 }
 
             }).ScheduleParallel();
-
-        }
-
-        private static bool IsPrey(AnimalTypeData animalType, DynamicBuffer<PreyTypesElement> preyBuffer)
-        {
-            for (int i = 0; i < preyBuffer.Length; i++)
-            {
-                int prey = preyBuffer[i].AnimalTypeId;
-
-                if (animalType.AnimalTypeId == prey)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

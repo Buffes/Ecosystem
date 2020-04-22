@@ -82,6 +82,19 @@ namespace Ecosystem.ECS.Hybrid
             EntityManager.SetComponentData(Entity, new SexualUrgesData { Urge = cur + value });
         }
 
+        /// <summary>
+        /// Transfer hunger from the parent of this animal to it.
+        /// </summary>
+        /// <param name="value">Float value</param>
+        public void TransferHunger(float value)
+        {
+            if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
+            float cur = GetComp<HungerData>().Hunger;
+            Entity ParentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
+            EntityManager.SetComponentData(ParentEntity, new HungerData { Hunger = cur - value });
+        }
+
         private T GetComp<T>() where T : struct, IComponentData
         {
             return EntityManager.GetComponentData<T>(Entity);

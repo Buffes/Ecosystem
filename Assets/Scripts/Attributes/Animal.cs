@@ -10,9 +10,9 @@ namespace Ecosystem.Attributes
     {
         public StateMachine StateMachine { get => stateMachine; }
 
-        private float hungerLimit;
-        private float thirstLimit;
-        private float matingLimit;
+        public float HungerLimit;
+        public float ThirstLimit;
+        public float MatingLimit;
 
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
@@ -47,9 +47,9 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.hungerLimit = 0.5f;
-            this.thirstLimit = 0.5f;
-            this.matingLimit = 0.5f;
+            this.HungerLimit = 0.5f;
+            this.ThirstLimit = 0.5f;
+            this.MatingLimit = 0.5f;
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
@@ -86,10 +86,10 @@ namespace Ecosystem.Attributes
             float currentMating = this.needs.GetSexualUrgesStatus();
 
             sensors.LookForPredator(true);
-            sensors.LookForPrey(currentHunger <= hungerLimit);
-            sensors.LookForFood(currentHunger <= hungerLimit);
-            sensors.LookForWater(currentThirst <= thirstLimit);
-            sensors.LookForMate(currentMating <= matingLimit);
+            sensors.LookForPrey(currentHunger <= HungerLimit);
+            sensors.LookForFood(currentHunger <= HungerLimit);
+            sensors.LookForWater(currentThirst <= ThirstLimit);
+            sensors.LookForMate(currentMating <= MatingLimit);
 
             if (sensors.FoundPredator())
             {
