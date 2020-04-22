@@ -29,16 +29,17 @@ namespace Ecosystem.Console
         private void Start()
         {
             console.CommandExecutor = new CommandManager(commandCollection);
-            inputField.onSubmit.AddListener((string input) => ProcessInput(input));
+            inputField.onSubmit.AddListener(ProcessInput);
         }
 
         private void ProcessInput(string input)
         {
             console.SendInput(this, input);
             inputField.text = string.Empty;
+            inputField.ActivateInputField();
         }
 
-        private void Toggle(CallbackContext context)
+        public void Toggle(CallbackContext context)
         {
             if (!context.action.triggered) return;
 
