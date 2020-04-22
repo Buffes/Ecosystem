@@ -40,6 +40,9 @@ namespace Ecosystem.ECS.Animal
             SetComponent((ref BaseSpeed speed) => DNA.NextGene(ref speed.Value));
             SetComponent((ref BaseHearingRange hearingRange) => DNA.NextGene(ref hearingRange.Value));
             SetComponent((ref BaseVisionRange visionRange) => DNA.NextGene(ref visionRange.Value));
+            SetComponent((ref BaseHungerLimit hungerLimit) => DNA.NextGene(ref hungerLimit.Value));
+            SetComponent((ref BaseThirstLimit thirstLimit) => DNA.NextGene(ref thirstLimit.Value));
+            SetComponent((ref BaseMatingLimit matingLimit) => DNA.NextGene(ref matingLimit.Value));
         }
 
         private delegate void ModifyComponentDelegate<T>(ref T t) where T : struct, IComponentData;
