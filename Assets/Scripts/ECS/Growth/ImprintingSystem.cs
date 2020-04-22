@@ -7,7 +7,7 @@ using Unity.Transforms;
 namespace Ecosystem.ECS.Growth
 {
     /// <summary>
-    /// Newborn animals imprint on the closest adult they see. Assuming it to be their mother.
+    /// Newborn animals imprint on the closest adult they see. Assuming it to be their mother. This works cross-species too.
     /// </summary>
     public class ImprintingSystem : SystemBase
     {
