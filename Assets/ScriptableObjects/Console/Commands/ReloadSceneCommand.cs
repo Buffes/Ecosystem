@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Entities;
 
 namespace Ecosystem.Console
 {
@@ -8,6 +9,9 @@ namespace Ecosystem.Console
     {
         public override void Execute(ICommandSender sender, string[] args)
         {
+            EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            entityManager.DestroyEntity(entityManager.UniversalQuery);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             sender.SendMessage("Scene reloaded");
         }
