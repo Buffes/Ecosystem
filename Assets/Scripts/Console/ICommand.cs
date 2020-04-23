@@ -4,6 +4,10 @@
     {
         string Name { get; }
         string[] Aliases { get; }
-        string Execute(string[] args);
+        (int min, int max) ArgsRange { get; }
+        string ArgsUsage { get; }
+        string[] ArgsAlternatives { get; }
+
+        void Execute(ICommandSender sender, string[] args);
     }
 }
