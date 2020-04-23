@@ -30,7 +30,7 @@ namespace Ecosystem.StateMachines {
             Vector3 parentPos = owner.GetSensors().GetFoundParentInfo().Position;
             float diffLength = Vector3.Distance(parentPos, currentPos);
 
-            if (diffLength > 3f)
+            if (diffLength > 2f)
             {
                 // Move closer to parent
                 owner.Move(parentPos,1f,200);
@@ -48,7 +48,7 @@ namespace Ecosystem.StateMachines {
             }
 
         }
-        
+
         public void Exit() 
         {
         }
