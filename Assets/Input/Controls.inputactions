@@ -2,13 +2,45 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "Default",
+            "name": "Console",
             "id": "759047f2-b11c-4db6-a2a9-290b97c109bd",
             "actions": [
                 {
                     "name": "Toggle Console",
                     "type": "Button",
                     "id": "ce04802a-ac27-4dad-acb2-6eb216d962be",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Previous",
+                    "type": "Button",
+                    "id": "dfab9ad2-98c9-4660-82be-32eaf544d815",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "52a1f349-91af-44e6-a7dc-78ebfe9f8858",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Close Console",
+                    "type": "Button",
+                    "id": "4ae639de-ab03-44d6-9404-7caad1941384",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Autocomplete",
+                    "type": "Button",
+                    "id": "5733ae9f-30c5-48c6-a74b-2d2b3b489bf5",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -19,10 +51,54 @@
                     "name": "",
                     "id": "c5931282-e5c5-45e7-8c6b-9ee338ade7d9",
                     "path": "<Keyboard>/backquote",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "Toggle Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ed2d72d-0acf-47c8-b7b6-814623c7f09b",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Previous",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc76142e-6b11-4999-9967-7994dc3012bf",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83354106-51b2-420b-a139-041e0f688f43",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Close Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ae897e8-f0ed-4285-a55f-8968404839fd",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Autocomplete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
