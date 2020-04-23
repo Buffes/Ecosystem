@@ -95,17 +95,11 @@ namespace Ecosystem.Attributes
 
             if (sensors.FoundPredator())
             {
-                if (stateMachine.getCurrentState() != this.fleeState)
-                {
-                    stateMachine.ChangeState(this.fleeState);
-                }
+                stateMachine.ChangeState(this.fleeState);
             }
             else if (!needs.IsAdult())
             {
-                if (stateMachine.getCurrentState() != this.followParentState)
-                {
-                    stateMachine.ChangeState(this.followParentState);
-                }
+                stateMachine.ChangeState(this.followParentState);
             }
             else if (sensors.FoundFood() || sensors.FoundWater())
             {
@@ -118,31 +112,19 @@ namespace Ecosystem.Attributes
                     newState = this.thirstState;
                 }
 
-                if (stateMachine.getCurrentState() != newState)
-                {
-                    stateMachine.ChangeState(newState);
-                }
+                stateMachine.ChangeState(newState);
             }
             else if (sensors.FoundPrey())
             {
-                if (stateMachine.getCurrentState() != this.huntState)
-                {
-                    stateMachine.ChangeState(this.huntState);
-                }
+                stateMachine.ChangeState(this.huntState);
             }
             else if (sensors.FoundMate())
             {
-                if (stateMachine.getCurrentState() != this.mateState)
-                {
-                    stateMachine.ChangeState(this.mateState);
-                }
+                stateMachine.ChangeState(this.mateState);
             }
             else
             {
-                if (stateMachine.getCurrentState() != this.casualState)
-                {
-                    stateMachine.ChangeState(this.casualState);
-                }
+                stateMachine.ChangeState(this.casualState);
             }
             stateMachine.Update();
         }
