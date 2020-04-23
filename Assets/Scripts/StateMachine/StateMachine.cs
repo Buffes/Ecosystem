@@ -7,6 +7,7 @@ namespace Ecosystem.StateMachines {
         private IState previousState;
 
         public void ChangeState(IState newState) {
+            if (currentState == newState) return; // Already in this state.
             if (currentState != null) {
                 currentState.Exit();
             }
