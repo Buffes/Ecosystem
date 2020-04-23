@@ -15,7 +15,6 @@ namespace Ecosystem.StateMachines {
 
         public void Enter() 
         {
-            owner.GetSensors().LookForParent(true);
             owner.GetMovement().Fly(true);
         }
 
@@ -49,11 +48,9 @@ namespace Ecosystem.StateMachines {
             }
 
         }
-
-
+        
         public void Exit() 
         {
-            owner.GetSensors().LookForParent(false);
         }
     }
 }
