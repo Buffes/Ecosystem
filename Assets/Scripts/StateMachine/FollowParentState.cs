@@ -5,7 +5,6 @@ namespace Ecosystem.StateMachines {
     public class FollowParentState : IState {
 
         Animal owner;
-        Vector3 nextTarget;
         private float timeSinceLastFrame;
         private readonly float pathfindInterval = 3f;
 
@@ -35,7 +34,7 @@ namespace Ecosystem.StateMachines {
             if (diffLength > 3f)
             {
                 // Move closer to parent
-                owner.Move(nextTarget,0f,200);
+                owner.Move(parentPos,0f,200);
                 return;
             }
 
