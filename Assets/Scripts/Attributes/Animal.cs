@@ -95,11 +95,11 @@ namespace Ecosystem.Attributes
 
             if (sensors.FoundPredator())
             {
-                stateMachine.ChangeState(this.fleeState);
+                ChangeState(this.fleeState);
             }
             else if (!needs.IsAdult())
             {
-                stateMachine.ChangeState(this.followParentState);
+                ChangeState(this.followParentState);
             }
             else if (sensors.FoundFood() || sensors.FoundWater())
             {
@@ -112,19 +112,19 @@ namespace Ecosystem.Attributes
                     newState = this.thirstState;
                 }
 
-                stateMachine.ChangeState(newState);
+                ChangeState(newState);
             }
             else if (sensors.FoundPrey())
             {
-                stateMachine.ChangeState(this.huntState);
+                ChangeState(this.huntState);
             }
             else if (sensors.FoundMate())
             {
-                stateMachine.ChangeState(this.mateState);
+                ChangeState(this.mateState);
             }
             else
             {
-                stateMachine.ChangeState(this.casualState);
+                ChangeState(this.casualState);
             }
             stateMachine.Update();
         }
@@ -133,6 +133,14 @@ namespace Ecosystem.Attributes
             Vector3 currentPos = movement.GetPosition();
             Vector3 diff = target - currentPos;
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+        }
+
+        private void ChangeState(IState state)
+        {
+            if (stateMachine.getCurrentState() != state)
+            {
+                stateMachine.ChangeState(state);
+            }
         }
 
         public NeedsStatus GetNeedsStatus() {
