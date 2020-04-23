@@ -6,7 +6,7 @@ namespace Ecosystem.StateMachines {
 
         Animal owner;
         private float timeSinceLastFrame;
-        private readonly float pathfindInterval = 3f;
+        private readonly float pathfindInterval = 1f;
 
         public FollowParentState(Animal owner) 
         { 
@@ -34,13 +34,18 @@ namespace Ecosystem.StateMachines {
             if (diffLength > 3f)
             {
                 // Move closer to parent
-                owner.Move(parentPos,0f,200);
+                owner.Move(parentPos,1f,200);
                 return;
             }
 
             if (owner.GetNeedsStatus().GetHungerStatus() < owner.HungerLimit)
             {
                 owner.GetNeedsStatus().TransferHunger(1f);
+            }
+
+            if (owner.GetNeedsStatus().GetThirstStatus() < owner.ThirstLimit)
+            {
+                owner.GetNeedsStatus().TransferThirst(1f);
             }
 
         }

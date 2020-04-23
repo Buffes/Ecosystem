@@ -47,7 +47,9 @@ public class PrefabSpawner : MonoBehaviour
                     {
                         Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
                         spawnPos.y = 1f;
-                        Instantiate(whatToSpawnPrefab[k], spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
+                        GameObject animal = Instantiate(whatToSpawnPrefab[k], spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
+                        float lifespan = animal.GetComponentInChildren<AgeAuthoring>().Lifespan;
+                        animal.GetComponentInChildren<AgeAuthoring>().Age = 7.6f;
                         lookingForFreeTile = false;
                     }
                 }
