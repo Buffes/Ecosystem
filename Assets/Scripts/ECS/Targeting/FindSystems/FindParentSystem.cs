@@ -1,12 +1,11 @@
 using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Grid;
 using Ecosystem.ECS.Grid.Buckets;
-using Ecosystem.ECS.Movement;
+using Ecosystem.ECS.Growth;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
@@ -25,19 +24,11 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
         protected override void OnUpdate()
         {
-            var blockedCells = worldGridSystem.BlockedCells;
-            var waterCells = worldGridSystem.WaterCells;
-            var grid = worldGridSystem.Grid;
-            var directions = GetComponentDataFromEntity<MovementInput>();
 
             Entities
-                .WithReadOnly(blockedCells)
-                .WithReadOnly(waterCells)
-                .WithReadOnly(directions)
                 .WithNone<Adult>()
                 .ForEach((ref LookingForParent lookingForParent,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions,
                 in ParentData parent) =>
             {
                 int parentIndex = -1;

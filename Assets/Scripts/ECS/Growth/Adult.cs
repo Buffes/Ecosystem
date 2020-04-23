@@ -1,7 +1,7 @@
 using System;
 using Unity.Entities;
 
-namespace Ecosystem.ECS.Animal
+namespace Ecosystem.ECS.Growth
 {
     /// <summary>
     /// If this is an adult.

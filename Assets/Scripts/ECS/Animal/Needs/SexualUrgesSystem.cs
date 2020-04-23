@@ -23,6 +23,7 @@ namespace Ecosystem.ECS.Animal.Needs
 
             Entities
                 .WithNone<Reproduction.Pregnant>()
+                .WithAll<Growth.Adult>()
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref SexualUrgesData sexualUrgesData) =>
             {
