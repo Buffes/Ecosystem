@@ -32,7 +32,7 @@ namespace Ecosystem.ECS.Growth
                 in AgeData age,
                 in LifespanData lifespan) =>
                 {
-                    float ageOfMaturity = lifespan.Value * 0.003f; // TODO: Maybe make multiplier dependent on a component. 
+                    float ageOfMaturity = lifespan.Value * 0.01f; // TODO: Maybe make multiplier dependent on a component. 
                     if (age.Age < ageOfMaturity)
                     {
                         float small = 0.5f;

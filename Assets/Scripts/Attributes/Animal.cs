@@ -10,9 +10,9 @@ namespace Ecosystem.Attributes
     {
         public StateMachine StateMachine { get => stateMachine; }
 
-        public float HungerLimit;
-        public float ThirstLimit;
-        public float MatingLimit;
+        public float HungerLimit {get; private set;}
+        public float ThirstLimit {get; private set;}
+        public float MatingLimit {get; private set;}
 
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
@@ -34,6 +34,7 @@ namespace Ecosystem.Attributes
         private IState fleeState;
         private IState mateState;
         private IState huntState;
+        private IState followParentState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
@@ -57,6 +58,7 @@ namespace Ecosystem.Attributes
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
             this.huntState = new HuntState(this);
+            this.followParentState = new FollowParentState(this);
             this.stateMachine.ChangeState(this.casualState);
         }
 
@@ -96,6 +98,13 @@ namespace Ecosystem.Attributes
                 if (stateMachine.getCurrentState() != this.fleeState)
                 {
                     stateMachine.ChangeState(this.fleeState);
+                }
+            }
+            else if (!needs.IsAdult())
+            {
+                if (stateMachine.getCurrentState() != this.followParentState)
+                {
+                    stateMachine.ChangeState(this.followParentState);
                 }
             }
             else if (sensors.FoundFood() || sensors.FoundWater())

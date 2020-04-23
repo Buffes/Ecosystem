@@ -1145,6 +1145,16 @@ PrefabInstance:
       propertyPath: MovesOnWater
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Lifespan
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_LocalPosition.x

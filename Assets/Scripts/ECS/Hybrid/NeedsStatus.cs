@@ -2,6 +2,7 @@
 
 using Ecosystem.ECS.Animal.Needs;
 using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Growth;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -11,12 +12,11 @@ namespace Ecosystem.ECS.Hybrid
     public class NeedsStatus : HybridBehaviour
     {
         /// <summary>
-        /// Get age in seconds as float
+        /// If this is an adult
         /// </summary>
-        public float GetAge()
+        public bool IsAdult()
         {
-            AgeData age = GetComp<AgeData>();
-            return age.Age;
+            return EntityManager.HasComponent<Adult>(Entity);
         }
 
         /// <summary>
@@ -93,6 +93,15 @@ namespace Ecosystem.ECS.Hybrid
             Entity ParentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
             EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
             EntityManager.SetComponentData(ParentEntity, new HungerData { Hunger = cur - value });
+        }
+
+        public void TransferThirst(float value)
+        {
+            if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
+            float cur = GetComp<ThirstData>().Thirst;
+            Entity ParentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            EntityManager.SetComponentData(Entity, new ThirstData { Thirst = cur + value });
+            EntityManager.SetComponentData(ParentEntity, new ThirstData { Thirst = cur - value });
         }
 
         private T GetComp<T>() where T : struct, IComponentData
