@@ -2,6 +2,6 @@
 {
     public interface ICommandExecutor
     {
-        string OnCommand(string label, string[] args);
+        bool OnCommand(ICommandSender sender, string label, string[] args);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Ecosystem.MinMaxSlider
+namespace MinMaxSlider
 {
     public class MinMaxSliderAttribute : PropertyAttribute
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace Ecosystem.MinMaxSlider
+namespace MinMaxSlider
 {
     [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
     public class MinMaxSliderDrawer : PropertyDrawer
@@ -17,7 +17,7 @@ namespace Ecosystem.MinMaxSlider
             Rect controlRect = EditorGUI.PrefixLabel(position, label);
 
             Rect[] splitRect = SplitRect(controlRect, 3);
-            
+
             EditorGUI.BeginChangeCheck();
 
             Vector2 vector = GetFromProperty(property);
@@ -81,7 +81,7 @@ namespace Ecosystem.MinMaxSlider
             for (int i = 0; i < n; i++)
             {
 
-                rects[i] = new Rect(rectToSplit.position.x + (i * rectToSplit.width / n), rectToSplit.position.y, rectToSplit.width / n, rectToSplit.height);
+                rects[i] = new Rect(rectToSplit.position.x + i * rectToSplit.width / n, rectToSplit.position.y, rectToSplit.width / n, rectToSplit.height);
 
             }
 
