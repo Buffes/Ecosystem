@@ -691,6 +691,11 @@ PrefabInstance:
       propertyPath: m_Cylinder.Radius
       value: 0.16
       objectReference: {fileID: 0}
+    - target: {fileID: 7692351275043969183, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Thirst
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Water
@@ -711,7 +716,8 @@ PrefabInstance:
       propertyPath: MovesOnLand
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6099541318120149023, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!4 &7752642800463083572 stripped
 Transform:
