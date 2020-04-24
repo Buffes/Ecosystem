@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 7241647726829484548}
   - component: {fileID: 7692351275043969183}
   - component: {fileID: 1922742331810803413}
+  - component: {fileID: 118408086390162964}
   - component: {fileID: 2223985520359843425}
   - component: {fileID: 5070148453820763526}
   - component: {fileID: 5070148453820763527}
@@ -247,6 +248,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Urge: 2
+--- !u!114 &118408086390162964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f52208666fc42bb88686b06e33c8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InfertilityAge: 9
 --- !u!114 &2223985520359843425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +549,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4043c14c8962bdd428034364d02ff179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6099541318120149023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee7c6eaba84ef4dab9d1714abf2e4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Value: 10
 --- !u!114 &998787032190030635
 MonoBehaviour:
   m_ObjectHideFlags: 0

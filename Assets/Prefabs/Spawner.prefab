@@ -47,3 +47,4 @@ MonoBehaviour:
   - {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263, type: 3}
   - {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0, type: 3}
   amountToSpawn: 6400000032000000
+  settings: {fileID: 11400000, guid: 99384a9c422f42142bb448e312a89afa, type: 2}
