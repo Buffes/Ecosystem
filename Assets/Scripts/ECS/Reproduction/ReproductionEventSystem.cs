@@ -14,7 +14,7 @@ namespace Ecosystem.ECS.Reproduction
         protected override void OnUpdate()
         {
             Entities
-                .WithNone<Pregnant>()
+                .WithNone<Pregnant,Infertile>()
                 .WithStructuralChanges()
                 .WithoutBurst()
                 .ForEach((Entity entity,
