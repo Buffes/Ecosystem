@@ -21,7 +21,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var adultData = GetComponentDataFromEntity<Adult>(true);
 
             Entities
-                .WithAll<Adult>()
                 .WithReadOnly(adultData)
                 .WithReadOnly(sexTypes)
                 .ForEach((
