@@ -608,8 +608,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 603128125552041235, guid: d926564931b9643789a1f64382be8263,
         type: 3}
-      propertyPath: Urge
-      value: 0.4
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 877464357721265575, guid: d926564931b9643789a1f64382be8263,
         type: 3}
