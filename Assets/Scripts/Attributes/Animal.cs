@@ -88,13 +88,14 @@ namespace Ecosystem.Attributes
             float currentMating = this.needs.GetSexualUrgesStatus();
 
             sensors.LookForPredator(true);
+            sensors.LookForFleeTarget(sensors.FoundPredator());
             sensors.LookForParent(!needs.IsAdult());
             sensors.LookForPrey(currentHunger <= HungerLimit);
             sensors.LookForFood(currentHunger <= HungerLimit);
             sensors.LookForWater(currentThirst <= ThirstLimit);
             sensors.LookForMate(currentMating <= MatingLimit);
 
-            if (sensors.FoundPredator())
+            if (sensors.FoundFleeTarget())
             {
                 ChangeState(this.fleeState);
             }

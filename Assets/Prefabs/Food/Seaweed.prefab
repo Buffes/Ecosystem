@@ -55,6 +55,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 8731d26bee3582344904d69dc3f678f3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 8731d26bee3582344904d69dc3f678f3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300004, guid: 8731d26bee3582344904d69dc3f678f3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8731d26bee3582344904d69dc3f678f3, type: 3}
 --- !u!1001 &7941113320987845372
@@ -119,6 +131,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2818400315749066013, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: Lifespan
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376392, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_Name
@@ -129,7 +146,7 @@ PrefabInstance:
       propertyPath: foodType
       value: 
       objectReference: {fileID: 11400000, guid: 26814f138066335b7b105d0d95e172e6,
-        type: 2}
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
 --- !u!4 &8331982654441877032 stripped
