@@ -90,18 +90,20 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
             float cur = GetComp<HungerData>().Hunger;
-            Entity ParentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            Entity parentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            float parentValue = EntityManager.GetComponentData<ThirstData>(parentEntity).Thirst;
             EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
-            EntityManager.SetComponentData(ParentEntity, new HungerData { Hunger = cur - value });
+            EntityManager.SetComponentData(parentEntity, new HungerData { Hunger = parentValue - value });
         }
 
         public void TransferThirst(float value)
         {
             if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
             float cur = GetComp<ThirstData>().Thirst;
-            Entity ParentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            Entity parentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            float parentValue = EntityManager.GetComponentData<ThirstData>(parentEntity).Thirst;
             EntityManager.SetComponentData(Entity, new ThirstData { Thirst = cur + value });
-            EntityManager.SetComponentData(ParentEntity, new ThirstData { Thirst = cur - value });
+            EntityManager.SetComponentData(parentEntity, new ThirstData { Thirst = parentValue - value });
         }
 
         private T GetComp<T>() where T : struct, IComponentData
