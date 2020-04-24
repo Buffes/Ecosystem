@@ -54,7 +54,7 @@ public class PrefabSpawner : MonoBehaviour
                     spawnPos.y = 1f;
                     GameObject animal = Instantiate(prefab, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
                     float lifespan = animal.GetComponentInChildren<AgeAuthoring>().Lifespan;
-                    animal.GetComponentInChildren<AgeAuthoring>().Age = 7.6f;
+                    animal.GetComponentInChildren<AgeAuthoring>().Age = lifespan * 0.5f;
                     lookingForFreeTile = false;
 
                 }
