@@ -101,6 +101,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b14a02feda3ba0e4285bc37185ffb967,
         type: 2}
+    - target: {fileID: 5943067794134930405, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_MotionType
