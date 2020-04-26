@@ -21,8 +21,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 ref LookingForFood lookingForFood,
                 in Translation position,
                 in DynamicBuffer<FoodTypesElement> foodTypeBuffer,
-                in DynamicBuffer<BucketFoodData> sensedFood,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<BucketFoodData> sensedFood) =>
                 {
 
                     int closestFoodIndex = -1;
@@ -39,7 +38,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                         if (!IsWantedFood(targetFoodType, foodTypeBuffer)) continue; // Not wanted food type
                         if (closestFoodIndex != -1 && targetDistance >= closestFoodDistance) continue; // Not the closest
-                        if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                         closestFoodIndex = i;
                         closestFoodDistance = targetDistance;

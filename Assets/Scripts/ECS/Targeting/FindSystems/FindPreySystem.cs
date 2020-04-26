@@ -40,7 +40,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in DynamicBuffer<PreyTypesElement> preyTypeBuffer,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions,
                 in MovementTerrain movementTerrain) =>
             {
                 bool onLand = movementTerrain.MovesOnLand;
@@ -59,7 +58,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                     if (!IsPrey(targetAnimalType, preyTypeBuffer)) continue; // Not prey
                     if (closestPreyIndex != -1 && targetDistance >= closestPreyDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                     closestPreyIndex = i;
                     closestPreyDistance = targetDistance;
