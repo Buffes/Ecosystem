@@ -91,7 +91,7 @@ namespace Ecosystem.ECS.Hybrid
             if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
             float cur = GetComp<HungerData>().Hunger;
             Entity parentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
-            float parentValue = EntityManager.GetComponentData<ThirstData>(parentEntity).Thirst;
+            float parentValue = EntityManager.GetComponentData<HungerData>(parentEntity).Hunger;
             EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
             EntityManager.SetComponentData(parentEntity, new HungerData { Hunger = parentValue - value });
         }
