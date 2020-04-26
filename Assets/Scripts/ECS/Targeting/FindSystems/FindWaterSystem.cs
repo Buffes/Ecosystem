@@ -26,7 +26,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
             var grid = worldGridSystem.Grid;
             var drinkableTiles = worldGridSystem.DrinkableCells;
            
-            // Get buffers here since ForEach lambda has max 9 parameters. Should be unnecessary once the Separate concerns in find-systems task is done
             var unreachableBuffers = GetBufferFromEntity<UnreachablePosition>(true);
 
             Entities
@@ -57,7 +56,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     } 
 
                     if (closestWaterIndex != -1 && targetDistance >= closestWaterDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition)) continue;
+                    if (Utilities.IsUnreachable(unreachableBuffers[entity], targetPosition, grid)) continue;
                     
                     closestWaterIndex = i;
                     closestWaterDistance = targetDistance;
