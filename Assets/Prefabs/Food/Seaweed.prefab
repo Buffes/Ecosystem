@@ -145,8 +145,8 @@ PrefabInstance:
         type: 3}
       propertyPath: foodType
       value: 
-      objectReference: {fileID: 11400000, guid: 26814f138066335b7b105d0d95e172e6,
-        type: 3}
+      objectReference: {fileID: 11400000, guid: 6e2574af69e1ddd4497a11adb45777a1,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
 --- !u!4 &8331982654441877032 stripped
