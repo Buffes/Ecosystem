@@ -89,6 +89,10 @@ namespace Ecosystem.Attributes
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
 
+            bool notInCriticalState = !CriticalLevel(HungerLimit, currentHunger) && !CriticalLevel(ThirstLimit, currentThirst);
+            bool lookForMate = notInCriticalState && !sensors.FoundPredator() && currentMating <= MatingLimit;
+            bool flee = notInCriticalState && sensors.FoundPredator();
+
             sensors.LookForPredator(true);
             sensors.LookForFleeTarget(sensors.FoundPredator());
             sensors.LookForParent(!needs.IsAdult());
@@ -144,6 +148,17 @@ namespace Ecosystem.Attributes
             Vector3 currentPos = movement.GetPosition();
             Vector3 diff = target - currentPos;
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+        }
+
+        private bool CriticalLevel(float limit, float current)
+        {
+            bool critical = (current / limit) <= 0.5f;
+            return critical;
+        }
+
+        private bool ShouldFlee(float limit, float current, float fear)
+        {
+            return true;
         }
 
         private void ChangeState(IState state)
