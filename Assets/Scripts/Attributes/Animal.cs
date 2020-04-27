@@ -13,6 +13,7 @@ namespace Ecosystem.Attributes
         public float HungerLimit {get; private set;}
         public float ThirstLimit {get; private set;}
         public float MatingLimit {get; private set;}
+        public float FearLevel {get; private set;}
 
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
@@ -51,6 +52,7 @@ namespace Ecosystem.Attributes
             this.HungerLimit = needs.GetHungerLimit();
             this.ThirstLimit = needs.GetThirstLimit();
             this.MatingLimit = needs.GetMatingLimit();
+            this.FearLevel = needs.GetFear();
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
