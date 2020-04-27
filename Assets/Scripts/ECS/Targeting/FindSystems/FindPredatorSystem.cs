@@ -27,8 +27,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in AnimalTypeData animalType,
                 in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions,
-                in Vision vision) =>
+                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
             {
 
                 int closestPredatorIndex = -1;
@@ -44,10 +43,18 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     float targetDistance = math.distance(targetPosition, position.Value);
                     Quaternion targetRotation = sensedAnimalInfo.Rotation;
 
+                    float3 relativePosition = position.Value - targetPosition;
+
+                    relativePosition = math.normalize(relativePosition);
+                    float3 forward = math.normalize(math.forward(targetRotation));
+                    float forwardAngle = math.atan2(forward.z,forward.x);
+
+                    float targetAngle = math.atan2(relativePosition.z,relativePosition.x);
+
+                    if (math.abs(targetAngle - forwardAngle) > math.PI / 2) continue; // Target not walking towards prey
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
-                    if (!Utilities.IntersectsVision(position.Value,targetPosition,targetRotation,vision)) continue; // Predator not looking at prey
+
 
                     closestPredatorIndex = i;
                     closestPredatorDistance = targetDistance;
