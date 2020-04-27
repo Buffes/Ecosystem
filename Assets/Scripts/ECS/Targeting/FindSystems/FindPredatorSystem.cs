@@ -25,8 +25,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 ref LookingForPredator lookingForPredator,
                 in Translation position,
                 in AnimalTypeData animalType,
-                in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<BucketAnimalData> sensedAnimals) =>
             {
 
                 int closestPredatorIndex = -1;
@@ -43,7 +42,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
-                    if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                     closestPredatorIndex = i;
                     closestPredatorDistance = targetDistance;

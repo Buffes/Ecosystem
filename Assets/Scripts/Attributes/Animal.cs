@@ -48,9 +48,9 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.HungerLimit = 0.5f;
-            this.ThirstLimit = 0.5f;
-            this.MatingLimit = 0.5f;
+            this.HungerLimit = needs.GetHungerLimit();
+            this.ThirstLimit = needs.GetThirstLimit();
+            this.MatingLimit = needs.GetMatingLimit();
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);

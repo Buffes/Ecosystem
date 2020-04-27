@@ -50,6 +50,31 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
+        /// Get hungerLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetHungerLimit() {
+            HungerLimit value = GetComp<HungerLimit>();
+            return value.Value;
+        }
+        /// <summary>
+        /// Get thistLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetThirstLimit() {
+            ThirstLimit value = GetComp<ThirstLimit>();
+            return value.Value;
+        }
+        /// <summary>
+        /// Get matingLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetMatingLimit() {
+            MatingLimit value = GetComp<MatingLimit>();
+            return value.Value;
+        }
+
+        /// <summary>
         /// Sate the hunger of an animal when eating.
         /// </summary>
         /// <param name="value">Float value</param>

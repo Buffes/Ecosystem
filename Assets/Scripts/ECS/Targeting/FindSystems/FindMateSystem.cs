@@ -28,8 +28,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 in Translation position,
                 in AnimalTypeData animalType,
                 in SexData sexType,
-                in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<BucketAnimalData> sensedAnimals) =>
                 {
                     
                     int closestMateIndex = -1;
@@ -49,7 +48,6 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
                         if (sexType.Sex == targetSexType.Sex) continue; // Not the opposite sex
                         if (!targetAdult) continue; // Not an adult
-                        if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
 
                         closestMateIndex = i;
                         closestMateDistance = targetDistance;
