@@ -1,9 +1,9 @@
-﻿
-using Unity.Entities;
+﻿using Unity.Entities;
 using Ecosystem.ECS.Animal;
 
 namespace Ecosystem.ECS.Reproduction
 {
+    [UpdateBefore(typeof(BirthSystem))]
     public class PregnancyVisualSystem : SystemBase
     {
         protected override void OnUpdate()
@@ -14,8 +14,8 @@ namespace Ecosystem.ECS.Reproduction
                 .ForEach((Entity entity,
                 PregnancyParticleSystem particleSystem) =>
                 {
-                    if (particleSystem.ParticleSystem.IsAlive())
-                        particleSystem.ParticleSystem.Stop();
+                    particleSystem.ParticleSystem.Stop();
+                    particleSystem.ParticleSystem.Clear();
                 }).Run();
             Entities
                 .WithAll<ReproductionEvent>()
@@ -24,10 +24,9 @@ namespace Ecosystem.ECS.Reproduction
                 PregnancyParticleSystem particleSystem,
                 in SexData sexData) =>
                 {
-                    if(sexData.Sex == Sex.Female) 
+                    if (sexData.Sex == Sex.Female)
                     {
-                        if(!particleSystem.ParticleSystem.IsAlive())
-                            particleSystem.ParticleSystem.Play();
+                        particleSystem.ParticleSystem.Play();
                     }
                 }).Run();
         }

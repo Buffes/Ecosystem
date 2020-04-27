@@ -18,5 +18,6 @@ MonoBehaviour:
   prey:
   - {fileID: 11400000, guid: bdd7a7559f0396f4f86fb7ae5a3d8b3d, type: 2}
   food:
-  - {fileID: 11400000, guid: 93ff989ed0e9a8f4781ef01559050103, type: 2}
+  - {fileID: 11400000, guid: be74e9cbc325944a08988fc53cd74dc1, type: 2}
+  - {fileID: 11400000, guid: c156f86a8f816ce4abd6e5ab3a27bc93, type: 2}
   - {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
