@@ -116,7 +116,7 @@ namespace Ecosystem.ECS.Hybrid
             if (!EntityManager.HasComponent<SexualUrgesData>(partner)) return;
             float cur = EntityManager.GetComponentData<SexualUrgesData>(partner).Urge;
             EntityManager.SetComponentData(partner,new SexualUrgesData { Urge = cur + value });
-
+        }
         /// Transfer hunger from the parent of this animal to it.
         /// </summary>
         /// <param name="value">Float value</param>
