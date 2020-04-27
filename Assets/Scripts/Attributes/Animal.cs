@@ -10,9 +10,9 @@ namespace Ecosystem.Attributes
     {
         public StateMachine StateMachine { get => stateMachine; }
 
-        private float hungerLimit;
-        private float thirstLimit;
-        private float matingLimit;
+        public float HungerLimit {get; private set;}
+        public float ThirstLimit {get; private set;}
+        public float MatingLimit {get; private set;}
 
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
@@ -34,6 +34,7 @@ namespace Ecosystem.Attributes
         private IState fleeState;
         private IState mateState;
         private IState huntState;
+        private IState followParentState;
 
         private void Awake() {
             this.stateMachine = new StateMachine();
@@ -47,9 +48,9 @@ namespace Ecosystem.Attributes
         }
 
         private void Init() {
-            this.hungerLimit = needs.GetHungerLimit();
-            this.thirstLimit = needs.GetThirstLimit();
-            this.matingLimit = needs.GetMatingLimit();
+            this.HungerLimit = needs.GetHungerLimit();
+            this.ThirstLimit = needs.GetThirstLimit();
+            this.MatingLimit = needs.GetMatingLimit();
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
@@ -57,6 +58,8 @@ namespace Ecosystem.Attributes
             this.fleeState = new FleeState(this);
             this.mateState = new MateState(this);
             this.huntState = new HuntState(this);
+            this.followParentState = new FollowParentState(this);
+            this.stateMachine.ChangeState(this.casualState);
         }
 
         /// <summary>
@@ -86,16 +89,25 @@ namespace Ecosystem.Attributes
 
             sensors.LookForPredator(true);
             sensors.LookForFleeTarget(sensors.FoundPredator());
-            sensors.LookForPrey(currentHunger <= hungerLimit);
-            sensors.LookForFood(currentHunger <= hungerLimit);
-            sensors.LookForWater(currentThirst <= thirstLimit);
-            sensors.LookForMate(currentMating <= matingLimit);
+            sensors.LookForParent(!needs.IsAdult());
+            sensors.LookForPrey(currentHunger <= HungerLimit);
+            sensors.LookForFood(currentHunger <= HungerLimit);
+            sensors.LookForWater(currentThirst <= ThirstLimit);
+            sensors.LookForMate(currentMating <= MatingLimit);
 
             if (sensors.FoundFleeTarget())
             {
-                if (stateMachine.getCurrentState() != this.fleeState)
+                ChangeState(this.fleeState);
+            }
+            else if (!needs.IsAdult())
+            {
+                if (sensors.FoundParent())
                 {
-                    stateMachine.ChangeState(this.fleeState);
+                    ChangeState(this.followParentState);
+                }
+                else 
+                {
+                    ChangeState(this.casualState);
                 }
             }
             else if (sensors.FoundFood() || sensors.FoundWater())
@@ -109,31 +121,19 @@ namespace Ecosystem.Attributes
                     newState = this.thirstState;
                 }
 
-                if (stateMachine.getCurrentState() != newState)
-                {
-                    stateMachine.ChangeState(newState);
-                }
+                ChangeState(newState);
             }
             else if (sensors.FoundPrey())
             {
-                if (stateMachine.getCurrentState() != this.huntState)
-                {
-                    stateMachine.ChangeState(this.huntState);
-                }
+                ChangeState(this.huntState);
             }
             else if (sensors.FoundMate())
             {
-                if (stateMachine.getCurrentState() != this.mateState)
-                {
-                    stateMachine.ChangeState(this.mateState);
-                }
+                ChangeState(this.mateState);
             }
             else
             {
-                if (stateMachine.getCurrentState() != this.casualState)
-                {
-                    stateMachine.ChangeState(this.casualState);
-                }
+                ChangeState(this.casualState);
             }
             stateMachine.Update();
         }
@@ -142,6 +142,14 @@ namespace Ecosystem.Attributes
             Vector3 currentPos = movement.GetPosition();
             Vector3 diff = target - currentPos;
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+        }
+
+        private void ChangeState(IState state)
+        {
+            if (stateMachine.getCurrentState() != state)
+            {
+                stateMachine.ChangeState(state);
+            }
         }
 
         public NeedsStatus GetNeedsStatus() {

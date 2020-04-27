@@ -13,9 +13,9 @@ namespace Ecosystem.Samples
         private void Update()
         {
             if (!hybridEntity.HasConverted) return;
-
             transform.position = movement.GetPosition();
             transform.rotation = movement.GetRotation();
+            transform.localScale = movement.GetScale();
         }
     }
 }
