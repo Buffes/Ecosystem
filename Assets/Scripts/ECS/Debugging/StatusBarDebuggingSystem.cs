@@ -1,9 +1,9 @@
 ﻿using Ecosystem.ECS.Animal.Needs;
+using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Debugging.Selection;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
-using Unity.Collections;
 using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Debugging
@@ -33,13 +33,13 @@ namespace Ecosystem.ECS.Debugging
             Vector2[] uv = new Vector2[4];
             int[] triangles = new int[6];
 
-            vertices[0] = new Vector3(0,0.25f);
-            vertices[1] = new Vector3(1,0.25f);
+            vertices[0] = new Vector3(0,0.1f);
+            vertices[1] = new Vector3(1,0.1f);
             vertices[2] = new Vector3(0,0);
             vertices[3] = new Vector3(1,0);
 
-            uv[0] = new Vector2(0,0.25f);
-            uv[1] = new Vector2(1,0.25f);
+            uv[0] = new Vector2(0,0.1f);
+            uv[1] = new Vector2(1,0.1f);
             uv[2] = new Vector2(0,0);
             uv[3] = new Vector2(1,0);
 
@@ -85,7 +85,6 @@ namespace Ecosystem.ECS.Debugging
             {
                 float3 pos = position.Value;
                 pos.y += Height;
-                pos.x -= 0.5f;
 
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
               
@@ -99,8 +98,7 @@ namespace Ecosystem.ECS.Debugging
             {
 
                 float3 pos = position.Value;
-                pos.y += Height + 0.3f;
-                pos.x -= 0.5f;
+                pos.y += Height + 0.15f;
 
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
                 
@@ -113,12 +111,24 @@ namespace Ecosystem.ECS.Debugging
                 in MaxSexualUrgesData maxUrge) =>
             {
                 float3 pos = position.Value;
-                pos.y += Height + 0.6f;
-                pos.x -= 0.5f;
+                pos.y += Height + 0.3f;
 
                 Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
 
                 Draw(urgesData.Urge, maxUrge.MaxUrge, m, MateColor);
+            }).Run();
+
+            Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
+                in Translation position,
+                in AgeOfDeathData ageOfDeathData,
+                in AgeData ageData) =>
+            {
+                float3 pos = position.Value;
+                pos.y += Height + 0.45f;
+
+                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+
+                Draw(ageData.Age, ageOfDeathData.Value, m, Color.white);
             }).Run();
 
             
