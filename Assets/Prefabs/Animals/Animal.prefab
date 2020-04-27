@@ -103,12 +103,12 @@ GameObject:
   - component: {fileID: 8235464667470886990}
   - component: {fileID: 2208487732288310472}
   - component: {fileID: 205040342004547871}
-  - component: {fileID: 6099541318120149023}
   - component: {fileID: 998787032190030635}
   - component: {fileID: 651237655262531605}
   - component: {fileID: 7232735020347957534}
   - component: {fileID: 2006784302017292277}
   - component: {fileID: 5075381746476165254}
+  - component: {fileID: 650131295108155739}
   - component: {fileID: 6303536544478638138}
   - component: {fileID: 4555329424664434073}
   - component: {fileID: 8358889571667046334}
@@ -129,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 5070148453820763646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
   m_Children: []
   m_Father: {fileID: 5070148452478974442}
   m_RootOrder: 0
@@ -591,19 +591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4043c14c8962bdd428034364d02ff179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6099541318120149023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ee7c6eaba84ef4dab9d1714abf2e4a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Value: 10
 --- !u!114 &998787032190030635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +654,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHunger: 3
+--- !u!114 &650131295108155739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81dff61f84aff0b92a04ecc7f34af4e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lifespan: 20
+  Age: 0
 --- !u!114 &6303536544478638138
 MonoBehaviour:
   m_ObjectHideFlags: 0

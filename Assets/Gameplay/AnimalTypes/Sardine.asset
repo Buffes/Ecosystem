@@ -16,5 +16,4 @@ MonoBehaviour:
   Baby: {fileID: 2003170221973116033, guid: 290fdc0c73d1e4649bf63eeb3459216c, type: 3}
   Name: Sardine
   prey: []
-  food:
-  - {fileID: 11400000, guid: 26814f138066335b7b105d0d95e172e6, type: 2}
+  food: []
