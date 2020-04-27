@@ -52,7 +52,7 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                 
                 float3 target = translation.Value;
                 
-                float cap = 4; // cap + min = maximum distance from entity to pick a point.
+                float cap = 6; // cap + min = maximum distance from entity to pick a point.
                 float min = 2; // The minimum distance away from the entity to pick a point.
                 int tries = 10; // To handle case of no possible targets.
 

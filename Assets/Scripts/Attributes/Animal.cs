@@ -84,12 +84,16 @@ namespace Ecosystem.Attributes
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
 
+            bool notInCriticalState = !CriticalLevel(hungerLimit, currentHunger) && !CriticalLevel(thirstLimit, currentThirst);
+            bool lookForMate = notInCriticalState && !sensors.FoundPredator() && currentMating <= matingLimit;
+            bool flee = notInCriticalState && sensors.FoundPredator();
+
             sensors.LookForPredator(true);
-            sensors.LookForFleeTarget(sensors.FoundPredator());
+            sensors.LookForFleeTarget(flee);
             sensors.LookForPrey(currentHunger <= hungerLimit);
             sensors.LookForFood(currentHunger <= hungerLimit);
             sensors.LookForWater(currentThirst <= thirstLimit);
-            sensors.LookForMate(currentMating <= matingLimit);
+            sensors.LookForMate(lookForMate);
 
             if (sensors.FoundFleeTarget())
             {
@@ -142,6 +146,12 @@ namespace Ecosystem.Attributes
             Vector3 currentPos = movement.GetPosition();
             Vector3 diff = target - currentPos;
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
+        }
+
+        private bool CriticalLevel(float limit, float current)
+        {
+            bool critical = (current / limit) <= 0.5f;
+            return critical;
         }
 
         public NeedsStatus GetNeedsStatus() {
