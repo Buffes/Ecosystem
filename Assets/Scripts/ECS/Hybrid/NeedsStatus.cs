@@ -107,6 +107,17 @@ namespace Ecosystem.ECS.Hybrid
             EntityManager.SetComponentData(Entity, new SexualUrgesData { Urge = cur + value });
         }
 
+        /// <summary>
+        /// Sate the sexual urges of the partner when reproducing.
+        /// </summary>
+        /// <param name="value">Float value</param>
+        public void SateSexualUrge(float value, Entity partner) {
+            if (value <= 0.0f) return;
+            if (!EntityManager.HasComponent<SexualUrgesData>(partner)) return;
+            float cur = EntityManager.GetComponentData<SexualUrgesData>(partner).Urge;
+            EntityManager.SetComponentData(partner,new SexualUrgesData { Urge = cur + value });
+        }
+
         private T GetComp<T>() where T : struct, IComponentData
         {
             return EntityManager.GetComponentData<T>(Entity);
