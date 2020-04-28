@@ -12,6 +12,7 @@ namespace Ecosystem.ECS.Debugging
     {
         public bool Show { get; set; }
         public Material Material { get; set; }
+        public Color BackgroundColor { get; set; }
         public Color HungerColor { get; set; }
         public Color ThirstColor { get; set; }
         public Color MateColor { get; set; }
@@ -21,11 +22,11 @@ namespace Ecosystem.ECS.Debugging
 
         protected override void OnCreate()
         {
-            mesh = CreateMesh();
+            mesh = CreateMesh(1f, 0.1f);
         }
 
 
-        private Mesh CreateMesh()
+        private Mesh CreateMesh(float width, float height)
         {
             Mesh mesh = new Mesh();
 
@@ -33,15 +34,18 @@ namespace Ecosystem.ECS.Debugging
             Vector2[] uv = new Vector2[4];
             int[] triangles = new int[6];
 
-            vertices[0] = new Vector3(0,0.1f);
-            vertices[1] = new Vector3(1,0.1f);
-            vertices[2] = new Vector3(0,0);
-            vertices[3] = new Vector3(1,0);
+            float halfWidth = width / 2;
+            float halfHeight = height / 2;
 
-            uv[0] = new Vector2(0,0.1f);
-            uv[1] = new Vector2(1,0.1f);
-            uv[2] = new Vector2(0,0);
-            uv[3] = new Vector2(1,0);
+            vertices[0] = new Vector3(-halfWidth, halfHeight);
+            vertices[1] = new Vector3(halfWidth, halfHeight);
+            vertices[2] = new Vector3(-halfWidth, -halfHeight);
+            vertices[3] = new Vector3(halfWidth, -halfHeight);
+
+            uv[0] = new Vector2(0, 1);
+            uv[1] = new Vector2(1, 1);
+            uv[2] = new Vector2(0, 0);
+            uv[3] = new Vector2(1, 0);
 
             triangles[0] = 0;
             triangles[1] = 1;
@@ -60,6 +64,7 @@ namespace Ecosystem.ECS.Debugging
         private void Draw(float cur, float max, Matrix4x4 matrix, Color color)
         {
             MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+            materialPropertyBlock.SetVector("_BackgroundColor", BackgroundColor);
             materialPropertyBlock.SetVector("_Color", color);
             materialPropertyBlock.SetFloat("_Fill", cur / max);
             UnityEngine.Graphics.DrawMesh(
@@ -78,6 +83,8 @@ namespace Ecosystem.ECS.Debugging
         {
             if (!Show) return;
             Quaternion lookRot = Camera.main.transform.rotation;
+            float3 camPos = Camera.main.transform.position;
+
             Entities.WithoutBurst().WithAll<Selected>().ForEach((Entity entity,
                 in Translation position,
                 in HungerData hungerData,
@@ -86,7 +93,7 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height;
 
-                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                Matrix4x4 m = Matrix4x4.TRS(pos, BillboardRotation(pos, camPos), Vector3.one);
               
                 Draw(hungerData.Hunger, maxHunger.MaxHunger, m, HungerColor);
             }).Run();
@@ -100,7 +107,7 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height + 0.15f;
 
-                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                Matrix4x4 m = Matrix4x4.TRS(pos, BillboardRotation(pos, camPos), Vector3.one);
                 
                 Draw(thirstData.Thirst, maxThirst.MaxThirst, m, ThirstColor);
             }).Run();
@@ -113,7 +120,7 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height + 0.3f;
 
-                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                Matrix4x4 m = Matrix4x4.TRS(pos, BillboardRotation(pos, camPos), Vector3.one);
 
                 Draw(urgesData.Urge, maxUrge.MaxUrge, m, MateColor);
             }).Run();
@@ -126,13 +133,16 @@ namespace Ecosystem.ECS.Debugging
                 float3 pos = position.Value;
                 pos.y += Height + 0.45f;
 
-                Matrix4x4 m = Matrix4x4.TRS(pos, lookRot, Vector3.one);
+                Matrix4x4 m = Matrix4x4.TRS(pos, BillboardRotation(pos, camPos), Vector3.one);
 
                 Draw(ageData.Age, ageOfDeathData.Value, m, Color.white);
             }).Run();
 
             
         }
+
+        private static quaternion BillboardRotation(float3 position, float3 cameraPosition)
+            => quaternion.LookRotation(position - cameraPosition, new float3(0, 1, 0));
     }
 
 
