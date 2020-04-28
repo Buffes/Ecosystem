@@ -52,7 +52,6 @@ namespace Ecosystem.Attributes
             this.HungerLimit = needs.GetHungerLimit();
             this.ThirstLimit = needs.GetThirstLimit();
             this.MatingLimit = needs.GetMatingLimit();
-            this.BraveryLevel = needs.GetBravery();
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
@@ -88,17 +87,10 @@ namespace Ecosystem.Attributes
             float currentHunger = this.needs.GetHungerStatus();
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
-
-            bool shouldFlee = false;
-
-            if (sensors.FoundPredator())
-            {
-                float distanceToPredator = DiffLength(sensors.GetFoundPredatorInfo().Position);
-                shouldFlee = sensors.FoundPredator() && (ShouldFlee(HungerLimit, currentHunger, BraveryLevel, distanceToPredator) || ShouldFlee(ThirstLimit, currentThirst, BraveryLevel, distanceToPredator));
-            }
+            this.BraveryLevel = needs.GetBravery();
 
             sensors.LookForPredator(true);
-            sensors.LookForFleeTarget(shouldFlee);
+            sensors.LookForFleeTarget(sensors.FoundPredator());
             sensors.LookForParent(!needs.IsAdult());
             sensors.LookForPrey(currentHunger <= HungerLimit);
             sensors.LookForFood(currentHunger <= HungerLimit);
@@ -107,6 +99,17 @@ namespace Ecosystem.Attributes
 
             if (sensors.FoundFleeTarget())
             {
+                if(sensors.FoundFood() || sensors.FoundWater())
+                {
+                    float distanceToPredator = DiffLength(sensors.GetFoundPredatorInfo().Position);
+                    bool shouldFlee = (ShouldFlee(HungerLimit, currentHunger, distanceToPredator) || ShouldFlee(ThirstLimit, currentThirst, distanceToPredator));
+                    if(shouldFlee)
+                        ChangeState(this.fleeState);
+                    else
+                    {
+                        HungerOrThirst();
+                    }
+                }
                 ChangeState(this.fleeState);
             }
             else if (!needs.IsAdult())
@@ -122,16 +125,7 @@ namespace Ecosystem.Attributes
             }
             else if (sensors.FoundFood() || sensors.FoundWater())
             {
-                IState newState = sensors.FoundFood() ? this.hungerState : this.thirstState;
-
-                if (sensors.FoundFood() && sensors.FoundWater()
-                    && DiffLength(sensors.GetFoundWaterInfo())
-                        < DiffLength(sensors.GetFoundFoodInfo().Position))
-                {
-                    newState = this.thirstState;
-                }
-
-                ChangeState(newState);
+                HungerOrThirst();
             }
             else if (sensors.FoundPrey())
             {
@@ -154,16 +148,29 @@ namespace Ecosystem.Attributes
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
         }
 
-        private bool ShouldFlee(float limit, float current, float bravery, float distanceToPredator)
+        private bool ShouldFlee(float limit, float current, float distanceToPredator)
         {
-            if (distanceToPredator <= 0)
+            if (distanceToPredator <= 1.0f)
                 return true;
 
             float need = (current / limit);
-            float m = Mathf.Pow(need / bravery, 2.0f)*0.1f;
+            float m = Mathf.Pow(need * BraveryLevel, 2.0f);
             m = Mathf.Clamp(m, 0.0f, 1.0f);
-            bool flee = m * distanceToPredator < 0.25f;
+            bool flee = m * distanceToPredator < 0.50f;
             return flee;
+        }
+
+        private void HungerOrThirst()
+        {
+            IState newState = sensors.FoundFood() ? this.hungerState : this.thirstState;
+
+            if (sensors.FoundFood() && sensors.FoundWater()
+                && DiffLength(sensors.GetFoundWaterInfo())
+                    < DiffLength(sensors.GetFoundFoodInfo().Position))
+            {
+                newState = this.thirstState;
+            }
+            ChangeState(newState);
         }
 
         private void ChangeState(IState state)
