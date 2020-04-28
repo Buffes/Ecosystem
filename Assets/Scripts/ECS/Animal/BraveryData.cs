@@ -4,11 +4,11 @@ using Unity.Entities;
 namespace Ecosystem.ECS.Animal
 {
     /// <summary>
-    /// Float value for calculating how often the animal will flee when noticing predators.
+    /// Float value for calculating how often the animal will flee when noticing predators. Higher = braver
     /// </summary>
     [Serializable]
     [GenerateAuthoringComponent]
-    public struct FearData : IComponentData
+    public struct BraveryData : IComponentData
     {
         public float Value;
     }

@@ -19,9 +19,9 @@ namespace Ecosystem.ECS.Hybrid
             return EntityManager.HasComponent<Adult>(Entity);
         }
 
-        public float GetFear()
+        public float GetBravery()
         {
-            FearData value = GetComp<FearData>();
+            BraveryData value = GetComp<BraveryData>();
             return value.Value;
         }
 

@@ -13,7 +13,7 @@ namespace Ecosystem.Attributes
         public float HungerLimit {get; private set;}
         public float ThirstLimit {get; private set;}
         public float MatingLimit {get; private set;}
-        public float FearLevel {get; private set;}
+        public float BraveryLevel { get; private set;}
 
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
@@ -52,7 +52,7 @@ namespace Ecosystem.Attributes
             this.HungerLimit = needs.GetHungerLimit();
             this.ThirstLimit = needs.GetThirstLimit();
             this.MatingLimit = needs.GetMatingLimit();
-            this.FearLevel = needs.GetFear();
+            this.BraveryLevel = needs.GetBravery();
 
             this.casualState = new CasualState(this);
             this.hungerState = new HungerState(this);
@@ -89,12 +89,16 @@ namespace Ecosystem.Attributes
             float currentThirst = this.needs.GetThirstStatus();
             float currentMating = this.needs.GetSexualUrgesStatus();
 
-            bool notInCriticalState = !CriticalLevel(HungerLimit, currentHunger) && !CriticalLevel(ThirstLimit, currentThirst);
-            bool lookForMate = notInCriticalState && !sensors.FoundPredator() && currentMating <= MatingLimit;
-            bool flee = notInCriticalState && sensors.FoundPredator();
+            bool shouldFlee = false;
+
+            if (sensors.FoundPredator())
+            {
+                float distanceToPredator = DiffLength(sensors.GetFoundPredatorInfo().Position);
+                shouldFlee = sensors.FoundPredator() && (ShouldFlee(HungerLimit, currentHunger, BraveryLevel, distanceToPredator) || ShouldFlee(ThirstLimit, currentThirst, BraveryLevel, distanceToPredator));
+            }
 
             sensors.LookForPredator(true);
-            sensors.LookForFleeTarget(sensors.FoundPredator());
+            sensors.LookForFleeTarget(shouldFlee);
             sensors.LookForParent(!needs.IsAdult());
             sensors.LookForPrey(currentHunger <= HungerLimit);
             sensors.LookForFood(currentHunger <= HungerLimit);
@@ -150,15 +154,16 @@ namespace Ecosystem.Attributes
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
         }
 
-        private bool CriticalLevel(float limit, float current)
+        private bool ShouldFlee(float limit, float current, float bravery, float distanceToPredator)
         {
-            bool critical = (current / limit) <= 0.5f;
-            return critical;
-        }
+            if (distanceToPredator <= 0)
+                return true;
 
-        private bool ShouldFlee(float limit, float current, float fear)
-        {
-            return true;
+            float need = (current / limit);
+            float m = Mathf.Pow(need / bravery, 2.0f)*0.1f;
+            m = Mathf.Clamp(m, 0.0f, 1.0f);
+            bool flee = m * distanceToPredator < 0.25f;
+            return flee;
         }
 
         private void ChangeState(IState state)
