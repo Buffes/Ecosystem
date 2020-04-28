@@ -6,9 +6,9 @@ namespace UnityStandardAssets.Utility
     public class FPSCounter : MonoBehaviour
     {
         [SerializeField]
-        private GameObject m_UI;
+        private GameObject m_UI = default;
         [SerializeField]
-        private TMP_Text m_Text;
+        private TMP_Text m_Text = default;
 
         private float fixedDeltaTime;
         private int FPS;

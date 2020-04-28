@@ -6,6 +6,7 @@ using Ecosystem.ECS.Targeting.Targets;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Ecosystem.ECS.Targeting.FindSystems
 {
@@ -39,7 +40,17 @@ namespace Ecosystem.ECS.Targeting.FindSystems
                     DynamicBuffer<PreyTypesElement> targetPreyTypes = preyTypeBuffers[sensedAnimalInfo.Entity];
                     float3 targetPosition = sensedAnimalInfo.Position;
                     float targetDistance = math.distance(targetPosition, position.Value);
+                    Quaternion targetRotation = sensedAnimalInfo.Rotation;
 
+                    float3 relativePosition = position.Value - targetPosition;
+
+                    relativePosition = math.normalize(relativePosition);
+                    float3 forward = math.normalize(math.forward(targetRotation));
+                    float forwardAngle = math.atan2(forward.z,forward.x);
+
+                    float targetAngle = math.atan2(relativePosition.z,relativePosition.x);
+
+                    if (math.abs(targetAngle - forwardAngle) > math.PI / 2) continue; // Target not walking towards prey
                     if (!IsPrey(animalType, targetPreyTypes)) continue; // Not prey to the target
                     if (closestPredatorIndex != -1 && targetDistance >= closestPredatorDistance) continue; // Not the closest
 

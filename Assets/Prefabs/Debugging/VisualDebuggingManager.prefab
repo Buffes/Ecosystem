@@ -53,13 +53,14 @@ MonoBehaviour:
   stateMaterial: {fileID: 2100000, guid: 7cdcfc48593ed634d8e1a7fabdcd8f88, type: 2}
   stateRadius: 0.15
   stateHeight: 1.25
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  casualColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 0}
-  hungerColor: {r: 1, g: 0.60990745, b: 0, a: 0}
-  thirstColor: {r: 0, g: 0.6884818, b: 1, a: 0}
-  mateColor: {r: 1, g: 0, b: 0.797163, a: 0}
-  fleeColor: {r: 0.754717, g: 0.14409424, b: 0, a: 0}
-  huntColor: {r: 0.103773594, g: 0.061676756, b: 0.06380923, a: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  casualColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
+  hungerColor: {r: 1, g: 0.60990745, b: 0, a: 1}
+  thirstColor: {r: 0, g: 0.6884818, b: 1, a: 1}
+  mateColor: {r: 1, g: 0, b: 0.797163, a: 1}
+  fleeColor: {r: 0.754717, g: 0.14409424, b: 0, a: 1}
+  huntColor: {r: 0.103773594, g: 0.061676756, b: 0.06380923, a: 1}
   visionMaterial: {fileID: 2100000, guid: a83be484d23b20f438491cef8ca78c3a, type: 2}
   statusMaterial: {fileID: 2100000, guid: 93e6151621bd0954a93788e3970bdbcc, type: 2}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0.3137255}
   statusHeight: 1.75

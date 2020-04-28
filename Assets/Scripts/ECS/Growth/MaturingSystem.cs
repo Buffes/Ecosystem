@@ -26,6 +26,7 @@ namespace Ecosystem.ECS.Growth
             
             Entities
                 .WithNone<Adult>()
+                .WithAll<AnimalTypeData>()
                 .ForEach((Entity entity, int entityInQueryIndex,
                 ref CompositeScale scale,
                 ref Translation translation,

@@ -30,7 +30,8 @@ namespace Ecosystem.StateMachines {
                 // Reproduction event
                 Entity partner = owner.GetSensors().GetFoundMateInfo().Entity;
                 owner.GetInteraction().Reproduce(partner);
-                owner.GetNeedsStatus().SateSexualUrge(1f);
+                owner.GetNeedsStatus().SateSexualUrge(2f);
+                owner.GetNeedsStatus().SateSexualUrge(2f,partner);
             }
 
             // Move owner
