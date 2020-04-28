@@ -28,7 +28,7 @@ public class PrefabSpawner : MonoBehaviour
         // For each prefab find a free spot and spawn the gameobject
         foreach (var population in settings.InitialPopulations)
         {
-            Spawn(population.Value.Prefab, population.Value.Amount);
+            Spawn(population.Prefab, population.Amount);
         }
     }
 
