@@ -154,9 +154,8 @@ namespace Ecosystem.Attributes
                 return true;
 
             float need = (current / limit);
-            float m = Mathf.Pow(need * BraveryLevel, 2.0f);
-            m = Mathf.Clamp(m, 0.0f, 1.0f);
-            bool flee = m * distanceToPredator < 0.50f;
+            float m = 8.0f / distanceToPredator;
+            bool flee = need * m > BraveryLevel; // if true then flee
             return flee;
         }
 
