@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Grid;
+using System.Linq;
 using Unity.Entities;
 using UnityEngine;
 
@@ -21,12 +22,15 @@ namespace Ecosystem.Console
                 sender.SendMessage("Not a number: " + args[1], MessageType.Error);
                 return;
             }
-            
-            if (!simulationSettings.InitialPopulations.TryGetValue(prefabName, out var population))
+
+            var population = simulationSettings.InitialPopulations.SingleOrDefault(x => x.Prefab.name == prefabName);
+
+            if (population == null)
             {
                 sender.SendMessage("Could not find \"" + prefabName + "\"");
                 return;
             }
+
             var prefab = population.Prefab;
 
             if (worldGridSystem == null) worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();

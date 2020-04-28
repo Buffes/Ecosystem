@@ -10,16 +10,7 @@ namespace Ecosystem
         [SerializeField]
         private List<AnimalPopulation> initialPopulations = new List<AnimalPopulation>();
 
-        public Dictionary<string, AnimalPopulation> InitialPopulations { get; } = new Dictionary<string, AnimalPopulation>();
-
-        private void OnEnable()
-        {
-            InitialPopulations.Clear();
-            foreach (var population in initialPopulations)
-            {
-                InitialPopulations.Add(population.Prefab.name.ToLower(), population);
-            }
-        }
+        public List<AnimalPopulation> InitialPopulations => initialPopulations;
 
         [Serializable]
         public class AnimalPopulation

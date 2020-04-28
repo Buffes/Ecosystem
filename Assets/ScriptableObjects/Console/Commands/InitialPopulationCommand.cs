@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Ecosystem.Console
@@ -15,7 +16,7 @@ namespace Ecosystem.Console
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Initial populations:");
-                foreach (var pop in simulationSettings.InitialPopulations.Values)
+                foreach (var pop in simulationSettings.InitialPopulations)
                 {
                     sb.Append("\n    ").Append(pop.Prefab.name).Append(": ").Append(pop.Amount);
                 }
@@ -25,7 +26,7 @@ namespace Ecosystem.Console
 
             if (args.Length == 1 && args[0] == "clear")
             {
-                foreach (var pop in simulationSettings.InitialPopulations.Values) pop.Amount = 0;
+                foreach (var pop in simulationSettings.InitialPopulations) pop.Amount = 0;
                 sender.SendMessage("All initial populations set to 0");
                 return;
             }
@@ -33,7 +34,9 @@ namespace Ecosystem.Console
             if (args.Length != 2) return;
             var prefabName = args[0].ToLower();
 
-            if (!simulationSettings.InitialPopulations.TryGetValue(prefabName, out var population))
+            var population = simulationSettings.InitialPopulations.SingleOrDefault(x => x.Prefab.name == prefabName);
+            
+            if (population == null)
             {
                 sender.SendMessage("Could not find \"" + prefabName + "\"");
                 return;
