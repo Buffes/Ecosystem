@@ -26,7 +26,7 @@ namespace Ecosystem.Debugging
         [Header("State")]
         [SerializeField] private Material stateMaterial = default;
         [SerializeField] private float stateRadius = 0.15f;
-        [SerializeField] private float stateHeight = 3.5f;
+        [SerializeField] private float stateHeight = 1.25f;
         [SerializeField] private Color defaultColor = default;
         [SerializeField] private Color casualColor = default;
         [SerializeField] private Color hungerColor = default;
@@ -40,7 +40,8 @@ namespace Ecosystem.Debugging
 
         [Header("Status")]
         [SerializeField] private Material statusMaterial = default;
-        [SerializeField] private float statusHeight = 2.5f;
+        [SerializeField] private float statusHeight = 1.75f;
+        [SerializeField] private Color backgroundColor = default;
 
         private HearingDebuggingSystem hearingDebuggingSystem;
         private PathDebuggingSystem pathDebuggingSystem;
@@ -84,6 +85,7 @@ namespace Ecosystem.Debugging
             statusBarDebuggingSystem.Material = statusMaterial;
             statusBarDebuggingSystem.Show = statusDebugShow;
             statusBarDebuggingSystem.Height = statusHeight;
+            statusBarDebuggingSystem.BackgroundColor = backgroundColor;
             statusBarDebuggingSystem.HungerColor = hungerColor;
             statusBarDebuggingSystem.ThirstColor = thirstColor;
             statusBarDebuggingSystem.MateColor = mateColor;
