@@ -63,8 +63,8 @@ namespace Ecosystem
 
             // Move using WASD or arrow keys
             Vector3 movement = new Vector3();
-            movement += currentMoveSpeed * transform.forward * Input.GetAxis("Vertical") * Time.deltaTime;
-            movement += currentMoveSpeed * transform.right * Input.GetAxis("Horizontal") * Time.deltaTime;
+            movement += currentMoveSpeed * transform.forward * Input.GetAxis("Vertical") * Time.unscaledDeltaTime;
+            movement += currentMoveSpeed * transform.right * Input.GetAxis("Horizontal") * Time.unscaledDeltaTime;
             movement.y = 0f;
             target += movement;
 
@@ -74,13 +74,13 @@ namespace Ecosystem
             // Move up with Space
             if (Input.GetKey(KeyCode.Space))
             {
-                target.y += currentMoveSpeed * Time.deltaTime;
+                target.y += currentMoveSpeed * Time.unscaledDeltaTime;
             }
 
             // Move down with Control
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                target.y -= currentMoveSpeed * Time.deltaTime;
+                target.y -= currentMoveSpeed * Time.unscaledDeltaTime;
             }
         }
 
