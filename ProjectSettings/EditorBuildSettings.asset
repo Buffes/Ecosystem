@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Samples/PathfindingECS/ECSHybridScene.unity
+    guid: 26e0bad571c9fe94da8897155565795f
   m_configObjects: {}
