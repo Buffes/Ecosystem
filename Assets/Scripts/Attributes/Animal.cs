@@ -99,7 +99,7 @@ namespace Ecosystem.Attributes
 
             if (sensors.FoundFleeTarget())
             {
-                if(sensors.FoundFood() || sensors.FoundWater())
+                if((sensors.FoundFood() || sensors.FoundWater()) && needs.IsAdult())
                 {
                     float distanceToPredator = DiffLength(sensors.GetFoundPredatorInfo().Position);
                     bool shouldFlee = (ShouldFlee(HungerLimit, currentHunger, distanceToPredator) || ShouldFlee(ThirstLimit, currentThirst, distanceToPredator));
