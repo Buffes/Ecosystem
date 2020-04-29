@@ -39,8 +39,8 @@ public class PathfindingProfiler : MonoBehaviour
         UpdateBuffer();
         CalculateExecutionTime();
 
-        if (textTimeAverage != null) textTimeAverage.text = "Average (ms/frame): " + averageTime;
-        if (textTimeHighest != null) textTimeHighest.text = "Highest (ms/frame): " + highestTime;
+        if (textTimeAverage != null) textTimeAverage.text = "Average (ms/frame): " + averageTime.ToString("0.00");
+        if (textTimeHighest != null) textTimeHighest.text = "Highest (ms/frame): " + highestTime.ToString("0.00");
     }
 
     private void InitializeBuffer()
