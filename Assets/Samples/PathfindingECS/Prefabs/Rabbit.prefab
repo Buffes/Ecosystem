@@ -258,6 +258,16 @@ PrefabInstance:
       propertyPath: m_Material.m_CollidesWith.m_Value.Array.data[31]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763531, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5070148453998145580, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
