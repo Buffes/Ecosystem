@@ -23,7 +23,8 @@ namespace Ecosystem.Console
                 return;
             }
 
-            var population = simulationSettings.InitialPopulations.SingleOrDefault(x => x.Prefab.name == prefabName);
+            var population = simulationSettings.InitialPopulations.SingleOrDefault(
+                x => x.Prefab.name.Equals(prefabName, System.StringComparison.OrdinalIgnoreCase));
 
             if (population == null)
             {
