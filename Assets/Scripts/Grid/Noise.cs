@@ -14,14 +14,28 @@ namespace Ecosystem.Grid
         /// <param name="persistence"></param>
         /// <param name="lacunarity"></param>
         /// <returns></returns>
-        public static float[,] GenerateNoiseMap(int width, int height, float scale, int octaves, float persistence, float lacunarity)
+        public static float[,] GenerateNoiseMap(int width, int height, int seed, float scale, int octaves, float persistence, float lacunarity)
         {
+            
+            System.Random random = new System.Random(seed);
+            Vector2[] octaveOffsets = new Vector2[octaves];
+
+            for (int i = 0; i < octaves; i++)
+            {
+                float offsetX = random.Next(-100000, 100000);
+                float offsetY = random.Next(-100000, 100000);
+                octaveOffsets[i] = new Vector2(offsetX, offsetY);
+            }
+
             if (scale <= 0f)
             {
                 scale = 0.0001f; // Avoid division by 0.
             }
+
             float[,] noiseMap = new float[width, height]; 
-        
+            float maxNoiseHeight = float.MinValue;
+            float minNoiseHeight = float.MaxValue;
+
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -32,19 +46,30 @@ namespace Ecosystem.Grid
 
                     for (int i = 0; i < octaves; i++)
                     {        
-                        float yInput = y / scale * frequency;
-                        float xInput = x / scale * frequency;
+                        float xInput = x / scale * frequency + octaveOffsets[i].x;
+                        float yInput = y / scale * frequency + octaveOffsets[i].y;
 
-                        float perlinValue = Mathf.PerlinNoise(xInput, yInput);
+                        float perlinValue = 2f * Mathf.PerlinNoise(xInput, yInput) - 1f;
                         noiseHeight += perlinValue * amplitude;
 
                         amplitude *= persistence;
                         frequency *= lacunarity;
                     }
-                    noiseMap[x,y] = noiseHeight;
+
+                    if (noiseHeight > maxNoiseHeight) maxNoiseHeight = noiseHeight;
+                    if (noiseHeight < minNoiseHeight) minNoiseHeight = noiseHeight;
+                    noiseMap[x, y] = noiseHeight;
                 }            
             }
-
+            
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    noiseMap[x, y] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[x, y]);
+                }
+            }
+            
             return noiseMap;
         }
     }
