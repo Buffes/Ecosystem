@@ -57,7 +57,7 @@ public class PathfindingProfiler : MonoBehaviour
     {
         if (!pathfindingRecorder.isValid) return;
 
-        buffer[bufferIndex++] = (float)(pathfindingRecorder.elapsedNanoseconds / 1000000);
+        buffer[bufferIndex++] = pathfindingRecorder.elapsedNanoseconds / 1000000;
         if (bufferIndex >= frameRange)
         {
             bufferIndex = 0;

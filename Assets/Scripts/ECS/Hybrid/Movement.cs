@@ -44,5 +44,8 @@ namespace Ecosystem.ECS.Hybrid
         {
             return entityManager.GetComponentData<Rotation>(entity).Value;
         }
+
+        public bool HasPath => entityManager.HasComponent<PathElement>(entity)
+            && entityManager.GetBuffer<PathElement>(entity).Length > 0;
     }
 }

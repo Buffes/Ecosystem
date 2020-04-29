@@ -26,7 +26,7 @@ namespace Ecosystem.Samples
 
         private void Update()
         {
-            if ((transform.position - target).sqrMagnitude < 0.01f) 
+            if (!movement.HasPath) 
             {
                 // Randomize new target
                 target = GetWorldPosition(new int2(UnityEngine.Random.Range(1, 99), UnityEngine.Random.Range(1, 99)));

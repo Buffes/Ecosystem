@@ -29,8 +29,8 @@ public class GroundMovementSystem : SystemBase
             if (math.length(direction) != 0)
             {
                 rotation.Value = quaternion.LookRotation(direction, math.up());
+                position.Value += math.forward(rotation.Value) * 6f * deltaTime;
             }
-            position.Value += math.forward(rotation.Value) * 6f * deltaTime;
 
         }).ScheduleParallel();
     }
