@@ -28,12 +28,14 @@ namespace Ecosystem.ECS.Movement.Pathfinding
         protected override void OnUpdate()
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
+            var profilerMarker = PathfindingProfiler.ProfilerMarker;
 
             Entities.ForEach((Entity entity, int entityInQueryIndex,
                 ref DynamicBuffer<PathElement> pathBuffer,
                 in MoveCommand moveCommand,
                 in Translation translation) =>
             {
+                profilerMarker.Begin();
 
                 float3 target = moveCommand.target;
                 float reach = moveCommand.reach;
@@ -57,6 +59,8 @@ namespace Ecosystem.ECS.Movement.Pathfinding
                 }
                 pathBuffer.Add(new PathElement { Checkpoint = position }); // Start with the current position so that the path following can correctly stop the movement
                 path.Dispose();
+
+                profilerMarker.End();
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);

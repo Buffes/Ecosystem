@@ -51,7 +51,9 @@ public class OOPpathfind : MonoBehaviour
     {
         int2 logicTarget = new int2(UnityEngine.Random.Range(1, 100), UnityEngine.Random.Range(1, 100));
         int2 logicStart = GetGridCoords(transform.position);
+        PathfindingProfiler.ProfilerMarker.Begin();
         path = pathfinding.FindPath(logicStart.x, logicStart.y, logicTarget.x, logicTarget.y);
+        PathfindingProfiler.ProfilerMarker.End();
         // Debug.Log("Start: " + logicStart);
         // Debug.Log("Target: " + logicTarget);
         // Debug.Log(path == null);
@@ -62,7 +64,7 @@ public class OOPpathfind : MonoBehaviour
         // {
         //     PathNode node = path[i];
         //     PathNode next = path[i + 1];
-            
+
         //     Debug.DrawLine(new Vector3(node.x, 0, node.y), new Vector3(next.x, 0, next.y), Color.red, 20f);
         // }
         // Debug.DrawLine(new Vector3(path[0].x, 0, path[0].y), new Vector3(path[1].x, 0, path[1].y), Color.blue, 20f);
