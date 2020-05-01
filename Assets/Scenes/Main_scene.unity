@@ -723,12 +723,22 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: Persistence
-      value: 0.5
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: Lacunarity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: NoiseSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: RandomNoiseSeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
