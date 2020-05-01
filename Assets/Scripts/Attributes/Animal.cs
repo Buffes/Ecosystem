@@ -103,14 +103,20 @@ namespace Ecosystem.Attributes
                 {
                     float distanceToPredator = DiffLength(sensors.GetFoundPredatorInfo().Position);
                     bool shouldFlee = (ShouldFlee(HungerLimit, currentHunger, distanceToPredator) || ShouldFlee(ThirstLimit, currentThirst, distanceToPredator));
-                    if(shouldFlee)
+                    if (shouldFlee)
+                    {
                         ChangeState(this.fleeState);
+                    }
                     else
                     {
                         HungerOrThirst();
                     }
                 }
-                ChangeState(this.fleeState);
+                else
+                {
+                    ChangeState(this.fleeState);
+                }
+
             }
             else if (!needs.IsAdult())
             {
@@ -142,7 +148,8 @@ namespace Ecosystem.Attributes
             stateMachine.Update();
         }
 
-        private float DiffLength(Vector3 target) {
+        private float DiffLength(Vector3 target) 
+        {
             Vector3 currentPos = movement.GetPosition();
             Vector3 diff = target - currentPos;
             return Mathf.Sqrt(Mathf.Pow(diff.x,2) + Mathf.Pow(diff.z,2));
