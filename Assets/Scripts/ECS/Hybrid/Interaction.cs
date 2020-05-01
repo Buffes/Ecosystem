@@ -3,7 +3,6 @@ using Ecosystem.ECS.Death;
 using Ecosystem.ECS.Reproduction;
 using Ecosystem.Genetics;
 using Unity.Entities;
-using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Hybrid
 {

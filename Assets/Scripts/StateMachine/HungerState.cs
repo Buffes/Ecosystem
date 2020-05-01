@@ -2,7 +2,6 @@
 using Unity.Entities;
 using Ecosystem.Attributes;
 using Ecosystem.ParticleSystems;
-using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.StateMachines {
     public class HungerState : IState {

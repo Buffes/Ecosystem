@@ -12,7 +12,6 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class BirthSystem : SystemBase
     {
-        int i = 0;
         protected override void OnUpdate()
         {
             Entities
