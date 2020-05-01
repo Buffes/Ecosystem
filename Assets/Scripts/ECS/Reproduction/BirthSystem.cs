@@ -3,6 +3,7 @@ using Ecosystem.ECS.Animal;
 using Ecosystem.Genetics;
 using Unity.Transforms;
 using UnityEngine;
+using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.ECS.Reproduction
 {
@@ -11,7 +12,7 @@ namespace Ecosystem.ECS.Reproduction
     /// </summary>
     public class BirthSystem : SystemBase
     {
-
+        int i = 0;
         protected override void OnUpdate()
         {
             Entities
@@ -25,7 +26,7 @@ namespace Ecosystem.ECS.Reproduction
                 in Translation position,
                 in Rotation rotation) =>
             {
-
+                ParticleMono.InstantiateParticles(ParticleMono.birth, position.Value, 2f);
                 Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
                 baby.InitDNA(pregnancyData.DNAforBaby); // Initialize the baby's DNA 
                 EntityManager.RemoveComponent<BirthEvent>(entity);

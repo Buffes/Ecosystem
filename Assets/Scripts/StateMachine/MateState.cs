@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Ecosystem.Attributes;
 using Unity.Entities;
+using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.StateMachines {
     public class MateState : IState {
@@ -31,6 +32,7 @@ namespace Ecosystem.StateMachines {
                 Entity partner = owner.GetSensors().GetFoundMateInfo().Entity;
                 owner.GetInteraction().Reproduce(partner);
                 owner.GetNeedsStatus().SateSexualUrge(1f);
+                ParticleMono.InstantiateParticles(ParticleMono.breed, currentPos, 2f);
             }
 
             // Move owner

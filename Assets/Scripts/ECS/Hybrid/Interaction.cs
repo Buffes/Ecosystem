@@ -3,6 +3,7 @@ using Ecosystem.ECS.Death;
 using Ecosystem.ECS.Reproduction;
 using Ecosystem.Genetics;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -24,7 +25,7 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns>The food points of the food that was eaten</returns>
         public int Eat(Entity food)
         {
-            if (KillEntity(food)) return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
+            if (EatFood(food)) return EntityManager.GetComponentData<FoodTypeData>(food).FoodPoints;
             else return 0;
         }
 
@@ -46,6 +47,12 @@ namespace Ecosystem.ECS.Hybrid
         {
             if (!EntityManager.Exists(e)) return false;
             return EntityManager.AddComponentData<DeathEvent>(e,new DeathEvent(DeathCause.Predators));
+        }
+
+        private bool EatFood(Entity e)
+        {
+            if (!EntityManager.Exists(e)) return false;
+            return EntityManager.AddComponentData<DeathEvent>(e, new DeathEvent(DeathCause.Food));
         }
 
     }

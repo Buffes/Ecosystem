@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using Ecosystem.Attributes;
+using Ecosystem.ParticleSystems;
+using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.StateMachines {
     public class HungerState : IState {
@@ -26,12 +28,13 @@ namespace Ecosystem.StateMachines {
             float diffLength = Vector3.Distance(nextTarget, currentPos);
             if (diffLength <= 2.5f) {
                 Entity food = owner.GetSensors().GetFoundFoodInfo().Entity;
+                ParticleMono.InstantiateParticles(ParticleMono.eatplant, currentPos, 2f);
+                ParticleMono.InstantiateParticles(ParticleMono.eatmeat, currentPos, 2f);
                 owner.GetNeedsStatus().SateHunger(owner.GetInteraction().Eat(food));
             }
 
             // Move owner
             owner.Move(nextTarget,1f,200);
-
         }
 
         public void Exit() {
