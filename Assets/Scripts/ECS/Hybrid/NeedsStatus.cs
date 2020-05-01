@@ -19,6 +19,12 @@ namespace Ecosystem.ECS.Hybrid
             return EntityManager.HasComponent<Adult>(Entity);
         }
 
+        public float GetBravery()
+        {
+            BraveryData value = GetComp<BraveryData>();
+            return value.Value;
+        }
+
         /// <summary>
         /// Get hunger as float
         /// </summary>

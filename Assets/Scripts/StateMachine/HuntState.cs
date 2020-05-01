@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Entities;
 using Ecosystem.Attributes;
 using Ecosystem.ECS.Grid;
+using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.StateMachines
 {
@@ -34,6 +35,7 @@ namespace Ecosystem.StateMachines
             if (diffLength <= 1f)
             {
                 Entity prey = owner.GetSensors().GetFoundPreyInfo().Entity;
+                ParticleMono.InstantiateParticles(ParticleMono.kill, currentPos, 2f);
                 owner.GetInteraction().Kill(prey);
             }
             Vector3 predictedPosition = preyInfo.PredictedPosition;
