@@ -170,10 +170,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2818400315749066013, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: Lifespan
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376392, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_Name
-      value: RabbitMeat
+      value: ChickenMeat
       objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376399, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
@@ -181,7 +186,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c156f86a8f816ce4abd6e5ab3a27bc93,
         type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_MotionType
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -5100348314832684959, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
 --- !u!4 &8113020888156494962 stripped
 Transform:

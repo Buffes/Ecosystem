@@ -50,7 +50,7 @@ namespace Ecosystem.Grid
 
         private void ToggleShadows(bool receiveShadows)
         {
-            tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard"); //replace shader with standard
+            tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard (Specular setup)"); //replace shader with standard
             tilemap.GetComponent<TilemapRenderer>().receiveShadows = receiveShadows;
         }
 

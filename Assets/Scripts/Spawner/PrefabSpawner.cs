@@ -2,15 +2,13 @@
 using Ecosystem.ECS.Grid;
 using Unity.Entities;
 using Random = UnityEngine.Random;
-using Ecosystem.ECS.Movement;
 using Ecosystem.ECS.Animal;
+using Ecosystem;
 
 public class PrefabSpawner : MonoBehaviour
 {
-    // GameObject array with the prefabs
-    public GameObject[] whatToSpawnPrefab;
-    // How many to spawn of each prefab
-    public int[] amountToSpawn;
+    [SerializeField]
+    private SimulationSettings settings = default;
 
     private WorldGridSystem worldGridSystem;
 
@@ -20,36 +18,45 @@ public class PrefabSpawner : MonoBehaviour
             .GetOrCreateSystem<WorldGridSystem>();
     }
 
-    void Start()
+    private void Start()
     {
-        GridData grid = worldGridSystem.Grid;
-        int differentPrefabs = whatToSpawnPrefab.Length;
-        // Spawn
-        spawnPlease(grid, differentPrefabs);
+        SpawnInitialPopulation();
     }
 
-    void spawnPlease(GridData grid, int differentPrefabs)
+    private void SpawnInitialPopulation()
     {
-        //for each prefab find a free spot and spawn the gameobject
-        for (int k = 0; k < differentPrefabs; k++)
+        // For each prefab find a free spot and spawn the gameobject
+        foreach (var population in settings.InitialPopulations)
         {
-            MovementTerrainAuthoring movementTerrain = whatToSpawnPrefab[k].GetComponentInChildren<MovementTerrainAuthoring>();
-            bool lookingForFreeTile;
-            int length = grid.Length;
-            for (int i = 0; i < amountToSpawn[k]; i++)
+            Spawn(population.Prefab, population.Amount);
+        }
+    }
+
+    public void Spawn(GameObject prefab, int amount) => Spawn(prefab, amount, worldGridSystem);
+
+    public static void Spawn(GameObject prefab, int amount, WorldGridSystem worldGridSystem)
+    {
+        GridData grid = worldGridSystem.Grid;
+        MovementTerrainAuthoring movementTerrain = prefab.GetComponentInChildren<MovementTerrainAuthoring>();
+        
+        bool lookingForFreeTile;
+        int length = grid.Length;
+        for (int i = 0; i < amount; i++)
+        {
+            lookingForFreeTile = true;
+            while (lookingForFreeTile)
             {
-                lookingForFreeTile = true;
-                while (lookingForFreeTile)
+                int n = Random.Range(0, length);
+                if (worldGridSystem.IsWalkable(movementTerrain.MovesOnLand, movementTerrain.MovesOnWater,
+                    grid.GetGridPositionFromIndex(n)))
                 {
-                    int n = Random.Range(0, length);
-                    if (worldGridSystem.IsWalkable(movementTerrain.MovesOnLand, movementTerrain.MovesOnWater,
-                        grid.GetGridPositionFromIndex(n)))
-                    {
-                        Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
-                        spawnPos.y = 1f;
-                        Instantiate(whatToSpawnPrefab[k], spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
-                        lookingForFreeTile = false;
-                    }
+                    Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
+                    spawnPos.y = 1f;
+                    GameObject animal = Instantiate(prefab, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
+                    float lifespan = animal.GetComponentInChildren<AgeAuthoring>().Lifespan;
+                    animal.GetComponentInChildren<AgeAuthoring>().Age = lifespan * 0.25f;
+                    lookingForFreeTile = false;
+
                 }
             }
         }

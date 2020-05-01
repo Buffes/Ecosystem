@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
-  m_Name: Fox
+  m_Name: Lion
   m_EditorClassIdentifier: 
   Meat: {fileID: 4278235268764069113, guid: 5c06864f96393a54ab762927f594de4f, type: 3}
-  Baby: {fileID: 237763005265493658, guid: 3e63c95c8826a4b45875d7335c4840d0, type: 3}
+  Baby: {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0, type: 3}
   Name: Lion
   prey:
   - {fileID: 11400000, guid: bdd7a7559f0396f4f86fb7ae5a3d8b3d, type: 2}
   food:
-  - {fileID: 11400000, guid: 93ff989ed0e9a8f4781ef01559050103, type: 2}
+  - {fileID: 11400000, guid: be74e9cbc325944a08988fc53cd74dc1, type: 2}
+  - {fileID: 11400000, guid: c156f86a8f816ce4abd6e5ab3a27bc93, type: 2}
   - {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}

@@ -26,7 +26,7 @@ namespace Ecosystem.ECS.Reproduction
                 in Rotation rotation) =>
             {
                 ParticleMono.InstantiateParticles(ParticleMono.birth, position.Value, 2f);
-                Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value); // Spawns child
+                Attributes.Animal baby = Object.Instantiate(prefab.Prefab, position.Value, rotation.Value).GetComponent<Attributes.Animal>(); // Spawns child
                 baby.InitDNA(pregnancyData.DNAforBaby); // Initialize the baby's DNA 
                 EntityManager.RemoveComponent<BirthEvent>(entity);
                 EntityManager.RemoveComponent<PregnancyData>(entity);

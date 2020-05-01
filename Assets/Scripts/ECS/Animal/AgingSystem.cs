@@ -31,6 +31,8 @@ namespace Ecosystem.ECS.Animal
 
                     // Store age in seconds.
                     age.Age += deltaTime;
+
+
                     if (age.Age >= ageOfDeath.Value)
                     {
                         // Death by old age.
@@ -38,6 +40,19 @@ namespace Ecosystem.ECS.Animal
                     }
                 
                 }).ScheduleParallel();
+
+            Entities
+                .WithNone<Infertile>()
+                .ForEach((Entity entity,int entityInQueryIndex,
+                in AgeData age,
+                in InfertilityData ageOfInfertilty) =>
+                {
+                    if (age.Age >= ageOfInfertilty.InfertilityAge)
+                    {
+                        commandBuffer.AddComponent<Infertile>(entityInQueryIndex,entity);
+                    }
+                }).ScheduleParallel();
+
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
         }

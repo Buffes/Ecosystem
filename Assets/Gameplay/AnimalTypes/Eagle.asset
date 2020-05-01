@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
   m_Name: Eagle
   m_EditorClassIdentifier: 
-  Meat: {fileID: 0}
-  Baby: {fileID: 0}
+  Meat: {fileID: 8351528323046132514, guid: 2079e50fcd3ed667d85ea48653edcabb, type: 3}
+  Baby: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39, type: 3}
   Name: Eagle
   prey: []
   food:

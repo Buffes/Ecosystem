@@ -2,6 +2,7 @@
 
 using Ecosystem.ECS.Animal.Needs;
 using Ecosystem.ECS.Animal;
+using Ecosystem.ECS.Growth;
 
 namespace Ecosystem.ECS.Hybrid
 {
@@ -11,12 +12,17 @@ namespace Ecosystem.ECS.Hybrid
     public class NeedsStatus : HybridBehaviour
     {
         /// <summary>
-        /// Get age in seconds as float
+        /// If this is an adult
         /// </summary>
-        public float GetAge()
+        public bool IsAdult()
         {
-            AgeData age = GetComp<AgeData>();
-            return age.Age;
+            return EntityManager.HasComponent<Adult>(Entity);
+        }
+
+        public float GetBravery()
+        {
+            BraveryData value = GetComp<BraveryData>();
+            return value.Value;
         }
 
         /// <summary>
@@ -50,6 +56,31 @@ namespace Ecosystem.ECS.Hybrid
         }
 
         /// <summary>
+        /// Get hungerLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetHungerLimit() {
+            HungerLimit value = GetComp<HungerLimit>();
+            return value.Value;
+        }
+        /// <summary>
+        /// Get thistLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetThirstLimit() {
+            ThirstLimit value = GetComp<ThirstLimit>();
+            return value.Value;
+        }
+        /// <summary>
+        /// Get matingLimit as float
+        /// </summary>
+        /// <returns></returns>
+        public float GetMatingLimit() {
+            MatingLimit value = GetComp<MatingLimit>();
+            return value.Value;
+        }
+
+        /// <summary>
         /// Sate the hunger of an animal when eating.
         /// </summary>
         /// <param name="value">Float value</param>
@@ -80,6 +111,40 @@ namespace Ecosystem.ECS.Hybrid
             if (value <= 0.0f) return;
             float cur = GetComp<SexualUrgesData>().Urge;
             EntityManager.SetComponentData(Entity, new SexualUrgesData { Urge = cur + value });
+        }
+
+        /// <summary>
+        /// Sate the sexual urges of the partner when reproducing.
+        /// </summary>
+        /// <param name="value">Float value</param>
+        public void SateSexualUrge(float value, Entity partner) {
+            if (value <= 0.0f) return;
+            if (!EntityManager.HasComponent<SexualUrgesData>(partner)) return;
+            float cur = EntityManager.GetComponentData<SexualUrgesData>(partner).Urge;
+            EntityManager.SetComponentData(partner,new SexualUrgesData { Urge = cur + value });
+        }
+        /// Transfer hunger from the parent of this animal to it.
+        /// </summary>
+        /// <param name="value">Float value</param>
+        public void TransferHunger(float value)
+        {
+            if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
+            float cur = GetComp<HungerData>().Hunger;
+            Entity parentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            float parentValue = EntityManager.GetComponentData<HungerData>(parentEntity).Hunger;
+            EntityManager.SetComponentData(Entity, new HungerData { Hunger = cur + value });
+            EntityManager.SetComponentData(parentEntity, new HungerData { Hunger = parentValue - value });
+        }
+
+        public void TransferThirst(float value)
+        {
+            if (!EntityManager.HasComponent<ParentData>(Entity)) return; // No parent
+            float cur = GetComp<ThirstData>().Thirst;
+            Entity parentEntity = EntityManager.GetComponentData<ParentData>(Entity).Entity;
+            float parentValue = EntityManager.GetComponentData<ThirstData>(parentEntity).Thirst;
+            EntityManager.SetComponentData(Entity, new ThirstData { Thirst = cur + value });
+            EntityManager.SetComponentData(parentEntity, new ThirstData { Thirst = parentValue - value });
+
         }
 
         private T GetComp<T>() where T : struct, IComponentData

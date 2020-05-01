@@ -95,13 +95,14 @@ namespace Ecosystem.ECS.Grid.Buckets
             var animalBucketsWriter = AnimalBuckets.AsParallelWriter();
             Entities
                 .WithNone<DeathEvent>()
-                .ForEach((Entity entity, in Translation position, in AnimalTypeData animalTypeData) =>
+                .ForEach((Entity entity, in Translation position, in AnimalTypeData animalTypeData, in Rotation rotation) =>
                 {
                     var data = new BucketAnimalData
                     {
                         Entity = entity,
                         Position = position.Value,
-                        AnimalTypeData = animalTypeData
+                        AnimalTypeData = animalTypeData,
+                        Rotation = rotation.Value
                     };
                     animalBucketsWriter.Add(grid.GetCellKey(position.Value), data);
                 }).ScheduleParallel();

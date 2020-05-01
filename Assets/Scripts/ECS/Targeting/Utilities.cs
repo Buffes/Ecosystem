@@ -1,3 +1,4 @@
+using Ecosystem.ECS.Grid;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Sensing;
 using Unity.Entities;
@@ -33,24 +34,17 @@ namespace Ecosystem.ECS.Targeting
         }
 
 
-        public static bool IsUnreachable(DynamicBuffer<UnreachablePosition> buffer, float3 position)
+        public static bool IsUnreachable(DynamicBuffer<UnreachablePosition> buffer, float3 position, GridData grid)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
-                if (buffer[i].Position.Equals(GetGridCoords(position)))
+                if (buffer[i].Position.Equals(grid.GetGridPosition(position)))
                 {
                     return true;
                 }
             }
 
             return false;
-        }
-
-        private static int2 GetGridCoords(float3 worldPosition)
-        {
-            int x = (int)math.round(worldPosition.x);
-            int z = (int)math.round(worldPosition.z);
-            return new int2(x, z);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Ecosystem.Graphs
             = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Stats");
         private string path;
         private string valueTitle;
-        private List<AnimalStatsEntry> entries = new List<AnimalStatsEntry>();
+        private ICollection<AnimalStatsEntry> entries = new LinkedList<AnimalStatsEntry>();
 
         /// <param name="path">The path to the file to write the data to</param>
         /// <param name="valueTitle">The title of the value column.
