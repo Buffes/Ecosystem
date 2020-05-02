@@ -14,7 +14,7 @@ namespace Ecosystem.Debugging.Noise
 
             if (DrawDefaultInspector())
             {
-                if(mapGenerator.autoUpdate)
+                if(mapGenerator.AutoUpdate)
                 {
                     mapGenerator.GenerateMap();
                 }

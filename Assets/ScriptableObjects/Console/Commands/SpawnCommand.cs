@@ -1,5 +1,6 @@
 ﻿using Ecosystem.ECS.Grid;
 using System.Linq;
+using System.Text;
 using Unity.Entities;
 using UnityEngine;
 
@@ -23,11 +24,13 @@ namespace Ecosystem.Console
                 return;
             }
 
-            var population = simulationSettings.InitialPopulations.SingleOrDefault(x => x.Prefab.name == prefabName);
+            var population = simulationSettings.InitialPopulations.SingleOrDefault(
+                x => x.Prefab.name.Equals(prefabName, System.StringComparison.OrdinalIgnoreCase));
 
             if (population == null)
             {
                 sender.SendMessage("Could not find \"" + prefabName + "\"");
+                sender.SendMessage(GetAvailableAnimals());
                 return;
             }
 
@@ -37,6 +40,17 @@ namespace Ecosystem.Console
 
             PrefabSpawner.Spawn(prefab, amount, worldGridSystem);
             sender.SendMessage("Spawned " + amount + " " + prefab.name + "s");
+        }
+
+        private string GetAvailableAnimals()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Available animals:");
+            foreach (var pop in simulationSettings.InitialPopulations)
+            {
+                sb.Append("\n    " + pop.Prefab.name);
+            }
+            return sb.ToString();
         }
     }
 }
