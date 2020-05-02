@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 using Unity.Entities;
 using Unity.Mathematics;
 using Ecosystem.ECS.Grid;
-using System;
 
 namespace Ecosystem.Grid
 {
@@ -36,14 +35,10 @@ namespace Ecosystem.Grid
 
         [Range(0f, 1f)]
         public float WaterThreshold;
-        
-        [HideInInspector]
-        public bool RandomNoiseSeed;
-        [HideInInspector]
-        public int NoiseSeed;
 
         public float Scale;
         public int Octaves;
+        public int NoiseSeed;
         [Range(0f, 1f)] 
         public  float Persistence;
         public float Lacunarity;
@@ -89,10 +84,7 @@ namespace Ecosystem.Grid
 
         private void RandomizeStartGrid()
         {
-            System.Random random = new System.Random();
-            
-            int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
-            float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
+            float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), NoiseSeed, Scale, Octaves, Persistence, Lacunarity);
             for (int y = 0; y < tiles.GetLength(1); y++ )
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )

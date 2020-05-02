@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum DeathCause
 {
-    Other, Hunger, Thirst, Age, Predators, Food
+    Other, Hunger, Thirst, Age, Predators
 }
