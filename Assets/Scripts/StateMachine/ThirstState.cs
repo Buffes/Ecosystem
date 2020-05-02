@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Ecosystem.Attributes;
+using Ecosystem.ParticleSystems;
 
 namespace Ecosystem.StateMachines {
     public class ThirstState : IState {
@@ -25,6 +26,7 @@ namespace Ecosystem.StateMachines {
             nextTarget = owner.GetSensors().GetFoundWaterInfo();
             float diffLength = Vector3.Distance(nextTarget, currentPos);
             if (diffLength <= 2f) {
+                ParticleMono.InstantiateParticles(ParticleMono.drink, currentPos, 2f);
                 owner.GetNeedsStatus().SateThirst(3f);
             }
 
