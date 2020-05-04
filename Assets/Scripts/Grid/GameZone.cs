@@ -13,7 +13,8 @@ namespace Ecosystem.Grid
     {
         //Tiles with assets in the Grid, and the size of the Grid
         public static int[,] tiles = new int[99,99];
-        public static float[,] noiseMap;
+        public static float[,] NoiseMap;
+        public static Color[] ColorMap;
         
         public static Mesh mesh;
         public static Tilemap tilemap;
@@ -67,33 +68,47 @@ namespace Ecosystem.Grid
         {
             InitObjects();
             RandomizeStartGrid();
-            CheckCorners();
-            CheckEdges();
-            CheckMiddle();
+            //CheckCorners();
+            //CheckEdges();
+            //CheckMiddle();
             //SetupTilemap();
             SetupColors();
             SetupMesh();
-            tilesAssetsToTilemap = new TilesAssetsToTilemap();
+            //tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWaterTiles();
             SetupDrinkableTiles();
-            ToggleShadows(true);
+            //ToggleShadows(true);
         }
 
         private void SetupColors()
         {
-            for (int y = 0; y < noiseMap.GetLength(1); y++)
+            ColorMap = new Color[NoiseMap.GetLength(0) * NoiseMap.GetLength(1)];
+
+            for (int y = 0; y < NoiseMap.GetLength(1); y++)
             {
-                for (int x = 0; x < noiseMap.GetLength(0); x++)
+                for (int x = 0; x < NoiseMap.GetLength(0); x++)
                 {
-                    
+                    float currentHeight = NoiseMap[x, y];
+                    for (int i = 0; i < Regions.Length; i++)
+                    {
+                        if (currentHeight <= Regions[i].Height)
+                        {
+                            ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
+                            break;
+                        }
+                    }
+
+                    Debug.Log(ColorMap[y * NoiseMap.GetLength(0) + x]);
                 }
             }
         }
         private void SetupMesh()
         {
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-           
-            //mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap), TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
+            
+            
+            
+            mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(NoiseMap), TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
         private void ToggleShadows(bool receiveShadows)
@@ -116,12 +131,12 @@ namespace Ecosystem.Grid
             System.Random random = new System.Random();
             
             int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
-            noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
+            NoiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
             for (int y = 0; y < tiles.GetLength(1); y++ )
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
-                    tiles[x,y] = noiseMap[x,y] > WaterThreshold ? landIndex : waterIndex;
+                    tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace Ecosystem.Debugging.Noise
             float[,] noiseMap = Ecosystem.Grid.Noise.GenerateNoiseMap(MapWidth, MapHeight, Seed, MapScale, Octaves, Persistence, Lacunarity);
         
             MapDisplay display = FindObjectOfType<MapDisplay>();
-            display.DrawNoiseMap(noiseMap);
+            display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
         }
     }
 }
