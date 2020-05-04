@@ -27,8 +27,8 @@ namespace Ecosystem.Grid
                 Vector2 spawnCentre = spawnPoints[spawnIndex];
                 int x = (int)spawnCentre.x;
                 int y = (int)spawnCentre.y;
-                grey = noiseMap[(int)x, (int)y];
-                Mathf.Clamp(grey, 0.0f, 1.0f);
+                grey = noiseMap[x, y];
+                //grey = Mathf.Clamp(grey, 0.0f, 1.0f);
                 float min_dist = min_radius + grey * (max_radius - min_radius);
                 float radius = min_dist * (Random.value + 1.0f);
                 bool candidateAccepted = false;

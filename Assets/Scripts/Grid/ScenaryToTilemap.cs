@@ -13,10 +13,12 @@ namespace Ecosystem.Grid
         private List<Vector2> poissonPoints;
 
         [Header("Poisson Disc Sampling")]
-        [Range(1.0f, 10f)]
+        [Range(0.1f, 5f)]
         public float min_radius;
-        [Range(1.0f, 10f)]
+        [Range(0.1f, 5f)]
         public float max_radius;
+        [Range(1, 50)]
+        public int numSamplesBeforeRejection = 20;
 
 
         private int waterIndex = 17;
@@ -37,7 +39,7 @@ namespace Ecosystem.Grid
         void Start()
         {
             this.tiles = GameZone.tiles;
-            this.poissonPoints = PoissonDiscSampling.GeneratePoisson(GameZone.NoiseMap, new Vector2(tiles.GetLength(0), tiles.GetLength(1)), 10, min_radius, max_radius);
+            this.poissonPoints = PoissonDiscSampling.GeneratePoisson(GameZone.NoiseMap, new Vector2(tiles.GetLength(0), tiles.GetLength(1)), numSamplesBeforeRejection, min_radius, max_radius);
 
             gameObjectsInGrid = new Scenary [tiles.GetLength(0), tiles.GetLength(1)];
             CreateEmptyScenary();
