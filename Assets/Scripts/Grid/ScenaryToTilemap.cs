@@ -10,6 +10,10 @@ namespace Ecosystem.Grid
         //Matrix with all GameObjects in the Grid
         private Scenary [,] gameObjectsInGrid;
         private int [,] tiles;
+        private List<Vector2> poissonPoints;
+
+        private int waterIndex = 17;
+        private int landIndex = 34;
 
         public float greenScenaryNeigbourRate = 0.15f;
         public float greenScenarySpawnRate = 0.05f;
@@ -26,6 +30,7 @@ namespace Ecosystem.Grid
         void Start()
         {
             this.tiles = GameZone.tiles;
+            this.poissonPoints = PoissonDiscSampling.GeneratePoisson(1, new Vector2(tiles.GetLength(0), tiles.GetLength(1)), 10);
 
             gameObjectsInGrid = new Scenary [tiles.GetLength(0), tiles.GetLength(1)];
             CreateEmptyScenary();
@@ -34,6 +39,31 @@ namespace Ecosystem.Grid
 
         private void SetupGameObjects()
         {
+            if (poissonPoints != null)
+            {
+                foreach(Vector2 point in poissonPoints)
+                {
+                    int row = (int)point.x;
+                    int col = (int)point.y;
+                    if (tiles[row, col] == 34)
+                    {
+                        //Scenary in the desert does not spawn more often if there are other things closeby
+                        gameObjectsInGrid[row, col] = RandomizeDesertScenary(desertScenarySpawnRate, row, col);
+                    }
+                    else if (tiles[row, col] == 51)
+                    {
+                        if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
+                        {
+                            gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenaryNeigbourRate, row, col);
+                        }
+                        else
+                        {
+                            gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenarySpawnRate, row, col);
+                        }
+                    }
+                }
+            }
+            /*
             for (int row = 0; row < tiles.GetLength(0); row++)
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
@@ -55,7 +85,7 @@ namespace Ecosystem.Grid
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private Scenary ScenaryAsNeighbour(int row, int col)

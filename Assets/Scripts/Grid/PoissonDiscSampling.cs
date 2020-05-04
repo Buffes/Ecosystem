@@ -5,7 +5,7 @@ namespace Ecosystem.Grid
 {
     public static class PoissonDiscSampling
     {
-        public static List<Vector2> GeneratePoisson(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection = 30)
+        public static List<Vector2> GeneratePoisson(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection)
         {
             float cellSize = radius / Mathf.Sqrt(2);
 
