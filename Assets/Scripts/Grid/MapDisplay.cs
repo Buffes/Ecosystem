@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ecosystem.Debugging.Noise
+namespace Ecosystem.Grid
 {
     public class MapDisplay : MonoBehaviour
     {
         public Renderer TextureRenderer;
+        public MeshFilter meshFilter;
+        public MeshRenderer meshRenderer;
 
         public void DrawNoiseMap(float[,] noiseMap)
         {
@@ -30,6 +32,18 @@ namespace Ecosystem.Debugging.Noise
 
             TextureRenderer.sharedMaterial.mainTexture = texture;
             TextureRenderer.transform.localScale = new Vector3(width, 1, height);
+        }
+
+        public void DrawTexture(Texture2D texture)
+        {
+            TextureRenderer.material.mainTexture = texture;
+            TextureRenderer.transform.localScale = new Vector3(texture.width, 1, texture.height);
+        }
+
+        public void DrawMesh(Mesh mesh, Texture2D texture)
+        {
+            meshFilter.mesh = mesh;
+            meshRenderer.material.mainTexture = texture;
         }
     }
 

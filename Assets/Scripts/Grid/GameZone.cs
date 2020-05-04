@@ -13,8 +13,11 @@ namespace Ecosystem.Grid
     {
         //Tiles with assets in the Grid, and the size of the Grid
         public static int[,] tiles = new int[99,99];
+        public static float[,] noiseMap;
         
+        public static Mesh mesh;
         public static Tilemap tilemap;
+
         public static List<Vector3Int> tilePositions;
 
         private TilesAssetsToTilemap tilesAssetsToTilemap;
@@ -48,6 +51,8 @@ namespace Ecosystem.Grid
         public  float Persistence;
         public float Lacunarity;
 
+        public TerrainColor[] Regions;
+
         private GridData grid;
         private WorldGridSystem worldGridSystem;
 
@@ -65,11 +70,30 @@ namespace Ecosystem.Grid
             CheckCorners();
             CheckEdges();
             CheckMiddle();
-            SetupTilemap();
+            //SetupTilemap();
+            SetupColors();
+            SetupMesh();
             tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWaterTiles();
             SetupDrinkableTiles();
             ToggleShadows(true);
+        }
+
+        private void SetupColors()
+        {
+            for (int y = 0; y < noiseMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < noiseMap.GetLength(0); x++)
+                {
+                    
+                }
+            }
+        }
+        private void SetupMesh()
+        {
+            MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+           
+            //mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap), TextureGenerator.TextureFromColorMap(colorMap, mapWidth, mapHeight));
         }
 
         private void ToggleShadows(bool receiveShadows)
@@ -92,7 +116,7 @@ namespace Ecosystem.Grid
             System.Random random = new System.Random();
             
             int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
-            float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
+            noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
             for (int y = 0; y < tiles.GetLength(1); y++ )
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )
