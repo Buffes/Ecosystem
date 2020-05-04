@@ -18,10 +18,10 @@ MonoBehaviour:
     Amount: 100
   - Prefab: {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0,
       type: 3}
-    Amount: 50
+    Amount: 0
   - Prefab: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39,
       type: 3}
-    Amount: 20
+    Amount: 0
   - Prefab: {fileID: 2003170221973116033, guid: 290fdc0c73d1e4649bf63eeb3459216c,
       type: 3}
     Amount: 0

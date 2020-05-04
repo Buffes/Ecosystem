@@ -573,12 +573,37 @@ PrefabInstance:
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Lifespan
-      value: 20
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 826927873525821883, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Urge
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555329424664434073, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxUrge
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: GestationPeriod
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -691,10 +716,30 @@ PrefabInstance:
       propertyPath: m_Cylinder.Radius
       value: 0.16
       objectReference: {fileID: 0}
+    - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxHunger
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312866617543724570, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414172234341297823, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241647726829484548, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Hunger
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7692351275043969183, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Thirst
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}

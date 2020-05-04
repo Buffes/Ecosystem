@@ -349,22 +349,37 @@ PrefabInstance:
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Lifespan
-      value: 20
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 826927873525821883, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Urge
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4555329424664434073, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxUrge
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: GestationPeriod
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -493,6 +508,26 @@ PrefabInstance:
       propertyPath: Value
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6303536544478638138, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxThirst
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414172234341297823, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241647726829484548, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Hunger
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692351275043969183, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Thirst
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Land
@@ -510,15 +545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
---- !u!1 &6101400050520849976 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070148453820763646, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 1364676599854920646}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6101400048629877292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
+    type: 3}
+  m_PrefabInstance: {fileID: 1364676599854920646}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6101400050520849976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5070148453820763646, guid: 1ab49e1f0a45e6143b303a5638864304,
     type: 3}
   m_PrefabInstance: {fileID: 1364676599854920646}
   m_PrefabAsset: {fileID: 0}

@@ -47,7 +47,7 @@ MonoBehaviour:
   fruitPrefab: {fileID: 880257211521551299, guid: 9dc5e0917980a4ae8ad7a5f9991397a7,
     type: 3}
   spawnAmount: 1
-  spawnTime: 5
+  spawnTime: 4
   range: 1
 --- !u!1001 &8426730877930602745
 PrefabInstance:

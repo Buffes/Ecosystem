@@ -1148,7 +1148,7 @@ PrefabInstance:
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Lifespan
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
