@@ -13,9 +13,9 @@ namespace Ecosystem.Grid
         private List<Vector2> poissonPoints;
 
         [Header("Poisson Disc Sampling")]
-        [Range(0.1f, 10f)]
+        [Range(1.0f, 10f)]
         public float min_radius;
-        [Range(0.1f, 10f)]
+        [Range(1.0f, 10f)]
         public float max_radius;
 
 

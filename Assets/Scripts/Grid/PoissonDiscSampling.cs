@@ -8,6 +8,12 @@ namespace Ecosystem.Grid
         public static List<Vector2> GeneratePoisson(float[,] noiseMap, Vector2 sampleRegionSize, int numSamplesBeforeRejection, float min_radius, float max_radius)
         {
             float grey;
+            if(min_radius > max_radius)
+            {
+                var tmp = max_radius;
+                max_radius = min_radius;
+                min_radius = tmp;
+            }
             float cellSize = max_radius / Mathf.Sqrt(2);
 
             int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
@@ -23,7 +29,8 @@ namespace Ecosystem.Grid
                 int y = (int)spawnCentre.y;
                 grey = noiseMap[(int)x, (int)y];
                 Mathf.Clamp(grey, 0.0f, 1.0f);
-                float radius = min_radius + grey * (max_radius - min_radius);
+                float min_dist = min_radius + grey * (max_radius - min_radius);
+                float radius = min_dist * (Random.value + 1.0f);
                 bool candidateAccepted = false;
                 for(int i = 0; i < numSamplesBeforeRejection; i++)
                 {
