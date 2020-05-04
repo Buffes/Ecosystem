@@ -5,9 +5,10 @@ namespace Ecosystem.Grid
 {
     public static class PoissonDiscSampling
     {
-        public static List<Vector2> GeneratePoisson(float radius, Vector2 sampleRegionSize, int numSamplesBeforeRejection)
+        public static List<Vector2> GeneratePoisson(float[,] noiseMap, Vector2 sampleRegionSize, int numSamplesBeforeRejection, float min_radius, float max_radius)
         {
-            float cellSize = radius / Mathf.Sqrt(2);
+            float grey;
+            float cellSize = max_radius / Mathf.Sqrt(2);
 
             int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
             List<Vector2> points = new List<Vector2>();
@@ -18,6 +19,11 @@ namespace Ecosystem.Grid
             {
                 int spawnIndex = Random.Range(0, spawnPoints.Count);
                 Vector2 spawnCentre = spawnPoints[spawnIndex];
+                int x = (int)spawnCentre.x;
+                int y = (int)spawnCentre.y;
+                grey = noiseMap[(int)x, (int)y];
+                Mathf.Clamp(grey, 0.0f, 1.0f);
+                float radius = min_radius + grey * (max_radius - min_radius);
                 bool candidateAccepted = false;
                 for(int i = 0; i < numSamplesBeforeRejection; i++)
                 {

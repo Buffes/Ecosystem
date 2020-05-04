@@ -16,6 +16,7 @@ namespace Ecosystem.Grid
         
         public static Tilemap tilemap;
         public static List<Vector3Int> tilePositions;
+        public static float[,] NoiseMap;
 
         private TilesAssetsToTilemap tilesAssetsToTilemap;
 
@@ -47,6 +48,12 @@ namespace Ecosystem.Grid
         [Range(0f, 1f)] 
         public  float Persistence;
         public float Lacunarity;
+
+        [Header("Poisson Disc Sampling")]
+        [Range(0.1f, 10f)]
+        public float min_radius;
+        [Range(0.1f, 10f)]
+        public float max_radius;
 
         private GridData grid;
         private WorldGridSystem worldGridSystem;
@@ -87,12 +94,18 @@ namespace Ecosystem.Grid
             worldGridSystem.InitGrid(grid);
         }
 
+        private List<Vector2> GeneratePoisson()
+        {
+            throw new NotImplementedException();
+        }
+
         private void RandomizeStartGrid()
         {
             System.Random random = new System.Random();
             
             int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
             float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
+            NoiseMap = noiseMap;
             for (int y = 0; y < tiles.GetLength(1); y++ )
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )

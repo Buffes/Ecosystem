@@ -705,6 +705,16 @@ PrefabInstance:
       propertyPath: R
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: min_radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: max_radius
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_Name
@@ -743,7 +753,17 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: RandomNoiseSeed
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: min_radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: max_radius
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
