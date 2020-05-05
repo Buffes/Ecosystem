@@ -186,13 +186,27 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c156f86a8f816ce4abd6e5ab3a27bc93,
         type: 2}
+    - target: {fileID: 5943067794134930405, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_MotionType
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -5100348314832684959, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
+    - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LinearDamping
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_AngularDamping
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
 --- !u!4 &8113020888156494962 stripped
 Transform:
