@@ -29,6 +29,8 @@ namespace Ecosystem.ECS.Debugging.Selection
             if (Input.GetMouseButtonDown(0))
             {
                 DeselectAll();
+                if (cam == null) cam = Camera.main;
+                if (cam == null) return;
                 Select(cam.ScreenPointToRay(Input.mousePosition));
             }
             else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))

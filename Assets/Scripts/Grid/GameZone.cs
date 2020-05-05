@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using Unity.Entities;
 using Unity.Mathematics;
 using Ecosystem.ECS.Grid;
+using System;
 
 namespace Ecosystem.Grid
 {
@@ -26,13 +27,36 @@ namespace Ecosystem.Grid
         private int diffWaterLand = 0;
 
         //The rate of chance for spawning an object if there is a similar object as neighbour
-        public float waterNeighbourRate = 0.65f;
+        // public float waterNeighbourRate = 0.65f;
 
-        //The rate of objects spawning
-        public float waterSpawnRate = 0.005f;
+        // //The rate of objects spawning
+        // public float waterSpawnRate = 0.005f;
+
+        
+
+        [Range(0f, 1f)]
+        public float WaterThreshold;
+        
+        [HideInInspector]
+        public bool RandomNoiseSeed;
+        [HideInInspector]
+        public int NoiseSeed;
+
+        public float Scale;
+        public int Octaves;
+        [Range(0f, 1f)] 
+        public  float Persistence;
+        public float Lacunarity;
 
         private GridData grid;
         private WorldGridSystem worldGridSystem;
+
+        void OnValidate()
+        {
+            Scale = Mathf.Max(0f, Scale);
+            Lacunarity = Mathf.Max(1f, Lacunarity);
+            Octaves = Mathf.Max(0, Octaves);
+        }
 
         void Awake() 
         {
@@ -50,7 +74,7 @@ namespace Ecosystem.Grid
 
         private void ToggleShadows(bool receiveShadows)
         {
-            tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard"); //replace shader with standard
+            tilemap.GetComponent<TilemapRenderer>().material.shader = Shader.Find("Standard (Specular setup)"); //replace shader with standard
             tilemap.GetComponent<TilemapRenderer>().receiveShadows = receiveShadows;
         }
 
@@ -65,17 +89,15 @@ namespace Ecosystem.Grid
 
         private void RandomizeStartGrid()
         {
-            for (int i = 0; i < tiles.GetLength(0); i += 2 )
+            System.Random random = new System.Random();
+            
+            int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
+            float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
+            for (int y = 0; y < tiles.GetLength(1); y++ )
             {
-                for (int j = 0; j < tiles.GetLength(1); j += 2 )
+                for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
-                    if ((i - 2 >= 0 && tiles[i - 2,j] == waterIndex) || (j - 2 >= 0 && tiles[i, j - 2] == waterIndex))
-                    {
-                        tiles[i,j] = RandomizeWater(waterNeighbourRate);
-                    } else 
-                    {
-                        tiles[i,j] = RandomizeWater(waterSpawnRate);
-                    }
+                    tiles[x,y] = noiseMap[x,y] > WaterThreshold ? landIndex : waterIndex;
                 }
             }
         }

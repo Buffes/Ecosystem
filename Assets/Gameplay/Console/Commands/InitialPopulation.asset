@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f7f529e5f3934419ffa82928f6defc, type: 3}
+  m_Name: InitialPopulation
+  m_EditorClassIdentifier: 
+  name: initialpopulation
+  aliases:
+  - initial
+  - initialpop
+  - pop
+  - population
+  argsRange: {x: 0, y: 2}
+  argsUsage: '[<name>/clear/list=list] <amount>'
+  argsAlternatives:
+  - clear
+  - list
+  simulationSettings: {fileID: 11400000, guid: 99384a9c422f42142bb448e312a89afa, type: 2}

@@ -29,7 +29,6 @@ namespace Ecosystem.StateMachines {
 
             if (!owner.GetSensors().FoundRandomTarget()) return;
             
-            Vector3 currentPos = owner.GetMovement().GetPosition();
             nextTarget = owner.GetSensors().GetFoundRandomTargetInfo();
             
             // Move owner

@@ -1,5 +1,6 @@
 ﻿using Ecosystem.ECS.Animal;
 using Ecosystem.ECS.Grid.Buckets;
+using Ecosystem.ECS.Growth;
 using Ecosystem.ECS.Movement.Pathfinding;
 using Ecosystem.ECS.Targeting.Targets;
 using Unity.Entities;
@@ -17,16 +18,17 @@ namespace Ecosystem.ECS.Targeting.FindSystems
         protected override void OnUpdate()
         {
             var sexTypes = GetComponentDataFromEntity<SexData>(true);
+            var adultData = GetComponentDataFromEntity<Adult>(true);
 
             Entities
+                .WithReadOnly(adultData)
                 .WithReadOnly(sexTypes)
                 .ForEach((
                 ref LookingForMate lookingForMate,
                 in Translation position,
                 in AnimalTypeData animalType,
                 in SexData sexType,
-                in DynamicBuffer<BucketAnimalData> sensedAnimals,
-                in DynamicBuffer<UnreachablePosition> unreachablePositions) =>
+                in DynamicBuffer<BucketAnimalData> sensedAnimals) =>
                 {
                     
                     int closestMateIndex = -1;
@@ -38,13 +40,14 @@ namespace Ecosystem.ECS.Targeting.FindSystems
 
                         AnimalTypeData targetAnimalType = sensedAnimalInfo.AnimalTypeData;
                         SexData targetSexType = sexTypes[sensedAnimalInfo.Entity];
+                        bool targetAdult = adultData.Exists(sensedAnimalInfo.Entity);
                         float3 targetPosition = sensedAnimalInfo.Position;
                         float targetDistance = math.distance(targetPosition, position.Value);
 
                         if (animalType.AnimalTypeId != targetAnimalType.AnimalTypeId) continue; // Not the same type of animal
                         if (closestMateIndex != -1 && targetDistance >= closestMateDistance) continue; // Not the closest
                         if (sexType.Sex == targetSexType.Sex) continue; // Not the opposite sex
-                        if (Utilities.IsUnreachable(unreachablePositions, targetPosition)) continue;
+                        if (!targetAdult) continue; // Not an adult
 
                         closestMateIndex = i;
                         closestMateDistance = targetDistance;

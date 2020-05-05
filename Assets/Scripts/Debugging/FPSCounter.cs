@@ -1,12 +1,15 @@
-using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UnityStandardAssets.Utility
 {
-    [RequireComponent(typeof (Text))]
     public class FPSCounter : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject m_UI = default;
+        [SerializeField]
+        private TMP_Text m_Text = default;
+
         private float fixedDeltaTime;
         private int FPS;
 
@@ -15,13 +18,11 @@ namespace UnityStandardAssets.Utility
         private float m_FpsNextPeriod = 0;
         private int m_CurrentFps;
         const string display = "{0} FPS";
-        private Text m_Text;
 
 
         private void Start()
         {
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
-            m_Text = GetComponent<Text>();
             this.fixedDeltaTime = Time.fixedDeltaTime;
         }
 
@@ -30,14 +31,7 @@ namespace UnityStandardAssets.Utility
         {
             if (Input.GetKeyDown("f"))
             {
-                if (m_Text.IsActive())
-                {
-                    m_Text.enabled = false;
-                }
-                else
-                {
-                    m_Text.enabled = true;
-                }
+                m_UI.SetActive(!m_UI.activeSelf);
             }
             if (Input.GetKeyDown("g"))
             {
