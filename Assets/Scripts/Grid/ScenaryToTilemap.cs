@@ -58,7 +58,9 @@ namespace Ecosystem.Grid
                     else if (tiles[row, col] == 51)
                     {
 
-                        gameObjectsInGrid[row, col] = SpawnRandomTree(row, col);
+                        //gameObjectsInGrid[row, col] = SpawnRandomTree(row, col);
+                        gameObjectsInGrid[row, col] = RandomizeGreenScenary(1, row, col);
+                        
                         /*if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
                         {
                             gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenaryNeigbourRate, row, col);
