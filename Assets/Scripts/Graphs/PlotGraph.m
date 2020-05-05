@@ -72,7 +72,15 @@ function [TempArray] = GetValues(Array)
         
         TempArray(pos,B - mod(i,B) +1) = table2array(col3(i,1));
 
-        if mod(i,B) == 0
+    for i = 1:1:length(table2array(col1))
+       if mod(i,B) == 0
+           TempArray(pos,B+1) = table2array(col3(i,1));
+       end
+       if mod(i,B) ~= 0
+       TempArray(pos,mod(i,B)+1) = table2array(col3(i,1));
+       end
+
+       if mod(i,B) == 0
             TempArray(pos,1) = table2array(col1(i,1));
             pos = pos + 1;
         end     

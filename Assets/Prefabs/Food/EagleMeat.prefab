@@ -78,10 +78,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: be74e9cbc325944a08988fc53cd74dc1,
         type: 2}
+    - target: {fileID: 5943067794134930405, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: m_MotionType
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877129774131322408, guid: 41939f0a77fdd604db248c02d5ac5af5,
+        type: 3}
+      propertyPath: m_AngularDamping
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41939f0a77fdd604db248c02d5ac5af5, type: 3}
