@@ -29,8 +29,8 @@ namespace Ecosystem.Graphs
             }
         }
 
-        private static readonly string STATS_DIRECTORY
-            = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Stats");
+        private static readonly string STATS_DIRECTORY = @"C:\Users\Emma\Documents\GitHub\DataForEcosystem\Stats";
+            //= Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Stats");
         private string path;
         private string valueTitle;
         private ICollection<AnimalStatsEntry> entries = new LinkedList<AnimalStatsEntry>();

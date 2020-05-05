@@ -17,11 +17,12 @@ namespace Ecosystem.Graphs
         private AverageAnimalStats hearingStats = new AverageAnimalStats("HearingDoc.csv");
         private AverageAnimalStats visionStats = new AverageAnimalStats("VisionDoc.csv");
         private AverageAnimalStats animalCount = new AverageAnimalStats("AnimalCountDoc.csv");
-        private AnimalStats<float> ageOfDeathStats = new AnimalStats<float>("ageOfDeathData.csv","Age of Death");
+        private AnimalStats<float> ageOfDeathStats = new AnimalStats<float>("AgeOfDeathData.csv","Age of Death");
         private AverageAnimalStats ageStats = new AverageAnimalStats("AgeDoc.csv");
         private AverageAnimalStats hungerLimitStats = new AverageAnimalStats("HungerLimitDoc.csv");
         private AverageAnimalStats thirstLimitStats = new AverageAnimalStats("ThirstLimitDoc.csv");
         private AverageAnimalStats matingLimitStats = new AverageAnimalStats("MatingLimitDoc.csv");
+        private AverageAnimalStats animalSexCount = new AverageAnimalStats("AnimalSexCountDoc.csv");
 
 
         private float dataPointInterval = 5f;
@@ -44,12 +45,12 @@ namespace Ecosystem.Graphs
             Entities
                 .WithoutBurst()
                 .ForEach((in AnimalTypeData animalTypeData,in DeathEvent deathEvent,in AgeData ageOfDeathData) => {
-                    if (deathEvent.Cause.Equals(DeathCause.Age)) {
+                    //if (deathEvent.Cause.Equals(DeathCause.Age)) {
                         ageOfDeathStats.AddDataPoint(
                             time,
                             animalTypeData.AnimalName.ToString(),
                             ageOfDeathData.Age);
-                    }
+                    //}
                 }).Run();
 
             timeUntilDataPoint -= Time.DeltaTime;
@@ -109,6 +110,13 @@ namespace Ecosystem.Graphs
                         animalCount.AddStatValue(animalTypeData.AnimalName.ToString(), 1);
                     }).Run();
 
+                Entities
+                    .WithoutBurst()
+                    .ForEach((in AnimalTypeData animalTypeData,in SexData sexData) =>
+                    {
+                        animalSexCount.AddStatValue(animalTypeData.AnimalName.ToString() + sexData.Sex.ToString(), 1);
+                    }).Run();
+
                 speedStats.AddDataPoint(time);
                 hearingStats.AddDataPoint(time);
                 visionStats.AddDataPoint(time);
@@ -117,6 +125,7 @@ namespace Ecosystem.Graphs
                 hungerLimitStats.AddDataPoint(time);
                 thirstLimitStats.AddDataPoint(time);
                 matingLimitStats.AddDataPoint(time);
+                animalSexCount.AddDataPointCount(time);
 
             }
         }
@@ -138,6 +147,7 @@ namespace Ecosystem.Graphs
             hungerLimitStats.WriteToFile();
             thirstLimitStats.WriteToFile();
             matingLimitStats.WriteToFile();
+            animalSexCount.WriteToFile();
         }
     }
 }

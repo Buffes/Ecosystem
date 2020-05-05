@@ -52,7 +52,7 @@ namespace Ecosystem.ECS.Death
         {
             deathStats.Add("Total", totalDeathStats);
 
-            using (StreamWriter sw = new StreamWriter("DeathCauses.csv"))
+            using (StreamWriter sw = new StreamWriter(@"C:\Users\Emma\Documents\GitHub\DataForEcosystem\DeathCauses.csv"))
             {
                 StringBuilder sb = new StringBuilder();
                 WriteLine(sw, sb, "Animal", (DeathCause deathCause) => deathCause.ToString());
