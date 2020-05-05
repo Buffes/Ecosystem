@@ -1,48 +1,48 @@
 clc;
 a = erase(pwd, "Ecosystem/Assets/Scripts/Graphs");
-file =[a, "Ecosystem/Stats/SpeedDoc.csv"];
+file =[a, "DataForEcosystem/Stats/SpeedDoc.csv"];
 file = join(file, "/");
 SpeedArray = readtable(file);
 figure(1)
 PlotValues(GetValues(SpeedArray), SpeedArray,'Average Speed');
 
-file = [a, "Ecosystem/Stats/HearingDoc.csv"];
+file = [a, "DataForEcosystem/Stats/HearingDoc.csv"];
 file = join(file, "/");
 HearingArray = readtable(file);
 figure(2)
 PlotValues(GetValues(HearingArray), HearingArray, 'Average Hearing Range');
 
-file = [a, "Ecosystem/Stats/VisionDoc.csv"];
+file = [a, "DataForEcosystem/Stats/VisionDoc.csv"];
 file = join(file, "/");
 VisionArray = readtable(file);
 figure(3)
 PlotValues(GetValues(VisionArray), VisionArray, 'Average Vision Range');
 
-file = [a, "Ecosystem/Stats/AnimalCountDoc.csv"];
+file = [a, "DataForEcosystem/Stats/AnimalCountDoc.csv"];
 file = join(file, "/");
 AnimalCountArray = readtable(file);
 figure(4)
 PlotValues(GetValues(AnimalCountArray), AnimalCountArray, 'Animal Count');
 
-file = [a, "Ecosystem/Stats/AgeDoc.csv"];
+file = [a, "DataForEcosystem/Stats/AgeDoc.csv"];
 file = join(file, "/");
 AgeArray = readtable(file);
 figure(5)
 PlotValues(GetValues(AgeArray), AgeArray, 'Animal Ages');
 
-file = [a, "Ecosystem/Stats/HungerLimitDoc.csv"];
+file = [a, "DataForEcosystem/Stats/HungerLimitDoc.csv"];
 file = join(file, "/");
 AgeArray = readtable(file);
 figure(6)
 PlotValues(GetValues(AgeArray), AgeArray, 'Hunger Limit');
 
-file = [a, "Ecosystem/Stats/ThirstLimitDoc.csv"];
+file = [a, "DataForEcosystem/Stats/ThirstLimitDoc.csv"];
 file = join(file, "/");
 AgeArray = readtable(file);
 figure(7)
 PlotValues(GetValues(AgeArray), AgeArray, 'Thirst Limit');
 
-file = [a, "Ecosystem/Stats/MatingLimitDoc.csv"];
+file = [a, "DataForEcosystem/Stats/MatingLimitDoc.csv"];
 file = join(file, "/");
 AgeArray = readtable(file);
 figure(8)
