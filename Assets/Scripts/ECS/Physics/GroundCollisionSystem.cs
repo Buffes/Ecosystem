@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿using Ecosystem.ECS.Grid;
+using Unity.Collections;
+using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -17,13 +19,23 @@ using Unity.Transforms;
 [UpdateInGroup(typeof(PhysicsSystemGroup))]
 public class GroundCollisionSystem : SystemBase
 {
+    WorldGridSystem worldGridSystem;
+    protected override void OnCreate()
+    {
+        worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
+    }
+
     protected override void OnUpdate()
     {
+        var heightMap = worldGridSystem.HeightMap;
+        var grid = worldGridSystem.Grid;
+
         Entities
+            .WithReadOnly(heightMap)
             .WithAll<PhysicsMass>()
             .ForEach((ref Translation translation, ref PhysicsVelocity velocity) =>
             {
-                float groundLevel = GetGroundLevel(translation.Value);
+                float groundLevel = GetGroundLevel(translation.Value, heightMap, grid);
 
                 if (translation.Value.y < groundLevel)
                 {
@@ -33,8 +45,9 @@ public class GroundCollisionSystem : SystemBase
             }).ScheduleParallel();
     }
 
-    private static float GetGroundLevel(float3 position)
+    private static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
     {
-        return 0; // This can be replaced by a height map
+        
+        return heightMap[grid.GetCellIndex(position)]; // This can be replaced by a height map
     }
 }

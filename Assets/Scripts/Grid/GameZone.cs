@@ -17,6 +17,7 @@ namespace Ecosystem.Grid
         public static Color[] ColorMap;
         
         public static Mesh mesh;
+        public static MeshCollider meshCollider;
         public static Tilemap tilemap;
 
         public static List<Vector3Int> tilePositions;
@@ -97,18 +98,19 @@ namespace Ecosystem.Grid
                             break;
                         }
                     }
-
-                    Debug.Log(ColorMap[y * NoiseMap.GetLength(0) + x]);
                 }
             }
         }
+
         private void SetupMesh()
         {
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+            MeshCollision meshCollision = FindObjectOfType<MeshCollision>();
+           
+            MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
             
-            
-            
-            mapDisplay.DrawMesh(MeshGenerator.GenerateTerrainMesh(NoiseMap), TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
+            meshCollision.SetMeshCollider(meshData);
+            mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
         private void ToggleShadows(bool receiveShadows)

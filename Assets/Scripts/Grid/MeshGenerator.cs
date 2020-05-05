@@ -17,7 +17,7 @@ namespace Ecosystem.Grid
             {
                 for (int x = 0; x < width; x++)
                 {
-                    meshData.vertices[vertexIndex] = new Vector3(x, 0, y);
+                    meshData.vertices[vertexIndex] = new Vector3(x, 3f*heightMap[x,y], y);
                     meshData.uvs[vertexIndex] = new Vector2(x/(float)width, y/(float)height);
                     
                     if (x < width - 1 && y < height - 1)

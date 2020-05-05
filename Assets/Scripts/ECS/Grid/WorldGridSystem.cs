@@ -15,6 +15,7 @@ namespace Ecosystem.ECS.Grid
         public NativeArray<bool> BlockedCells;
         public NativeArray<bool> WaterCells;
         public NativeArray<bool> DrinkableCells;
+        public NativeArray<float> HeightMap;
 
         /// <summary>
         /// Sets a cell as occupied.
@@ -31,6 +32,8 @@ namespace Ecosystem.ECS.Grid
         public void SetWaterCell(int2 gridPosition) => WaterCells[Grid.GetCellIndex(gridPosition)] = true;
 
         public void setDrinkableCell(int2 gridPosition) => DrinkableCells[Grid.GetCellIndex(gridPosition)] = true;
+
+        public void SetHeight(int2 gridPosition, float height) => HeightMap[Grid.GetCellIndex(gridPosition)] = height;
 
         /// <summary>
         /// Returns if the specified position is walkable.
