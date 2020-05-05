@@ -47,10 +47,41 @@ public class GroundCollisionSystem : SystemBase
 
     private static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
     {
-        // If heightmap has high values, use linear interpolation to avoid staircase movement
-        float xU = position.x - grid.GetGridPosition(position).x;
-        float zU = (position.z - grid.GetGridPosition(position).y);
+        // Use linear interpolation to avoid staircase-like movement
+        int2 position2D = grid.GetGridPosition(position);
+        
+        float xU = position.x - position2D.x;
+        float zU = (position.z - position2D.y);
 
-        return heightMap[grid.GetCellIndex(position)]; // This can be replaced by a height map
+        xU = xU / grid.CellSize;
+        zU = zU / grid.CellSize;
+        
+        int2 nextX = new int2(position2D.x + 1, position2D.y);
+        int2 nextZ = new int2(position2D.x, position2D.y + 1);
+        float xHeight;
+        float zHeight;
+
+        if (grid.IsInBounds(nextX))
+        {
+            xHeight = math.lerp(heightMap[grid.GetCellIndex(position2D)], 
+                                heightMap[grid.GetCellIndex(nextX)], xU);
+        }
+        else
+        {
+            xHeight = heightMap[grid.GetCellIndex(position)];
+        }
+
+        if (grid.IsInBounds(nextZ))
+        {
+            zHeight = math.lerp(heightMap[grid.GetCellIndex(position2D)], 
+                                heightMap[grid.GetCellIndex(nextZ)], zU);
+        }
+        else
+        {
+            zHeight = heightMap[grid.GetCellIndex(position)];
+        }
+
+
+        return (xHeight + zHeight) / 2f;
     }
 }
