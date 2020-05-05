@@ -49,12 +49,6 @@ namespace Ecosystem.Grid
         public  float Persistence;
         public float Lacunarity;
 
-        [Header("Poisson Disc Sampling")]
-        [Range(0.1f, 10f)]
-        public float min_radius;
-        [Range(0.1f, 10f)]
-        public float max_radius;
-
         private GridData grid;
         private WorldGridSystem worldGridSystem;
 

@@ -13,16 +13,12 @@ namespace Ecosystem.Grid
         private List<Vector2> poissonPoints;
 
         [Header("Poisson Disc Sampling")]
-        [Range(0.1f, 5f)]
+        [Range(1f, 15f)]
         public float min_radius;
-        [Range(0.1f, 5f)]
+        [Range(1f, 15f)]
         public float max_radius;
         [Range(1, 50)]
         public int numSamplesBeforeRejection = 20;
-
-
-        private int waterIndex = 17;
-        private int landIndex = 34;
 
         public float greenScenaryNeigbourRate = 0.15f;
         public float greenScenarySpawnRate = 0.05f;
@@ -61,14 +57,16 @@ namespace Ecosystem.Grid
                     }
                     else if (tiles[row, col] == 51)
                     {
-                        if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
+
+                        gameObjectsInGrid[row, col] = SpawnRandomTree(row, col);
+                        /*if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
                         {
                             gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenaryNeigbourRate, row, col);
                         }
                         else
                         {
                             gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenarySpawnRate, row, col);
-                        }
+                        }*/
                     }
                 }
             }
@@ -130,6 +128,13 @@ namespace Ecosystem.Grid
         private Quaternion RandomQuaternion()
         {
             return Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        }
+
+        private Scenary SpawnRandomTree(int row, int col)
+        {
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            Instantiate(GetRandomTree(), spawnPos, RandomQuaternion());
+            return Scenary.Tree;
         }
 
         private Scenary RandomizeGreenScenary(float value, int row, int col)
