@@ -17,7 +17,7 @@ namespace Ecosystem.Graphs
         private AverageAnimalStats hearingStats = new AverageAnimalStats("HearingDoc.csv");
         private AverageAnimalStats visionStats = new AverageAnimalStats("VisionDoc.csv");
         private AverageAnimalStats animalCount = new AverageAnimalStats("AnimalCountDoc.csv");
-        private AnimalStats<float> ageOfDeathStats = new AnimalStats<float>("ageOfDeathData.csv","Age of Death");
+        private AnimalStats<float> ageOfDeathStats = new AnimalStats<float>("AgeOfDeathData.csv","Age of Death");
         private AverageAnimalStats ageStats = new AverageAnimalStats("AgeDoc.csv");
         private AverageAnimalStats hungerLimitStats = new AverageAnimalStats("HungerLimitDoc.csv");
         private AverageAnimalStats thirstLimitStats = new AverageAnimalStats("ThirstLimitDoc.csv");
@@ -44,12 +44,12 @@ namespace Ecosystem.Graphs
             Entities
                 .WithoutBurst()
                 .ForEach((in AnimalTypeData animalTypeData,in DeathEvent deathEvent,in AgeData ageOfDeathData) => {
-                    if (deathEvent.Cause.Equals(DeathCause.Age)) {
+                    //if (deathEvent.Cause.Equals(DeathCause.Age)) {
                         ageOfDeathStats.AddDataPoint(
                             time,
                             animalTypeData.AnimalName.ToString(),
                             ageOfDeathData.Age);
-                    }
+                    //}
                 }).Run();
 
             timeUntilDataPoint -= Time.DeltaTime;
