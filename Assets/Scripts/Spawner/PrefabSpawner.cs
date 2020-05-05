@@ -4,6 +4,7 @@ using Unity.Entities;
 using Random = UnityEngine.Random;
 using Ecosystem.ECS.Animal;
 using Ecosystem;
+using Ecosystem.Grid;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class PrefabSpawner : MonoBehaviour
                     grid.GetGridPositionFromIndex(n)))
                 {
                     Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
-                    spawnPos.y = 5f;
+                    spawnPos.y = GameZone.NoiseMap[grid.GetGridPositionFromIndex(n).x, grid.GetGridPositionFromIndex(n).y];
                     GameObject animal = Instantiate(prefab, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
                     float lifespan = animal.GetComponentInChildren<AgeAuthoring>().Lifespan;
                     animal.GetComponentInChildren<AgeAuthoring>().Age = lifespan * 0.25f;

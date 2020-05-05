@@ -101,6 +101,7 @@ namespace Ecosystem.Grid
             float rand = Random.value;
 
             Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            spawnPos.y = GameZone.NoiseMap[row, col];
 
             if (rand <= newBush)
             {
@@ -127,6 +128,7 @@ namespace Ecosystem.Grid
             float rand = Random.value;
 
             Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            spawnPos.y = GameZone.NoiseMap[row, col];
 
             if (rand <= newRock)
             {

@@ -92,7 +92,7 @@ namespace Ecosystem.Grid
                     float currentHeight = NoiseMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
-                        if (currentHeight <= Regions[i].Height * 5f)
+                        if (currentHeight <= Regions[i].Height)
                         {
                             ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
                             break;
@@ -139,7 +139,6 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
-                    NoiseMap[x,y] *= 5f;
                     SetHeight(x, y, NoiseMap[x, y]);
                 }
             }
