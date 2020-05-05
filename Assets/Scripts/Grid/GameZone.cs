@@ -92,7 +92,7 @@ namespace Ecosystem.Grid
                     float currentHeight = NoiseMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
-                        if (currentHeight <= Regions[i].Height)
+                        if (currentHeight <= Regions[i].Height * 5f)
                         {
                             ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
                             break;
@@ -105,11 +105,11 @@ namespace Ecosystem.Grid
         private void SetupMesh()
         {
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-            MeshCollision meshCollision = FindObjectOfType<MeshCollision>();
+            //MeshCollision meshCollision = FindObjectOfType<MeshCollision>();
            
             MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
             
-            meshCollision.SetMeshCollider(meshData);
+            //meshCollision.SetMeshCollider(meshData);
             mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
@@ -139,6 +139,8 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
+                    NoiseMap[x,y] *= 5f;
+                    SetHeight(x, y, NoiseMap[x, y]);
                 }
             }
         }
@@ -740,6 +742,9 @@ namespace Ecosystem.Grid
 
         public void SetBlockedCell(int x, int y)
             => worldGridSystem.SetOccupiedCell(new int2(x, y), true);
+
+        public void SetHeight(int x, int y, float height)
+            => worldGridSystem.SetHeight(new int2(x, y), height);
 
         public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(new int2(x, y));
     }

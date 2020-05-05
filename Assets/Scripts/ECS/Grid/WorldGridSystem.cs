@@ -74,10 +74,12 @@ namespace Ecosystem.ECS.Grid
             if (BlockedCells.IsCreated) BlockedCells.Dispose();
             if (WaterCells.IsCreated) WaterCells.Dispose();
             if (DrinkableCells.IsCreated) DrinkableCells.Dispose();
+            if (HeightMap.IsCreated) HeightMap.Dispose();
             OccupiedCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             BlockedCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             WaterCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             DrinkableCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
+            HeightMap = new NativeArray<float>(Grid.Length, Allocator.Persistent);
         }
 
         protected override void OnDestroy()
@@ -86,6 +88,7 @@ namespace Ecosystem.ECS.Grid
             BlockedCells.Dispose();
             WaterCells.Dispose();
             DrinkableCells.Dispose();
+            HeightMap.Dispose();
         }
 
         protected override void OnUpdate()

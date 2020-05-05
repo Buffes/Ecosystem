@@ -47,7 +47,10 @@ public class GroundCollisionSystem : SystemBase
 
     private static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
     {
-        
+        // If heightmap has high values, use linear interpolation to avoid staircase movement
+        float xU = position.x - grid.GetGridPosition(position).x;
+        float zU = (position.z - grid.GetGridPosition(position).y);
+
         return heightMap[grid.GetCellIndex(position)]; // This can be replaced by a height map
     }
 }
