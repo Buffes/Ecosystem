@@ -15,6 +15,7 @@ namespace Ecosystem.ParticleSystems
             death = ParticleMono.death;
 
             Entities
+                .WithAll<Ecosystem.ECS.Animal.AnimalTypeData>()
                 .WithoutBurst()
                 .ForEach((in Translation translation, in DeathEvent deathEvent) =>
                 {
