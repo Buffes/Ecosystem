@@ -277,7 +277,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &250487792
 PrefabInstance:
@@ -520,6 +520,11 @@ PrefabInstance:
       propertyPath: amountToSpawn.Array.data[1]
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4675160465158057465, guid: 98c98caacaf7f424b888bca8a6de5ae2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98c98caacaf7f424b888bca8a6de5ae2, type: 3}
 --- !u!1 &1013633815 stripped
@@ -700,6 +705,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: R
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: min_radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: max_radius
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_Name
@@ -728,7 +753,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: Lacunarity
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -738,7 +763,17 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: RandomNoiseSeed
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: min_radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: max_radius
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -778,7 +813,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}

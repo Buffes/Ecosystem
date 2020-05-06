@@ -50,6 +50,7 @@ function [TempArray] = GetValues(Array)
             TempArray(pos,1) = table2array(col1(i,1));
             pos = pos + 1;
         elseif ~isequal(col1(i,1),col1(i+1,1))
+
             TempArray(pos,1) = table2array(col1(i,1));
             pos = pos + 1;
         end
