@@ -27,6 +27,8 @@ namespace Ecosystem.Grid
         //The numbers of the shallow and beach tiles
         private int waterIndex = 17;
         private int landIndex = 34;
+
+        private float heightMultiplier = 5f;
         
         //The difference between water and land
         private int diffWaterLand = 0;
@@ -92,7 +94,7 @@ namespace Ecosystem.Grid
                     float currentHeight = NoiseMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
-                        if (currentHeight <= Regions[i].Height)
+                        if (currentHeight <= Regions[i].Height * heightMultiplier)
                         {
                             ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
                             break;
@@ -139,6 +141,7 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
+                    NoiseMap[x, y] *= heightMultiplier;
                     SetHeight(x, y, NoiseMap[x, y]);
                 }
             }

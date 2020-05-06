@@ -58,12 +58,21 @@ public class GroundCollisionSystem : SystemBase
         
         int2 nextX = new int2(position2D.x + 1, position2D.y);
         int2 nextZ = new int2(position2D.x, position2D.y + 1);
+        // int2 nextXZ = new int2(position2D.x + 1, position2D.y + 1);
+        
+        int2 origin = position2D;
+        // if (xU + zU > 1f && grid.IsInBounds(nextXZ))
+        // {
+        //     // On second triangle in this cell.
+        //     origin = nextXZ;
+        // }
+        
         float xHeight;
         float zHeight;
 
         if (grid.IsInBounds(nextX))
         {
-            xHeight = math.lerp(heightMap[grid.GetCellIndex(position2D)], 
+            xHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
                                 heightMap[grid.GetCellIndex(nextX)], xU);
         }
         else
@@ -73,7 +82,7 @@ public class GroundCollisionSystem : SystemBase
 
         if (grid.IsInBounds(nextZ))
         {
-            zHeight = math.lerp(heightMap[grid.GetCellIndex(position2D)], 
+            zHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
                                 heightMap[grid.GetCellIndex(nextZ)], zU);
         }
         else
