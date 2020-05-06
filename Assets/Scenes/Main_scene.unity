@@ -416,7 +416,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1963549219}
+  m_Father: {fileID: 1963549222}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &420642530
@@ -996,13 +996,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 1963549217}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc66274b4db6d5f418c34677f5077b7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birthSystem: {fileID: 1887437310664773286, guid: ac6181b3b20fa014a8be5efc086b250b,
+    type: 3}
+  breedSystem: {fileID: 2429165594321411380, guid: 31e65bad1042b6147b98eb922992e6fa,
+    type: 3}
+  deathSystem: {fileID: 4498131209124397651, guid: f71df26f5a4db3b4a8fd1424fa969922,
+    type: 3}
+  drinkSystem: {fileID: 7902469663851764698, guid: 554e118c3085b734b9f0b535861950a9,
+    type: 3}
+  eatmeatSystem: {fileID: 5406721021189759731, guid: 4ca89f5cba02fd443814125d737bd0cb,
+    type: 3}
+  eatplantSystem: {fileID: 3773439093377776189, guid: 3c63a8aaa38855f41bbe063c6daaa1ac,
+    type: 3}
+  killSystem: {fileID: 8168985824901175513, guid: 8913d7d09fc3a4745a2cc7d814c6196e,
+    type: 3}
+--- !u!114 &1963549219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963549217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cab5d5547a2e85978e7451faba7841c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TextureRenderer: {fileID: 0}
   meshFilter: {fileID: 420642530}
   meshRenderer: {fileID: 420642528}
---- !u!4 &1963549219 stripped
+--- !u!4 &1963549222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
     type: 3}

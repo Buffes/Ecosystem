@@ -7,20 +7,20 @@ namespace Ecosystem.ParticleSystems
 {
     public class ParticleMono : MonoBehaviour
     {
-        public ParticleSystem birthSystem;
-        public ParticleSystem breedSystem;
-        public ParticleSystem deathSystem;
-        public ParticleSystem drinkSystem;
-        public ParticleSystem eatmeatSystem;
-        public ParticleSystem eatplantSystem;
-        public ParticleSystem killSystem;
-        public static ParticleSystem birth;
-        public static ParticleSystem breed;
-        public static ParticleSystem death;
-        public static ParticleSystem drink;
-        public static ParticleSystem eatmeat;
-        public static ParticleSystem eatplant;
-        public static ParticleSystem kill;
+        public GameObject birthSystem;
+        public GameObject breedSystem;
+        public GameObject deathSystem;
+        public GameObject drinkSystem;
+        public GameObject eatmeatSystem;
+        public GameObject eatplantSystem;
+        public GameObject killSystem;
+        public static GameObject birth;
+        public static GameObject breed;
+        public static GameObject death;
+        public static GameObject drink;
+        public static GameObject eatmeat;
+        public static GameObject eatplant;
+        public static GameObject kill;
 
         void Start()
         {
@@ -34,9 +34,9 @@ namespace Ecosystem.ParticleSystems
             
         }
 
-        public static void InstantiateParticles(ParticleSystem ps, Vector3 pos, float time)
+        public static void InstantiateParticles(GameObject ps, Vector3 pos, float time)
         {
-           var o = Instantiate(ps, pos, Quaternion.Euler(0, 0, 0));
+            GameObject o = (GameObject)Instantiate(ps, pos, Quaternion.Euler(0, 0, 0));
             Destroy(o, time);
         }
     }
