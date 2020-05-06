@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: SimulationSettings
   m_EditorClassIdentifier: 
   initialPopulations:
-  - Prefab: {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263,
+  - Prefab: {fileID: 3999619118026667676, guid: cb29c42f7248c384a9822e2122e35067,
       type: 3}
     Amount: 100
-  - Prefab: {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0,
+  - Prefab: {fileID: 1435295048096349929, guid: 63c029db3643e0c44ba625c7f2f13438,
       type: 3}
     Amount: 50
   - Prefab: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39,
@@ -24,4 +24,4 @@ MonoBehaviour:
     Amount: 20
   - Prefab: {fileID: 2003170221973116033, guid: 290fdc0c73d1e4649bf63eeb3459216c,
       type: 3}
-    Amount: 0
+    Amount: 10
