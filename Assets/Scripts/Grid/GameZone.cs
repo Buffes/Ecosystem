@@ -33,10 +33,10 @@ namespace Ecosystem.Grid
         // //The rate of objects spawning
         // public float waterSpawnRate = 0.005f;
 
-        
+        public static float Water;
 
         [Range(0f, 1f)]
-        public float WaterThreshold;
+        public float WaterThreshold = 0.45f;
         
         [HideInInspector]
         public bool RandomNoiseSeed;
@@ -61,6 +61,7 @@ namespace Ecosystem.Grid
 
         void Awake() 
         {
+            Water = WaterThreshold;
             InitObjects();
             RandomizeStartGrid();
             CheckCorners();
@@ -86,11 +87,6 @@ namespace Ecosystem.Grid
             grid = new GridData(tiles.GetLength(0), tiles.GetLength(1));
             worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
             worldGridSystem.InitGrid(grid);
-        }
-
-        private List<Vector2> GeneratePoisson()
-        {
-            throw new NotImplementedException();
         }
 
         private void RandomizeStartGrid()
