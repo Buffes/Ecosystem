@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59edf238602dde16bb3d4578f9a4b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovesOnLand: 0
+  MovesOnLand: 1
   MovesOnWater: 0
 --- !u!114 &7772181361341400762
 MonoBehaviour:

@@ -19,13 +19,13 @@ namespace Ecosystem.Animation {
             } else {
                 IdleAnimation();
             }
-
         }
 
         private void IdleAnimation() {
             if(animator != null) {
                 animator.SetBool("Run", false);
             }
+
         }
 
         private void RunAnimation() {
