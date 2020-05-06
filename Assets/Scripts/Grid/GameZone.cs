@@ -16,8 +16,6 @@ namespace Ecosystem.Grid
         public static float[,] NoiseMap;
         public static Color[] ColorMap;
         
-        public static Mesh mesh;
-        public static MeshCollider meshCollider;
         public static Tilemap tilemap;
 
         public static List<Vector3Int> tilePositions;
@@ -59,7 +57,7 @@ namespace Ecosystem.Grid
         
         public float heightMultiplier = 5f;
 
-        public TerrainColor[] Regions;
+        public TerrainType[] Regions;
 
         private GridData grid;
         private WorldGridSystem worldGridSystem;
