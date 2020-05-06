@@ -520,6 +520,11 @@ PrefabInstance:
       propertyPath: amountToSpawn.Array.data[1]
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4675160465158057465, guid: 98c98caacaf7f424b888bca8a6de5ae2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98c98caacaf7f424b888bca8a6de5ae2, type: 3}
 --- !u!1 &1013633815 stripped

@@ -8,7 +8,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435295048096349929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: b4dc3c74541def84191303ea727d9a51, type: 3}
   m_Controller: {fileID: 9100000, guid: 7c05beb634bfdce4092d676300bd461d, type: 2}
   m_CullingMode: 0
@@ -26,11 +26,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435295048096349929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81209b33390dc05419bed6350916cd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement: {fileID: 1435295046748473988}
 --- !u!1001 &6176678206614636290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,6 +99,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fox
       objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763520, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animalType
+      value: 
+      objectReference: {fileID: 11400000, guid: 54ebd0d0cdfca8d48be3c648fec0bb90,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
 --- !u!1 &1435295048096349929 stripped
@@ -112,6 +119,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6176678206614636290}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1435295046748473988 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5070148453820763526, guid: 1ab49e1f0a45e6143b303a5638864304,
+    type: 3}
+  m_PrefabInstance: {fileID: 6176678206614636290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6c8ccefe007e54e87c518a1855a3f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8491917996977740007
 PrefabInstance:
   m_ObjectHideFlags: 0
