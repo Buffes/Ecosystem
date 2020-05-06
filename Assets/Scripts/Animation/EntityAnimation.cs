@@ -14,7 +14,7 @@ namespace Ecosystem.Animation {
         }
 
         void Update() {
-            if(math.length(movement.GetMovementInput()) != 0) {
+            if (math.length(movement.GetMovementInput()) != 0) {
                 RunAnimation();
             } else {
                 IdleAnimation();
@@ -22,10 +22,9 @@ namespace Ecosystem.Animation {
         }
 
         private void IdleAnimation() {
-            if(animator != null) {
+            if (animator != null) {
                 animator.SetBool("Run", false);
             }
-
         }
 
         private void RunAnimation() {
