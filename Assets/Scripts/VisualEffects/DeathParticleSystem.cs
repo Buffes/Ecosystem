@@ -8,7 +8,7 @@ namespace Ecosystem.ParticleSystems
 {
     public class DeathParticleSystem : SystemBase
     {
-        private ParticleSystem death;
+        private GameObject death;
 
         protected override void OnUpdate()
         {
