@@ -45,8 +45,13 @@ public class GroundCollisionSystem : SystemBase
             }).ScheduleParallel();
     }
 
-    private static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
+    /// <summary>
+    /// Returns the linearly interpolated height for a given position in the grid. Safe to use in systems.
+    /// </summary>
+    /// <returns></returns>
+    public static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
     {
+        
         // Use linear interpolation to avoid staircase-like movement
         int2 position2D = grid.GetGridPosition(position);
         
@@ -56,34 +61,36 @@ public class GroundCollisionSystem : SystemBase
         xU = xU / grid.CellSize;
         zU = zU / grid.CellSize;
         
-        int2 nextX = new int2(position2D.x + 1, position2D.y);
-        int2 nextZ = new int2(position2D.x, position2D.y + 1);
-        // int2 nextXZ = new int2(position2D.x + 1, position2D.y + 1);
+        int2 bottomRight = new int2(position2D.x + 1, position2D.y);
+        int2 topLeft = new int2(position2D.x, position2D.y + 1);
+        int2 topRight = new int2(position2D.x + 1, position2D.y + 1);
         
         int2 origin = position2D;
-        // if (xU + zU > 1f && grid.IsInBounds(nextXZ))
-        // {
-        //     // On second triangle in this cell.
-        //     origin = nextXZ;
-        // }
+        if (xU + zU > 1f && grid.IsInBounds(topRight))
+        {
+            // On second triangle in this cell. Invert and switch xU and zU
+            origin = topRight;
+            xU = 1f - zU;
+            zU = 1f - xU; 
+        }
         
         float xHeight;
         float zHeight;
 
-        if (grid.IsInBounds(nextX))
+        if (grid.IsInBounds(bottomRight))
         {
             xHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
-                                heightMap[grid.GetCellIndex(nextX)], xU);
+                                heightMap[grid.GetCellIndex(bottomRight)], xU);
         }
         else
         {
             xHeight = heightMap[grid.GetCellIndex(position)];
         }
 
-        if (grid.IsInBounds(nextZ))
+        if (grid.IsInBounds(topLeft))
         {
             zHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
-                                heightMap[grid.GetCellIndex(nextZ)], zU);
+                                heightMap[grid.GetCellIndex(topLeft)], zU);
         }
         else
         {

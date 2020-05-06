@@ -28,7 +28,6 @@ namespace Ecosystem.Grid
         private int waterIndex = 17;
         private int landIndex = 34;
 
-        private float heightMultiplier = 5f;
         
         //The difference between water and land
         private int diffWaterLand = 0;
@@ -39,11 +38,14 @@ namespace Ecosystem.Grid
         // //The rate of objects spawning
         // public float waterSpawnRate = 0.005f;
 
-        
+        [Serializable]
+        public enum MapMode {
+            Tilemap,
+            Mesh
+        };
 
-        [Range(0f, 1f)]
-        public float WaterThreshold;
-        
+        public MapMode mapMode;
+
         [HideInInspector]
         public bool RandomNoiseSeed;
         [HideInInspector]
@@ -54,6 +56,8 @@ namespace Ecosystem.Grid
         [Range(0f, 1f)] 
         public  float Persistence;
         public float Lacunarity;
+        
+        public float heightMultiplier = 5f;
 
         public TerrainColor[] Regions;
 
@@ -71,16 +75,24 @@ namespace Ecosystem.Grid
         {
             InitObjects();
             RandomizeStartGrid();
-            //CheckCorners();
-            //CheckEdges();
-            //CheckMiddle();
-            //SetupTilemap();
-            SetupColors();
-            SetupMesh();
-            //tilesAssetsToTilemap = new TilesAssetsToTilemap();
+            CheckCorners();
+            CheckEdges();
+            CheckMiddle();
+           
+            if (mapMode == MapMode.Tilemap)
+            {
+                SetupTilemap();
+                tilesAssetsToTilemap = new TilesAssetsToTilemap();
+                ToggleShadows(true);
+            }
+            else if (mapMode == MapMode.Mesh)
+            {
+                SetupColors();
+                SetupMesh();
+            }
+
             SetupWaterTiles();
             SetupDrinkableTiles();
-            //ToggleShadows(true);
         }
 
         private void SetupColors()
@@ -89,7 +101,7 @@ namespace Ecosystem.Grid
             {
                 Regions[i].Height *= heightMultiplier;
             }
-            
+
             ColorMap = new Color[NoiseMap.GetLength(0) * NoiseMap.GetLength(1)];
 
             for (int y = 0; y < NoiseMap.GetLength(1); y++)
@@ -112,11 +124,9 @@ namespace Ecosystem.Grid
         private void SetupMesh()
         {
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
-            //MeshCollision meshCollision = FindObjectOfType<MeshCollision>();
            
             MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
             
-            //meshCollision.SetMeshCollider(meshData);
             mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
