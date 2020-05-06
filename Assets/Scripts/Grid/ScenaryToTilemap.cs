@@ -52,23 +52,11 @@ namespace Ecosystem.Grid
                     int col = (int)point.y;
                     if (tiles[row, col] == 34)
                     {
-                        //Scenary in the desert does not spawn more often if there are other things closeby
-                        gameObjectsInGrid[row, col] = RandomizeDesertScenary(desertScenarySpawnRate, row, col);
+                        gameObjectsInGrid[row, col] = RandomizeDesertScenary(1, row, col);
                     }
                     else if (tiles[row, col] == 51)
                     {
-
-                        //gameObjectsInGrid[row, col] = SpawnRandomTree(row, col);
                         gameObjectsInGrid[row, col] = RandomizeGreenScenary(1, row, col);
-                        
-                        /*if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
-                        {
-                            gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenaryNeigbourRate, row, col);
-                        }
-                        else
-                        {
-                            gameObjectsInGrid[row, col] = RandomizeGreenScenary(greenScenarySpawnRate, row, col);
-                        }*/
                     }
                 }
             }

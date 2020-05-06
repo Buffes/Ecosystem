@@ -98,13 +98,12 @@ namespace Ecosystem.Grid
             System.Random random = new System.Random();
             
             int seed = RandomNoiseSeed ? random.Next() : NoiseSeed;
-            float[,] noiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
-            NoiseMap = noiseMap;
+            NoiseMap = Noise.GenerateNoiseMap(tiles.GetLength(0), tiles.GetLength(1), seed, Scale, Octaves, Persistence, Lacunarity);
             for (int y = 0; y < tiles.GetLength(1); y++ )
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
-                    tiles[x,y] = noiseMap[x,y] > WaterThreshold ? landIndex : waterIndex;
+                    tiles[x,y] = NoiseMap[x,y] > WaterThreshold ? landIndex : waterIndex;
                 }
             }
         }
