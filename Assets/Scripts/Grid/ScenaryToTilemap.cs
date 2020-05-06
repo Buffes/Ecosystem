@@ -38,12 +38,14 @@ namespace Ecosystem.Grid
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
-                    if (tiles[row, col] == 34)
+                    if (GameZone.NoiseMap[row, col] <= gameZone.Regions[0].Height) continue; // water
+                    
+                    if (GameZone.NoiseMap[row, col] <= gameZone.Regions[1].Height)
                     {
                         //Scenary in the desert does not spawn more often if there are other things closeby
                         gameObjectsInGrid[row, col] = RandomizeDesertScenary(desertScenarySpawnRate, row, col);
                     }
-                    else if (tiles[row, col] == 51)
+                    else if (GameZone.NoiseMap[row, col] <= gameZone.Regions[2].Height)
                     {
                         if (ScenaryAsNeighbour(row, col) != Scenary.Empty)
                         {

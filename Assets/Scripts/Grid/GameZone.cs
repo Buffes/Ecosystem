@@ -85,6 +85,11 @@ namespace Ecosystem.Grid
 
         private void SetupColors()
         {
+            for (int i = 0; i < Regions.Length; i++)
+            {
+                Regions[i].Height *= heightMultiplier;
+            }
+            
             ColorMap = new Color[NoiseMap.GetLength(0) * NoiseMap.GetLength(1)];
 
             for (int y = 0; y < NoiseMap.GetLength(1); y++)
@@ -94,7 +99,7 @@ namespace Ecosystem.Grid
                     float currentHeight = NoiseMap[x, y];
                     for (int i = 0; i < Regions.Length; i++)
                     {
-                        if (currentHeight <= Regions[i].Height * heightMultiplier)
+                        if (currentHeight <= Regions[i].Height)
                         {
                             ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
                             break;
