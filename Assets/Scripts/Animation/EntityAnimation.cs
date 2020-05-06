@@ -3,13 +3,14 @@ using Unity.Mathematics;
 using UnityEngine;
 
 namespace Ecosystem.Animation {
+    [RequireComponent(typeof(Animator))]
     public class EntityAnimation : MonoBehaviour {
         private Animator animator;
 
         [SerializeField]
         private Movement movement = default;
 
-        void Start() {
+        void Awake() {
             animator = GetComponent<Animator>();
         }
 
@@ -22,15 +23,11 @@ namespace Ecosystem.Animation {
         }
 
         private void IdleAnimation() {
-            if (animator != null) {
-                animator.SetBool("Run", false);
-            }
+            animator.SetBool("Run", false);
         }
 
         private void RunAnimation() {
-            if (animator != null) {
-                animator.SetBool("Run", true);
-            }
+            animator.SetBool("Run", true);
         }
     }
 }
