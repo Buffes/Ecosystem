@@ -4,7 +4,6 @@ file = join(file, "\");
 SpeedArray = readtable(file);
 figure(1)
 PlotValues(GetValues(SpeedArray), SpeedArray,'Average Speed');
-XD = GetValues(SpeedArray);
 
 
 file = [a, "Stats\HearingDoc.csv"];
