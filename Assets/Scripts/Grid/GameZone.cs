@@ -84,6 +84,7 @@ namespace Ecosystem.Grid
                 SetupTilemap();
                 tilesAssetsToTilemap = new TilesAssetsToTilemap();
                 ToggleShadows(true);
+                FlattenNoiseMap();
             }
             else if (mapMode == MapMode.Mesh)
             {
@@ -93,6 +94,18 @@ namespace Ecosystem.Grid
 
             SetupWaterTiles();
             SetupDrinkableTiles();
+        }
+
+        private void FlattenNoiseMap()
+        {
+            for (int y = 0; y < NoiseMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < NoiseMap.GetLength(0); x++)
+                {
+                    NoiseMap[x, y] = 0f;
+                    SetHeight(x, y, 0f);    
+                }
+            }
         }
 
         private void SetupColors()

@@ -914,6 +914,11 @@ PrefabInstance:
       propertyPath: Regions.Array.data[2].Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: mapMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: m_LocalPosition.x
