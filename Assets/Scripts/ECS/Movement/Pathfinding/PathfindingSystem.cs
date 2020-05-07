@@ -59,17 +59,24 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
                 // Clear any existing path
                 pathBuffer.Clear();
-                
-                if (!shouldPathfind || flyingComponents.Exists(entity))
+
+                int2 startPos = grid.GetGridPosition(position);
+                int2 targetPos = grid.GetGridPosition(target);
+                bool onLand = movementTerrain.MovesOnLand;
+                bool inWater = movementTerrain.MovesOnWater;
+
+                if (!shouldPathfind
+                || flyingComponents.Exists(entity)
+                || IsOpenPath(startPos, targetPos,
+                blockedCells, waterCells, grid, onLand, inWater))
                 {
                     pathBuffer.Add(new PathElement { Checkpoint = target + reach * math.normalize(position - target)});
                     pathBuffer.Add(new PathElement { Checkpoint = position});
                     return;
                 } 
                 
-                NativeList<int2> path = FindPath(grid.GetGridPosition(position),
-                    grid.GetGridPosition(target), blockedCells, waterCells, grid,
-                    movementTerrain.MovesOnLand, movementTerrain.MovesOnWater, maxTiles);
+                NativeList<int2> path = FindPath(startPos, targetPos, blockedCells, waterCells, grid,
+                    onLand, inWater, maxTiles);
             
                 // Add path checkpoints
                 for (int i = 0; i < path.Length - 1; i++)
@@ -108,6 +115,63 @@ namespace Ecosystem.ECS.Movement.Pathfinding
             }).ScheduleParallel();
 
             m_EndSimulationEcbSystem.AddJobHandleForProducer(Dependency);
+        }
+
+        /// <summary>
+        /// Returns if there is an open path between the start and target position with walkable cells.
+        /// <para>
+        /// Uses a modified version of Bresenham's line algorithm. The original algorithm creates
+        /// a close approximation of a straight line in the form of connected points in a grid.
+        /// The modification is that it returns false if it hits an unwalkable cells or tries to
+        /// move diagonally while squeezing through two unwalkable cells.
+        /// </para>
+        /// <para>
+        /// Theory: https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+        /// Source (based on): https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C.23
+        /// </para>
+        /// </summary>
+        private static bool IsOpenPath(int2 startPosition, int2 targetPosition,
+            NativeArray<bool> blockedCells, NativeArray<bool> waterCells, GridData grid,
+            bool onLand, bool inWater)
+        {
+            return CheckLine(startPosition.x, startPosition.y, targetPosition.x, targetPosition.y,
+                blockedCells, waterCells, grid, onLand, inWater);
+        }
+
+        private static bool CheckLine(int x0, int y0, int x1, int y1, NativeArray<bool> blockedCells,
+            NativeArray<bool> waterCells, GridData grid,
+            bool onLand, bool inWater)
+        {
+            int dx = math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+            int dy = math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+            int err = (dx > dy ? dx : -dy) / 2, e2;
+            int prevX = x0, prevY = y0;
+            for (; ; )
+            {
+                if (!WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater, new int2(x0, y0))
+                    || !IsOpenDiagonal(prevX, prevY, x0, y0, blockedCells, waterCells, grid, onLand, inWater))
+                {
+                    return false;
+                }
+                if (x0 == x1 && y0 == y1) return true;
+
+                prevX = x0;
+                prevY = y0;
+                e2 = err;
+                if (e2 > -dx) { err -= dy; x0 += sx; }
+                if (e2 < dy) { err += dx; y0 += sy; }
+            }
+        }
+
+        private static bool IsOpenDiagonal(int x0, int y0, int x1, int y1,
+            NativeArray<bool> blockedCells, NativeArray<bool> waterCells, GridData grid,
+            bool onLand, bool inWater)
+        {
+            int dx = x1 - x0;
+            int dy = y1 - y0;
+            if (dx == 0 || dy == 0) return true;
+            return WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater, new int2(x1 - dx, y1))
+                || WorldGridSystem.IsWalkable(grid, blockedCells, waterCells, onLand, inWater, new int2(x1, y1 - dy));
         }
 
         ///<summary>
