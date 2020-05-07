@@ -1268,6 +1268,11 @@ PrefabInstance:
       propertyPath: Urge
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3352532566447112004, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 8110904167012176384}
     - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_RootOrder
