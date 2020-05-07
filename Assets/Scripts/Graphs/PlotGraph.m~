@@ -51,8 +51,8 @@ PlotValues(GetValues(AgeArray), AgeArray, 'Mating Limit');
 file = [a, "DataForEcosystem/Stats/AnimalSexCountDoc.csv"];
 file = join(file, "/");
 SexArray = readtable(file);
-figure(10)
-PlotValues(GetValues(SexArray), SexArray, 'Animals sex count');
+figure(8)
+PlotValues(GetValues(AgeArray), AgeArray, 'Mating Limit');
 
 function [TempArray] = GetValues(Array)
    col1 = Array(:,1);
