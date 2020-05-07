@@ -13,8 +13,8 @@ namespace Ecosystem.Genetics
 
         public void Mutate(ref float value)
         {
-            value += NextGaussianFloat() * (value * maxMutationAmount);
-            if (value < 0) value = Random.Range(0.1f,1f);
+            value += NextGaussianFloat() * (value * maxMutationAmount)/3;
+            if (value < 0.01f) value = Random.Range(0.1f,1f);
         }
 
         /// <summary>
