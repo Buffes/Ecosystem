@@ -19,3 +19,14 @@ MonoBehaviour:
   food:
   - {fileID: 11400000, guid: 43943814e1f448743bee4a526ed51e1e, type: 2}
   - {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
+  MovementSpeed: 3
+  HearingRange: 6
+  VisionRange: 12
+  VisionAngle: 2
+  MaxHunger: 3
+  MaxThirst: 3
+  MaxSexualUrge: 3
+  Bravery: 0.5
+  GestationPeriod: 0.2
+  MovesOnLand: 1
+  MovesInWater: 0

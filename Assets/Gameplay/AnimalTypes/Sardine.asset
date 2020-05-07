@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
   m_Name: Sardine
   m_EditorClassIdentifier: 
+  Name: Sardine
+  MovementSpeed: 3
+  HearingRange: 6
+  VisionRange: 12
+  VisionAngle: 2
+  MaxHunger: 3
+  MaxThirst: 3
+  MaxSexualUrge: 3
+  Bravery: 0.55
+  Lifespan: 20
+  InfertilityAge: 9
+  GestationPeriod: 0.2
+  Land: 0
+  Water: 1
   Meat: {fileID: 5051909552354685666, guid: 97eacc50661884900814b75b7a1bd8da, type: 3}
   Baby: {fileID: 2003170221973116033, guid: 290fdc0c73d1e4649bf63eeb3459216c, type: 3}
-  Name: Sardine
   prey: []
   food:
   - {fileID: 11400000, guid: 6e2574af69e1ddd4497a11adb45777a1, type: 2}

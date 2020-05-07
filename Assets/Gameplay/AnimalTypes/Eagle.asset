@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
   m_Name: Eagle
   m_EditorClassIdentifier: 
+  Name: Eagle
+  MovementSpeed: 3
+  HearingRange: 6
+  VisionRange: 12
+  VisionAngle: 2
+  MaxHunger: 3
+  MaxThirst: 3
+  MaxSexualUrge: 3
+  Bravery: 0.75
+  Lifespan: 20
+  InfertilityAge: 9
+  GestationPeriod: 0.2
+  Land: 1
+  Water: 1
   Meat: {fileID: 8351528323046132514, guid: 2079e50fcd3ed667d85ea48653edcabb, type: 3}
   Baby: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39, type: 3}
-  Name: Eagle
   prey: []
   food:
   - {fileID: 11400000, guid: 42c1d199ea7f64a80812e71f7ec2dc9d, type: 2}
