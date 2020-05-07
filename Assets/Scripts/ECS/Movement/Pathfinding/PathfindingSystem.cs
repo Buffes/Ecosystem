@@ -119,11 +119,16 @@ namespace Ecosystem.ECS.Movement.Pathfinding
 
         /// <summary>
         /// Returns if there is an open path between the start and target position with walkable cells.
-        /// </para>
+        /// <para>
         /// Uses a modified version of Bresenham's line algorithm. The original algorithm creates
         /// a close approximation of a straight line in the form of connected points in a grid.
         /// The modification is that it returns false if it hits an unwalkable cells or tries to
         /// move diagonally while squeezing through two unwalkable cells.
+        /// </para>
+        /// <para>
+        /// Theory: https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+        /// Source (based on): https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C.23
+        /// </para>
         /// </summary>
         private static bool IsOpenPath(int2 startPosition, int2 targetPosition,
             NativeArray<bool> blockedCells, NativeArray<bool> waterCells, GridData grid,
