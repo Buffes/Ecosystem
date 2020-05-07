@@ -75,6 +75,7 @@ namespace Ecosystem.Grid
         {
             InitObjects();
             RandomizeStartGrid();
+            ApplyMultiplier();
             CheckCorners();
             CheckEdges();
             CheckMiddle();
@@ -95,7 +96,23 @@ namespace Ecosystem.Grid
             SetupWaterTiles();
             SetupDrinkableTiles();
         }
+        
+        private void ApplyMultiplier()
+        {
+            for (int y = 0; y < tiles.GetLength(1); y++ )
+            {
+                for (int x = 0; x < tiles.GetLength(0); x++ )
+                {
+                    NoiseMap[x, y] *= heightMultiplier;
+                    SetHeight(x, y, NoiseMap[x, y]);
+                }
+            }
 
+            for (int i = 0; i < Regions.Length; i++)
+            {
+                Regions[i].Height *= heightMultiplier;
+            }
+        }
         private void FlattenNoiseMap()
         {
             for (int y = 0; y < NoiseMap.GetLength(1); y++)
@@ -111,11 +128,6 @@ namespace Ecosystem.Grid
 
         private void SetupColors()
         {
-            for (int i = 0; i < Regions.Length; i++)
-            {
-                Regions[i].Height *= heightMultiplier;
-            }
-
             ColorMap = new Color[NoiseMap.GetLength(0) * NoiseMap.GetLength(1)];
 
             for (int y = 0; y < NoiseMap.GetLength(1); y++)
@@ -170,8 +182,6 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
-                    NoiseMap[x, y] *= heightMultiplier;
-                    SetHeight(x, y, NoiseMap[x, y]);
                 }
             }
         }
