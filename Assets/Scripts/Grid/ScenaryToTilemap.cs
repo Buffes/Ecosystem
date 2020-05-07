@@ -10,6 +10,16 @@ namespace Ecosystem.Grid
         //Matrix with all GameObjects in the Grid
         private Scenary [,] gameObjectsInGrid;
         private int [,] tiles;
+        private List<Vector2> poissonPoints;
+
+        [Header("Poisson Disc Sampling")]
+        [Range(0.1f, 15f)]
+        public float min_radius;
+        [Range(1f, 15f)]
+        public float max_radius;
+        [Range(1, 50)]
+        public int numSamplesBeforeRejection = 20;
+        public int numToSpawn;
 
         public float greenScenaryNeigbourRate = 0.15f;
         public float greenScenarySpawnRate = 0.05f;
@@ -26,6 +36,13 @@ namespace Ecosystem.Grid
         void Start()
         {
             this.tiles = GameZone.tiles;
+            this.poissonPoints = PoissonDiscSampling.GeneratePoisson(GameZone.NoiseMap,
+                                                                     new Vector2(tiles.GetLength(0), tiles.GetLength(1)),
+                                                                     numSamplesBeforeRejection,
+                                                                     min_radius,
+                                                                     max_radius,
+                                                                     numToSpawn,
+                                                                     GameZone.Water);
 
             gameObjectsInGrid = new Scenary [tiles.GetLength(0), tiles.GetLength(1)];
             CreateEmptyScenary();
@@ -34,7 +51,24 @@ namespace Ecosystem.Grid
 
         private void SetupGameObjects()
         {
-            for (int row = 0; row < tiles.GetLength(0); row++)
+           if (poissonPoints != null)
+            {
+                foreach(Vector2 point in poissonPoints)
+                {
+                    int row = (int)point.x;
+                    int col = (int)point.y;
+                    if (tiles[row, col] == 34)
+                    {
+                        gameObjectsInGrid[row, col] = RandomizeDesertScenary(1, row, col);
+                    }
+                    else if (tiles[row, col] == 51)
+                    {
+                        gameObjectsInGrid[row, col] = RandomizeGreenScenary(1, row, col);
+                    }
+                }
+            }
+            
+            /*for (int row = 0; row < tiles.GetLength(0); row++)
             {
                 for (int col = 0; col < tiles.GetLength(1); col++)
                 {
@@ -55,7 +89,7 @@ namespace Ecosystem.Grid
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private Scenary ScenaryAsNeighbour(int row, int col)
@@ -91,6 +125,13 @@ namespace Ecosystem.Grid
         private Quaternion RandomQuaternion()
         {
             return Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        }
+
+        private Scenary SpawnRandomTree(int row, int col)
+        {
+            Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            Instantiate(GetRandomTree(), spawnPos, RandomQuaternion());
+            return Scenary.Tree;
         }
 
         private Scenary RandomizeGreenScenary(float value, int row, int col)

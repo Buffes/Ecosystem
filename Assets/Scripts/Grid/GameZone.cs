@@ -44,6 +44,8 @@ namespace Ecosystem.Grid
 
         public MapMode mapMode;
 
+        public static float Water;
+        
         [HideInInspector]
         public bool RandomNoiseSeed;
         [HideInInspector]
@@ -104,6 +106,7 @@ namespace Ecosystem.Grid
                     SetHeight(x, y, 0f);    
                 }
             }
+            Water = Regions[0].Height;
         }
 
         private void SetupColors()
