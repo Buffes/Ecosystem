@@ -42,7 +42,7 @@ namespace Ecosystem.Grid
         
 
         [Range(0f, 1f)]
-        public float WaterThreshold;
+        public static float WaterThreshold;
         
         [HideInInspector]
         public bool RandomNoiseSeed;
@@ -77,10 +77,16 @@ namespace Ecosystem.Grid
             //SetupTilemap();
             SetupColors();
             SetupMesh();
+            levelWater();
             //tilesAssetsToTilemap = new TilesAssetsToTilemap();
             SetupWaterTiles();
             SetupDrinkableTiles();
             //ToggleShadows(true);
+        }
+
+        private void levelWater()
+        {
+            this.gameObject.transform.GetChild(2).transform.Translate(new Vector3(0,WaterThreshold,0));
         }
 
         private void SetupColors()
@@ -107,12 +113,16 @@ namespace Ecosystem.Grid
         private void SetupMesh()
         {
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+            WaterMeshGenerator waterMeshGenerator = FindObjectOfType<WaterMeshGenerator>();
             //MeshCollision meshCollision = FindObjectOfType<MeshCollision>();
-           
+
             MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
-            
+            MeshData waterMeshData = waterMeshGenerator.GenerateMeshData();
+
             //meshCollision.SetMeshCollider(meshData);
             mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
+            waterMeshGenerator.DrawWaterMesh(waterMeshData.CreateMesh());
+
         }
 
         private void ToggleShadows(bool receiveShadows)
