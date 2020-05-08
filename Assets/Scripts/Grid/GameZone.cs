@@ -110,19 +110,6 @@ namespace Ecosystem.Grid
 
             return regionNames;
         }
-
-        // private float GetHeightFromRegionIndex(string name)
-        // {
-        //     foreach (TerrainType terrain in Regions)
-        //     {
-        //         if (name == terrain.Name)
-        //         {
-        //             return terrain.Height;
-        //         }
-        //     }
-
-        //     return 0f;
-        // }
         
         private void ApplyMultiplier()
         {
@@ -209,7 +196,6 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     tiles[x,y] = NoiseMap[x,y] > Regions[WaterThresholdIndex].Height ? landIndex : waterIndex;
-                    Debug.Log(Regions[WaterThresholdIndex].Height);
                 }
             }
         }
@@ -816,6 +802,11 @@ namespace Ecosystem.Grid
             => worldGridSystem.SetHeight(new int2(x, y), height);
 
         public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(new int2(x, y));
+
+        public static float GetGroundLevel(int x, int y)
+        {
+            return NoiseMap[x, y];
+        }
     }
 }
 
