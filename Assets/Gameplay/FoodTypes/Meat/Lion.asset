@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ebc68a3708f5a4c85beb350e2e0946, type: 3}
   m_Name: Fox
   m_EditorClassIdentifier: 
-  FoodPoints: 3
+  FoodPoints: 4

@@ -349,7 +349,7 @@ PrefabInstance:
     - target: {fileID: 118408086390162964, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: InfertilityAge
-      value: 9.25
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -360,6 +360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Value
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208909882274344314, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1741054821152911738, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -389,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: GestationPeriod
-      value: 0.85
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
