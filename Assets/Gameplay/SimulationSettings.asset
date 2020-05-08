@@ -15,10 +15,10 @@ MonoBehaviour:
   initialPopulations:
   - Prefab: {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263,
       type: 3}
-    Amount: 100
+    Amount: 200
   - Prefab: {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0,
       type: 3}
-    Amount: 0
+    Amount: 65
   - Prefab: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39,
       type: 3}
     Amount: 0

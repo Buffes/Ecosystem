@@ -81,8 +81,6 @@ GameObject:
   - component: {fileID: 2762537172183571910}
   - component: {fileID: 6414172234341297823}
   - component: {fileID: 826927873525821883}
-  - component: {fileID: 7241647726829484548}
-  - component: {fileID: 7692351275043969183}
   - component: {fileID: 3387839622014107514}
   - component: {fileID: 118408086390162964}
   - component: {fileID: 2223985520359843425}
@@ -213,32 +211,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 12
---- !u!114 &7241647726829484548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c89b5abce0205764a999dad207f348cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hunger: 2
---- !u!114 &7692351275043969183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7100fc6710885f64cb7644a997c1fd7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Thirst: 2
 --- !u!114 &3387839622014107514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e355ce41b9c0b45a4ba76b9420be6d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Urge: 3
+  SexualUrge: 3
+  Hunger: 3
+  Thirst: 3
 --- !u!114 &118408086390162964
 MonoBehaviour:
   m_ObjectHideFlags: 0
