@@ -61,6 +61,9 @@ namespace Ecosystem.Grid
 
         public TerrainType[] Regions;
 
+        [HideInInspector]
+        public int WaterThresholdIndex;
+
         private GridData grid;
         private WorldGridSystem worldGridSystem;
 
@@ -96,6 +99,30 @@ namespace Ecosystem.Grid
             SetupWaterTiles();
             SetupDrinkableTiles();
         }
+
+        public string[] GetRegionNames()
+        {
+            string[] regionNames = new string[Regions.Length];
+            for (int i = 0; i < regionNames.Length; i++)
+            {
+                regionNames[i] = Regions[i].Name;
+            }
+
+            return regionNames;
+        }
+
+        // private float GetHeightFromRegionIndex(string name)
+        // {
+        //     foreach (TerrainType terrain in Regions)
+        //     {
+        //         if (name == terrain.Name)
+        //         {
+        //             return terrain.Height;
+        //         }
+        //     }
+
+        //     return 0f;
+        // }
         
         private void ApplyMultiplier()
         {
@@ -123,7 +150,7 @@ namespace Ecosystem.Grid
                     SetHeight(x, y, 0f);    
                 }
             }
-            Water = Regions[0].Height;
+            Water = Regions[WaterThresholdIndex].Height;
         }
 
         private void SetupColors()
@@ -181,7 +208,8 @@ namespace Ecosystem.Grid
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
-                    tiles[x,y] = NoiseMap[x,y] > Regions[0].Height ? landIndex : waterIndex;
+                    tiles[x,y] = NoiseMap[x,y] > Regions[WaterThresholdIndex].Height ? landIndex : waterIndex;
+                    Debug.Log(Regions[WaterThresholdIndex].Height);
                 }
             }
         }

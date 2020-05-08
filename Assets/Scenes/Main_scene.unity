@@ -822,7 +822,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: Scale
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -952,6 +952,41 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: mapMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: WaterThresholdIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Name
+      value: Apa
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Color.r
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Color.g
+      value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Color.b
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[3].Height
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237109, guid: 3d6571ed8ced74e4cad067533607be38,
