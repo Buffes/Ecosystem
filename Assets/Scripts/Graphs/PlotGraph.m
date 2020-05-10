@@ -80,7 +80,6 @@ function [] = PlotValues(TempArray, Array, Ylabel)
     [~,columns]= size(TempArray);
     NameCol = Array(:,2);
     lx = find(TempArray(:,2)==0,1,'first');
-    NoZeroArray = TempArray(1:lx-1,2);
     if lx ~= 0  
         plot(TempArray(1:lx-1,1)/3600,NoZeroArray, 'DisplayName', join(char(table2cell(NameCol(1,1)))),'LineWidth',2);
         legend(join(char(table2cell(NameCol(1,1)))),'FontSize',20);
@@ -99,7 +98,7 @@ function [] = PlotValues(TempArray, Array, Ylabel)
             lx = find(TempArray(:,i+1)==0,1,'first');
             NoZeroArray = TempArray(1:lx-1,i+1);
         
-            if lx ~= 0  
+            if lx ~= 0
                 plot(TempArray(1:lx-1,1)/3600,NoZeroArray, 'DisplayName', join(char(table2cell(NameCol(i,1)))),'LineWidth',2);
             else       
                 plot(TempArray(:,1)/3600,TempArray(:,i+1), 'DisplayName', join(char(table2cell(NameCol(i,1)))),'LineWidth',2);

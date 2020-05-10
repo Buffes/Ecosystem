@@ -90,5 +90,9 @@ namespace Ecosystem.ECS.Hybrid
             
             return new Vector3(scale.c0.x, scale.c1.y, scale.c2.z);
         }
+
+        public float3 GetMovementInput() {
+            return EntityManager.GetComponentData<MovementInput>(Entity).Direction;
+        }
     }
 }
