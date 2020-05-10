@@ -39,11 +39,61 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 118408086390162964, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: InfertilityAge
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Lifespan
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 826927873525821883, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741054821152911738, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3352532566447112004, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 108122444459103273}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: SexualUrge
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Hunger
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Thirst
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555329424664434073, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxUrge
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: GestationPeriod
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -110,6 +160,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 54ebd0d0cdfca8d48be3c648fec0bb90,
         type: 2}
+    - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxHunger
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303536544478638138, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxThirst
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414172234341297823, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8358889571667046334, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: MovesOnLand

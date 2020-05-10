@@ -1278,16 +1278,21 @@ PrefabInstance:
       propertyPath: Urge
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3352532566447112004, guid: 1ab49e1f0a45e6143b303a5638864304,
+    - target: {fileID: 2577730440138288425, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 8110904167012176384}
+      propertyPath: Value
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3352532566447112004, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 8110904167012176384}
     - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Thirst
@@ -1301,12 +1306,17 @@ PrefabInstance:
     - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: SexualUrge
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555329424664434073, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxUrge
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -1374,6 +1384,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a1b52950926274649b65d081f535a333,
         type: 2}
+    - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxHunger
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6303536544478638138, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: MaxThirst
@@ -1411,12 +1426,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
---- !u!1 &2003170221973116033 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 6742022317625863530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2003170222783324396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5070148453820763526, guid: 1ab49e1f0a45e6143b303a5638864304,
@@ -1432,6 +1441,12 @@ MonoBehaviour:
 --- !u!4 &2003170221973116032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
+    type: 3}
+  m_PrefabInstance: {fileID: 6742022317625863530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2003170221973116033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
     type: 3}
   m_PrefabInstance: {fileID: 6742022317625863530}
   m_PrefabAsset: {fileID: 0}
