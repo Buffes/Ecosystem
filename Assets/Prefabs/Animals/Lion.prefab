@@ -573,7 +573,7 @@ PrefabInstance:
     - target: {fileID: 118408086390162964, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: InfertilityAge
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -588,7 +588,7 @@ PrefabInstance:
     - target: {fileID: 1208909882274344314, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1741054821152911738, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -603,7 +603,7 @@ PrefabInstance:
     - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
-      value: 4
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -633,7 +633,7 @@ PrefabInstance:
     - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: GestationPeriod
-      value: 2.6
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -749,7 +749,7 @@ PrefabInstance:
     - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: MaxHunger
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6303536544478638138, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -759,7 +759,7 @@ PrefabInstance:
     - target: {fileID: 6312866617543724570, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6414172234341297823, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}

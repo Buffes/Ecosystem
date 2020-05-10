@@ -543,7 +543,7 @@ MonoBehaviour:
   grass: {fileID: 1317140292629962124, guid: a3ab53cba051c293f85226a2cdd652dc, type: 3}
   GrassSpawnTime: 1
   seaweed: {fileID: 5832808878485633524, guid: 1582edbbe877f1646b432bec757288da, type: 3}
-  SeaweedSpawnTime: 3
+  SeaweedSpawnTime: 0.2
 --- !u!1 &1721414185 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,

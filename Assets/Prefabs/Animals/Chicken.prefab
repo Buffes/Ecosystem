@@ -369,7 +369,7 @@ PrefabInstance:
     - target: {fileID: 1741054821152911738, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
-      value: 0.45
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -394,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 4933172163321527102, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: GestationPeriod
-      value: 0.8
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -517,6 +517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PrimitiveCenter.y
       value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxHunger
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6099541318120149023, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
