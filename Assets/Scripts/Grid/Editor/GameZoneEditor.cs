@@ -14,6 +14,8 @@ namespace Ecosystem.Grid
         {
             GameZone gameZone = (GameZone)target;
             DrawDefaultInspector();
+            
+            gameZone.WaterThresholdIndex = EditorGUILayout.Popup("Water threshold", gameZone.WaterThresholdIndex, gameZone.GetRegionNames());
             EditorGUILayout.LabelField("Noise Map Seed", EditorStyles.boldLabel);
             gameZone.RandomNoiseSeed = EditorGUILayout.Toggle("Random Seed", gameZone.RandomNoiseSeed);
             

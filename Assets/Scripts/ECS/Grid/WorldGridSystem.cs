@@ -15,6 +15,7 @@ namespace Ecosystem.ECS.Grid
         public NativeArray<bool> BlockedCells;
         public NativeArray<bool> WaterCells;
         public NativeArray<bool> DrinkableCells;
+        public NativeArray<float> HeightMap;
 
         /// <summary>
         /// Sets a cell as occupied.
@@ -31,6 +32,8 @@ namespace Ecosystem.ECS.Grid
         public void SetWaterCell(int2 gridPosition) => WaterCells[Grid.GetCellIndex(gridPosition)] = true;
 
         public void setDrinkableCell(int2 gridPosition) => DrinkableCells[Grid.GetCellIndex(gridPosition)] = true;
+
+        public void SetHeight(int2 gridPosition, float height) => HeightMap[Grid.GetCellIndex(gridPosition)] = height;
 
         /// <summary>
         /// Returns if the specified position is walkable.
@@ -71,10 +74,12 @@ namespace Ecosystem.ECS.Grid
             if (BlockedCells.IsCreated) BlockedCells.Dispose();
             if (WaterCells.IsCreated) WaterCells.Dispose();
             if (DrinkableCells.IsCreated) DrinkableCells.Dispose();
+            if (HeightMap.IsCreated) HeightMap.Dispose();
             OccupiedCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             BlockedCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             WaterCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
             DrinkableCells = new NativeArray<bool>(Grid.Length, Allocator.Persistent);
+            HeightMap = new NativeArray<float>(Grid.Length, Allocator.Persistent);
         }
 
         protected override void OnDestroy()
@@ -83,6 +88,7 @@ namespace Ecosystem.ECS.Grid
             BlockedCells.Dispose();
             WaterCells.Dispose();
             DrinkableCells.Dispose();
+            HeightMap.Dispose();
         }
 
         protected override void OnUpdate()

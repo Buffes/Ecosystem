@@ -4,6 +4,8 @@ using Unity.Entities;
 using Random = UnityEngine.Random;
 using Ecosystem.ECS.Animal;
 using Ecosystem;
+using Ecosystem.Grid;
+using Unity.Mathematics;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class PrefabSpawner : MonoBehaviour
     {
         worldGridSystem = World.DefaultGameObjectInjectionWorld
             .GetOrCreateSystem<WorldGridSystem>();
+
     }
 
     private void Start()
@@ -50,8 +53,9 @@ public class PrefabSpawner : MonoBehaviour
                 if (worldGridSystem.IsWalkable(movementTerrain.MovesOnLand, movementTerrain.MovesOnWater,
                     grid.GetGridPositionFromIndex(n)))
                 {
-                    Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
-                    spawnPos.y = 1f;
+                    int2 gridPos = grid.GetGridPositionFromIndex(n);
+                    Vector3 spawnPos = grid.GetWorldPosition(gridPos);
+                    spawnPos.y = GameZone.GetGroundLevel(gridPos.x, gridPos.y);
                     GameObject animal = Instantiate(prefab, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
                     float lifespan = animal.GetComponentInChildren<AgeAuthoring>().Lifespan;
                     animal.GetComponentInChildren<AgeAuthoring>().Age = lifespan * 0.25f;
