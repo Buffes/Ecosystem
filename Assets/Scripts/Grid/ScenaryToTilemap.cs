@@ -136,8 +136,8 @@ namespace Ecosystem.Grid
 
         private Scenary RandomizeGreenScenary(float value, int row, int col)
         {
-            float newBush = value / 3;
-            float newTree = (value / 3) * 2;
+            float newBush = (value / 5) * 2;
+            float newTree = (value / 5) * 4;
             float newRock = value;
             float rand = Random.value;
 

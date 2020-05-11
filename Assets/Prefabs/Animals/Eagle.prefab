@@ -1177,30 +1177,75 @@ PrefabInstance:
       propertyPath: MovesOnWater
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 118408086390162964, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: InfertilityAge
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Lifespan
-      value: 20
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 826927873525821883, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208909882274344314, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1741054821152911738, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1922742331810803413, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Urge
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2577730440138288425, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762537172183571910, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3352532566447112004, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 5939344901363283709}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Hunger
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Thirst
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387839622014107514, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: SexualUrge
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4006984848664019944, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555329424664434073, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxUrge
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -1288,10 +1333,30 @@ PrefabInstance:
       propertyPath: m_SphereRadius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxHunger
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6099541318120149023, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Value
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303536544478638138, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: MaxThirst
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312866617543724570, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414172234341297823, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: Value
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8095955945078100068, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
@@ -1325,12 +1390,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
---- !u!1 &4564373161721369777 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 8722100367199563098}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4564373163055538396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5070148453820763526, guid: 1ab49e1f0a45e6143b303a5638864304,
@@ -1352,6 +1411,12 @@ GameObject:
 --- !u!4 &4564373161721369776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
+    type: 3}
+  m_PrefabInstance: {fileID: 8722100367199563098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4564373161721369777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
     type: 3}
   m_PrefabInstance: {fileID: 8722100367199563098}
   m_PrefabAsset: {fileID: 0}

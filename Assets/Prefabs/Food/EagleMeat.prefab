@@ -1,80 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1753450810247624145
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4144321989678560784}
-  m_Layer: 0
-  m_Name: ChickenDrumstick (Missing Prefab)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4144321989678560784
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753450810247624145}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7625011841204456328}
-  m_Father: {fileID: 5815831655954210046}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8624685815614667013
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7625011841204456328}
-  - component: {fileID: 4406022515785094427}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7625011841204456328
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8624685815614667013}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4144321989678560784}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4406022515785094427
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8624685815614667013}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.17256652, y: 0.081670865, z: 0.081670836}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5557541421629329450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 2818400315749066013, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
       propertyPath: Lifespan
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4523527969179376392, guid: 41939f0a77fdd604db248c02d5ac5af5,
         type: 3}
@@ -181,3 +106,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5557541421629329450}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5882600359474710838
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5815831655954210046}
+    m_Modifications:
+    - target: {fileID: 1000010917563242, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_Name
+      value: ChickenDrumstick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011017869408, guid: 26814f138066335b7b105d0d95e172e6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 23000011261519524, guid: 26814f138066335b7b105d0d95e172e6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b3be6e4843e5036ca2fcc10d24c65d9, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26814f138066335b7b105d0d95e172e6, type: 3}

@@ -625,9 +625,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grass: {fileID: 1317140292629962124, guid: a3ab53cba051c293f85226a2cdd652dc, type: 3}
-  GrassSpawnTime: 3
+  GrassSpawnTime: 1
   seaweed: {fileID: 5832808878485633524, guid: 1582edbbe877f1646b432bec757288da, type: 3}
-  SeaweedSpawnTime: 3
+  SeaweedSpawnTime: 0.2
+--- !u!1 &1721414185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
+    type: 3}
+  m_PrefabInstance: {fileID: 1963549216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1721414189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721414185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc66274b4db6d5f418c34677f5077b7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birthSystem: {fileID: 1887437310664773286, guid: ac6181b3b20fa014a8be5efc086b250b,
+    type: 3}
+  breedSystem: {fileID: 2429165594321411380, guid: 31e65bad1042b6147b98eb922992e6fa,
+    type: 3}
+  deathSystem: {fileID: 4498131209124397651, guid: f71df26f5a4db3b4a8fd1424fa969922,
+    type: 3}
+  drinkSystem: {fileID: 7902469663851764698, guid: 554e118c3085b734b9f0b535861950a9,
+    type: 3}
+  eatmeatSystem: {fileID: 5406721021189759731, guid: 4ca89f5cba02fd443814125d737bd0cb,
+    type: 3}
+  eatplantSystem: {fileID: 3773439093377776189, guid: 3c63a8aaa38855f41bbe063c6daaa1ac,
+    type: 3}
+  killSystem: {fileID: 8168985824901175513, guid: 8913d7d09fc3a4745a2cc7d814c6196e,
+    type: 3}
 --- !u!1001 &1867397352
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -797,12 +829,57 @@ PrefabInstance:
     - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: min_radius
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: max_radius
-      value: 6
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: trees.Array.data[4]
+      value: 
+      objectReference: {fileID: 293787554305520941, guid: 81ff01dca00f85a4488d15d694dd0277,
+        type: 3}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: trees.Array.data[18]
+      value: 
+      objectReference: {fileID: 293787554305520941, guid: 81ff01dca00f85a4488d15d694dd0277,
+        type: 3}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: trees.Array.data[19]
+      value: 
+      objectReference: {fileID: 293787554305520941, guid: 81ff01dca00f85a4488d15d694dd0277,
+        type: 3}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: trees.Array.data[13]
+      value: 
+      objectReference: {fileID: 293787554305520941, guid: 81ff01dca00f85a4488d15d694dd0277,
+        type: 3}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: bushes.Array.data[4]
+      value: 
+      objectReference: {fileID: 4390595859010704324, guid: 5e288258708204b1786b31732aba5af1,
+        type: 3}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: numToSpawn
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: numSamplesBeforeRejection
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -822,7 +899,7 @@ PrefabInstance:
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: WaterThreshold
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}

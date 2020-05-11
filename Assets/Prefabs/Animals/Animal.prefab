@@ -81,9 +81,7 @@ GameObject:
   - component: {fileID: 2762537172183571910}
   - component: {fileID: 6414172234341297823}
   - component: {fileID: 826927873525821883}
-  - component: {fileID: 7241647726829484548}
-  - component: {fileID: 7692351275043969183}
-  - component: {fileID: 1922742331810803413}
+  - component: {fileID: 3387839622014107514}
   - component: {fileID: 118408086390162964}
   - component: {fileID: 2223985520359843425}
   - component: {fileID: 5070148453820763526}
@@ -97,6 +95,9 @@ GameObject:
   - component: {fileID: 1208909882274344314}
   - component: {fileID: 2577730440138288425}
   - component: {fileID: 6312866617543724570}
+  - component: {fileID: 5075381746476165254}
+  - component: {fileID: 6303536544478638138}
+  - component: {fileID: 4555329424664434073}
   - component: {fileID: 9054965001546035335}
   - component: {fileID: 5070148453820763531}
   - component: {fileID: 5070148453820763524}
@@ -107,10 +108,7 @@ GameObject:
   - component: {fileID: 651237655262531605}
   - component: {fileID: 7232735020347957534}
   - component: {fileID: 2006784302017292277}
-  - component: {fileID: 5075381746476165254}
   - component: {fileID: 650131295108155739}
-  - component: {fileID: 6303536544478638138}
-  - component: {fileID: 4555329424664434073}
   - component: {fileID: 8358889571667046334}
   - component: {fileID: 7772181361341400762}
   - component: {fileID: 1741054821152911738}
@@ -173,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8f102822f64a246868c134ccc8f0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GestationPeriod: 0.2
+  GestationPeriod: 0.5
 --- !u!114 &2762537172183571910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 12
---- !u!114 &7241647726829484548
+--- !u!114 &3387839622014107514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,36 +220,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5070148453820763646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c89b5abce0205764a999dad207f348cd, type: 3}
+  m_Script: {fileID: 11500000, guid: e355ce41b9c0b45a4ba76b9420be6d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hunger: 2
---- !u!114 &7692351275043969183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7100fc6710885f64cb7644a997c1fd7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Thirst: 2
---- !u!114 &1922742331810803413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38a14f3910d849e4b81e5c550dceda1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Urge: 2
+  SexualUrge: 3
+  Hunger: 3
+  Thirst: 3
 --- !u!114 &118408086390162964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35801531463154135823397baf2a03ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 0.5
+  Value: 0.8
 --- !u!114 &2577730440138288425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b555e94481a2a41cbb19f311c4a29aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 0.5
+  Value: 1
 --- !u!114 &6312866617543724570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,7 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81dff61f84aff0b92a04ecc7f34af4e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lifespan: 20
+  Lifespan: 10
   Age: 0
 --- !u!114 &6303536544478638138
 MonoBehaviour:

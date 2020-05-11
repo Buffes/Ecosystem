@@ -13,7 +13,11 @@ namespace Ecosystem.Genetics
 
         public void Mutate(ref float value)
         {
-            value += NextGaussianFloat() * (value * maxMutationAmount);
+            float mutation = NextGaussianFloat() / 3;
+            // E.g., 0.7 becomes 1 / 1.3 = 0.77
+            if (mutation < 1) mutation = 1 / (1 + (1 - mutation));
+
+            value += mutation * (value * maxMutationAmount);
             if (value < 0) value = 0;
         }
 
