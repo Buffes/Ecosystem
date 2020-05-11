@@ -1177,10 +1177,15 @@ PrefabInstance:
       propertyPath: MovesOnWater
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 118408086390162964, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: InfertilityAge
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 650131295108155739, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: Lifespan
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 826927873525821883, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
