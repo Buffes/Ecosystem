@@ -95,7 +95,7 @@ namespace Ecosystem.Grid
                 SetupColors();
                 SetupMesh();
             }
-
+            setupWater();
             SetupWaterTiles();
             SetupDrinkableTiles();
         }
@@ -183,6 +183,14 @@ namespace Ecosystem.Grid
             grid = new GridData(tiles.GetLength(0), tiles.GetLength(1));
             worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
             worldGridSystem.InitGrid(grid);
+        }
+
+        private void setupWater()
+        {
+            GameObject water = GameObject.FindGameObjectsWithTag("Water")[0];
+            //water.transform.position.y = 2.0f + WaterThresholdIndex;
+            water.transform.position.Set(water.transform.position.x, 2.0f + WaterThresholdIndex, water.transform.position.z);
+            
         }
 
         private void RandomizeStartGrid()
