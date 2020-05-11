@@ -6,7 +6,7 @@ namespace Ecosystem.ECS.Grid
     {
         private readonly int width;
         private readonly int height;
-        private readonly float cellSize;
+        public readonly float CellSize;
 
         public int Length => width * height;
 
@@ -14,7 +14,7 @@ namespace Ecosystem.ECS.Grid
         {
             this.width = width;
             this.height = height;
-            this.cellSize = cellSize;
+            this.CellSize = cellSize;
         }
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace Ecosystem.ECS.Grid
 
         public int2 GetGridPosition(float3 worldPosition)
         {
-            int x = (int)math.floor(worldPosition.x / cellSize);
-            int z = (int)math.floor(worldPosition.z / cellSize);
+            int x = (int)math.floor(worldPosition.x / CellSize);
+            int z = (int)math.floor(worldPosition.z / CellSize);
 
             return new int2(x, z);
         }

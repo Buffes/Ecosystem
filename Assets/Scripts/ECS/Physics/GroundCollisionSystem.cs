@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿using Ecosystem.ECS.Grid;
+using Unity.Collections;
+using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -17,13 +19,23 @@ using Unity.Transforms;
 [UpdateInGroup(typeof(PhysicsSystemGroup))]
 public class GroundCollisionSystem : SystemBase
 {
+    WorldGridSystem worldGridSystem;
+    protected override void OnCreate()
+    {
+        worldGridSystem = World.GetOrCreateSystem<WorldGridSystem>();
+    }
+
     protected override void OnUpdate()
     {
+        var heightMap = worldGridSystem.HeightMap;
+        var grid = worldGridSystem.Grid;
+
         Entities
+            .WithReadOnly(heightMap)
             .WithAll<PhysicsMass>()
             .ForEach((ref Translation translation, ref PhysicsVelocity velocity) =>
             {
-                float groundLevel = GetGroundLevel(translation.Value);
+                float groundLevel = GetGroundLevel(translation.Value, heightMap, grid);
 
                 if (translation.Value.y < groundLevel)
                 {
@@ -33,8 +45,59 @@ public class GroundCollisionSystem : SystemBase
             }).ScheduleParallel();
     }
 
-    private static float GetGroundLevel(float3 position)
+    /// <summary>
+    /// Returns the linearly interpolated height for a given position in the grid. Safe to use in systems.
+    /// </summary>
+    /// <returns></returns>
+    public static float GetGroundLevel(float3 position, NativeArray<float> heightMap, GridData grid)
     {
-        return 0; // This can be replaced by a height map
+        
+        // Use linear interpolation to avoid staircase-like movement
+        int2 position2D = grid.GetGridPosition(position);
+        
+        float xU = position.x - position2D.x;
+        float zU = (position.z - position2D.y);
+
+        xU = xU / grid.CellSize;
+        zU = zU / grid.CellSize;
+        
+        int2 bottomRight = new int2(position2D.x + 1, position2D.y);
+        int2 topLeft = new int2(position2D.x, position2D.y + 1);
+        int2 topRight = new int2(position2D.x + 1, position2D.y + 1);
+        
+        int2 origin = position2D;
+        if (xU + zU > 1f && grid.IsInBounds(topRight))
+        {
+            // On second triangle in this cell. Invert and switch xU and zU
+            origin = topRight;
+            xU = 1f - zU;
+            zU = 1f - xU; 
+        }
+        
+        float xHeight;
+        float zHeight;
+
+        if (grid.IsInBounds(bottomRight))
+        {
+            xHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
+                                heightMap[grid.GetCellIndex(bottomRight)], xU);
+        }
+        else
+        {
+            xHeight = heightMap[grid.GetCellIndex(position)];
+        }
+
+        if (grid.IsInBounds(topLeft))
+        {
+            zHeight = math.lerp(heightMap[grid.GetCellIndex(origin)], 
+                                heightMap[grid.GetCellIndex(topLeft)], zU);
+        }
+        else
+        {
+            zHeight = heightMap[grid.GetCellIndex(position)];
+        }
+
+
+        return (xHeight + zHeight) / 2f;
     }
 }
