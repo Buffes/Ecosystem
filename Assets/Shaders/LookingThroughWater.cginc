@@ -2,11 +2,10 @@
 #define LOOKING_THROUGH_WATER_INCLUDED
 
 sampler2D _CameraDepthTexture, _WaterBackground;
-float4 _CameraDepthTexture_TexelSize;
 
+float4 _CameraDepthTexture_TexelSize;
 float3 _WaterFogColor;
 float _WaterFogDensity;
-
 float _RefractionStrength;
 
 float2 AlignWithGrabTexel (float2 uv) {
@@ -26,7 +25,6 @@ float3 ColorBelowWater (float4 screenPos, float3 tangentSpaceNormal) {
 	uvOffset.y *=
 		_CameraDepthTexture_TexelSize.z * abs(_CameraDepthTexture_TexelSize.y);
 	float2 uv = AlignWithGrabTexel((screenPos.xy + uvOffset) / screenPos.w);
-	
 	float backgroundDepth =
 		LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv));
 	float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.z);

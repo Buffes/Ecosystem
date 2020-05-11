@@ -21,7 +21,6 @@
 	SubShader {
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		LOD 200
-		
 		GrabPass { "_WaterBackground" }
 
 		CGPROGRAM
@@ -32,6 +31,7 @@
 		#include "Assets/Shaders/LookingThroughWater.cginc"
 
 		sampler2D _MainTex, _FlowMap, _DerivHeightMap;
+
 		float _UJump, _VJump, _Tiling, _Speed, _FlowStrength, _FlowOffset;
 		float _HeightScale, _HeightScaleModulated;
 		
@@ -62,6 +62,7 @@
 				IN.uv_MainTex, flow.xy, jump,
 				_FlowOffset, _Tiling, time, false
 			);
+
 			float3 uvwB = FlowUVW(
 				IN.uv_MainTex, flow.xy, jump,
 				_FlowOffset, _Tiling, time, true
@@ -73,9 +74,11 @@
 			float3 dhA =
 				UnpackDerivativeHeight(tex2D(_DerivHeightMap, uvwA.xy)) *
 				(uvwA.z * finalHeightScale);
+
 			float3 dhB =
 				UnpackDerivativeHeight(tex2D(_DerivHeightMap, uvwB.xy)) *
 				(uvwB.z * finalHeightScale);
+
 			o.Normal = normalize(float3(-(dhA.xy + dhB.xy), 1));
 
 			fixed4 texA = tex2D(_MainTex, uvwA.xy) * uvwA.z;
