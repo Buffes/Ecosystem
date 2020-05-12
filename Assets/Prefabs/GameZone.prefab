@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1022454915255237109}
   - component: {fileID: 1022454915255237108}
   - component: {fileID: -7102660320631865697}
+  - component: {fileID: 5188475410913618776}
   m_Layer: 0
   m_Name: GameZone
   m_TagString: Untagged
@@ -45,8 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc8923cb5cade64cb4073cd79a5a11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterNeighbourRate: 0.65
-  waterSpawnRate: 0.005
+  mapMode: 0
+  RandomNoiseSeed: 0
+  NoiseSeed: 0
+  Scale: 0
+  Octaves: 0
+  Persistence: 0
+  Lacunarity: 1
+  heightMultiplier: 5
+  Regions: []
+  WaterThresholdIndex: 0
 --- !u!114 &-7102660320631865697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +69,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameZone: {fileID: 1022454915255237108}
+  min_radius: 0
+  max_radius: 0
+  numSamplesBeforeRejection: 20
+  numToSpawn: 0
   greenScenaryNeigbourRate: 0.15
   greenScenarySpawnRate: 0.05
   desertScenarySpawnRate: 0.1
@@ -115,6 +128,21 @@ MonoBehaviour:
   - {fileID: 4678081621971413900, guid: 0db75333ec2227f469a31a3c16d01153, type: 3}
   cacti:
   - {fileID: 4164056731790697608, guid: b7b5424cac5ceed42a08b8fcce75fe11, type: 3}
+--- !u!114 &5188475410913618776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022454915255237003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cab5d5547a2e85978e7451faba7841c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextureRenderer: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
 --- !u!1 &1022454915919162661
 GameObject:
   m_ObjectHideFlags: 0

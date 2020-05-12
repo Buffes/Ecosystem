@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916414920c3d445d995b24e819088e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   animalDNAAuthoring: {fileID: 9054965001546035335}
   hybridEntity: {fileID: 205040342004547871}
   movement: {fileID: 5070148453820763526}
@@ -395,6 +396,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 0.5
+--- !u!114 &5075381746476165254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aaa9fa491a454ecf8be8fb0a6dde989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHunger: 3
+--- !u!114 &6303536544478638138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8bce6621d13430ab3239285eaa0873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxThirst: 3
+--- !u!114 &4555329424664434073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070148453820763646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186afd44aa07c06409a171bf47f440dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxUrge: 3
 --- !u!114 &9054965001546035335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,12 +511,12 @@ MonoBehaviour:
   m_ShapeType: 1
   m_PrimitiveCenter:
     x: 0
-    y: 1
+    y: 0.2
     z: 0
   m_PrimitiveSize:
-    x: 1
-    y: 1
-    z: 2
+    x: 0.2
+    y: 0.2
+    z: 0.4
   m_PrimitiveOrientation:
     Value:
       x: 270
@@ -484,15 +524,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 2
-    Radius: 0.5
+    Height: 0.4
+    Radius: 0.1
     Axis: 2
   m_Cylinder:
-    Height: 2
-    Radius: 0.5
+    Height: 0.4
+    Radius: 0.1
     Axis: 2
   m_CylinderSideCount: 20
-  m_SphereRadius: 1
+  m_SphereRadius: 0.2
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -616,19 +656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animal: {fileID: 3352532566447112004}
---- !u!114 &5075381746476165254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aaa9fa491a454ecf8be8fb0a6dde989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHunger: 3
 --- !u!114 &650131295108155739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,32 +670,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lifespan: 10
   Age: 0
---- !u!114 &6303536544478638138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a8bce6621d13430ab3239285eaa0873, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxThirst: 3
---- !u!114 &4555329424664434073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070148453820763646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 186afd44aa07c06409a171bf47f440dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxUrge: 3
 --- !u!114 &8358889571667046334
 MonoBehaviour:
   m_ObjectHideFlags: 0

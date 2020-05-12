@@ -1384,6 +1384,51 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a1b52950926274649b65d081f535a333,
         type: 2}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_PrimitiveSize.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Capsule.Height
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Cylinder.Height
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_SphereRadius
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_PrimitiveCenter.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_PrimitiveSize.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_PrimitiveSize.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Capsule.Radius
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070148453820763524, guid: 1ab49e1f0a45e6143b303a5638864304,
+        type: 3}
+      propertyPath: m_Cylinder.Radius
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5075381746476165254, guid: 1ab49e1f0a45e6143b303a5638864304,
         type: 3}
       propertyPath: MaxHunger
@@ -1426,6 +1471,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab49e1f0a45e6143b303a5638864304, type: 3}
+--- !u!1 &2003170221973116033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
+    type: 3}
+  m_PrefabInstance: {fileID: 6742022317625863530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2003170222783324396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5070148453820763526, guid: 1ab49e1f0a45e6143b303a5638864304,
@@ -1441,12 +1492,6 @@ MonoBehaviour:
 --- !u!4 &2003170221973116032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5070148452478974442, guid: 1ab49e1f0a45e6143b303a5638864304,
-    type: 3}
-  m_PrefabInstance: {fileID: 6742022317625863530}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2003170221973116033 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070148452478974443, guid: 1ab49e1f0a45e6143b303a5638864304,
     type: 3}
   m_PrefabInstance: {fileID: 6742022317625863530}
   m_PrefabAsset: {fileID: 0}
