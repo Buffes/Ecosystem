@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cab5d5547a2e85978e7451faba7841c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MeshMaterial: {fileID: 2100000, guid: 6db3ea456d0034be7831f33df6e96c08, type: 2}
   TextureRenderer: {fileID: 0}
   meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
