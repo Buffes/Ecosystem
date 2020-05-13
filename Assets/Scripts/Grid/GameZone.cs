@@ -12,7 +12,7 @@ namespace Ecosystem.Grid
     public class GameZone : MonoBehaviour 
     {
         //Tiles with assets in the Grid, and the size of the Grid
-        public static int[,] tiles = new int[99,99];
+        public static int[,] tiles = new int[199,199];
         public static float[,] NoiseMap;
         public static Color[] ColorMap;
         
@@ -59,6 +59,9 @@ namespace Ecosystem.Grid
         
         public float heightMultiplier = 5f;
 
+        public float MaxHeight { get { return heightMultiplier;} }
+        public float MinHeight { get { return 0;} }
+
         public TerrainType[] Regions;
 
         [HideInInspector]
@@ -95,9 +98,34 @@ namespace Ecosystem.Grid
                 SetupColors();
                 SetupMesh();
             }
-
+            setupWater();
             SetupWaterTiles();
             SetupDrinkableTiles();
+        }
+
+        private void updateMeshShaders(Material material)
+        {
+            material.SetFloat("minHeight", MinHeight);
+            material.SetFloat("maxHeight", MaxHeight);
+            material.SetInt("baseColorCount", Regions.Length);
+            Color[] baseColors = new Color[Regions.Length];
+            float[] baseStartHeights = new float[Regions.Length];
+
+            for (int i = 0; i < Regions.Length; i++)
+            {
+                baseColors[i] = Regions[i].Color;
+                if (i - 1 < 0)
+                {
+                     baseStartHeights[i] = 0;
+                }
+                else
+                {
+                    baseStartHeights[i] = Regions[i - 1].Height / heightMultiplier;
+                }
+            }
+
+            material.SetColorArray("baseColors", baseColors);
+            material.SetFloatArray("baseStartHeights", baseStartHeights);
         }
 
         public string[] GetRegionNames()
@@ -166,7 +194,7 @@ namespace Ecosystem.Grid
             MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
            
             MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
-            
+            updateMeshShaders(mapDisplay.MeshMaterial);
             mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
@@ -183,6 +211,14 @@ namespace Ecosystem.Grid
             grid = new GridData(tiles.GetLength(0), tiles.GetLength(1));
             worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
             worldGridSystem.InitGrid(grid);
+        }
+
+        private void setupWater()
+        {
+            GameObject water = GameObject.FindGameObjectsWithTag("Water")[0];
+            //water.transform.position.y = 2.0f + WaterThresholdIndex;
+            water.transform.position.Set(water.transform.position.x, 2.0f + WaterThresholdIndex, water.transform.position.z);
+            
         }
 
         private void RandomizeStartGrid()

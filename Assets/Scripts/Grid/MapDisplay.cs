@@ -6,6 +6,7 @@ namespace Ecosystem.Grid
 {
     public class MapDisplay : MonoBehaviour
     {
+        public Material MeshMaterial;
         public Renderer TextureRenderer;
         public MeshFilter meshFilter;
         public MeshRenderer meshRenderer;
@@ -20,6 +21,7 @@ namespace Ecosystem.Grid
         {
             Mesh mesh = meshData.CreateMesh();
             meshFilter.mesh = mesh;
+            meshRenderer.material = MeshMaterial;
             meshRenderer.material.mainTexture = texture;
         }
     }
