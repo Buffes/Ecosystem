@@ -12,7 +12,7 @@ namespace Ecosystem.Grid
     public class GameZone : MonoBehaviour 
     {
         //Tiles with assets in the Grid, and the size of the Grid
-        public static int[,] tiles = new int[199,199];
+        public static int[,] tiles = new int[79,79];
         public static float[,] NoiseMap;
         public static Color[] ColorMap;
         
@@ -44,7 +44,7 @@ namespace Ecosystem.Grid
 
         public MapMode mapMode;
 
-        public static float Water;
+        public static float WaterSurface;
         
         [HideInInspector]
         public bool RandomNoiseSeed;
@@ -98,6 +98,9 @@ namespace Ecosystem.Grid
                 SetupColors();
                 SetupMesh();
             }
+            
+            WaterSurface = Regions[WaterThresholdIndex].Height;
+            PassNoiseMapToECSWorld();
             setupWater();
             SetupWaterTiles();
             SetupDrinkableTiles();
@@ -146,7 +149,6 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
                     NoiseMap[x, y] *= heightMultiplier;
-                    SetHeight(x, y, NoiseMap[x, y]);
                 }
             }
 
@@ -155,6 +157,28 @@ namespace Ecosystem.Grid
                 Regions[i].Height *= heightMultiplier;
             }
         }
+
+        private void PassNoiseMapToECSWorld()
+        {
+            for (int y = 0; y < tiles.GetLength(1); y++ )
+            {
+                for (int x = 0; x < tiles.GetLength(0); x++ )
+                {
+                    float noiseValue = NoiseMap[x, y];
+                    
+                    if (noiseValue < WaterSurface)
+                    {
+                        SetHeight(x, y, WaterSurface);
+                    }
+                    else
+                    {
+                        SetHeight(x, y, noiseValue);
+                    }
+
+                }
+            }
+        }
+
         private void FlattenNoiseMap()
         {
             for (int y = 0; y < NoiseMap.GetLength(1); y++)
@@ -162,10 +186,8 @@ namespace Ecosystem.Grid
                 for (int x = 0; x < NoiseMap.GetLength(0); x++)
                 {
                     NoiseMap[x, y] = 0f;
-                    SetHeight(x, y, 0f);    
                 }
             }
-            Water = Regions[WaterThresholdIndex].Height;
         }
 
         private void SetupColors()

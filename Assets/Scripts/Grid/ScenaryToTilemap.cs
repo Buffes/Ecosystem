@@ -42,7 +42,7 @@ namespace Ecosystem.Grid
                                                                      min_radius,
                                                                      max_radius,
                                                                      numToSpawn,
-                                                                     GameZone.Water);
+                                                                     GameZone.WaterSurface);
 
             gameObjectsInGrid = new Scenary [tiles.GetLength(0), tiles.GetLength(1)];
             CreateEmptyScenary();
