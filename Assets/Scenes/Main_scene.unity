@@ -934,6 +934,21 @@ PrefabInstance:
     - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
       propertyPath: min_radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: max_radius
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: numToSpawn
+      value: 43921
+      objectReference: {fileID: 0}
+    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: min_radius
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
@@ -995,11 +1010,6 @@ PrefabInstance:
         type: 3}
       propertyPath: numSamplesBeforeRejection
       value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: -7102660320631865697, guid: 3d6571ed8ced74e4cad067533607be38,
-        type: 3}
-      propertyPath: numToSpawn
-      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237003, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
@@ -1085,6 +1095,21 @@ PrefabInstance:
         type: 3}
       propertyPath: Regions.Array.data[2].Height
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[0].Color.r
+      value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[0].Color.g
+      value: 0.71239007
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
+        type: 3}
+      propertyPath: Regions.Array.data[0].Color.b
+      value: 0.5731577
       objectReference: {fileID: 0}
     - target: {fileID: 1022454915255237108, guid: 3d6571ed8ced74e4cad067533607be38,
         type: 3}
