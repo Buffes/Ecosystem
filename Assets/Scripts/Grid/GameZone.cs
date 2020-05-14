@@ -12,7 +12,7 @@ namespace Ecosystem.Grid
     public class GameZone : MonoBehaviour 
     {
         //Tiles with assets in the Grid, and the size of the Grid
-        public static int[,] tiles = new int[79,79];
+        public static int[,] tiles = new int[119,119];
         public static float[,] NoiseMap;
         public static Color[] ColorMap;
         
@@ -238,8 +238,12 @@ namespace Ecosystem.Grid
         private void setupWater()
         {
             GameObject water = GameObject.FindGameObjectsWithTag("Water")[0];
-            //water.transform.position.y = 2.0f + WaterThresholdIndex;
-            water.transform.position.Set(water.transform.position.x, 2.0f + WaterThresholdIndex, water.transform.position.z);
+            Debug.Log(water.transform.position);
+            //water.transform.position.y = WaterSurface;
+            water.transform.position = new Vector3(water.transform.position.x, WaterSurface, water.transform.position.z);
+            Debug.Log("surface: " + WaterSurface);
+            Debug.Log("after: " + water.transform.position);
+
             
         }
 
