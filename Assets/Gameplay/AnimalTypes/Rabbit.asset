@@ -19,6 +19,7 @@ MonoBehaviour:
   food:
   - {fileID: 11400000, guid: 43943814e1f448743bee4a526ed51e1e, type: 2}
   - {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
+  - {fileID: 11400000, guid: ca094083e1778324d846bea66efea76f, type: 2}
   MovementSpeed: 3
   HearingRange: 6
   VisionRange: 12

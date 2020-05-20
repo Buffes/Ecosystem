@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace Ecosystem
+namespace Ecosystem.CameraControl
 {
     public class CameraMovement : MonoBehaviour
     {
@@ -31,6 +32,13 @@ namespace Ecosystem
         private bool inputBoost;
         private bool inputActivateLookAround;
 
+        private FollowedEntitySystem followedEntitySystem;
+
+        private void Awake()
+        {
+            followedEntitySystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<FollowedEntitySystem>();
+        }
+
         private void Start()
         {
             target = transform.position;
@@ -39,7 +47,8 @@ namespace Ecosystem
         private void Update()
         {
             LookAround();
-            MoveTarget();
+            if (followedEntitySystem.FollowingEntity) FollowEntity();
+            else MoveTarget();
             FollowTarget();
         }
 
@@ -60,6 +69,16 @@ namespace Ecosystem
             {
                 LockCursor(false);
             }
+        }
+
+        private void FollowEntity()
+        {
+            Vector3 entityPosition = followedEntitySystem.Position;
+            float distance = Vector3.Distance(transform.position, entityPosition);
+            float targetDistance = Vector3.Distance(target, entityPosition);
+
+            transform.position = entityPosition + -transform.forward * distance;
+            target = entityPosition + -transform.forward * targetDistance;
         }
 
         private void MoveTarget()
@@ -105,34 +124,12 @@ namespace Ecosystem
             return eventSystem != null && eventSystem.IsPointerOverGameObject();
         }
 
-        public void OnMovement(InputValue value)
-        {
-            inputDirection = value.Get<Vector2>();
-        }
-
-        public void OnElevation(InputValue value)
-        {
-            inputElevation = value.Get<float>();
-        }
-
-        public void OnRotation(InputValue value)
-        {
-            inputRotation = value.Get<Vector2>();
-        }
-
-        public void OnZoom(InputValue value)
-        {
-            target += zoomSpeed / 100 * transform.forward * value.Get<float>();
-        }
-
-        public void OnBoost(InputValue value)
-        {
-            inputBoost = value.Get<float>() > 0;
-        }
-
-        public void OnActivateLookAround(InputValue value)
-        {
-            inputActivateLookAround = value.Get<float>() > 0;
-        }
+        public void OnMovement(InputValue value) => inputDirection = value.Get<Vector2>();
+        public void OnElevation(InputValue value) => inputElevation = value.Get<float>();
+        public void OnRotation(InputValue value) => inputRotation = value.Get<Vector2>();
+        public void OnZoom(InputValue value) => target += zoomSpeed / 100 * transform.forward * value.Get<float>();
+        public void OnBoost(InputValue value) => inputBoost = value.Get<float>() > 0;
+        public void OnActivateLookAround(InputValue value) => inputActivateLookAround = value.Get<float>() > 0;
+        public void OnToggleFollowTarget() => followedEntitySystem.ToggleFollow();
     }
 }

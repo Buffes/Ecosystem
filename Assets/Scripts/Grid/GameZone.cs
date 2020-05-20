@@ -12,17 +12,20 @@ namespace Ecosystem.Grid
     public class GameZone : MonoBehaviour 
     {
         //Tiles with assets in the Grid, and the size of the Grid
-        public static int[,] tiles = new int[99,99];
+        public static int[,] tiles = new int[119,119];
+        public static float[,] NoiseMap;
+        public static Color[] ColorMap;
         
         public static Tilemap tilemap;
+
         public static List<Vector3Int> tilePositions;
-        public static float[,] NoiseMap;
 
         private TilesAssetsToTilemap tilesAssetsToTilemap;
 
         //The numbers of the shallow and beach tiles
         private int waterIndex = 17;
         private int landIndex = 34;
+
         
         //The difference between water and land
         private int diffWaterLand = 0;
@@ -33,10 +36,15 @@ namespace Ecosystem.Grid
         // //The rate of objects spawning
         // public float waterSpawnRate = 0.005f;
 
-        public static float Water;
+        [Serializable]
+        public enum MapMode {
+            Tilemap,
+            Mesh
+        };
 
-        [Range(0f, 1f)]
-        public float WaterThreshold = 0.45f;
+        public MapMode mapMode;
+
+        public static float WaterSurface;
         
         [HideInInspector]
         public bool RandomNoiseSeed;
@@ -48,6 +56,16 @@ namespace Ecosystem.Grid
         [Range(0f, 1f)] 
         public  float Persistence;
         public float Lacunarity;
+        
+        public float heightMultiplier = 5f;
+
+        public float MaxHeight { get { return heightMultiplier;} }
+        public float MinHeight { get { return 0;} }
+
+        public TerrainType[] Regions;
+
+        [HideInInspector]
+        public int WaterThresholdIndex;
 
         private GridData grid;
         private WorldGridSystem worldGridSystem;
@@ -61,17 +79,145 @@ namespace Ecosystem.Grid
 
         void Awake() 
         {
-            Water = WaterThreshold;
             InitObjects();
             RandomizeStartGrid();
+            ApplyMultiplier();
             CheckCorners();
             CheckEdges();
             CheckMiddle();
-            SetupTilemap();
-            tilesAssetsToTilemap = new TilesAssetsToTilemap();
+           
+            if (mapMode == MapMode.Tilemap)
+            {
+                SetupTilemap();
+                tilesAssetsToTilemap = new TilesAssetsToTilemap();
+                ToggleShadows(true);
+                FlattenNoiseMap();
+            }
+            else if (mapMode == MapMode.Mesh)
+            {
+                SetupColors();
+                SetupMesh();
+            }
+            
+            WaterSurface = Regions[WaterThresholdIndex].Height;
+            PassNoiseMapToECSWorld();
+            setupWater();
             SetupWaterTiles();
             SetupDrinkableTiles();
-            ToggleShadows(true);
+        }
+
+        private void updateMeshShaders(Material material)
+        {
+            material.SetFloat("minHeight", MinHeight);
+            material.SetFloat("maxHeight", MaxHeight);
+            material.SetInt("baseColorCount", Regions.Length);
+            Color[] baseColors = new Color[Regions.Length];
+            float[] baseStartHeights = new float[Regions.Length];
+
+            for (int i = 0; i < Regions.Length; i++)
+            {
+                baseColors[i] = Regions[i].Color;
+                if (i - 1 < 0)
+                {
+                     baseStartHeights[i] = 0;
+                }
+                else
+                {
+                    baseStartHeights[i] = Regions[i - 1].Height / heightMultiplier;
+                }
+            }
+
+            material.SetColorArray("baseColors", baseColors);
+            material.SetFloatArray("baseStartHeights", baseStartHeights);
+        }
+
+        public string[] GetRegionNames()
+        {
+            string[] regionNames = new string[Regions.Length];
+            for (int i = 0; i < regionNames.Length; i++)
+            {
+                regionNames[i] = Regions[i].Name;
+            }
+
+            return regionNames;
+        }
+        
+        private void ApplyMultiplier()
+        {
+            for (int y = 0; y < tiles.GetLength(1); y++ )
+            {
+                for (int x = 0; x < tiles.GetLength(0); x++ )
+                {
+                    NoiseMap[x, y] *= heightMultiplier;
+                }
+            }
+
+            for (int i = 0; i < Regions.Length; i++)
+            {
+                Regions[i].Height *= heightMultiplier;
+            }
+        }
+
+        private void PassNoiseMapToECSWorld()
+        {
+            for (int y = 0; y < tiles.GetLength(1); y++ )
+            {
+                for (int x = 0; x < tiles.GetLength(0); x++ )
+                {
+                    float noiseValue = NoiseMap[x, y];
+                    
+                    if (noiseValue < WaterSurface)
+                    {
+                        SetHeight(x, y, WaterSurface);
+                    }
+                    else
+                    {
+                        SetHeight(x, y, noiseValue);
+                    }
+
+                }
+            }
+        }
+
+        private void FlattenNoiseMap()
+        {
+            for (int y = 0; y < NoiseMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < NoiseMap.GetLength(0); x++)
+                {
+                    NoiseMap[x, y] = 0f;
+                }
+            }
+        }
+
+        private void SetupColors()
+        {
+            ColorMap = new Color[NoiseMap.GetLength(0) * NoiseMap.GetLength(1)];
+
+            for (int y = 0; y < NoiseMap.GetLength(1); y++)
+            {
+                for (int x = 0; x < NoiseMap.GetLength(0); x++)
+                {
+                    float currentHeight = NoiseMap[x, y];
+                    for (int i = 0; i < Regions.Length; i++)
+                    {
+                        if (currentHeight <= Regions[i].Height)
+                        {
+                            ColorMap[y * NoiseMap.GetLength(0) + x] = Regions[i].Color;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SetupMesh()
+        {
+            MapDisplay mapDisplay = FindObjectOfType<MapDisplay>();
+           
+            MeshData meshData = MeshGenerator.GenerateTerrainMesh(NoiseMap);
+            updateMeshShaders(mapDisplay.MeshMaterial);
+            mapDisplay.DrawMesh(meshData, TextureGenerator.TextureFromColorMap(ColorMap, NoiseMap.GetLength(0), NoiseMap.GetLength(1)));
         }
 
         private void ToggleShadows(bool receiveShadows)
@@ -89,6 +235,18 @@ namespace Ecosystem.Grid
             worldGridSystem.InitGrid(grid);
         }
 
+        private void setupWater()
+        {
+            GameObject water = GameObject.FindGameObjectsWithTag("Water")[0];
+            Debug.Log(water.transform.position);
+            //water.transform.position.y = WaterSurface;
+            water.transform.position = new Vector3(water.transform.position.x, WaterSurface, water.transform.position.z);
+            Debug.Log("surface: " + WaterSurface);
+            Debug.Log("after: " + water.transform.position);
+
+            
+        }
+
         private void RandomizeStartGrid()
         {
             System.Random random = new System.Random();
@@ -99,7 +257,7 @@ namespace Ecosystem.Grid
             {
                 for (int x = 0; x < tiles.GetLength(0); x++ )
                 {
-                    tiles[x,y] = NoiseMap[x,y] > WaterThreshold ? landIndex : waterIndex;
+                    tiles[x,y] = NoiseMap[x,y] > Regions[WaterThresholdIndex].Height ? landIndex : waterIndex;
                 }
             }
         }
@@ -702,7 +860,15 @@ namespace Ecosystem.Grid
         public void SetBlockedCell(int x, int y)
             => worldGridSystem.SetOccupiedCell(new int2(x, y), true);
 
+        public void SetHeight(int x, int y, float height)
+            => worldGridSystem.SetHeight(new int2(x, y), height);
+
         public Vector3 GetWorldPosition(int x, int y) => grid.GetWorldPosition(new int2(x, y));
+
+        public static float GetGroundLevel(int x, int y)
+        {
+            return NoiseMap[x, y];
+        }
     }
 }
 

@@ -42,7 +42,7 @@ namespace Ecosystem.Grid
                                                                      min_radius,
                                                                      max_radius,
                                                                      numToSpawn,
-                                                                     GameZone.Water);
+                                                                     GameZone.WaterSurface);
 
             gameObjectsInGrid = new Scenary [tiles.GetLength(0), tiles.GetLength(1)];
             CreateEmptyScenary();
@@ -136,12 +136,13 @@ namespace Ecosystem.Grid
 
         private Scenary RandomizeGreenScenary(float value, int row, int col)
         {
-            float newBush = value / 3;
-            float newTree = (value / 3) * 2;
+            float newBush = (value / 5) * 2;
+            float newTree = (value / 5) * 4;
             float newRock = value;
             float rand = Random.value;
 
             Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            spawnPos.y = GameZone.GetGroundLevel(row, col);
 
             if (rand <= newBush)
             {
@@ -168,6 +169,7 @@ namespace Ecosystem.Grid
             float rand = Random.value;
 
             Vector3 spawnPos = gameZone.GetWorldPosition(row, col);
+            spawnPos.y = GameZone.NoiseMap[row, col];
 
             if (rand <= newRock)
             {

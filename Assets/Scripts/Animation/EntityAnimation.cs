@@ -14,7 +14,7 @@ namespace Ecosystem.Animation {
             animator = GetComponent<Animator>();
         }
 
-        void Update() {
+        public void UpdateState() {
             if (math.length(movement.GetMovementInput()) != 0) {
                 RunAnimation();
             } else {

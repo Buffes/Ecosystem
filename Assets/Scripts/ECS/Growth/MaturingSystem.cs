@@ -22,7 +22,7 @@ namespace Ecosystem.ECS.Growth
         {
             var commandBuffer = m_EndSimulationEcbSystem.CreateCommandBuffer().ToConcurrent();
 
-            float deltaTime = Time.DeltaTime/60;
+            float deltaTime = Time.DeltaTime/60f;
             
             Entities
                 .WithNone<Adult>()

@@ -3,6 +3,7 @@ using Ecosystem.StateMachines;
 using Ecosystem.ECS.Hybrid;
 using Ecosystem.ECS.Animal;
 using Ecosystem.Genetics;
+using Ecosystem.Animation;
 
 namespace Ecosystem.Attributes
 {
@@ -15,6 +16,10 @@ namespace Ecosystem.Attributes
         public float MatingLimit {get; private set;}
         public float BraveryLevel { get; private set;}
 
+        [SerializeField]
+        private EntityAnimation animator = default;
+
+        [Header("Hybrid Entity")]
         [SerializeField]
         private AnimalDNAAuthoring animalDNAAuthoring = default;
         [SerializeField]
@@ -39,6 +44,7 @@ namespace Ecosystem.Attributes
 
         private void Awake() {
             this.stateMachine = new StateMachine();
+            animator = GetComponent<EntityAnimation>();
 
             hybridEntity.Converted += Init;
         }
@@ -146,6 +152,8 @@ namespace Ecosystem.Attributes
                 ChangeState(this.casualState);
             }
             stateMachine.Update();
+
+            animator?.UpdateState();
         }
 
         private float DiffLength(Vector3 target) 

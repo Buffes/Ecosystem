@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3698618211449862959}
   - component: {fileID: 4675160465158057465}
+  - component: {fileID: 1013633816}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -43,8 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bb2f03b645bfb45886ac6d90d8f4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whatToSpawnPrefab:
-  - {fileID: 6101400048629877293, guid: d926564931b9643789a1f64382be8263, type: 3}
-  - {fileID: 7752642800463083573, guid: 3e63c95c8826a4b45875d7335c4840d0, type: 3}
-  amountToSpawn: 6400000032000000
   settings: {fileID: 11400000, guid: 99384a9c422f42142bb448e312a89afa, type: 2}
+--- !u!114 &1013633816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2757748227421460007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304b61da2589f46459e92467d1768d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grass: {fileID: 1317140292629962124, guid: a3ab53cba051c293f85226a2cdd652dc, type: 3}
+  GrassSpawnTime: 1
+  seaweed: {fileID: 5832808878485633524, guid: 1582edbbe877f1646b432bec757288da, type: 3}
+  SeaweedSpawnTime: 0.2

@@ -55,7 +55,7 @@ namespace Ecosystem
                         Vector3 spawnPos = grid.GetWorldPosition(grid.GetGridPositionFromIndex(n));
                         spawnPos.y = 1f;
                         GameObject animal = Instantiate(prefab, spawnPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
-                        animal.GetComponentInChildren<AgeAuthoring>().Age = animalType.Lifespan * 0.25f;
+                        animal.GetComponentInChildren<AgeAuthoring>().Age = animalType.Lifespan * Random.value;
                         lookingForFreeTile = false;
                     }
                 }

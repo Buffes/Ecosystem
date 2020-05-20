@@ -7,7 +7,7 @@ namespace Ecosystem.ECS.Animal.Needs
     /// A float value representing the sexual urges of an animal.
     /// </summary>
     [Serializable]
-    [GenerateAuthoringComponent]
+    //[GenerateAuthoringComponent]
     public struct SexualUrgesData : IComponentData
     {
         public float Urge;

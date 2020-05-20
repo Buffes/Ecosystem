@@ -15,13 +15,13 @@ MonoBehaviour:
   initialPopulations:
   - Prefab: {fileID: 3999619118026667676, guid: cb29c42f7248c384a9822e2122e35067,
       type: 3}
-    Amount: 100
+    Amount: 400
   - Prefab: {fileID: 1435295048096349929, guid: 63c029db3643e0c44ba625c7f2f13438,
       type: 3}
-    Amount: 50
+    Amount: 120
   - Prefab: {fileID: 4564373161721369777, guid: dbb7043a93053452ca87544ec8313d39,
       type: 3}
-    Amount: 20
+    Amount: 40
   - Prefab: {fileID: 2003170221973116033, guid: 290fdc0c73d1e4649bf63eeb3459216c,
       type: 3}
-    Amount: 10
+    Amount: 50

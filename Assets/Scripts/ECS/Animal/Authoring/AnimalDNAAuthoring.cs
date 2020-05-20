@@ -2,6 +2,7 @@
 using Ecosystem.Genetics;
 using Unity.Entities;
 using UnityEngine;
+using Ecosystem.ECS.Animal.Needs;
 
 namespace Ecosystem.ECS.Animal
 {
@@ -40,9 +41,19 @@ namespace Ecosystem.ECS.Animal
             SetComponent((ref BaseSpeed speed) => DNA.NextGene(ref speed.Value));
             SetComponent((ref BaseHearingRange hearingRange) => DNA.NextGene(ref hearingRange.Value));
             SetComponent((ref BaseVisionRange visionRange) => DNA.NextGene(ref visionRange.Value));
-            SetComponent((ref Needs.HungerLimit hungerLimit) => DNA.NextGene(ref hungerLimit.Value));
-            SetComponent((ref Needs.ThirstLimit thirstLimit) => DNA.NextGene(ref thirstLimit.Value));
-            SetComponent((ref Needs.MatingLimit matingLimit) => DNA.NextGene(ref matingLimit.Value));
+            SetComponent((ref HungerLimit hungerLimit) => DNA.NextGene(ref hungerLimit.Value));
+            if (entityManager.GetComponentData<HungerLimit>(entity).Value > entityManager.GetComponentData<MaxHungerData>(entity).MaxHunger)
+            {
+                entityManager.SetComponentData<HungerLimit>(entity,new HungerLimit { Value = 0.9f * entityManager.GetComponentData<MaxHungerData>(entity).MaxHunger });
+            }
+            SetComponent((ref ThirstLimit thirstLimit) => DNA.NextGene(ref thirstLimit.Value));
+            if (entityManager.GetComponentData<ThirstLimit>(entity).Value > entityManager.GetComponentData<MaxThirstData>(entity).MaxThirst) {
+                entityManager.SetComponentData<ThirstLimit>(entity,new ThirstLimit { Value = 0.9f * entityManager.GetComponentData<MaxThirstData>(entity).MaxThirst });
+            }
+            SetComponent((ref MatingLimit matingLimit) => DNA.NextGene(ref matingLimit.Value));
+            if (entityManager.GetComponentData<MatingLimit>(entity).Value > entityManager.GetComponentData<MaxSexualUrgesData>(entity).MaxUrge) {
+                entityManager.SetComponentData<MatingLimit>(entity,new MatingLimit { Value = 0.9f * entityManager.GetComponentData<MaxSexualUrgesData>(entity).MaxUrge });
+            }
         }
 
         private delegate void ModifyComponentDelegate<T>(ref T t) where T : struct, IComponentData;
