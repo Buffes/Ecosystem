@@ -12,22 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d75475b8bed3c4eba3e08d026dc932, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
+  Name: Rabbit
+  MovementSpeed: 4
+  Lifespan: 10
+  InfertilityAge: 0.9
+  GestationPeriod: 0.85
+  Bravery: 0.65
+  HearingRange: 8
+  VisionRange: 16
+  VisionAngle: 2.4
+  MaxHunger: 4
+  HungerLimit: 0.3
+  MaxThirst: 4
+  ThirstLimit: 0.3
+  MaxSexualUrge: 4
+  MatingLimit: 0.3
+  Land: 1
+  Water: 0
   Meat: {fileID: 6036045412324625326, guid: 1e985e15736829647affb3f1e42c6439, type: 3}
   Baby: {fileID: 3999619118026667676, guid: cb29c42f7248c384a9822e2122e35067, type: 3}
-  Name: Rabbit
   prey: []
   food:
   - {fileID: 11400000, guid: 43943814e1f448743bee4a526ed51e1e, type: 2}
   - {fileID: 11400000, guid: 91f924cf85fbb494a9054d33d53c6444, type: 2}
   - {fileID: 11400000, guid: ca094083e1778324d846bea66efea76f, type: 2}
-  MovementSpeed: 3
-  HearingRange: 6
-  VisionRange: 12
-  VisionAngle: 2
-  MaxHunger: 3
-  MaxThirst: 3
-  MaxSexualUrge: 3
-  Bravery: 0.5
-  GestationPeriod: 0.2
-  MovesOnLand: 1
-  MovesInWater: 0

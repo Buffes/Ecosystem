@@ -13,6 +13,15 @@ namespace Ecosystem.ECS.Animal
     public class AnimalTypeAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
     {
         public AnimalType animalType = default;
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float startingHunger = 0.75f;
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float startingThirst = 0.75f;
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float startingSexualUrge = 0.75f;
 
         private Entity entity;
         private EntityManager entityManager;
@@ -76,19 +85,58 @@ namespace Ecosystem.ECS.Animal
                 Range = 0
             });
 
+            if (animalType.MaxHunger > 0)
+            {
+                AddComp(new HungerData
+                {
+                    Hunger = animalType.MaxHunger * startingHunger
+                });
+            }
+
             AddComp(new MaxHungerData
             {
                 MaxHunger = animalType.MaxHunger
             });
+
+            AddComp(new HungerLimit
+            {
+                Value = animalType.HungerLimit
+            });
+
+            if (animalType.MaxThirst > 0)
+            {
+                AddComp(new ThirstData
+                {
+                    Thirst = animalType.MaxThirst * startingThirst
+                });
+            }
 
             AddComp(new MaxThirstData
             {
                 MaxThirst = animalType.MaxThirst
             });
 
+            AddComp(new ThirstLimit
+            {
+                Value = animalType.ThirstLimit
+            });
+
+            if (animalType.MaxSexualUrge > 0)
+            {
+                AddComp(new SexualUrgesData
+                {
+                    Urge = animalType.MaxSexualUrge * startingSexualUrge
+                });
+            }
+
             AddComp(new MaxSexualUrgesData
             {
                 MaxUrge = animalType.MaxSexualUrge
+            });
+
+            AddComp(new MatingLimit
+            {
+                Value = animalType.MatingLimit
             });
 
             AddComp(new BraveryData
@@ -99,6 +147,11 @@ namespace Ecosystem.ECS.Animal
             AddComp(new LifespanData
             {
                 Value = animalType.Lifespan
+            });
+
+            AddComp(new InfertilityData
+            {
+                InfertilityAge = animalType.Lifespan * animalType.InfertilityAge
             });
 
             AddComp(new GestationData

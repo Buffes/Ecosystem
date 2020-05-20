@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Sardine
   MovementSpeed: 3
-  HearingRange: 6
-  VisionRange: 12
-  VisionAngle: 2
+  Lifespan: 10
+  InfertilityAge: 0.9
+  GestationPeriod: 0.5
+  Bravery: 0.7
+  HearingRange: 8
+  VisionRange: 16
+  VisionAngle: 2.4
   MaxHunger: 3
-  MaxThirst: 3
+  HungerLimit: 0.5
+  MaxThirst: 0
+  ThirstLimit: 0
   MaxSexualUrge: 3
-  Bravery: 0.55
-  Lifespan: 20
-  InfertilityAge: 9
-  GestationPeriod: 0.2
+  MatingLimit: 0.3
   Land: 0
   Water: 1
   Meat: {fileID: 5051909552354685666, guid: 97eacc50661884900814b75b7a1bd8da, type: 3}

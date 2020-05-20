@@ -1,5 +1,4 @@
-﻿using Ecosystem.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ecosystem.Gameplay
@@ -11,16 +10,25 @@ namespace Ecosystem.Gameplay
         public string Name;
 
         [Header("Stats")]
-        public float MovementSpeed = 3;
-        public float HearingRange = 6;
-        public float VisionRange = 12;
-        public float VisionAngle = 2;
-        public float MaxHunger = 3;
-        public float MaxThirst = 3;
-        public float MaxSexualUrge = 3;
+        public float MovementSpeed = 4;
+        public float Lifespan = 10;
+        [Range(0, 1)] public float InfertilityAge = 0.9f;
+        public float GestationPeriod = 1f;
         public float Bravery = 0.5f;
-        public float Lifespan = 20;
-        public float GestationPeriod = 0.2f;
+
+        [Header("Senses")]
+        public float HearingRange = 8;
+        public float VisionRange = 16;
+        public float VisionAngle = 2.4f;
+
+        [Header("Needs")]
+        public float MaxHunger = 4;
+        [Range(0, 1)] public float HungerLimit = 0.3f;
+        public float MaxThirst = 4;
+        [Range(0, 1)] public float ThirstLimit = 0.3f;
+        public float MaxSexualUrge = 4;
+        [Range(0, 1)] public float MatingLimit = 0.3f;
+
 
         [Header("Terrain")]
 

@@ -31,6 +31,7 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns></returns>
         public float GetHungerStatus()
         {
+            if (!HasComp<HungerData>()) return float.MaxValue;
             HungerData value = GetComp<HungerData>();
             return value.Hunger;
         }
@@ -41,6 +42,7 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns></returns>
         public float GetThirstStatus()
         {
+            if (!HasComp<ThirstData>()) return float.MaxValue;
             ThirstData value = GetComp<ThirstData>();
             return value.Thirst;
         }
@@ -51,6 +53,7 @@ namespace Ecosystem.ECS.Hybrid
         /// <returns></returns>
         public float GetSexualUrgesStatus()
         {
+            if (!HasComp<SexualUrgesData>()) return float.MaxValue;
             SexualUrgesData value = GetComp<SexualUrgesData>();
             return value.Urge;
         }
@@ -147,9 +150,8 @@ namespace Ecosystem.ECS.Hybrid
 
         }
 
-        private T GetComp<T>() where T : struct, IComponentData
-        {
-            return EntityManager.GetComponentData<T>(Entity);
-        }
+        private T GetComp<T>() where T : struct, IComponentData => EntityManager.GetComponentData<T>(Entity);
+
+        private bool HasComp<T>() where T : struct, IComponentData => EntityManager.HasComponent<T>(Entity);
     }
 }
