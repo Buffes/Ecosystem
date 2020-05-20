@@ -54,7 +54,11 @@ public class GroundCollisionSystem : SystemBase
         
         // Use linear interpolation to avoid staircase-like movement
         int2 position2D = grid.GetGridPosition(position);
-        
+        if(!grid.IsInBounds(position2D))
+        {
+            return 0;
+        }
+
         float xU = position.x - position2D.x;
         float zU = (position.z - position2D.y);
 
