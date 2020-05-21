@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ecosystem
+namespace Ecosystem.Gameplay
 {
     [CreateAssetMenu(menuName = "Gameplay/SimulationSettings")]
     public class SimulationSettings : ScriptableObject
@@ -17,6 +17,17 @@ namespace Ecosystem
         {
             public GameObject Prefab;
             public int Amount;
+        }
+
+        public void Clear() => initialPopulations.Clear();
+
+        public void AddAnimalPopulation(GameObject prefab, int amount)
+        {
+            initialPopulations.Add(new AnimalPopulation
+            {
+                Prefab = prefab,
+                Amount = amount
+            });
         }
     }
 }

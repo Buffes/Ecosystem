@@ -18,8 +18,8 @@ MonoBehaviour:
   argsRange: {x: 2, y: 2}
   argsUsage: <name> <amount>
   argsAlternatives:
-  - chicken 100
-  - lion 100
+  - rabbit 100
+  - fox 100
   - eagle 100
   - sardine 100
-  simulationSettings: {fileID: 11400000, guid: 99384a9c422f42142bb448e312a89afa, type: 2}
+  animalTypeSet: {fileID: 11400000, guid: 2e051b35a4e404c42b4886596ffba9e7, type: 2}

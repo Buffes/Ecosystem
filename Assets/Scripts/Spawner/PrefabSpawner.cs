@@ -3,9 +3,9 @@ using Ecosystem.ECS.Grid;
 using Unity.Entities;
 using Random = UnityEngine.Random;
 using Ecosystem.ECS.Animal;
-using Ecosystem;
 using Ecosystem.Grid;
 using Unity.Mathematics;
+using Ecosystem.Gameplay;
 
 public class PrefabSpawner : MonoBehaviour
 {
