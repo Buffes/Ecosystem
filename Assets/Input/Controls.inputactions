@@ -382,22 +382,11 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "78ce2963-37cb-468e-a913-257c0e158aed",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "TogglePause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e5bb9f5f-d468-4ce7-8a53-b67a5335f111",
+                    "id": "bd5a23e8-1d5a-48fd-9009-6eea883f6c61",
                     "path": "*/{Back}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mobile",
+                    "groups": "Keyboard & Mouse;Mobile",
                     "action": "TogglePause",
                     "isComposite": false,
                     "isPartOfComposite": false
