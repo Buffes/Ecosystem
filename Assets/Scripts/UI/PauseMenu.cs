@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Ecosystem.UI
@@ -17,6 +18,8 @@ namespace Ecosystem.UI
 
         public void MainMenu()
         {
+            DisposeEntities();
+
             SceneManager.LoadScene(mainMenuScene);
         }
 
@@ -34,5 +37,11 @@ namespace Ecosystem.UI
         }
 
         public void OnTogglePause() => TogglePause();
+
+        private void DisposeEntities()
+        {
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            entityManager.DestroyEntity(entityManager.UniversalQuery);
+        }
     }
 }
