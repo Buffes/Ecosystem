@@ -20,10 +20,14 @@ namespace Ecosystem.CameraControl
         [Tooltip("How fast the camera rubber bands toward the target position")]
         private float smoothSpeed = 3f;
         [SerializeField]
+        [Tooltip("How fast the camera follows the mouse when looking around")]
+        private float smoothLook = 10f;
+        [SerializeField]
         [Tooltip("How fast the camera rotates when looking around")]
         private float sensitivity = 1f;
 
         private Vector3 target;
+        private Vector3 eulerAngles;
         private float currentMoveSpeed;
 
         private Vector2 inputDirection;
@@ -42,6 +46,7 @@ namespace Ecosystem.CameraControl
         private void Start()
         {
             target = transform.position;
+            eulerAngles = transform.eulerAngles;
         }
 
         private void Update()
@@ -59,16 +64,16 @@ namespace Ecosystem.CameraControl
             {
                 LockCursor(true);
 
-                var eulerAngles = transform.eulerAngles;
                 eulerAngles += sensitivity / 10 * new Vector3(-inputRotation.y, inputRotation.x);
                 if (eulerAngles.x > 180f && eulerAngles.x < 270.1f) eulerAngles.x = 270.1f;
                 if (eulerAngles.x < 180f && eulerAngles.x > 89.9f) eulerAngles.x = 89.9f;
-                transform.eulerAngles = eulerAngles;
             }
             else
             {
                 LockCursor(false);
             }
+
+            transform.eulerAngles = AngleLerp(transform.eulerAngles, eulerAngles, smoothLook * Time.unscaledDeltaTime);
         }
 
         private void FollowEntity()
@@ -109,7 +114,7 @@ namespace Ecosystem.CameraControl
 
         private void FollowTarget()
         {
-            transform.position = Vector3.Lerp(transform.position, target, smoothSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, target, smoothSpeed * Time.unscaledDeltaTime);
         }
 
         private void LockCursor(bool locked)
@@ -122,6 +127,19 @@ namespace Ecosystem.CameraControl
         {
             EventSystem eventSystem = EventSystem.current;
             return eventSystem != null && eventSystem.IsPointerOverGameObject();
+        }
+
+        /// <summary>
+        /// Same as Lerp but makes sure the values interpolate correctly when they wrap around
+        /// 360 degrees.
+        /// </summary>
+        private static Vector3 AngleLerp(Vector3 StartAngle, Vector3 FinishAngle, float t)
+        {
+            float xLerp = Mathf.LerpAngle(StartAngle.x, FinishAngle.x, t);
+            float yLerp = Mathf.LerpAngle(StartAngle.y, FinishAngle.y, t);
+            float zLerp = Mathf.LerpAngle(StartAngle.z, FinishAngle.z, t);
+            Vector3 Lerped = new Vector3(xLerp, yLerp, zLerp);
+            return Lerped;
         }
 
         public void OnMovement(InputValue value) => inputDirection = value.Get<Vector2>();

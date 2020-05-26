@@ -101,6 +101,7 @@ MonoBehaviour:
   boostFactor: 2
   zoomSpeed: 1.5
   smoothSpeed: 3
+  smoothLook: 10
   sensitivity: 1
 --- !u!114 &2930296422921347033
 MonoBehaviour:
