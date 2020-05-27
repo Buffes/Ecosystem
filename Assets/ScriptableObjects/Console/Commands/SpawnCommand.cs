@@ -1,4 +1,5 @@
 ﻿using Ecosystem.ECS.Grid;
+using Ecosystem.Gameplay;
 using System.Linq;
 using System.Text;
 using Unity.Entities;
@@ -10,7 +11,7 @@ namespace Ecosystem.Console
     public class SpawnCommand : Command
     {
         [SerializeField]
-        private SimulationSettings simulationSettings = default;
+        private AnimalTypeSet animalTypeSet = default;
 
         private WorldGridSystem worldGridSystem;
 
@@ -24,17 +25,17 @@ namespace Ecosystem.Console
                 return;
             }
 
-            var population = simulationSettings.InitialPopulations.SingleOrDefault(
-                x => x.Prefab.name.Equals(prefabName, System.StringComparison.OrdinalIgnoreCase));
+            var animalType = animalTypeSet.values.SingleOrDefault(
+                x => x.Name.Equals(prefabName, System.StringComparison.OrdinalIgnoreCase));
 
-            if (population == null)
+            if (animalType == null)
             {
                 sender.SendMessage("Could not find \"" + prefabName + "\"");
                 sender.SendMessage(GetAvailableAnimals());
                 return;
             }
 
-            var prefab = population.Prefab;
+            var prefab = animalType.Baby;
 
             if (worldGridSystem == null) worldGridSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<WorldGridSystem>();
 
@@ -46,9 +47,9 @@ namespace Ecosystem.Console
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Available animals:");
-            foreach (var pop in simulationSettings.InitialPopulations)
+            foreach (var animalType in animalTypeSet.values)
             {
-                sb.Append("\n    " + pop.Prefab.name);
+                sb.Append("\n    " + animalType.Name);
             }
             return sb.ToString();
         }
